@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shelfDocument>
+  <!-- This file contains definitions of shelves, toolbars, and tools.
+ It should not be hand-edited when it is being used by the application.
+ Note, that two definitions of the same element are not allowed in
+ a single file. -->
+
+  <toolshelf name="mlops" label="MLOPs">
+    <memberTool name="mlops_install"/>
+  </toolshelf>
+
+  <tool name="mlops_install" label="Install" icon="PLASMA_App">
+    <script scriptType="python"><![CDATA[
+import subprocess
+import os
+
+FOLDER = os.path.normpath(os.path.join(hou.text.expandString("$HOUDINI_TEMP_DIR"), "MLOPs"))
+PIP_FOLDER = os.path.normpath(os.path.join(hou.text.expandString("$HOUDINI_USER_PREF_DIR"), "scripts", "python"))
+PIPINSTALLFILE = os.path.normpath(os.path.join(FOLDER, "get-pip.py"))
+
+# Downloading pip installation file   
+if not os.path.isdir(FOLDER):
+    os.makedirs(FOLDER)
+    
+    
+p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
+
+# Installing pip to Houdini
+p = subprocess.Popen(["hython", PIPINSTALLFILE], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
+
+
+# Installing / Upgrading setuptools because on py3.9 some modules need to be rebuilt
+p = subprocess.Popen(["hython", "-m", "pip", "install", "--upgrade", PIP_FOLDER, "setuptools"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
+
+# Installing p4python module using pip
+p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
+
+# Informing user about the change
+hou.ui.displayMessage("You have now installed the required dependencies for this build of Houdini.\nPlease restart Houdini for it to take effect", buttons=('OK',), severity=hou.severityType.Message, title="MLOPs Plugin")]]></script>
+  </tool>
+
+</shelfDocument>
