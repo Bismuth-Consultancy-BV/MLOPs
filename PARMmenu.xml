@@ -15,9 +15,8 @@
         <label>Create VEX From Prompt</label>
         <context>
           <expression>
-if len(kwargs[&quot;parms&quot;]) == 0:
-  return False
-return True
+import mlops_utils
+return mlops_utils.is_relevant_parm(kwargs, &quot;wrangle&quot;)
           </expression>
         </context>
         <scriptCode>
@@ -42,9 +41,8 @@ if button == 0:
         <label>Comment VEX</label>
         <context>
           <expression>
-if len(kwargs[&quot;parms&quot;]) == 0:
-  return False
-return True
+import mlops_utils
+return mlops_utils.is_relevant_parm(kwargs, &quot;wrangle&quot;)
           </expression>
         </context>
         <scriptCode>
@@ -55,11 +53,31 @@ import mlops_utils
 DEFAULT_INSTRUCTION = "Analyze the following VEX code from SideFX Houdini and add comments to explain it. I only need the script body, do NOT explain the code body. The code: "
 
 parm = kwargs["parms"][0]
-
 message = parm.rawValue()
-
 code = mlops_utils.generate_gpt_code_from_prompt(message, DEFAULT_INSTRUCTION)
+parm.set(code)
+]]>
+        </scriptCode>
+      </scriptItem>
 
+      <scriptItem id="mlops_fixvex">
+        <label>Fix Error in VEX</label>
+        <context>
+          <expression>
+import mlops_utils
+return mlops_utils.is_relevant_parm(kwargs, &quot;wrangle&quot;)
+          </expression>
+        </context>
+        <scriptCode>
+          <![CDATA[
+import hou
+import mlops_utils
+
+DEFAULT_INSTRUCTION = "Analyze the following VEX code from SideFX Houdini and fix any errors you find. I only need the script body, do NOT explain the code body. The code: "
+
+parm = kwargs["parms"][0]
+message = parm.rawValue()
+code = mlops_utils.generate_gpt_code_from_prompt(message, DEFAULT_INSTRUCTION)
 parm.set(code)
 ]]>
         </scriptCode>

@@ -10,3 +10,9 @@ def generate_gpt_code_from_prompt(prompt, wrapper, model="gpt-3.5-turbo"):
     ]
   )
   return completion.choices[0].message.content
+
+def is_relevant_parm(kwargs, parmtype):
+  if parmtype == "wrangle":
+    if len(kwargs["parms"]) == 0:
+      return False
+  return True
