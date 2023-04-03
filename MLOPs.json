@@ -1,0 +1,14 @@
+{
+    "path": "$MLOPS",
+    "load_package_once": true,
+    "version": "19.5",
+    "enable": true,
+    "env": [
+        {
+            "MLOPS": "C:/BISMUTH/Work/Projects/Monaco/Toolset/MLOPs/"
+        },
+        {
+            "OPENAI_API_KEY": "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"
+        }
+    ]
+}

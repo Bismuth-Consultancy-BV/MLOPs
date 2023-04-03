@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+-->
+<menuDocument>
+  <!-- menuDocument can only contain 1 menu element, whose id is 
+         implicitly "root_menu"
+      -->
+  <menu>
+    <subMenu id="mlops_utils">
+      <label>MLOPs</label>
+      
+      <!-- WRITE VEX -->
+      <scriptItem id="mlops_generatevex">
+        <label>Create VEX Sample</label>
+        <context>
+          <expression>
+if len(kwargs[&quot;parms&quot;]) == 0:
+  return False
+return True
+          </expression>
+        </context>
+        <scriptCode>
+          <![CDATA[
+import hou
+import mlops_utils
+
+DEFAULT_INSTRUCTION = "Write valid Houdini VEX Code to execute. I only need the script body. Don't add any explanation."
+MESSAGE = "Describe your desired VEX code"
+button, message =hou.ui.readInput(MESSAGE, buttons=('OK','Cancel'), severity=hou.severityType.Message, default_choice=1, close_choice=1, help=None, title=None, initial_contents=None)
+
+if button == 0:
+  code = mlops_utils.generate_gpt_code_from_prompt(message, DEFAULT_INSTRUCTION)
+  parm = kwargs["parms"][0]
+  parm.set(code)
+
+]]>
+        </scriptCode>
+      </scriptItem>
+      <!-- WRITE VEX -->
+
+    </subMenu>
+  </menu>
+</menuDocument>
