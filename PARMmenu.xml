@@ -12,7 +12,7 @@
       
       <!-- WRITE VEX -->
       <scriptItem id="mlops_generatevex">
-        <label>Create VEX Sample</label>
+        <label>Create VEX From Prompt</label>
         <context>
           <expression>
 if len(kwargs[&quot;parms&quot;]) == 0:
@@ -25,7 +25,7 @@ return True
 import hou
 import mlops_utils
 
-DEFAULT_INSTRUCTION = "Write valid Houdini VEX Code to execute. I only need the script body. Don't add any explanation."
+DEFAULT_INSTRUCTION = "Write valid Houdini VEX Code to execute. I only need the script body, do NOT explain the code body. Comments in the code are allowed when prefixed with //."
 MESSAGE = "Describe your desired VEX code"
 button, message =hou.ui.readInput(MESSAGE, buttons=('OK','Cancel'), severity=hou.severityType.Message, default_choice=1, close_choice=1, help=None, title=None, initial_contents=None)
 
@@ -34,6 +34,34 @@ if button == 0:
   parm = kwargs["parms"][0]
   parm.set(code)
 
+]]>
+        </scriptCode>
+      </scriptItem>
+
+      <scriptItem id="mlops_commentvex">
+        <label>Comment VEX</label>
+        <context>
+          <expression>
+if len(kwargs[&quot;parms&quot;]) == 0:
+  return False
+return True
+          </expression>
+        </context>
+        <scriptCode>
+          <![CDATA[
+import hou
+import mlops_utils
+
+DEFAULT_INSTRUCTION = "Analyze the following VEX code from SideFX Houdini and add comments to explain it. I only need the script body, do NOT explain the code body. The code: "
+
+parm = kwargs["parms"][0]
+
+message = parm.rawValue()
+print(message)
+
+code = mlops_utils.generate_gpt_code_from_prompt(message, DEFAULT_INSTRUCTION)
+
+parm.set(code)
 ]]>
         </scriptCode>
       </scriptItem>
