@@ -57,7 +57,6 @@ DEFAULT_INSTRUCTION = "Analyze the following VEX code from SideFX Houdini and ad
 parm = kwargs["parms"][0]
 
 message = parm.rawValue()
-print(message)
 
 code = mlops_utils.generate_gpt_code_from_prompt(message, DEFAULT_INSTRUCTION)
 
