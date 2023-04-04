@@ -12,7 +12,7 @@
       
       <!-- WRITE VEX -->
       <scriptItem id="mlops_generatevex">
-        <label>Create VEX From Prompt</label>
+        <label>[GPT] Prompt to VEX</label>
         <context>
           <expression>
 import mlops_utils
@@ -38,7 +38,7 @@ if button == 0:
       </scriptItem>
 
       <scriptItem id="mlops_commentvex">
-        <label>Comment VEX</label>
+        <label>[GPT] Comment VEX</label>
         <context>
           <expression>
 import mlops_utils
@@ -61,7 +61,7 @@ parm.set(code)
       </scriptItem>
 
       <scriptItem id="mlops_fixvex">
-        <label>Fix Error in VEX</label>
+        <label>[GPT] Fix VEX Error</label>
         <context>
           <expression>
 import mlops_utils
