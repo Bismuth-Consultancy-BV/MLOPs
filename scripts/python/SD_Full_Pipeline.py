@@ -19,7 +19,7 @@ ATTR_SEED = 44
 
 
 
-
+## DONE
 ###### TOKENIZER NODE ######
 from transformers import CLIPTokenizer
 tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", local_files_only=True)
@@ -34,7 +34,7 @@ ATTR_INPUT_IDS = list(text_input.input_ids.cpu().numpy()[0])
 
 
 
-
+## TODO: text_embeddings
 ###### EMBEDDER NODE  ######
 from transformers import CLIPTextModel
 import torch
@@ -51,16 +51,8 @@ _tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", loca
 uncond_input = _tokenizer([""] * batch_size, padding="max_length", max_length=max_length, return_tensors="pt")
 uncond_embeddings = text_encoder(uncond_input.input_ids.to(ATTR_TORCH_DEVICE))[0]
 text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
-#print(text_embeddings.shape)
 del _tokenizer
 ###### EMBEDDER NODE  ######
-
-
-
-
-
-
-
 
 
 ###### LATENT NOISE NODE  ######
@@ -75,7 +67,10 @@ generator = torch.manual_seed(ATTR_SEED)    # Seed generator to create the inita
 latents = torch.randn((batch_size, _unet.in_channels, ATTR_IMAGE_HEIGHT // 8, ATTR_IMAGE_WIDTH // 8),generator=generator,)
 del _unet
 latents = latents.to(ATTR_TORCH_DEVICE)
+ATTR_LATENTS = latents.cpu().numpy()[0].flatten()
 ###### LATENT NOISE NODE  ######
+
+
 
 
 
@@ -88,10 +83,9 @@ latents = latents.to(ATTR_TORCH_DEVICE)
 from diffusers import LMSDiscreteScheduler
 scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", num_train_timesteps=1000)
 scheduler.set_timesteps(ATTR_NUM_INFERENCE_STEPS)
-
-latents = latents * scheduler.init_noise_sigma
+__LATENTS = torch.from_numpy(numpy.array([ATTR_LATENTS.reshape(4, 64, 64)])).to(ATTR_TORCH_DEVICE)
+ATTR_SCHEDULER_LATENTS = __LATENTS * scheduler.init_noise_sigma
 ###### SCHEDULER NODE #######
-
 
 
 
@@ -107,9 +101,10 @@ unet.to(ATTR_TORCH_DEVICE)
 from tqdm.auto import tqdm
 import torch
 guidance_scale = 7.5                # Scale for classifier-free guidance
+ATTR_UNET_LATENTS = ATTR_SCHEDULER_LATENTS
 for t in tqdm(scheduler.timesteps):
     # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
-    latent_model_input = torch.cat([latents] * 2)
+    latent_model_input = torch.cat([ATTR_UNET_LATENTS] * 2)
 
     latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t)
 
@@ -122,7 +117,7 @@ for t in tqdm(scheduler.timesteps):
     noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
 
     # compute the previous noisy sample x_t -> x_t-1
-    latents = scheduler.step(noise_pred, t, latents).prev_sample
+    ATTR_UNET_LATENTS = scheduler.step(noise_pred, t, ATTR_UNET_LATENTS).prev_sample
 ##### UNET SOLVER NODE ########
 
 
@@ -138,9 +133,9 @@ import torch
 vae = AutoencoderKL.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="vae", local_files_only=True)
 vae.to(ATTR_TORCH_DEVICE)
 
-latents = 1 / 0.18215 * latents
+ATTR_UNET_LATENTS = 1 / 0.18215 * ATTR_UNET_LATENTS
 with torch.no_grad():
-    image = vae.decode(latents).sample
+    image = vae.decode(ATTR_UNET_LATENTS).sample
 ######## IMAGE DECODER NODE ########
 
 
