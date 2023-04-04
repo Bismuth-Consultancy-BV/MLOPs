@@ -81,10 +81,12 @@ ATTR_LATENTS = latents.cpu().numpy()[0].flatten()
 ###### SCHEDULER NODE #######
 # Creating our pre-trained scheduler
 from diffusers import LMSDiscreteScheduler
+import json
 scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", num_train_timesteps=1000)
 scheduler.set_timesteps(ATTR_NUM_INFERENCE_STEPS)
 __LATENTS = torch.from_numpy(numpy.array([ATTR_LATENTS.reshape(4, 64, 64)])).to(ATTR_TORCH_DEVICE)
 ATTR_SCHEDULER_LATENTS = __LATENTS * scheduler.init_noise_sigma
+ATTR_SCHEDULER_CONFIG = json.dumps(scheduler.config)
 ###### SCHEDULER NODE #######
 
 
@@ -100,13 +102,16 @@ unet.to(ATTR_TORCH_DEVICE)
 
 from tqdm.auto import tqdm
 import torch
+import json
 guidance_scale = 7.5                # Scale for classifier-free guidance
 ATTR_UNET_LATENTS = ATTR_SCHEDULER_LATENTS
-for t in tqdm(scheduler.timesteps):
+__scheduler = LMSDiscreteScheduler.from_config(json.loads(ATTR_SCHEDULER_CONFIG))
+__scheduler.set_timesteps(ATTR_NUM_INFERENCE_STEPS)
+for t in tqdm(__scheduler.timesteps):
     # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
     latent_model_input = torch.cat([ATTR_UNET_LATENTS] * 2)
 
-    latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t)
+    latent_model_input = __scheduler.scale_model_input(latent_model_input, timestep=t)
 
     # predict the noise residual
     with torch.no_grad():
@@ -117,7 +122,7 @@ for t in tqdm(scheduler.timesteps):
     noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
 
     # compute the previous noisy sample x_t -> x_t-1
-    ATTR_UNET_LATENTS = scheduler.step(noise_pred, t, ATTR_UNET_LATENTS).prev_sample
+    ATTR_UNET_LATENTS = __scheduler.step(noise_pred, t, ATTR_UNET_LATENTS).prev_sample
 ##### UNET SOLVER NODE ########
 
 
