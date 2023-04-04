@@ -19,7 +19,6 @@ ATTR_SEED = 44
 
 
 
-## DONE
 ###### TOKENIZER NODE ######
 from transformers import CLIPTokenizer
 tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", local_files_only=True)
@@ -34,7 +33,6 @@ ATTR_INPUT_IDS = list(text_input.input_ids.cpu().numpy()[0])
 
 
 
-## TODO: text_embeddings
 ###### EMBEDDER NODE  ######
 from transformers import CLIPTextModel
 import torch
@@ -51,8 +49,15 @@ _tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", loca
 uncond_input = _tokenizer([""] * batch_size, padding="max_length", max_length=max_length, return_tensors="pt")
 uncond_embeddings = text_encoder(uncond_input.input_ids.to(ATTR_TORCH_DEVICE))[0]
 text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
+_embeddings = text_embeddings.detach().cpu().numpy()
+ATTR_UNCONDITIONAL_EMBEDDING = _embeddings[0]
+ATTR_CONDITIONAL_EMBEDDING = _embeddings[1]
+ATTR_EMBEDDING_SHAPE = list(ATTR_UNCONDITIONAL_EMBEDDING.shape)
+ATTR_UNCONDITIONAL_EMBEDDING = ATTR_UNCONDITIONAL_EMBEDDING.flatten()
+ATTR_CONDITIONAL_EMBEDDING = ATTR_CONDITIONAL_EMBEDDING.flatten()
 del _tokenizer
 ###### EMBEDDER NODE  ######
+
 
 
 ###### LATENT NOISE NODE  ######
@@ -77,13 +82,11 @@ ATTR_LATENTS = latents.cpu().numpy()[0].flatten()
 
 
 
-
 ###### SCHEDULER NODE #######
 # Creating our pre-trained scheduler
 from diffusers import LMSDiscreteScheduler
 import json
 scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", num_train_timesteps=1000)
-scheduler.set_timesteps(ATTR_NUM_INFERENCE_STEPS)
 __LATENTS = torch.from_numpy(numpy.array([ATTR_LATENTS.reshape(4, 64, 64)])).to(ATTR_TORCH_DEVICE)
 ATTR_SCHEDULER_LATENTS = __LATENTS * scheduler.init_noise_sigma
 ATTR_SCHEDULER_CONFIG = json.dumps(scheduler.config)
@@ -105,6 +108,12 @@ import torch
 import json
 guidance_scale = 7.5                # Scale for classifier-free guidance
 ATTR_UNET_LATENTS = ATTR_SCHEDULER_LATENTS
+_unconditional_embedding = numpy.array(ATTR_UNCONDITIONAL_EMBEDDING).reshape(ATTR_EMBEDDING_SHAPE)
+_conditional_embedding = numpy.array(ATTR_CONDITIONAL_EMBEDDING).reshape(ATTR_EMBEDDING_SHAPE)
+
+_text_embedding = torch.from_numpy(numpy.array([_unconditional_embedding, _conditional_embedding])).to(ATTR_TORCH_DEVICE)
+_text_embedding.requires_grad_()
+
 __scheduler = LMSDiscreteScheduler.from_config(json.loads(ATTR_SCHEDULER_CONFIG))
 __scheduler.set_timesteps(ATTR_NUM_INFERENCE_STEPS)
 for t in tqdm(__scheduler.timesteps):
@@ -115,7 +124,7 @@ for t in tqdm(__scheduler.timesteps):
 
     # predict the noise residual
     with torch.no_grad():
-        noise_pred = unet(latent_model_input, t, encoder_hidden_states=text_embeddings).sample
+        noise_pred = unet(latent_model_input, t, encoder_hidden_states=_text_embedding).sample
 
     # perform guidance
     noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
@@ -123,6 +132,8 @@ for t in tqdm(__scheduler.timesteps):
 
     # compute the previous noisy sample x_t -> x_t-1
     ATTR_UNET_LATENTS = __scheduler.step(noise_pred, t, ATTR_UNET_LATENTS).prev_sample
+
+ATTR_UNET_OUT_LATENTS = ATTR_UNET_LATENTS.cpu().numpy()[0].flatten()
 ##### UNET SOLVER NODE ########
 
 
@@ -138,9 +149,10 @@ import torch
 vae = AutoencoderKL.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="vae", local_files_only=True)
 vae.to(ATTR_TORCH_DEVICE)
 
-ATTR_UNET_LATENTS = 1 / 0.18215 * ATTR_UNET_LATENTS
+__LATENTS = torch.from_numpy(numpy.array([ATTR_UNET_OUT_LATENTS.reshape(4, 64, 64)])).to(ATTR_TORCH_DEVICE)
+__LATENTS = 1 / 0.18215 * __LATENTS
 with torch.no_grad():
-    image = vae.decode(ATTR_UNET_LATENTS).sample
+    image = vae.decode(__LATENTS).sample
 ######## IMAGE DECODER NODE ########
 
 
