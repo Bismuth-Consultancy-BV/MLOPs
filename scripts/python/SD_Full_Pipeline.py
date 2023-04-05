@@ -8,7 +8,7 @@ ATTR_PROMPT = ["a photograph of an astronaut riding a horse"]
 from sdpipeline import tokenizer
 ATTR_INPUT_IDS = tokenizer.run(ATTR_PROMPT, model="openai/clip-vit-large-patch14", local_cache_only=True)
 
-
+# DONE
 ###### EMBEDDER NODE  ######
 from sdpipeline import embedder
 ATTR_TORCH_DEVICE = "cuda"
@@ -20,7 +20,7 @@ ATTR_SEED = 44                                 # Seed
 ATTR_IMAGE_HEIGHT = 512                        # default ATTR_IMAGE_HEIGHT of Stable Diffusion
 ATTR_IMAGE_WIDTH = 512                         # default ATTR_IMAGE_WIDTH of Stable Diffusion
 ATTR_TORCH_DEVICE = "cuda"
-ATTR_LATENTS = latent_noise.run(ATTR_PROMPT, ATTR_SEED, ATTR_IMAGE_WIDTH, ATTR_IMAGE_HEIGHT, ATTR_TORCH_DEVICE)
+ATTR_LATENTS = latent_noise.run(ATTR_SEED, ATTR_IMAGE_WIDTH, ATTR_IMAGE_HEIGHT, ATTR_TORCH_DEVICE)
 
 ###### SCHEDULER NODE #######
 from sdpipeline import scheduler
