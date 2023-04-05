@@ -3,14 +3,16 @@
 ATTR_PROMPT = ["a photograph of an astronaut riding a horse"]
 ######## TEXT PROMPT NODE ########
 
+# DONE
 ###### TOKENIZER NODE ######
 from sdpipeline import tokenizer
 ATTR_INPUT_IDS = tokenizer.run(ATTR_PROMPT, model="openai/clip-vit-large-patch14", local_cache_only=True)
 
+
 ###### EMBEDDER NODE  ######
 from sdpipeline import embedder
 ATTR_TORCH_DEVICE = "cuda"
-ATTR_EMBEDDINGS = embedder.run(ATTR_PROMPT, ATTR_INPUT_IDS, ATTR_TORCH_DEVICE, model="openai/clip-vit-large-patch14", local_cache_only=True)
+ATTR_EMBEDDINGS = embedder.run(ATTR_INPUT_IDS, ATTR_TORCH_DEVICE, model="openai/clip-vit-large-patch14", local_cache_only=True)
 
 ###### LATENT NOISE NODE  ######
 from sdpipeline import latent_noise
