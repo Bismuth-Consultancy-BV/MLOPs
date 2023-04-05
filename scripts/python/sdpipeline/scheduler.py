@@ -8,8 +8,8 @@ def run(input_latents, torch_device):
 	__LATENTS = torch.from_numpy(numpy.array([input_latents.reshape(4, 64, 64)])).to(torch_device)
 	ATTR_SCHEDULER_LATENTS = __LATENTS * scheduler_object.init_noise_sigma
 	scheduler = {}
-	scheduler["config"] = json.dumps(scheduler_object.config)
+	scheduler["config"] = scheduler_object.config
 	scheduler["type"] = "LMSDiscreteScheduler"
-	scheduler["latents"] = ATTR_SCHEDULER_LATENTS.cpu().numpy()[0].flatten()
+	scheduler["latents"] = ATTR_SCHEDULER_LATENTS.cpu().numpy()[0]
 	return scheduler
 
