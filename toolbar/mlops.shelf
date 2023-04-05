@@ -23,30 +23,30 @@ if not os.path.isdir(FOLDER):
     os.makedirs(FOLDER)
     
     
-# p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# out, err = p.communicate()
-# if err:
-#     raise hou.Error(out.decode())
+p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
 
-# # Installing pip to Houdini
-# p = subprocess.Popen(["hython", PIPINSTALLFILE], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# out, err = p.communicate()
-# if err:
-#     raise hou.Error(out.decode())
+# Installing pip to Houdini
+p = subprocess.Popen(["hython", PIPINSTALLFILE], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
 
 
-# # Installing / Upgrading setuptools because on py3.9 some modules need to be rebuilt
-# p = subprocess.Popen(["hython", "-m", "pip", "install", "--upgrade", PIP_FOLDER, "setuptools"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# out, err = p.communicate()
-# if err:
-#     raise hou.Error(out.decode())
+# Installing / Upgrading setuptools because on py3.9 some modules need to be rebuilt
+p = subprocess.Popen(["hython", "-m", "pip", "install", "--upgrade", PIP_FOLDER, "setuptools"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
     
-#     pip install 
+    pip install 
     
-# p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "torch", "--index-url", "https://download.pytorch.org/whl/cu117"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# out, err = p.communicate()
-# if err:
-#     raise hou.Error(out.decode())
+p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "torch", "--index-url", "https://download.pytorch.org/whl/cu117"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+out, err = p.communicate()
+if err:
+    raise hou.Error(out.decode())
     
     
 # Installing p4python module using pip
