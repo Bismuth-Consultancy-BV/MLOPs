@@ -13,5 +13,5 @@ def run(input_latents, torch_device, model="CompVis/stable-diffusion-v1-4", loca
     __LATENTS = 1 / 0.18215 * __LATENTS
     with torch.no_grad():
         image = vae.decode(__LATENTS).sample
-    return image.cpu().numpy()[0].flatten()
+    return image.cpu().numpy()[0]
     ######## IMAGE DECODER NODE ########

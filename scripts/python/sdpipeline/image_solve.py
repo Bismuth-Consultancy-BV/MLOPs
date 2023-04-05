@@ -19,8 +19,8 @@ def run(iference_steps, input_embeddings, input_scheduler, torch_device, model="
     _text_embedding.requires_grad_()
 
     scheduler_config = input_scheduler["config"]
-    scheduler_type = input_scheduler["type"]
-    __scheduler = LMSDiscreteScheduler.from_config(json.loads(scheduler_config))
+    #scheduler_type = input_scheduler["type"]
+    __scheduler = LMSDiscreteScheduler.from_config(scheduler_config)
     __scheduler.set_timesteps(iference_steps)
     for t in tqdm(__scheduler.timesteps):
         # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
@@ -39,6 +39,6 @@ def run(iference_steps, input_embeddings, input_scheduler, torch_device, model="
         # compute the previous noisy sample x_t -> x_t-1
         ATTR_UNET_LATENTS = __scheduler.step(noise_pred, t, ATTR_UNET_LATENTS).prev_sample
 
-    ATTR_UNET_OUT_LATENTS = ATTR_UNET_LATENTS.cpu().numpy()[0].flatten()
+    ATTR_UNET_OUT_LATENTS = ATTR_UNET_LATENTS.cpu().numpy()[0]
     return ATTR_UNET_OUT_LATENTS
     ##### UNET SOLVER NODE ########
