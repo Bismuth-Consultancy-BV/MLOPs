@@ -9,7 +9,7 @@ def run(input_latents, torch_device, model="CompVis/stable-diffusion-v1-4", loca
     vae = AutoencoderKL.from_pretrained(model, subfolder="vae", local_files_only=local_cache_only)
     vae.to(torch_device)
 
-    __LATENTS = torch.from_numpy(numpy.array([input_latents.reshape(4, 64, 64)])).to(torch_device)
+    __LATENTS = torch.from_numpy(numpy.array([input_latents.reshape(4, 96, 96)])).to(torch_device)
     __LATENTS = 1 / 0.18215 * __LATENTS
     with torch.no_grad():
         image = vae.decode(__LATENTS).sample

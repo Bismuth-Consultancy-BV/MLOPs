@@ -11,12 +11,12 @@ def run(iference_steps, input_embeddings, input_scheduler, torch_device, model="
     unet.to(torch_device)
 
     guidance_scale = 7.5                # Scale for classifier-free guidance
-    ATTR_UNET_LATENTS = torch.from_numpy(numpy.array([input_scheduler["latents"].reshape(4, 64, 64)])).to(torch_device) 
+    ATTR_UNET_LATENTS = torch.from_numpy(numpy.array([input_scheduler["latents"].reshape(4, 96, 96)])).to(torch_device) 
     _unconditional_embedding = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     _conditional_embedding = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
 
     _text_embedding = torch.from_numpy(numpy.array([_unconditional_embedding, _conditional_embedding])).to(torch_device)
-    _text_embedding.requires_grad_()
+    #_text_embedding.requires_grad_()
 
     scheduler_config = input_scheduler["config"]
     #scheduler_type = input_scheduler["type"]
