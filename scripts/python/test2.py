@@ -1,6 +1,3 @@
-import os
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:400"
-
 import torch, logging
 
 ## disable warnings
@@ -16,7 +13,6 @@ from fastdownload import FastDownload
 import numpy as np
 from tqdm.auto import tqdm
 import matplotlib.pyplot as plt
-# %matplotlib inline
 from IPython.display import display
 import shutil
 import os
@@ -25,38 +21,32 @@ import os
 from IPython.display import HTML
 from base64 import b64encode
 
-
-
-
+STEPS = 20
 
 ## Import the CLIP artifacts 
 from transformers import CLIPTextModel, CLIPTokenizer
 from diffusers import AutoencoderKL, UNet2DConditionModel, LMSDiscreteScheduler
 
-model = r"C:\BISMUTH\Work\Projects\Monaco\checkpoints\SD_2_1\stable-diffusion-2-1"
-r"C:\Users\Paul\OneDrive - Bismuth Consultancy B.V\Desktop\EPC_Profile.jpg")
-
-
 ## Initiating tokenizer and encoder.
-tokenizer = CLIPTokenizer.from_pretrained(model, local_files_only=True, subfolder="tokenizer", torch_dtype=torch.float16)
-text_encoder = CLIPTextModel.from_pretrained(model, local_files_only=True, subfolder="text_encoder", torch_dtype=torch.float16).to("cuda")
+tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=torch.float16)
+text_encoder = CLIPTextModel.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=torch.float16).to("cuda")
 
 ## Initiating the VAE
-vae = AutoencoderKL.from_pretrained(model, local_files_only=True, subfolder="vae", torch_dtype=torch.float16).to("cuda")
+vae = AutoencoderKL.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="vae", torch_dtype=torch.float16).to("cuda")
 
 ## Initializing a scheduler and Setting number of sampling steps
 scheduler = LMSDiscreteScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", num_train_timesteps=1000)
-scheduler.set_timesteps(50)
+scheduler.set_timesteps(STEPS)
 
 ## Initializing the U-Net model
-unet = UNet2DConditionModel.from_pretrained(model, local_files_only=True, subfolder="unet", torch_dtype=torch.float16).to("cuda")
+unet = UNet2DConditionModel.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="unet", torch_dtype=torch.float16).to("cuda")
 
 ## Helper functions
 def load_image(p):
     '''
     Function to load images from a defined path
     '''
-    return Image.open(p).convert('RGB').resize((768,768))
+    return Image.open(p).convert('RGB').resize((512,512))
 
 def pil_to_latents(image):
     '''
@@ -74,8 +64,6 @@ def latents_to_pil(latents):
     latents = (1 / 0.18215) * latents
     with torch.no_grad():
         image = vae.decode(latents).sample
-
-
     image = (image / 2 + 0.5).clamp(0, 1)
     image = image.detach().cpu().permute(0, 2, 3, 1).numpy()
     images = (image * 255).round().astype("uint8")
@@ -91,7 +79,7 @@ def text_enc(prompts, maxlen=None):
     return text_encoder(inp.input_ids.to("cuda"))[0].half()
 
 
-def prompt_2_img_i2i(prompt, init_img, neg_prompts=None, g=7.5, seed=100, strength =0.8, steps=10, dim=768, save_int=False):
+def prompt_2_img_i2i(prompt, init_img, neg_prompts=None, g=7.5, seed=44, strength =0.6, steps=STEPS, dim=512, save_int=False):
     """
     Diffusion process to convert prompt to image
     """
@@ -103,8 +91,7 @@ def prompt_2_img_i2i(prompt, init_img, neg_prompts=None, g=7.5, seed=100, streng
     # Adding an unconditional prompt , helps in the generation process
     else: uncond =  text_enc(neg_prompts, text.shape[1])
     emb = torch.cat([uncond, text])
-
-
+    
     # Setting the seed
     if seed: torch.manual_seed(seed)
     
@@ -117,11 +104,9 @@ def prompt_2_img_i2i(prompt, init_img, neg_prompts=None, g=7.5, seed=100, streng
     # Figuring initial time step based on strength
     init_timestep = int(steps * strength) 
     timesteps = scheduler.timesteps[-init_timestep]
-    print(timesteps)
     timesteps = torch.tensor([timesteps], device="cuda")
     
     # Adding noise to the latents 
-    print(init_latents.shape)
     noise = torch.randn(init_latents.shape, generator=None, device="cuda", dtype=init_latents.dtype)
     init_latents = scheduler.add_noise(init_latents, noise, timesteps)
     latents = init_latents
@@ -149,15 +134,10 @@ def prompt_2_img_i2i(prompt, init_img, neg_prompts=None, g=7.5, seed=100, streng
             if not os.path.exists(f'./steps'):
                 os.mkdir(f'./steps')
             latents_to_pil(latents)[0].save(f'steps/{i:04}.jpeg')
-
-    # del scheduler
             
     # Returning the latent representation to output an image of 3x512x512
-    del text
-    del timesteps
-    
     return latents_to_pil(latents)
 
-
-image = prompt_2_img_i2i(["man with beard"], load_image(IMAGE)
-image[0].show()
+IMG = r"C:\Users\Paul\OneDrive - Bismuth Consultancy B.V\Desktop\EPC_Profile.jpg"
+images = prompt_2_img_i2i(["man with beard"], load_image(IMG))
+images[0].show()
