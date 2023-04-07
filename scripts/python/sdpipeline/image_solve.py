@@ -28,10 +28,7 @@ def run(iference_steps, input_embeddings, cfg_scale, input_scheduler, torch_devi
     if init_timesteps >= 0:
         timesteps = __scheduler.timesteps[init_timesteps:].to(torch_device)
 
-   # print(tqdm(timesteps))
-
     for t in tqdm(timesteps):
-        print(t)
         # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
         latent_model_input = torch.cat([ATTR_UNET_LATENTS] * 2)
         latent_model_input = __scheduler.scale_model_input(latent_model_input, timestep=t)

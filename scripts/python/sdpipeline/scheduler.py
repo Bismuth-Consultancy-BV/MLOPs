@@ -18,6 +18,7 @@ def run(input_latents, guided_latents, guiding_strength, guiding_seed, inference
         __GUIDEDLATENTS = torch.from_numpy(numpy.array([guided_latents.reshape(4, 96, 96)])).to(torch_device)
         # Figuring initial time step based on strength
         init_timestep = int(inference_steps * guiding_strength) 
+
         timesteps = scheduler_object.timesteps[-init_timestep]
         timesteps = torch.tensor([timesteps], device=torch_device)
         
