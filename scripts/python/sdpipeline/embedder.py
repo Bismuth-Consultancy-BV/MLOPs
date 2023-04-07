@@ -6,7 +6,13 @@ import logging
 logging.disable(logging.WARNING)  
 
 def run(input_ids_positive, input_ids_negative, torch_device, model="openai/clip-vit-large-patch14", local_cache_only=True):
-    text_encoder = CLIPTextModel.from_pretrained(model, subfolder="text_encoder", local_files_only=local_cache_only)
+    try:
+        text_encoder = CLIPTextModel.from_pretrained(model, subfolder="text_encoder", local_files_only=local_cache_only)
+    except OSError as error:
+        text_encoder = CLIPTextModel.from_pretrained(model, local_files_only=local_cache_only)
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+
     text_encoder.to(torch_device)
     
     with torch.no_grad():
