@@ -5,13 +5,13 @@ import torch
 import json
 import numpy
 
-def run(iference_steps, input_embeddings, cfg_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
+def run(iference_steps, latent_dimension, input_embeddings, cfg_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
 
     unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only)
     unet.to(torch_device)
 
     guidance_scale = cfg_scale                # Scale for classifier-free guidance
-    ATTR_UNET_LATENTS = torch.from_numpy(numpy.array([input_scheduler["latents"].reshape(4, 96, 96)])).to(torch_device) 
+    ATTR_UNET_LATENTS = torch.from_numpy(numpy.array([input_scheduler["latents"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
     _unconditional_embedding = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     _conditional_embedding = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     _text_embedding = torch.from_numpy(numpy.array([_unconditional_embedding, _conditional_embedding])).to(torch_device)
