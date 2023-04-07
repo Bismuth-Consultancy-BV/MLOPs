@@ -1,6 +1,6 @@
 from diffusers import UNet2DConditionModel
-from diffusers import EulerDiscreteScheduler,LMSDiscreteScheduler
 from tqdm.auto import tqdm
+from . import schedulers_lookup
 import torch
 import json
 import numpy
@@ -18,9 +18,11 @@ def run(iference_steps, latent_dimension, input_embeddings, cfg_scale, input_sch
 
     scheduler_config = input_scheduler["config"]
     init_timesteps = scheduler_config["init_timesteps"]
+    scheduler_type = scheduler_config["type"]
     del scheduler_config["init_timesteps"]
-    #scheduler_type = input_scheduler["type"]
-    __scheduler = LMSDiscreteScheduler.from_config(scheduler_config)
+    del scheduler_config["type"]
+
+    __scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(scheduler_config)
     __scheduler.set_timesteps(iference_steps)
 
     
@@ -48,3 +50,4 @@ def run(iference_steps, latent_dimension, input_embeddings, cfg_scale, input_sch
     ATTR_UNET_OUT_LATENTS = ATTR_UNET_LATENTS.cpu().numpy()[0]
     return ATTR_UNET_OUT_LATENTS
     ##### UNET SOLVER NODE ########
+

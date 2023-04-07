@@ -1,13 +1,13 @@
-from diffusers import LMSDiscreteScheduler
+from . import schedulers_lookup
 import json
 import torch
 import numpy
 
-def run(input_latents, latent_dimension, guided_latents, guiding_strength, guiding_seed, inference_steps, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
+def run(input_latents, latent_dimension, guided_latents, guiding_strength, guiding_seed, inference_steps, torch_device, scheduler_model, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
     try:
-        scheduler_object = LMSDiscreteScheduler.from_pretrained(model, subfolder="scheduler", local_files_only=local_cache_only)
+        scheduler_object = schedulers_lookup.schedulers[scheduler_model].from_pretrained(model, subfolder="scheduler", local_files_only=local_cache_only)
     except OSError:
-        scheduler_object = LMSDiscreteScheduler.from_pretrained(model, local_files_only=local_cache_only)
+        scheduler_object = schedulers_lookup.schedulers[scheduler_model].from_pretrained(model, local_files_only=local_cache_only)
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
 
@@ -33,7 +33,8 @@ def run(input_latents, latent_dimension, guided_latents, guiding_strength, guidi
 
     config = scheduler_object.config
     config["init_timesteps"] = t_start
+    config["type"] = scheduler_model
     scheduler["config"] = config
-    scheduler["type"] = "LMSDiscreteScheduler"
+    # scheduler["type"] = scheduler_model
     scheduler["latents"] = ATTR_SCHEDULER_LATENTS.cpu().numpy()[0]
     return scheduler
