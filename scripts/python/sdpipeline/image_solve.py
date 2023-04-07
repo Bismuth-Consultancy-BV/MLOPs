@@ -17,13 +17,23 @@ def run(iference_steps, input_embeddings, cfg_scale, input_scheduler, torch_devi
     _text_embedding = torch.from_numpy(numpy.array([_unconditional_embedding, _conditional_embedding])).to(torch_device)
 
     scheduler_config = input_scheduler["config"]
+    init_timesteps = scheduler_config["init_timesteps"]
+    del scheduler_config["init_timesteps"]
     #scheduler_type = input_scheduler["type"]
     __scheduler = LMSDiscreteScheduler.from_config(scheduler_config)
     __scheduler.set_timesteps(iference_steps)
-    for t in tqdm(__scheduler.timesteps):
+
+    
+    timesteps = __scheduler.timesteps
+    if init_timesteps >= 0:
+        timesteps = __scheduler.timesteps[init_timesteps:].to(torch_device)
+
+   # print(tqdm(timesteps))
+
+    for t in tqdm(timesteps):
+        print(t)
         # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
         latent_model_input = torch.cat([ATTR_UNET_LATENTS] * 2)
-
         latent_model_input = __scheduler.scale_model_input(latent_model_input, timestep=t)
 
         # predict the noise residual
@@ -36,6 +46,7 @@ def run(iference_steps, input_embeddings, cfg_scale, input_scheduler, torch_devi
 
         # compute the previous noisy sample x_t -> x_t-1
         ATTR_UNET_LATENTS = __scheduler.step(noise_pred, t, ATTR_UNET_LATENTS).prev_sample
+    
 
     ATTR_UNET_OUT_LATENTS = ATTR_UNET_LATENTS.cpu().numpy()[0]
     return ATTR_UNET_OUT_LATENTS
