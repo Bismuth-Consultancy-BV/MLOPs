@@ -14,7 +14,15 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
     if attention_slicing:
         unet.set_attention_slice("auto")
 
-    ATTR_UNET_LATENTS = torch.from_numpy(numpy.array([input_scheduler["latents"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+    init_latents = torch.from_numpy(numpy.array([input_scheduler["latents"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+    init_latents_orig = init_latents #TODO: Needs to be clean image latents
+
+    noise = torch.randn(init_latents.shape, generator=None, device=torch_device)
+
+    masking = len(mask_latents) > 0
+    if masking:
+        mask = torch.from_numpy(numpy.array([mask_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+
     text_embeddings = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     
@@ -34,7 +42,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
     if init_timesteps >= 0:
         timesteps = scheduler.timesteps[init_timesteps:].to(torch_device)
 
-    latents = ATTR_UNET_LATENTS
+    latents = init_latents
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
         for i, t in enumerate(tqdm(timesteps, disable=True)):
             # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
