@@ -23,9 +23,6 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
 
     if attention_slicing:
         unet.set_attention_slice("auto")
-
-    
-
     
     guided = t_start >= 0
     masking = len(mask_latents) > 0 and guided
@@ -37,8 +34,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
         
     noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
 
-
-    if not guided:#PROMPT_ONLY:
+    if not guided:
         # Only text prompt, starting with just noise latents
         init_latents = noise 
         init_latents = init_latents * scheduler.init_noise_sigma
@@ -46,6 +42,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
         # Fed by guided image, so starting with image latents + noise
         init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
     elif guided and masking:
+        # Fed by guided image, so starting with image latents + noise, but only for masked regions
         init_latents_orig = torch.from_numpy(numpy.array([input_scheduler["image_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
         init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
     else:
@@ -55,8 +52,6 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     text_embeddings = torch.from_numpy(numpy.array([uncond_embeddings, text_embeddings])).to(torch_device)
 
-    
-    
     if guided:
         timesteps = scheduler.timesteps[t_start:].to(torch_device)
 
@@ -81,7 +76,6 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
             if masking:
                 init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
                 latents = (init_latents_proper * mask) + (latents * (1 - mask)) 
-                                 
 
             operation.updateProgress(i/len(timesteps))
     
@@ -90,4 +84,3 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
 
     ATTR_UNET_OUT_LATENTS = latents.cpu().numpy()[0]
     return ATTR_UNET_OUT_LATENTS
-    ##### UNET SOLVER NODE ########
