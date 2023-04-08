@@ -68,8 +68,6 @@ class StableDiffusionUnifiedPipeline(DiffusionPipeline):
         init_image: Optional[PIL.Image.Image] = None,
         mask_image: Optional[PIL.Image.Image] = None,
         strength: float = 0.8,
-        height: Optional[int] = 512,
-        width: Optional[int] = 512,
         num_inference_steps: Optional[int] = 20,
         guidance_scale: Optional[float] = 7.5,
         generator: Optional[torch.Generator] = None,
