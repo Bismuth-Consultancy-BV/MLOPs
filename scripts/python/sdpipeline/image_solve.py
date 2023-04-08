@@ -6,9 +6,14 @@ import json
 import numpy
 import hou
 
-def run(iference_steps, latent_dimension, input_embeddings, cfg_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
+def run(iference_steps, latent_dimension, input_embeddings, attention_slicing, cfg_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
 
     unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only)
+    
+    if attention_slicing:
+        unet.set_attention_slice("auto")
+
+
     unet.to(torch_device)
 
     guidance_scale = cfg_scale                # Scale for classifier-free guidance
