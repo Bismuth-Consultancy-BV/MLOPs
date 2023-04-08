@@ -29,16 +29,10 @@ def run(input_latents, latent_dimension, guided_latents, guiding_strength, guidi
         
         ATTR_SCHEDULER_LATENTS = scheduler_object.add_noise(__GUIDEDLATENTS, __LATENTS, timesteps)
         scheduler["guided_latents"] = ATTR_SCHEDULER_LATENTS.cpu().numpy()[0]
-        #print(ATTR_SCHEDULER_LATENTS.shape)
         t_start = max(inference_steps - init_timestep, 0)
 
     config = scheduler_object.config
     config["init_timesteps"] = t_start
     config["type"] = scheduler_model
     scheduler["config"] = config
-    # scheduler["type"] = scheduler_model
-    #scheduler["prompt_latents"] = (__LATENTS * scheduler_object.init_noise_sigma).cpu().numpy()[0]
-    #scheduler["noise_latents"] = __LATENTS # Clean Noise
-    #scheduler["guided_latents"] = ATTR_SCHEDULER_LATENTS.cpu().numpy()[0]
-    #scheduler["image_latents"] = guided_latents
     return scheduler
