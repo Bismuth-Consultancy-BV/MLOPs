@@ -21,17 +21,14 @@ To install the plugin for the first time, follow these steps:
 1. Clone this repository and make note of the directory you have cloned it to.
 2. Copy the `MLOPs.json` file found in the repository root, and paste it in the $HOUDINI_USER_PREF_DIR/packages/ folder.
 3. Edit the `MLOPs.json` file you just pasted, and modify the `$MLOPS` path found inside. Set the path to where you cloned the repository to in step one.
-4. Launch Houdini and open the `MLOPs` shelf. Click the `Install` shelf button. Restart Houdini once complete. If you are experiencing any issues in this step please see the troubleshooting section. (CONTACT US!)
-
-# Downloading Stable Diffusion Models:
-
-1. Create a folder where you want the model to be stored. make sure to have enough free space. Models can be huge.
-2. Make sure you have git installed.
-3. Open a command prompt, go to the subfolder you just created.
+# Download your preferred Stable Diffusion model, e.g.:
+4. Create a folder where you want the model to be stored. make sure to have enough free space. Models can be huge.
+5. Make sure you have git installed.
+6. Open a command prompt, go to the subfolder you just created.
 now enter these commands:
-4. git lfs
-5. git clone "https://huggingface.co/stabilityai/stable-diffusion-2-1"
-6. Wait. Grab a coffee. Watch "Das Boot". Plant a tree...
-7. Once downloaded start Houdini, and in MLOPs nodes set Model Cache to Disk and then select the folder you just cloned
-8. Yeehaw!
+7. git lfs
+8. git clone "https://huggingface.co/stabilityai/stable-diffusion-2-1"
+9. Wait. Grab a coffee. Watch "Das Boot". Plant a tree...
+10. Launch Houdini and open the `MLOPs` shelf. Click the `Install` shelf button. Restart Houdini once complete. If you are experiencing any issues in this step please see the troubleshooting section. (CONTACT US!)
+11. In the MLOPs nodes, set Model Cache to Disk and then select the SD model's folder you just cloned
 
