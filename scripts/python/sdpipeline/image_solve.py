@@ -7,6 +7,16 @@ import numpy
 import hou
 
 def run(inference_steps, latent_dimension, input_embeddings, mask_latents, attention_slicing, guidance_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
+    scheduler_config = input_scheduler["config"]
+    t_start = scheduler_config["init_timesteps"]
+
+
+    scheduler_type = scheduler_config["type"]
+    del scheduler_config["init_timesteps"]
+    del scheduler_config["type"]
+    scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(scheduler_config)
+    scheduler.set_timesteps(inference_steps)
+    timesteps = scheduler.timesteps
 
     unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only)
     unet.to(torch_device)
@@ -14,33 +24,36 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
     if attention_slicing:
         unet.set_attention_slice("auto")
 
-    init_latents = torch.from_numpy(numpy.array([input_scheduler["latents"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
-    init_latents_orig = init_latents #TODO: Needs to be clean image latents
+    
 
-    noise = torch.randn(init_latents.shape, generator=None, device=torch_device)
-
-    masking = len(mask_latents) > 0
+    masking = True #len(mask_latents) > 0
     if masking:
         mask = torch.from_numpy(numpy.array([mask_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+        
+    noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+    mode = "mask"
 
+
+    if mode == "prompt":#PROMPT_ONLY:
+        # Only text prompt, starting with just noise latents
+        init_latents = noise 
+        init_latents = init_latents * scheduler.init_noise_sigma
+    elif mode == "guided":# if GUIDED_ONLY:
+        # Fed by guided image, so starting with image latents + noise
+        init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+    elif mode == "mask":
+        init_latents_orig = torch.from_numpy(numpy.array([input_scheduler["image_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+        init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+
+    
     text_embeddings = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
-    
     text_embeddings = torch.from_numpy(numpy.array([uncond_embeddings, text_embeddings])).to(torch_device)
 
-    scheduler_config = input_scheduler["config"]
-    init_timesteps = scheduler_config["init_timesteps"]
-    scheduler_type = scheduler_config["type"]
-    del scheduler_config["init_timesteps"]
-    del scheduler_config["type"]
-
-    scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(scheduler_config)
-    scheduler.set_timesteps(inference_steps)
-
     
-    timesteps = scheduler.timesteps
-    if init_timesteps >= 0:
-        timesteps = scheduler.timesteps[init_timesteps:].to(torch_device)
+    
+    if t_start >= 0:
+        timesteps = scheduler.timesteps[t_start:].to(torch_device)
 
     latents = init_latents
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
@@ -59,6 +72,11 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
 
             # compute the previous noisy sample x_t -> x_t-1
             latents = scheduler.step(noise_pred, t, latents).prev_sample
+            
+            if masking:
+                init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
+                latents = (init_latents_proper * mask) + (latents * (1 - mask))                
+
             operation.updateProgress(i/len(timesteps))
     
 
