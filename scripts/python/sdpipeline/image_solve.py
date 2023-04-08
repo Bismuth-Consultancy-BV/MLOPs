@@ -26,25 +26,30 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
 
     
 
-    masking = True #len(mask_latents) > 0
+    
+    guided = t_start >= 0
+    masking = len(mask_latents) > 0 and guided
+
+    mask = 0
+    init_latents_orig = 0
     if masking:
         mask = torch.from_numpy(numpy.array([mask_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
         
     noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
-    mode = "mask"
 
 
-    if mode == "prompt":#PROMPT_ONLY:
+    if not guided:#PROMPT_ONLY:
         # Only text prompt, starting with just noise latents
         init_latents = noise 
         init_latents = init_latents * scheduler.init_noise_sigma
-    elif mode == "guided":# if GUIDED_ONLY:
+    elif guided and not masking:# if GUIDED_ONLY:
         # Fed by guided image, so starting with image latents + noise
         init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
-    elif mode == "mask":
+    elif guided and masking:
         init_latents_orig = torch.from_numpy(numpy.array([input_scheduler["image_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
         init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
-
+    else:
+        raise hou.nodeWarning("Incorrect input data! Please provide guide image, or guide image and mask!")
     
     text_embeddings = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
@@ -52,7 +57,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
 
     
     
-    if t_start >= 0:
+    if guided:
         timesteps = scheduler.timesteps[t_start:].to(torch_device)
 
     latents = init_latents
@@ -75,10 +80,13 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
             
             if masking:
                 init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
-                latents = (init_latents_proper * mask) + (latents * (1 - mask))                
+                latents = (init_latents_proper * mask) + (latents * (1 - mask)) 
+                                 
 
             operation.updateProgress(i/len(timesteps))
     
+    if guided and masking:
+        latents = init_latents_orig * mask + latents * (1-mask)
 
     ATTR_UNET_OUT_LATENTS = latents.cpu().numpy()[0]
     return ATTR_UNET_OUT_LATENTS
