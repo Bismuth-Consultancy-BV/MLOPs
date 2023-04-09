@@ -75,12 +75,12 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
             
             if masking:
                 init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
-                latents = (init_latents_proper * mask) + (latents * (1 - mask)) 
+                latents = (init_latents_proper * (1.0-mask)) + (latents * mask) 
 
             operation.updateProgress(i/len(timesteps))
     
     if guided and masking:
-        latents = init_latents_orig * mask + latents * (1-mask)
+        latents = (init_latents_orig * (1.0-mask)) + (latents * mask)
 
     ATTR_UNET_OUT_LATENTS = latents.cpu().numpy()[0]
     return ATTR_UNET_OUT_LATENTS
