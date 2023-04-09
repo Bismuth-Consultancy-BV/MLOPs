@@ -8,8 +8,8 @@ ATTR_MODEL = r"C:\BISMUTH\Work\Projects\Monaco\checkpoints\SD_2_1\stable-diffusi
 # DONE
 ###### TOKENIZER NODE ######
 from sdpipeline import tokenizer
-ATTR_INPUT_IDS = tokenizer.run(ATTR_PROMPT, model=ATTR_MODEL, local_cache_only=True)
-ATTR_INPUT_IDS_NEG = tokenizer.run("", model=ATTR_MODEL, local_cache_only=True)
+ATTR_INPUT_IDS = tokenizer.run(ATTR_PROMPT, ATTR_MODEL, local_cache_only=True)
+ATTR_INPUT_IDS_NEG = tokenizer.run("", ATTR_MODEL, local_cache_only=True)
 
 # DONE
 ###### EMBEDDER NODE  ######
