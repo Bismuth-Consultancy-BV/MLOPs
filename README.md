@@ -32,3 +32,7 @@ now enter these commands:
 10. Launch Houdini and open the `MLOPs` shelf. Click the `Install` shelf button. Restart Houdini once complete. If you are experiencing any issues in this step please see the troubleshooting section. (CONTACT US!)
 11. In the MLOPs nodes, set Model Cache to Disk and then select the SD model's folder you just cloned
 
+#Notes
+
+- In order for Huggingface model caching to work, you need to run Houdini with admin rights.
+
