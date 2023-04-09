@@ -109,7 +109,7 @@ class StableDiffusionUnifiedPipeline(DiffusionPipeline):
         # get prompt text embeddings
         text_input = self.tokenizer(prompt, padding="max_length", max_length=self.tokenizer.model_max_length, truncation=True, return_tensors="pt",)
         text_embeddings = self.text_encoder(text_input.input_ids.to(self.device))[0]
-        uncond_input = self.tokenizer([""] * 1, padding="max_length", max_length=text_input.input_ids.shape[-1], return_tensors="pt")
+        uncond_input = self.tokenizer([""] * batch_size, padding="max_length", max_length=text_input.input_ids.shape[-1], return_tensors="pt")
         uncond_embeddings = self.text_encoder(uncond_input.input_ids.to(self.device))[0]
         
         text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
