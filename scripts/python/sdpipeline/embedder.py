@@ -1,19 +1,19 @@
-###### EMBEDDER NODE  ######
+import logging
+import numpy
 from transformers import CLIPTextModel
 import torch
-import numpy
-import logging
-logging.disable(logging.WARNING)  
+
+logging.disable(logging.WARNING)
 
 def run(input_ids_positive, input_ids_negative, torch_device, model, local_cache_only=True):
     try:
         text_encoder = CLIPTextModel.from_pretrained(model, subfolder="text_encoder", local_files_only=local_cache_only)
-    except OSError as error:
+    except OSError:
         text_encoder = CLIPTextModel.from_pretrained(model, local_files_only=local_cache_only)
     except Exception as err:
-        print(f"Unexpected {err=}, {type(err)=}")
+        print(f"Unexpected {err}, {type(err)}")
     text_encoder.to(torch_device)
-    
+
     with torch.no_grad():
         input_ids_positive = torch.from_numpy(numpy.array([input_ids_positive], dtype=numpy.int64))
         positive_text_embeddings = text_encoder(input_ids_positive.to(torch_device))[0]
