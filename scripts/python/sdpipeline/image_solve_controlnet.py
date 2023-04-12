@@ -19,7 +19,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
     #scheduler.to(torch_device)
     timesteps = scheduler.timesteps
 
-    unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only)
+    unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only, torch_dtype=torch.float16)
     unet.to(torch_device)
 
     if attention_slicing:
@@ -68,12 +68,12 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
         width = geo.attribValue("width")
         height = geo.attribValue("height")
         controlnet_conditioning_image = torch.from_numpy(numpy.array([floats.reshape(3, width, height)])).to(device=torch_device)
-        controlnet_conditioning_image = controlnet_conditioning_image.half()
+        controlnet_conditioning_image = controlnet_conditioning_image.to(torch.float16)
     
 
 
 
-    controlnet = ControlNetModel.from_pretrained(controlnetmodel, torch_dtype=torch.float16, local_files_only=local_cache_only)
+    controlnet = ControlNetModel.from_pretrained(controlnetmodel, local_files_only=local_cache_only, torch_dtype=torch.float16)
     controlnet.to(torch_device)
     controlnet_conditioning_scale = 1.0
     # CONTROLNET #
@@ -85,7 +85,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
 
     timesteps = scheduler.timesteps[t_start:].to(torch_device)
 
-    latents = init_latents.half()
+    latents = init_latents
     #print(latents)
 
     #, mask, masked_image
@@ -96,7 +96,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
         for i, t in enumerate(tqdm(timesteps, disable=True)):
             # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
             latent_model_input = torch.cat([latents] * 2)
-            latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t)
+            latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t).to(torch.float16)
             
             # print(latent_model_input.shape)
             # print(mask.shape)
@@ -105,10 +105,14 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
 
 
             # CONTROLNET
-            inpainting_latent_model_input = torch.cat([latent_model_input, mask, masked_image], dim=1).half()
+            inpainting_latent_model_input = torch.cat([latent_model_input, mask, masked_image], dim=1).to(torch.float16)
+            # print(latent_model_input)
+            # print(t.to(torch.float16))
+            # print(text_embeddings)
+            # print(controlnet_conditioning_image)
             # print(inpainting_latent_model_input.shape)
-            down_block_res_samples, mid_block_res_sample = controlnet(latent_model_input, t, encoder_hidden_states=text_embeddings, controlnet_cond=controlnet_conditioning_image, return_dict=False,)
-            down_block_res_samples = [down_block_res_sample * controlnet_conditioning_scale for down_block_res_sample in down_block_res_samples]
+            down_block_res_samples, mid_block_res_sample = controlnet(latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, controlnet_cond=controlnet_conditioning_image, return_dict=False,)
+            down_block_res_samples = [(down_block_res_sample * controlnet_conditioning_scale).to(torch.float16) for down_block_res_sample in down_block_res_samples]
             mid_block_res_sample *= controlnet_conditioning_scale
             #predict the noise residual
             # print(text_embeddings.shape)
@@ -117,7 +121,14 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
             #print("___")
 
             #print(mid_block_res_sample)
-            noise_pred = unet(inpainting_latent_model_input, t, encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
+            # print(inpainting_latent_model_input)
+            # print(t.to(torch.float16))
+            # print(text_embeddings)
+            # print(down_block_res_samples)
+            # print(mid_block_res_sample)
+
+            with torch.no_grad():
+                noise_pred = unet(inpainting_latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
             # CONTROLNET
 
 
@@ -138,4 +149,5 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
     # #     latents = (init_latents_orig * (1.0-mask)) + (latents * mask)
 
     latents = latents.cpu().numpy()[0]
+    
     return latents
