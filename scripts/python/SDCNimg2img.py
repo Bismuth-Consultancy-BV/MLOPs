@@ -23,95 +23,6 @@ from diffusers.utils import (
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
-EXAMPLE_DOC_STRING = """
-    Examples:
-        ```py
-        >>> import numpy as np
-        >>> import torch
-        >>> from PIL import Image
-        >>> from stable_diffusion_controlnet_inpaint_img2img import StableDiffusionControlNetInpaintImg2ImgPipeline
-        >>> from transformers import AutoImageProcessor, UperNetForSemanticSegmentation
-        >>> from diffusers import ControlNetModel, UniPCMultistepScheduler
-        >>> from diffusers.utils import load_image
-        >>> def ade_palette():
-                return [[120, 120, 120], [180, 120, 120], [6, 230, 230], [80, 50, 50],
-                        [4, 200, 3], [120, 120, 80], [140, 140, 140], [204, 5, 255],
-                        [230, 230, 230], [4, 250, 7], [224, 5, 255], [235, 255, 7],
-                        [150, 5, 61], [120, 120, 70], [8, 255, 51], [255, 6, 82],
-                        [143, 255, 140], [204, 255, 4], [255, 51, 7], [204, 70, 3],
-                        [0, 102, 200], [61, 230, 250], [255, 6, 51], [11, 102, 255],
-                        [255, 7, 71], [255, 9, 224], [9, 7, 230], [220, 220, 220],
-                        [255, 9, 92], [112, 9, 255], [8, 255, 214], [7, 255, 224],
-                        [255, 184, 6], [10, 255, 71], [255, 41, 10], [7, 255, 255],
-                        [224, 255, 8], [102, 8, 255], [255, 61, 6], [255, 194, 7],
-                        [255, 122, 8], [0, 255, 20], [255, 8, 41], [255, 5, 153],
-                        [6, 51, 255], [235, 12, 255], [160, 150, 20], [0, 163, 255],
-                        [140, 140, 140], [250, 10, 15], [20, 255, 0], [31, 255, 0],
-                        [255, 31, 0], [255, 224, 0], [153, 255, 0], [0, 0, 255],
-                        [255, 71, 0], [0, 235, 255], [0, 173, 255], [31, 0, 255],
-                        [11, 200, 200], [255, 82, 0], [0, 255, 245], [0, 61, 255],
-                        [0, 255, 112], [0, 255, 133], [255, 0, 0], [255, 163, 0],
-                        [255, 102, 0], [194, 255, 0], [0, 143, 255], [51, 255, 0],
-                        [0, 82, 255], [0, 255, 41], [0, 255, 173], [10, 0, 255],
-                        [173, 255, 0], [0, 255, 153], [255, 92, 0], [255, 0, 255],
-                        [255, 0, 245], [255, 0, 102], [255, 173, 0], [255, 0, 20],
-                        [255, 184, 184], [0, 31, 255], [0, 255, 61], [0, 71, 255],
-                        [255, 0, 204], [0, 255, 194], [0, 255, 82], [0, 10, 255],
-                        [0, 112, 255], [51, 0, 255], [0, 194, 255], [0, 122, 255],
-                        [0, 255, 163], [255, 153, 0], [0, 255, 10], [255, 112, 0],
-                        [143, 255, 0], [82, 0, 255], [163, 255, 0], [255, 235, 0],
-                        [8, 184, 170], [133, 0, 255], [0, 255, 92], [184, 0, 255],
-                        [255, 0, 31], [0, 184, 255], [0, 214, 255], [255, 0, 112],
-                        [92, 255, 0], [0, 224, 255], [112, 224, 255], [70, 184, 160],
-                        [163, 0, 255], [153, 0, 255], [71, 255, 0], [255, 0, 163],
-                        [255, 204, 0], [255, 0, 143], [0, 255, 235], [133, 255, 0],
-                        [255, 0, 235], [245, 0, 255], [255, 0, 122], [255, 245, 0],
-                        [10, 190, 212], [214, 255, 0], [0, 204, 255], [20, 0, 255],
-                        [255, 255, 0], [0, 153, 255], [0, 41, 255], [0, 255, 204],
-                        [41, 0, 255], [41, 255, 0], [173, 0, 255], [0, 245, 255],
-                        [71, 0, 255], [122, 0, 255], [0, 255, 184], [0, 92, 255],
-                        [184, 255, 0], [0, 133, 255], [255, 214, 0], [25, 194, 194],
-                        [102, 255, 0], [92, 0, 255]]
-        >>> image_processor = AutoImageProcessor.from_pretrained("openmmlab/upernet-convnext-small")
-        >>> image_segmentor = UperNetForSemanticSegmentation.from_pretrained("openmmlab/upernet-convnext-small")
-        >>> controlnet = ControlNetModel.from_pretrained("lllyasviel/sd-controlnet-seg", torch_dtype=torch.float16)
-        >>> pipe = StableDiffusionControlNetInpaintImg2ImgPipeline.from_pretrained(
-                "runwayml/stable-diffusion-inpainting", controlnet=controlnet, safety_checker=None, torch_dtype=torch.float16
-            )
-        >>> pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
-        >>> pipe.enable_xformers_memory_efficient_attention()
-        >>> pipe.enable_model_cpu_offload()
-        >>> def image_to_seg(image):
-                pixel_values = image_processor(image, return_tensors="pt").pixel_values
-                with torch.no_grad():
-                    outputs = image_segmentor(pixel_values)
-                seg = image_processor.post_process_semantic_segmentation(outputs, target_sizes=[image.size[::-1]])[0]
-                color_seg = np.zeros((seg.shape[0], seg.shape[1], 3), dtype=np.uint8)  # height, width, 3
-                palette = np.array(ade_palette())
-                for label, color in enumerate(palette):
-                    color_seg[seg == label, :] = color
-                color_seg = color_seg.astype(np.uint8)
-                seg_image = Image.fromarray(color_seg)
-                return seg_image
-        >>> image = load_image(
-                "https://github.com/CompVis/latent-diffusion/raw/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
-            )
-        >>> mask_image = load_image(
-                "https://github.com/CompVis/latent-diffusion/raw/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
-            )
-        >>> controlnet_conditioning_image = image_to_seg(image)
-        >>> image = pipe(
-                "Face of a yellow cat, high resolution, sitting on a park bench",
-                image,
-                mask_image,
-                controlnet_conditioning_image,
-                num_inference_steps=20,
-            ).images[0]
-        >>> image.save("out.png")
-        ```
-"""
-
-
 def prepare_image(image):
     if isinstance(image, torch.Tensor):
         # Batch single image
@@ -119,19 +30,23 @@ def prepare_image(image):
             image = image.unsqueeze(0)
 
         image = image.to(dtype=torch.float32)
+        print("TENSORE")
     else:
         # preprocess image
         if isinstance(image, (PIL.Image.Image, np.ndarray)):
             image = [image]
+            print("PIL")
 
         if isinstance(image, list) and isinstance(image[0], PIL.Image.Image):
             image = [np.array(i.convert("RGB"))[None, :] for i in image]
             image = np.concatenate(image, axis=0)
+            print("PILLOIST")
         elif isinstance(image, list) and isinstance(image[0], np.ndarray):
             image = np.concatenate([i[None, :] for i in image], axis=0)
-
+            print("LIST")
         image = image.transpose(0, 3, 1, 2)
         image = torch.from_numpy(image).to(dtype=torch.float32) / 127.5 - 1.0
+
 
     return image
 
@@ -173,7 +88,8 @@ def prepare_mask_image(mask_image):
 
 def prepare_controlnet_conditioning_image(
     controlnet_conditioning_image, width, height, batch_size, num_images_per_prompt, device, dtype
-):
+):  
+
     if not isinstance(controlnet_conditioning_image, torch.Tensor):
         if isinstance(controlnet_conditioning_image, PIL.Image.Image):
             controlnet_conditioning_image = [controlnet_conditioning_image]
@@ -190,6 +106,7 @@ def prepare_controlnet_conditioning_image(
         elif isinstance(controlnet_conditioning_image[0], torch.Tensor):
             controlnet_conditioning_image = torch.cat(controlnet_conditioning_image, dim=0)
 
+    print(controlnet_conditioning_image.shape)
     image_batch_size = controlnet_conditioning_image.shape[0]
 
     if image_batch_size == 1:
@@ -255,7 +172,7 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
         self.vae_scale_factor = 2 ** (len(self.vae.config.block_out_channels) - 1)
         self.register_to_config(requires_safety_checker=requires_safety_checker)
 
-    def enable_vae_slicing(self):
+    def enable_vae_slicing(self): 
         r"""
         Enable sliced VAE decoding.
         When this option is enabled, the VAE will split the input tensor in slices to compute decoding in several
@@ -718,6 +635,7 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
         # resize the mask to latents shape as we concatenate the mask to the latents
         # we do that before converting to dtype to avoid breaking in case we're using cpu_offload
         # and half precision
+       # print(mask_image.shape)
         mask_image = F.interpolate(mask_image, size=(height // self.vae_scale_factor, width // self.vae_scale_factor))
         mask_image = mask_image.to(device=device, dtype=dtype)
 
@@ -794,7 +712,7 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
         return height, width
 
     @torch.no_grad()
-    @replace_example_docstring(EXAMPLE_DOC_STRING)
+    #@replace_example_docstring(EXAMPLE_DOC_STRING)
     def __call__(
         self,
         prompt: Union[str, List[str]] = None,
@@ -952,7 +870,16 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
         )
 
         # 4. Prepare mask, image, and controlnet_conditioning_image
+       # mask_image.show()
+        
+        print("HERE")
         image = prepare_image(image)
+        print(image.shape)
+        #pil_image = self.decode_latents(image)
+
+        #pil_image.show()
+
+
 
         mask_image = prepare_mask_image(mask_image)
 
@@ -965,12 +892,15 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
             device,
             self.controlnet.dtype,
         )
+        print(mask_image)
 
         masked_image = image * (mask_image < 0.5)
+        print(masked_image)
 
         # 5. Prepare timesteps
         self.scheduler.set_timesteps(num_inference_steps, device=device)
         timesteps, num_inference_steps = self.get_timesteps(num_inference_steps, strength, device)
+        #print(num_inference_steps)
         latent_timestep = timesteps[:1].repeat(batch_size * num_images_per_prompt)
 
         # 6. Prepare latent variables
@@ -1011,60 +941,39 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
         # 7. Prepare extra step kwargs. TODO: Logic should ideally just be moved out of the pipeline
         extra_step_kwargs = self.prepare_extra_step_kwargs(generator, eta)
 
+        #print(masked_image_latents.shape)
+        
+        #print(timesteps)
         # 8. Denoising loop
-        num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
-        with self.progress_bar(total=num_inference_steps) as progress_bar:
-            for i, t in enumerate(timesteps):
-                # expand the latents if we are doing classifier free guidance
-                non_inpainting_latent_model_input = (
-                    torch.cat([latents] * 2) if do_classifier_free_guidance else latents
-                )
+        for i, t in enumerate(timesteps):
+            # expand the latents if we are doing classifier free guidance
+            latent_model_input = torch.cat([latents] * 2)
+            latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
 
-                non_inpainting_latent_model_input = self.scheduler.scale_model_input(
-                    non_inpainting_latent_model_input, t
-                )
+            # print(latent_model_input.shape)
+            # print(mask_image_latents.shape)
+            # print(masked_image_latents.shape)
+            
+            inpainting_latent_model_input = torch.cat([latent_model_input, mask_image_latents, masked_image_latents], dim=1)
+            # print(inpainting_latent_model_input.shape)
+            down_block_res_samples, mid_block_res_sample = self.controlnet(latent_model_input, t, encoder_hidden_states=prompt_embeds, controlnet_cond=controlnet_conditioning_image, return_dict=False,)
+            down_block_res_samples = [down_block_res_sample * controlnet_conditioning_scale for down_block_res_sample in down_block_res_samples]
+            mid_block_res_sample *= controlnet_conditioning_scale
+            # predict the noise residual
+            # print(prompt_embeds.shape)
+            # print(len(down_block_res_samples))
+            # print(mid_block_res_sample.shape)
+            # print("___")
+            noise_pred = self.unet(inpainting_latent_model_input, t, encoder_hidden_states=prompt_embeds, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
 
-                inpainting_latent_model_input = torch.cat(
-                    [non_inpainting_latent_model_input, mask_image_latents, masked_image_latents], dim=1
-                )
+            # perform guidance
+            noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
+            noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
 
-                down_block_res_samples, mid_block_res_sample = self.controlnet(
-                    non_inpainting_latent_model_input,
-                    t,
-                    encoder_hidden_states=prompt_embeds,
-                    controlnet_cond=controlnet_conditioning_image,
-                    return_dict=False,
-                )
+            # compute the previous noisy sample x_t -> x_t-1
+            latents = self.scheduler.step(noise_pred, t, latents).prev_sample
+            
 
-                down_block_res_samples = [
-                    down_block_res_sample * controlnet_conditioning_scale
-                    for down_block_res_sample in down_block_res_samples
-                ]
-                mid_block_res_sample *= controlnet_conditioning_scale
-
-                # predict the noise residual
-                noise_pred = self.unet(
-                    inpainting_latent_model_input,
-                    t,
-                    encoder_hidden_states=prompt_embeds,
-                    cross_attention_kwargs=cross_attention_kwargs,
-                    down_block_additional_residuals=down_block_res_samples,
-                    mid_block_additional_residual=mid_block_res_sample,
-                ).sample
-
-                # perform guidance
-                if do_classifier_free_guidance:
-                    noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
-                    noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
-
-                # compute the previous noisy sample x_t -> x_t-1
-                latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs).prev_sample
-
-                # call the callback, if provided
-                if i == len(timesteps) - 1 or ((i + 1) > num_warmup_steps and (i + 1) % self.scheduler.order == 0):
-                    progress_bar.update()
-                    if callback is not None and i % callback_steps == 0:
-                        callback(i, t, latents)
 
         # If we do sequential model offloading, let's offload unet and controlnet
         # manually for max memory savings
@@ -1174,9 +1083,10 @@ def image_to_seg(image):
     seg_image = Image.fromarray(color_seg)
     return seg_image
 
-image = load_image("https://github.com/CompVis/latent-diffusion/raw/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png")
-mask_image = load_image("https://github.com/CompVis/latent-diffusion/raw/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png")
+image = load_image(r"H:\Github\MLOPs\MLOPs\overture-creations-5sI6fQgYIuo.png")
+mask_image = load_image(r"H:\Github\MLOPs\MLOPs\overture-creations-5sI6fQgYIuo_mask.png")
 controlnet_conditioning_image = image_to_seg(image)
+controlnet_conditioning_image.save("controlnet.png")
 
 image = pipe(
         "Face of a yellow cat, high resolution, sitting on a park bench",
