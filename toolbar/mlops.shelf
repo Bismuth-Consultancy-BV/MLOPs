@@ -9,7 +9,7 @@
     <memberTool name="mlops_install"/>
   </toolshelf>
 
-  <tool name="mlops_install" label="Install" icon="PLASMA_App">
+  <tool name="mlops_install" label="Install" icon="$MLOPs/help/icons/mlops.svg">
     <script scriptType="python"><![CDATA[
 import subprocess
 import os
