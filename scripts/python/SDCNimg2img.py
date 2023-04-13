@@ -1116,8 +1116,8 @@ def image_to_seg(image):
     seg_image = Image.fromarray(color_seg)
     return seg_image
 
-image = load_image(r"H:\Github\MLOPs\MLOPs\overture-creations-5sI6fQgYIuo.png")
-mask_image = load_image(r"H:\Github\MLOPs\MLOPs\overture-creations-5sI6fQgYIuo_mask.png")
+image = load_image("https://github.com/CompVis/latent-diffusion/raw/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png")
+mask_image = load_image("https://github.com/CompVis/latent-diffusion/raw/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png")
 controlnet_conditioning_image = image_to_seg(image)
 controlnet_conditioning_image.save("controlnet.png")
 

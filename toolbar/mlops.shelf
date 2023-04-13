@@ -48,7 +48,7 @@ if err:
     
     
 # Installing p4python module using pip
-p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai", "transformers", "diffusers", "accelerate", "scipy"])#, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai", "transformers", "diffusers", "accelerate", "scipy", "opencv-contrib-python", "controlnet_aux"])#, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 out, err = p.communicate()
 if err:
    raise hou.Error(out.decode())
