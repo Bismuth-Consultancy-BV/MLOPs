@@ -2,10 +2,12 @@ from diffusers import UNet2DConditionModel
 from tqdm.auto import tqdm
 from . import schedulers_lookup
 from diffusers import ControlNetModel
+from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion_controlnet import MultiControlNetModel
 import torch
 import json
 import numpy
 import hou
+
 
 def run(inference_steps, latent_dimension, input_embeddings, mask_latents, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
     scheduler_config = input_scheduler["config"]
@@ -24,55 +26,49 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
     if attention_slicing:
         unet.set_attention_slice("auto")
 
-    #guided = t_start >= 0
-    # masking = len(mask_latents) > 0 and guided
-
     mask = torch.from_numpy(numpy.array([numpy.array([numpy.array(mask_latents.reshape(4, latent_dimension[0], latent_dimension[1]))[0]])]))
     mask = torch.cat([mask] * 2).to(torch_device)
 
 
     masked_image = torch.from_numpy(numpy.array([numpy.array(input_scheduler["masked_image_latent"].reshape(4, latent_dimension[0], latent_dimension[1]))]))
     masked_image = torch.cat([masked_image] * 2).to(torch_device)
-
-
-    #mask = torch.from_numpy(numpy.array(mask_latents.reshape(4, latent_dimension[0], latent_dimension[1]))[0]).to(torch_device) 
-   # noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
-
-    # if not guided:
-    #     # Only text prompt, starting with just noise latents
-    #     init_latents = noise
-    #     init_latents = init_latents * scheduler.init_noise_sigma
-    # elif guided and not masking:# if GUIDED_ONLY:
-    #     # Fed by guided image, so starting with image latents + noise
-    #     init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
-    # elif guided and masking:
-        # Fed by guided image, so starting with image latents + noise, but only for masked regions
-    # init_latents_orig = torch.from_numpy(numpy.array([input_scheduler["image_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
-    init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
-
-    # else:
-    #     raise hou.nodeWarning("Incorrect input data! Please provide guide image, or guide image and mask!")
-
-    # CONTROLNET #
     
+    init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+    init_latents_orig = torch.from_numpy(numpy.array([input_scheduler["image_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+    noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
 
-    controlnetmodel = ""
+    controlnet_model = []
     controlnet_image = []
-    for prim in controlnet_geo.points()[:1]:
-        controlnetmodel = prim.stringAttribValue("model")
-        geo = prim.prims()[0].getEmbeddedGeometry()
+    controlnet_scale = []
+    for point in controlnet_geo.points():
+        controlnetmodel = point.stringAttribValue("model")
+        geo = point.prims()[0].getEmbeddedGeometry()
         floats = numpy.array(geo.pointFloatAttribValues("Cd"))
         width = geo.attribValue("width")
         height = geo.attribValue("height")
-        controlnet_conditioning_image = torch.from_numpy(numpy.array([floats.reshape(3, width, height)])).to(device=torch_device)
+        controlnet_conditioning_scale = point.attribValue("scale")
+        r = numpy.array(geo.pointFloatAttribValues("r"), dtype=numpy.float16).reshape(width, height)# * 2.0 - 1.0
+        g = numpy.array(geo.pointFloatAttribValues("g"), dtype=numpy.float16).reshape(width, height)# * 2.0 - 1.0
+        b = numpy.array(geo.pointFloatAttribValues("b"), dtype=numpy.float16).reshape(width, height)# * 2.0 - 1.0
+        input_colors = numpy.stack((r,g,b), axis=0)
+        controlnet_conditioning_image = torch.from_numpy(numpy.array([input_colors])).to(device=torch_device)
         controlnet_conditioning_image = controlnet_conditioning_image.to(torch.float16)
+        controlnet = ControlNetModel.from_pretrained(controlnetmodel, local_files_only=local_cache_only, torch_dtype=torch.float16)
+        controlnet.to(torch_device)
+        controlnet_model.append(controlnet)
+        controlnet_image.append(controlnet_conditioning_image)
+        controlnet_scale.append(controlnet_conditioning_scale)
 
+        # from PIL import Image
+        # input_colors = input_colors*255.0
+        # input_colors = input_colors.astype(numpy.uint8)
+        # img = Image.fromarray(input_colors.transpose(1, 2, 0))
+        # img.show()
 
-    controlnet = ControlNetModel.from_pretrained(controlnetmodel, local_files_only=local_cache_only, torch_dtype=torch.float16)
-    controlnet.to(torch_device)
-    controlnet_conditioning_scale = 1.0
-    # CONTROLNET #
-
+    controlnet = MultiControlNetModel(controlnet_model)
+    # controlnet = controlnet_model[0]
+    # controlnet_image = controlnet_image[0]
+    # controlnet_scale = controlnet_scale[0]
 
     text_embeddings = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
@@ -90,16 +86,15 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
 
             # CONTROLNET
             inpainting_latent_model_input = torch.cat([latent_model_input, mask, masked_image], dim=1).to(torch.float16)
+            down_block_res_samples, mid_block_res_sample = controlnet(latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, controlnet_cond=controlnet_conditioning_image, conditioning_scale=controlnet_scale ,return_dict=False,)
+            # down_block_res_samples = [(down_block_res_sample * controlnet_conditioning_scale).to(torch.float16) for down_block_res_sample in down_block_res_samples]
+            # mid_block_res_sample *= controlnet_conditioning_scale
 
-            down_block_res_samples, mid_block_res_sample = controlnet(latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, controlnet_cond=controlnet_conditioning_image, return_dict=False,)
-            down_block_res_samples = [(down_block_res_sample * controlnet_conditioning_scale).to(torch.float16) for down_block_res_sample in down_block_res_samples]
-            mid_block_res_sample *= controlnet_conditioning_scale
 
 
             with torch.no_grad():
-                noise_pred = unet(inpainting_latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
-            # CONTROLNET
-
+                noise_pred = unet(latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
+                # noise_pred = unet(inpainting_latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
 
             # perform guidance
             noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
@@ -108,15 +103,13 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
             # compute the previous noisy sample x_t -> x_t-1
             latents = scheduler.step(noise_pred, t, latents).prev_sample
 
-            # if masking:
-            #     init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
-            #     latents = (init_latents_proper * (1.0-mask)) + (latents * mask)
-
             operation.updateProgress(i/len(timesteps))
 
-    # # if guided and masking:
-    # #     latents = (init_latents_orig * (1.0-mask)) + (latents * mask)
+            # if masking:
+            # init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
+            # latents = (init_latents_proper * (1.0-mask)) + (latents * mask)
 
+    # latents = (init_latents_orig * (1.0-mask)) + (latents * mask)
     latents = latents.cpu().numpy()[0]
 
     return latents
