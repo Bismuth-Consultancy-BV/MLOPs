@@ -27,6 +27,7 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
         unet.set_attention_slice("auto")
 
     mask = torch.from_numpy(numpy.array([numpy.array([numpy.array(mask_latents.reshape(4, latent_dimension[0], latent_dimension[1]))[0]])]))
+    mask_orig = mask.to(torch_device)
     mask = torch.cat([mask] * 2).to(torch_device)
 
 
@@ -74,7 +75,9 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     text_embeddings = torch.from_numpy(numpy.array([uncond_embeddings, text_embeddings])).to(torch_device).half()
 
+   # print(timesteps)
     timesteps = scheduler.timesteps[t_start:].to(torch_device)
+    #print(timesteps)
     latents = init_latents
 
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
@@ -87,10 +90,6 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
             # CONTROLNET
             inpainting_latent_model_input = torch.cat([latent_model_input, mask, masked_image], dim=1).to(torch.float16)
             down_block_res_samples, mid_block_res_sample = controlnet(latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, controlnet_cond=controlnet_conditioning_image, conditioning_scale=controlnet_scale ,return_dict=False,)
-            # down_block_res_samples = [(down_block_res_sample * controlnet_conditioning_scale).to(torch.float16) for down_block_res_sample in down_block_res_samples]
-            # mid_block_res_sample *= controlnet_conditioning_scale
-
-
 
             with torch.no_grad():
                 noise_pred = unet(latent_model_input, t.to(torch.float16), encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
@@ -103,13 +102,14 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, contr
             # compute the previous noisy sample x_t -> x_t-1
             latents = scheduler.step(noise_pred, t, latents).prev_sample
 
+            # MASKING
+            init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
+            latents = init_latents_proper * (1.0-mask_orig) + (latents * mask_orig)
+
             operation.updateProgress(i/len(timesteps))
 
-            # if masking:
-            # init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
-            # latents = (init_latents_proper * (1.0-mask)) + (latents * mask)
-
-    # latents = (init_latents_orig * (1.0-mask)) + (latents * mask)
+    # FINAL MASKING
+    latents = (init_latents_orig * (1.0-mask_orig)) + (latents * mask_orig)
     latents = latents.cpu().numpy()[0]
 
     return latents
