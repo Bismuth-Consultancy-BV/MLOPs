@@ -9,7 +9,7 @@ def run(input_latents, latent_dimension, guided_latents, guiding_strength, guidi
     except OSError:
         scheduler_object = schedulers_lookup.schedulers[scheduler_model].from_pretrained(model, local_files_only=local_cache_only)
     except Exception as err:
-        print(f"Unexpected {err=}, {type(err)=}")
+        print(f"Unexpected {err}, {type(err)}")
 
     scheduler_object.set_timesteps(inference_steps)
     __LATENTS = torch.from_numpy(numpy.array([input_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)

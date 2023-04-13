@@ -46,6 +46,7 @@ def prepare_image(image):
             print("LIST")
         image = image.transpose(0, 3, 1, 2)
         image = torch.from_numpy(image).to(dtype=torch.float32) / 127.5 - 1.0
+        #print(image)
 
 
     return image
@@ -106,7 +107,7 @@ def prepare_controlnet_conditioning_image(
         elif isinstance(controlnet_conditioning_image[0], torch.Tensor):
             controlnet_conditioning_image = torch.cat(controlnet_conditioning_image, dim=0)
 
-    print(controlnet_conditioning_image.shape)
+    #print(controlnet_conditioning_image.shape)
     image_batch_size = controlnet_conditioning_image.shape[0]
 
     if image_batch_size == 1:
@@ -635,6 +636,9 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
         # resize the mask to latents shape as we concatenate the mask to the latents
         # we do that before converting to dtype to avoid breaking in case we're using cpu_offload
         # and half precision
+       # from scipy import ndimage
+        #mask_image = ndimage.zoom(mask_image, (height // self.vae_scale_factor, width // self.vae_scale_factor), order=3)
+
        # print(mask_image.shape)
         mask_image = F.interpolate(mask_image, size=(height // self.vae_scale_factor, width // self.vae_scale_factor))
         mask_image = mask_image.to(device=device, dtype=dtype)
@@ -872,9 +876,9 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
         # 4. Prepare mask, image, and controlnet_conditioning_image
        # mask_image.show()
         
-        print("HERE")
+        #print("HERE")
         image = prepare_image(image)
-        print(image.shape)
+        #print(image.shape)
         #pil_image = self.decode_latents(image)
 
         #pil_image.show()
@@ -892,10 +896,12 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
             device,
             self.controlnet.dtype,
         )
-        print(mask_image)
+        #print(mask_image)
 
         masked_image = image * (mask_image < 0.5)
-        print(masked_image)
+       # print(masked_image.shape)
+
+        #print(masked_image)
 
         # 5. Prepare timesteps
         self.scheduler.set_timesteps(num_inference_steps, device=device)
@@ -924,6 +930,12 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
             do_classifier_free_guidance,
         )
 
+        #print(mask_image_latents.shape)
+
+
+
+
+
         masked_image_latents = self.prepare_masked_image_latents(
             masked_image,
             batch_size * num_images_per_prompt,
@@ -934,6 +946,27 @@ class StableDiffusionControlNetInpaintImg2ImgPipeline(DiffusionPipeline):
             generator,
             do_classifier_free_guidance,
         )
+        # TODO: mask_image_latents = GOOD
+            # mask_image_latents = torch.cat([mask_image_latents[0]] * 4)
+            # mask_image_latents = mask_image_latents.view(1, 4, 64,64)
+            # image = self.decode_latents(mask_image_latents)
+            # image = self.numpy_to_pil(image)
+            # image[0].show()
+
+        # TODO: latents = GOOD LIKELY
+            # image = self.decode_latents(latents)
+            # image = self.numpy_to_pil(image)
+            # image[0].show()
+
+        masked_image_latents = masked_image_latents[0].view(1, 4, 64,64)
+        image = self.decode_latents(masked_image_latents)
+        image = self.numpy_to_pil(image)
+        image[0].show()
+
+        print(masked_image_latents[0].shape)
+
+
+        #print(masked_image_latents)
 
         if do_classifier_free_guidance:
             controlnet_conditioning_image = torch.cat([controlnet_conditioning_image] * 2)
