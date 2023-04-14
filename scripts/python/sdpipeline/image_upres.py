@@ -45,7 +45,8 @@ def run(positive_embeds, negative_embeds, input_image, steps, seed, latent_dimen
     #input_image = (input_image * 2.0) - 1.0
     input_image = torch.from_numpy(input_image)
 
-    upscaled_image = pipeline(prompt="", prompt_embeds=positive_embeds, num_inference_steps=steps, output_type="np", negative_prompt_embeds=negative_embeds, image=input_image).images[0]    
+    with torch.no_grad():
+        upscaled_image = pipeline(prompt_embeds=positive_embeds, num_inference_steps=steps, output_type="np", negative_prompt_embeds=negative_embeds, image=input_image).images[0]    
     
     #image = numpy_to_pil(upscaled_image)[0].show() # remove
 
