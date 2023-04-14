@@ -5,7 +5,10 @@
     "enable": true,
     "env": [
         {
-            "MLOPS": "C:/BISMUTH/Work/Projects/Monaco/Toolset/MLOPs/"
+            "MLOPS_MODEL": "C:/BISMUTH/Work/Projects/Monaco/checkpoints/SD_2_1/stable-diffusion-2-1"
+        },
+        {
+            "MLOPS": "H:/Github/MLOPs/MLOPs"
         },
         {
             "OPENAI_API_KEY": "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"
