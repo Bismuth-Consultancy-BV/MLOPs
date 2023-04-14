@@ -6,7 +6,7 @@ import json
 import numpy
 import hou
 
-def run(inference_steps, latent_dimension, input_embeddings, mask_latents, attention_slicing, guidance_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
+def run(inference_steps, latent_dimension, input_embeddings, attention_slicing, guidance_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
     scheduler_config = input_scheduler["config"]
     t_start = scheduler_config["init_timesteps"]
 
@@ -24,13 +24,15 @@ def run(inference_steps, latent_dimension, input_embeddings, mask_latents, atten
     if attention_slicing:
         unet.set_attention_slice("auto")
 
+    mask_latents = torch.from_numpy(numpy.array([input_scheduler["mask_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+
     guided = t_start >= 0
     masking = len(mask_latents) > 0 and guided
 
     mask = 0
     init_latents_orig = 0
     if masking:
-        mask = torch.from_numpy(numpy.array([mask_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device) 
+        mask = mask_latents.to(torch_device) 
 
     noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
 

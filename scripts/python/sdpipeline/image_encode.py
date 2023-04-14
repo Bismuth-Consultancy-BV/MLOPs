@@ -10,7 +10,6 @@ def run(input_vectors, mask, torch_device, model, local_cache_only=True):
 
     input_vectors = input_vectors.to(torch_device)
 
-
     with torch.no_grad():
         latent = vae.encode(input_vectors.unsqueeze(0))
 
