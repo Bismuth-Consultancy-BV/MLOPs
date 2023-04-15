@@ -1,9 +1,10 @@
-from . import schedulers_lookup
 import json
 import torch
 import numpy
+from . import schedulers_lookup
 
-def run(input_latents, latent_dimension, guided_latents, guiding_strength, guiding_seed, inference_steps, torch_device, scheduler_model, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
+
+def run(input_latents, latent_dimension, image_latents, guiding_strength, inference_steps, torch_device, scheduler_model, model, local_cache_only=True):
     try:
         scheduler_object = schedulers_lookup.schedulers[scheduler_model].from_pretrained(model, subfolder="scheduler", local_files_only=local_cache_only)
     except OSError:
@@ -12,24 +13,23 @@ def run(input_latents, latent_dimension, guided_latents, guiding_strength, guidi
         print(f"Unexpected {err}, {type(err)}")
 
     scheduler_object.set_timesteps(inference_steps)
-    __LATENTS = torch.from_numpy(numpy.array([input_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
-    
+    noise_latents = torch.from_numpy(numpy.array([input_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+
     scheduler = {}
-    scheduler["guided_latents"] = torch.empty(4, latent_dimension[0], latent_dimension[1]).cpu().numpy()
-    t_start = -1
+    scheduler["guided_latents"] = noise_latents.cpu().numpy()[0]
 
-    if len(guided_latents) != 0:
-        __GUIDEDLATENTS = torch.from_numpy(numpy.array([guided_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
-        # Figuring initial time step based on strength
-        init_timestep = int(inference_steps * guiding_strength)
-        init_timestep = min(init_timestep, inference_steps)
+    # Figuring initial time step based on strength
+    init_timestep = int(inference_steps * guiding_strength)
+    init_timestep = min(init_timestep, inference_steps)
 
-        timesteps = scheduler_object.timesteps[-init_timestep]
-        timesteps = torch.tensor([timesteps], device=torch_device)
-        
-        ATTR_SCHEDULER_LATENTS = scheduler_object.add_noise(__GUIDEDLATENTS, __LATENTS, timesteps)
-        scheduler["guided_latents"] = ATTR_SCHEDULER_LATENTS.cpu().numpy()[0]
-        t_start = max(inference_steps - init_timestep, 0)
+    timesteps = scheduler_object.timesteps[-init_timestep]
+    timesteps = torch.tensor([timesteps], device=torch_device)
+
+    if len(image_latents) != 0:
+        image_latents = torch.from_numpy(numpy.array([image_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+        guided_latents = scheduler_object.add_noise(image_latents, noise_latents, timesteps)
+        scheduler["guided_latents"] = guided_latents.cpu().numpy()[0]
+    t_start = max(inference_steps - init_timestep, 0)
 
     config = scheduler_object.config
     config["init_timesteps"] = t_start
