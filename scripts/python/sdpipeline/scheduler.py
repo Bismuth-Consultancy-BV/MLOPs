@@ -24,12 +24,13 @@ def run(input_latents, latent_dimension, image_latents, guiding_strength, infere
 
     timesteps = scheduler_object.timesteps[-init_timestep]
     timesteps = torch.tensor([timesteps], device=torch_device)
+    t_start = 0
 
     if len(image_latents) != 0:
         image_latents = torch.from_numpy(numpy.array([image_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
         guided_latents = scheduler_object.add_noise(image_latents, noise_latents, timesteps)
         scheduler["guided_latents"] = guided_latents.cpu().numpy()[0]
-    t_start = max(inference_steps - init_timestep, 0)
+        t_start = max(inference_steps - init_timestep, 0)
 
     config = scheduler_object.config
     config["init_timesteps"] = t_start
