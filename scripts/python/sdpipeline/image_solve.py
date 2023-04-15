@@ -30,6 +30,7 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
     init_latents_orig = torch.from_numpy(numpy.array([input_scheduler["image_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
     init_latents = torch.from_numpy(numpy.array([input_scheduler["guided_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
     noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+    masking = input_scheduler["image_provided"] == 1
 
     text_embeddings = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
@@ -83,12 +84,14 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
             # compute the previous noisy sample x_t -> x_t-1
             latents = scheduler.step(noise_pred, t, latents).prev_sample
 
-            init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
-            latents = (init_latents_proper * (1.0-mask_orig)) + (latents * mask_orig)
+            if masking:
+                init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
+                latents = (init_latents_proper * (1.0-mask_orig)) + (latents * mask_orig)
 
             operation.updateProgress(i/len(timesteps))
 
-    latents = (init_latents_orig * (1.0-mask_orig)) + (latents * mask_orig)
+    if masking:
+        latents = (init_latents_orig * (1.0-mask_orig)) + (latents * mask_orig)
     latents = latents.cpu().numpy()[0]
 
     return latents
