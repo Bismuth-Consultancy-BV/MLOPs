@@ -2,10 +2,13 @@ import hou
 import numpy as np
 import math
 from PIL import Image
+import torch
+import torchvision.transforms.functional as F
+from torchmetrics import StructuralSimilarityIndexMeasure
 
-def PointCloudToImage(w, h):
+def PointCloudToImage(input_geo, w, h):
     # Get a reference to the input geometry
-    input_geo = hou.pwd().inputGeometry(0)
+    #input_geo = hou.pwd().inputGeometry(0)
 
     # Get the "r", "g", and "b" attributes from the input geometry
     r_attrib = input_geo.pointFloatAttribValues("r")
@@ -38,9 +41,9 @@ def PointCloudToImage(w, h):
 
     return pil_image
 
-def ImageToPointCloud(pil_image):
+def ImageToPointCloud(geo, pil_image):
     # Get a reference to the geometry object
-    geo = hou.pwd().geometry()
+    #geo = hou.pwd().geometry()
 
     # Convert the PIL image to a numpy array
     cd_array = np.array(pil_image)
@@ -54,3 +57,22 @@ def ImageToPointCloud(pil_image):
     geo.setPointFloatAttribValues("r", r_attrib)
     geo.setPointFloatAttribValues("g", g_attrib)
     geo.setPointFloatAttribValues("b", b_attrib)
+
+def ImageSimilarity(image1, image2):
+    #colculates image similarity by SSIM
+    # Convert the images to NumPy arrays
+    image1_array = np.array(image1)
+    image2_array = np.array(image2)
+
+    # Convert the NumPy arrays to tensors
+    image1_tensor = F.to_tensor(image1_array).unsqueeze(0)  # Add extra dimension for batch size
+    image2_tensor = F.to_tensor(image2_array).unsqueeze(0)  # Add extra dimension for batch size
+
+    # Create an instance of the SSIM metric
+    ssim_metric = StructuralSimilarityIndexMeasure(data_range=1.0, win_size=11, win_sigma=1.5, K=(0.01, 0.03))
+
+    # Compute SSIM
+    ssim_value_tensor = ssim_metric(image1_tensor, image2_tensor)
+    ssim_value = ssim_value_tensor.item()
+    # Print the similarity measure
+    return ssim_value

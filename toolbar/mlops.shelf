@@ -57,7 +57,7 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
     operation.updateProgress(percentage=count/total)
     count+=1
         
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai", "transformers", "accelerate", "scipy", "opencv-contrib-python", "controlnet_aux"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = subprocess.CREATE_NO_WINDOW)
+    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai", "transformers", "accelerate", "scipy", "opencv-contrib-python", "controlnet_aux", "torchmetrics"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = subprocess.CREATE_NO_WINDOW)
     out, err = p.communicate()
     if err:
        raise hou.Error(out.decode())
