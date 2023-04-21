@@ -23,7 +23,6 @@ To install the plugin for the first time, follow these steps:
 1. Clone this repository and make note of the directory you have cloned it to.
 2. Copy the `MLOPs.json` file found in the repository root, and paste it in the $HOUDINI_USER_PREF_DIR/packages/ folder.
 3. Edit the `MLOPs.json` file you just pasted, and modify the `$MLOPS` path found inside. Set the path to where you cloned the repository to in step one.
-# Download your preferred Stable Diffusion model, e.g.:
 4. Create a folder where you want the model to be stored. make sure to have enough free space. Models can be huge.
 5. Make sure you have git installed.
 6. Open a command prompt, go to the subfolder you just created.
