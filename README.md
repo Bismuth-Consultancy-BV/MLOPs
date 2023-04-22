@@ -27,5 +27,10 @@ To install the plugin for the first time, follow these steps:
 5. After restarting Houdini, open the `MLOPs` shelf. Click the `Download Model` button. Optionally change the `Model Name` parameter to a custom model, or just leave as is and hit `Download` to work with the default Stable Diffusion Model.
 12. In the MLOPs nodes, use the dropdown on the `[type] Model` parameters to select a downloaded model to use. You can also provide a repo name from the [Huggingface Library](https://huggingface.co/models?pipeline_tag=text-to-image&sort=downloads), and the nodes will download it for you. For example `runwayml/stable-diffusion-v1-5`.  
 
+# Downloading Models
+- By default, `$MLOPS_MODEL` (Without S at the end) is the path to a SINGLE model used by all nodes by default. You can set this to be your preferred default model.
+- By default, the plugin will cache all downloaded models to the folder specified by `$MLOPS_MODELS`. (Notice the S at the end) This will make them show up in the dropdowns for the model paths on the nodes.
+Both of the above varibles can be changed in the `MLOPS.json` to suit your preference.
+
 # Notes
 - We have provided a basic example file in this repo. You can find it in the `hip/` folder.
