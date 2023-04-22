@@ -7,9 +7,10 @@
 
   <toolshelf name="mlops" label="MLOPs">
     <memberTool name="mlops_install"/>
+    <memberTool name="mlops_download_model"/>
   </toolshelf>
 
-  <tool name="mlops_install" label="Install" icon="$MLOPs/help/icons/mlops.svg">
+  <tool name="mlops_install" label="Install Dependencies" icon="$MLOPs/help/icons/mlops.svg">
     <script scriptType="python"><![CDATA[
 import subprocess
 import os
@@ -74,4 +75,13 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
 # Informing user about the change
 hou.ui.displayMessage("You have now installed the required dependencies for this build of Houdini.\nPlease restart Houdini for it to take effect", buttons=('OK',), severity=hou.severityType.Message, title="MLOPs Plugin")]]></script>
   </tool>
+
+  <tool name="mlops_download_model" label="Download Model" icon="$MLOPS/help/icons/mlops.svg">
+    <script scriptType="python"><![CDATA[import mlops_utils
+from imp import reload
+reload(mlops_utils)
+
+mlops_utils.MLOPSCheckpointDownloader(hou.qt.mainWindow())]]></script>
+  </tool>
+  
 </shelfDocument>
