@@ -1,10 +1,11 @@
 import os
-import openai
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 def generate_gpt_code_from_prompt(prompt, wrapper, model="gpt-3.5-turbo"):
+    import openai
+    openai.api_key = os.getenv("OPENAI_API_KEY")
     completion = openai.ChatCompletion.create(
         model=model,
         messages=[
@@ -33,17 +34,13 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
     path = hou.text.expandString(os.path.join(model_path, model_name.replace("/", "-_-")))
     cache = hou.text.expandString(os.path.join(model_path, "cache"))
 
-    # print("ssss", model_name)
     if os.path.isdir(model_name):
-        # print("name", model_name)
         return model_name
     if cache_only:
-        # print("cache", path)
         return path.replace("\\", "/")
 
     from huggingface_hub import snapshot_download
     model_name = model_name.replace("-_-", "/")
-    # print("download", model_name)
     snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, repo_type="model", local_dir_use_symlinks=True, local_files_only=cache_only)
     return path.replace("\\", "/")
 
