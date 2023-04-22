@@ -26,16 +26,23 @@ if not os.path.isdir(FOLDER):
 total = 6
 count = 1
 with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", open_interrupt_dialog=True) as operation:
+    
+    flags = 0
+    if os.name == 'nt':
+        flags = subprocess.CREATE_NO_WINDOW
 
-    p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
         raise hou.Error(out.decode())
+        
     operation.updateProgress(percentage=count/total)
     count+=1
+    
+    
 
     # Installing pip to Houdini
-    p = subprocess.Popen(["hython", PIPINSTALLFILE], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = subprocess.CREATE_NO_WINDOW)
+    p = subprocess.Popen(["hython", PIPINSTALLFILE], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
         raise hou.Error(out.decode())
@@ -44,28 +51,28 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
 
 
     # Installing / Upgrading setuptools because on py3.9 some modules need to be rebuilt
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--upgrade", PIP_FOLDER, "setuptools"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = subprocess.CREATE_NO_WINDOW)
+    p = subprocess.Popen(["hython", "-m", "pip", "install", "--upgrade", PIP_FOLDER, "setuptools"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
         raise hou.Error(out.decode())
     operation.updateProgress(percentage=count/total)
     count+=1
         
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "torch", "--index-url", "https://download.pytorch.org/whl/cu117"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = subprocess.CREATE_NO_WINDOW)
+    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "torch", "--index-url", "https://download.pytorch.org/whl/cu117"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
         raise hou.Error(out.decode())
     operation.updateProgress(percentage=count/total)
     count+=1
         
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai", "transformers", "accelerate", "scipy", "opencv-contrib-python", "controlnet_aux", "torchmetrics", "clip_interrogator"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = subprocess.CREATE_NO_WINDOW)
+    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai", "transformers", "accelerate", "scipy", "opencv-contrib-python", "controlnet_aux", "torchmetrics", "clip_interrogator"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = flags)
     out, err = p.communicate()
     if err:
        raise hou.Error(out.decode())
     operation.updateProgress(percentage=count/total)
     count+=1
 
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "diffusers==0.15.0"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = subprocess.CREATE_NO_WINDOW)
+    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "diffusers==0.15.0"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = flags)
     out, err = p.communicate()
     if err:
        raise hou.Error(out.decode())
@@ -83,5 +90,4 @@ reload(mlops_utils)
 
 mlops_utils.MLOPSCheckpointDownloader(hou.qt.mainWindow())]]></script>
   </tool>
-  
 </shelfDocument>
