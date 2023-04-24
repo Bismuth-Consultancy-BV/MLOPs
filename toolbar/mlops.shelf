@@ -8,6 +8,7 @@
   <toolshelf name="mlops" label="MLOPs">
     <memberTool name="mlops_install"/>
     <memberTool name="mlops_download_model"/>
+    <memberTool name="mlops_convert_model"/>
   </toolshelf>
 
   <tool name="mlops_install" label="Install Dependencies" icon="$MLOPs/help/icons/mlops.svg">

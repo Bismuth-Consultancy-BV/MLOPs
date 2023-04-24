@@ -145,7 +145,9 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         if config_file == "":
             config_file = None
 
-        convert_model.convert(checkpoint_file, config_file, hou.text.expandString(os.path.join("$MLOPS_MODELS", model_name.replace("/", "-_-"))))
+        with hou.InterruptableOperation("Converting Model", open_interrupt_dialog=True) as operation:
+            convert_model.convert(checkpoint_file, config_file, hou.text.expandString(os.path.join("$MLOPS_MODELS", model_name.replace("/", "-_-"))))
+
         hou.ui.displayMessage(f"You have successfully converted the {model_name} model!", buttons=('OK',), severity=hou.severityType.Message, title="MLOPs Plugin")
 
         self.close()
