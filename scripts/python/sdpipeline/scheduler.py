@@ -27,10 +27,11 @@ def run(input_latents, latent_dimension, image_latents, guiding_strength, infere
     t_start = 0
 
     if len(image_latents) != 0:
-        image_latents = torch.from_numpy(numpy.array([image_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
-        guided_latents = scheduler_object.add_noise(image_latents, noise_latents, timesteps)
-        scheduler["guided_latents"] = guided_latents.cpu().numpy()[0]
-        t_start = max(inference_steps - init_timestep, 0)
+        if guiding_strength > 0.05:
+            image_latents = torch.from_numpy(numpy.array([image_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+            guided_latents = scheduler_object.add_noise(image_latents, noise_latents, timesteps)
+            scheduler["guided_latents"] = guided_latents.cpu().numpy()[0]
+            t_start = max(inference_steps - init_timestep, 0)
 
     config = scheduler_object.config
     config["init_timesteps"] = t_start
