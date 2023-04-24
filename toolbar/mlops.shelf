@@ -90,4 +90,12 @@ reload(mlops_utils)
 
 mlops_utils.MLOPSCheckpointDownloader(hou.qt.mainWindow())]]></script>
   </tool>
+
+  <tool name="mlops_convert_model" label="Convert Model" icon="$MLOPS/help/icons/mlops.svg">
+    <script scriptType="python"><![CDATA[import mlops_utils
+from imp import reload
+reload(mlops_utils)
+
+mlops_utils.MLOPSConvertModel(hou.qt.mainWindow())]]></script>
+  </tool>
 </shelfDocument>
