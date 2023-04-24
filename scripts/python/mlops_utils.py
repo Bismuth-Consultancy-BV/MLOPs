@@ -48,8 +48,7 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
     config_dict = StableDiffusionPipeline.load_config(model_name, cache_dir=cache, resume_download=True, force_download=False)
     folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
     allow_patterns = [os.path.join(k, "*") for k in folder_names]
-    allow_patterns += [WEIGHTS_NAME, SCHEDULER_CONFIG_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME, StableDiffusionPipeline.config_name]
-
+    allow_patterns += [WEIGHTS_NAME, SCHEDULER_CONFIG_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME, StableDiffusionPipeline.config_name, "*.json"]
     ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
 
     snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, local_dir_use_symlinks=True, local_files_only=cache_only, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
