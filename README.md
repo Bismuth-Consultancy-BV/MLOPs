@@ -35,5 +35,8 @@ To install the plugin for the first time, follow these steps:
 - By default, the plugin will cache all downloaded models to the folder specified by `$MLOPS_MODELS`. (Notice the S at the end) This will make them show up in the dropdowns for the model paths on the nodes.
 Both of the above varibles can be changed in the `MLOPS.json` to suit your preference.
 
+# Troubleshooting
+- If you get an error saying "Torch not compiled with CUDA enabled". Uninstall CUDA, restart your PC and hit the `Install Dependencies` shelf button again.
+
 # Notes
 - We have provided a basic example file in this repo. You can find it in the `hip/` folder.
