@@ -37,6 +37,7 @@ Both of the above varibles can be changed in the `MLOPS.json` to suit your prefe
 
 # Troubleshooting
 - If you get an error saying "Torch not compiled with CUDA enabled". Uninstall CUDA, restart your PC and hit the `Install Dependencies` shelf button again.
+- If you get an error similar to: "Unexpected self.size(-1) must be divisible by 4 to view Byte as Float (different element sizes), but got 2683502, <class 'RuntimeError'>". Try deleting the model cache in `$MLOPS_MODELS/cache/[your model]` and try again. This is likely caused by a corrupt cache.
 
 # Notes
 - We have provided a basic example file in this repo. You can find it in the `hip/` folder.
