@@ -11,6 +11,9 @@
             "MLOPS_MODELS": "$MLOPS/checkpoints/"
         },
         {
+            "HUGGINGFACE_HUB_CACHE": "$MLOPS_MODELS/cache/"
+        },
+        {
             "MLOPS_MODEL": "$MLOPS/checkpoints/stabilityai-_-stable-diffusion-2-1"
         },
         {

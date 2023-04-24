@@ -33,7 +33,7 @@ def return_downloaded_checkpoints():
 def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
     from huggingface_hub import snapshot_download
     from diffusers import StableDiffusionPipeline
-    from diffusers.utils import DIFFUSERS_CACHE, WEIGHTS_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME
+    from diffusers.utils import WEIGHTS_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME
     from diffusers.schedulers.scheduling_utils import SCHEDULER_CONFIG_NAME
 
     path = hou.text.expandString(os.path.join(model_path, model_name.replace("/", "-_-")))
@@ -43,14 +43,13 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
         return model_name
     if cache_only:
         return path.replace("\\", "/")
-    
+
     model_name = model_name.replace("-_-", "/")
     config_dict = StableDiffusionPipeline.load_config(model_name, cache_dir=cache, resume_download=True, force_download=False)
     folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
     allow_patterns = [os.path.join(k, "*") for k in folder_names]
     allow_patterns += [WEIGHTS_NAME, SCHEDULER_CONFIG_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME, StableDiffusionPipeline.config_name]
 
-    # make sure we don't download flax, safetensors, or ckpt weights.
     ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
 
     snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, local_dir_use_symlinks=True, local_files_only=cache_only, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
@@ -115,6 +114,101 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
 
         buttonlayout = QtWidgets.QHBoxLayout()
         self.update_button = QtWidgets.QPushButton("Download")
+        self.update_button.clicked.connect(self.on_accept)
+        buttonlayout.addWidget(self.update_button)
+
+        self.cancel_button = QtWidgets.QPushButton("Cancel")
+        self.cancel_button.clicked.connect(self.on_cancel)
+        buttonlayout.addWidget(self.cancel_button)
+
+        layout.addLayout(buttonlayout)
+
+        self.setMinimumSize(hou.ui.scaledSize(500), hou.ui.scaledSize(100))
+        self.show()
+
+
+class MLOPSConvertModel(QtWidgets.QDialog):
+    def __init__(self, parent):
+        super(MLOPSConvertModel, self).__init__(parent)
+        self.setWindowFlags(self.windowFlags() ^ QtCore.Qt.WindowContextHelpButtonHint)
+        self.buildUI()
+        self.resize(self.minimumSizeHint())
+
+    def closeEvent(self, event):
+        pass
+
+    def on_accept(self):
+        from sdpipeline import convert_model
+        model_name = self.model_name_field.text()
+        checkpoint_file = hou.text.expandString(self.checkpoint_file_field.text())
+        config_file = self.config_file_field.text()
+        if config_file == "":
+            config_file = None
+
+        convert_model.convert(checkpoint_file, config_file, hou.text.expandString(os.path.join("$MLOPS_MODELS", model_name.replace("/", "-_-"))))
+        hou.ui.displayMessage(f"You have successfully converted the {model_name} model!", buttons=('OK',), severity=hou.severityType.Message, title="MLOPs Plugin")
+
+        self.close()
+
+    def on_cancel(self):
+        self.close()
+
+    def open_checkpoint_dialog(self):
+
+        directory = hou.ui.selectFile(title="MLOPs - Select Download Directory", file_type=hou.fileType.Any, multiple_select=False, pattern="*.safetensors *.ckpt", chooser_mode=hou.fileChooserMode.Read)
+        if directory:
+            self.checkpoint_file_field.setText(directory)
+
+    def open_config_dialog(self):
+
+        directory = hou.ui.selectFile(title="MLOPs - Select Download Directory", file_type=hou.fileType.Any, multiple_select=False, pattern="*.yaml", chooser_mode=hou.fileChooserMode.Read)
+        if directory:
+            self.config_file_field.setText(directory)
+
+    def buildUI(self):
+        layout = QtWidgets.QVBoxLayout()
+        self.setLayout(layout)
+
+        self.setWindowTitle("MLOPs - Convert Model")
+        message_widget = QtWidgets.QLabel("Convert a checkpoint file to the Diffusers model used by this plugin!")
+        layout.addWidget(message_widget)
+
+        model_name_layout = QtWidgets.QHBoxLayout()
+        model_path_label = QtWidgets.QLabel("Model Name: ")
+        self.model_name_field = QtWidgets.QLineEdit("developer/model_name")
+        model_name_layout.addWidget(model_path_label)
+        model_name_layout.addWidget(self.model_name_field)
+
+        checkpoint_file_layout = QtWidgets.QHBoxLayout()
+        checkpoint_file_label = QtWidgets.QLabel("Checkpoint File: ")
+        self.checkpoint_file_field = QtWidgets.QLineEdit()
+        checkpoint_file_layout.addWidget(checkpoint_file_label)
+        checkpoint_file_layout.addWidget(self.checkpoint_file_field)
+
+        # Create QPushButton for directory browser
+        self.checkpoint_file_button = QtWidgets.QPushButton("...")
+        self.checkpoint_file_button.clicked.connect(self.open_checkpoint_dialog)
+        checkpoint_file_layout.addWidget(self.checkpoint_file_button)
+
+        layout.addLayout(model_name_layout)
+        layout.addLayout(checkpoint_file_layout)
+
+
+        config_file_layout = QtWidgets.QHBoxLayout()
+        config_file_label = QtWidgets.QLabel("Config File: ")
+        self.config_file_field = QtWidgets.QLineEdit()
+        config_file_layout.addWidget(config_file_label)
+        config_file_layout.addWidget(self.config_file_field)
+
+        # Create QPushButton for directory browser
+        self.config_file_button = QtWidgets.QPushButton("...")
+        self.config_file_button.clicked.connect(self.open_config_dialog)
+        config_file_layout.addWidget(self.config_file_button)
+        layout.addLayout(config_file_layout)
+
+
+        buttonlayout = QtWidgets.QHBoxLayout()
+        self.update_button = QtWidgets.QPushButton("Convert")
         self.update_button.clicked.connect(self.on_accept)
         buttonlayout.addWidget(self.update_button)
 
