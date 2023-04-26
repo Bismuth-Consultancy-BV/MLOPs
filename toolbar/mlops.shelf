@@ -15,6 +15,7 @@
     <script scriptType="python"><![CDATA[
 import subprocess
 import os
+import hashlib
 
 FOLDER = os.path.normpath(os.path.join(hou.text.expandString("$HOUDINI_TEMP_DIR"), "MLOPs"))
 PIP_FOLDER = os.path.normpath(os.path.join(hou.text.expandString("$HOUDINI_USER_PREF_DIR"), "scripts", "python"))
@@ -24,23 +25,36 @@ PIPINSTALLFILE = os.path.normpath(os.path.join(FOLDER, "get-pip.py"))
 if not os.path.isdir(FOLDER):
     os.makedirs(FOLDER)
 
-total = 6
+total = 7
 count = 1
 with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", open_interrupt_dialog=True) as operation:
     
     flags = 0
     if os.name == 'nt':
         flags = subprocess.CREATE_NO_WINDOW
-
+    # Trying to download get-pip with SSL
     p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
         raise hou.Error(out.decode())
-        
     operation.updateProgress(percentage=count/total)
     count+=1
-    
-    
+
+    # Checking if get-pip downloaded , otherwise try no SSL with safe MD5 check  
+    if not os.path.isfile(PIPINSTALLFILE):
+        p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py", "--ssl-no-revoke"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
+        out, err = p.communicate()
+        if err:
+          raise hou.Error(out.decode())
+        safe_md5 = '6f33e0cffbbd2093f2406f8d0839b01f'  
+        test_md5 = hashlib.md5(open(PIPINSTALLFILE,'rb').read()).hexdigest()
+        if safe_md5 != test_md5:
+          os.remove(PIPINSTALLFILE)
+          raise hou.Error("unsafe get-pip.py downloaded with incorrect MD5hash. safe_MD5 = " + safe_md5 + " != " + test_md5)
+    if not os.path.isfile(PIPINSTALLFILE):
+      raise hou.Error("get-pip.py not found in = " + PIPINSTALLFILE)
+    operation.updateProgress(percentage=count/total)
+    count+=1
 
     # Installing pip to Houdini
     p = subprocess.Popen(["hython", PIPINSTALLFILE], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
