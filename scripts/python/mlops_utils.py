@@ -20,14 +20,15 @@ def is_relevant_parm(kwargs, parmtype):
             return False
     return True
 
-def return_downloaded_checkpoints():
+def return_downloaded_checkpoints(subfolder="", replace_sign="-_-"):
     model_paths = ["$MLOPS_MODEL", "$MLOPS_MODEL"]
     root = hou.text.expandString("$MLOPS_MODELS")
-    for f in os.scandir(root):
+    full_path = root + '/' + subfolder
+    for f in os.scandir(full_path):
         if f.is_dir():
             if f.name != "cache":
-                model_paths.append(f.name.replace("-_-", "/"))
-                model_paths.append(f.name.replace("-_-", "/"))
+                model_paths.append(f.name.replace(replace_sign, "/"))
+                model_paths.append(f.name.replace(replace_sign, "/"))
     return model_paths
 
 def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
