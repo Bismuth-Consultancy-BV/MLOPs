@@ -49,7 +49,8 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
             r = numpy.array(geo.pointFloatAttribValues("r"), dtype=numpy.float16).reshape(width, height)
             g = numpy.array(geo.pointFloatAttribValues("g"), dtype=numpy.float16).reshape(width, height)
             b = numpy.array(geo.pointFloatAttribValues("b"), dtype=numpy.float16).reshape(width, height)
-            input_colors = numpy.stack((r, g, b), axis=0)
+            input_colors = numpy.flip(numpy.stack((r, g, b), axis=0),2)
+
             controlnet_conditioning_image = torch.from_numpy(numpy.array([input_colors])).to(device=torch_device)
             controlnet_conditioning_image = controlnet_conditioning_image.to(torch.float16)
             controlnet = ControlNetModel.from_pretrained(controlnetmodel, local_files_only=local_cache_only, torch_dtype=torch.float16)
