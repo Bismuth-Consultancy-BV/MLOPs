@@ -147,6 +147,8 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         model_name = self.model_name_field.text()
         checkpoint_file = hou.text.expandString(self.checkpoint_file_field.text())
         config_file = self.config_file_field.text()
+        config_file = hou.text.expandString(config_file)
+        checkpoint_file = hou.text.expandString(checkpoint_file)
         if config_file == "":
             config_file = None
 
