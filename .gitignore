@@ -3,3 +3,4 @@
 /otls/backup/
 hip/backup/
 checkpoints/*/
+scripts/sd-model-finetuned-lora/*
