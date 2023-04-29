@@ -34,7 +34,6 @@ from accelerate import Accelerator
 from accelerate.logging import get_logger
 from accelerate.utils import ProjectConfiguration, set_seed
 from datasets import load_dataset
-from huggingface_hub import create_repo, upload_folder
 from packaging import version
 from torchvision import transforms
 from tqdm.auto import tqdm
@@ -132,9 +131,9 @@ train_batch_size=1 #16
 
 num_train_epochs = 100
 
-max_train_steps = None
+max_train_steps = 15000
 
-gradient_accumulation_steps = 1
+gradient_accumulation_steps = 4
 
 gradient_checkpointing = False
 
@@ -146,7 +145,7 @@ lr_scheduler = "constant"
 # Choose between ["linear", "cosine", "cosine_with_restarts", "polynomial",'
 #     #         ' "constant", "constant_with_warmup"]'
 
-lr_warmup_steps = 500
+lr_warmup_steps = 0
 
 use_8bit_adam = False
 
@@ -253,8 +252,7 @@ def main():
             ).repo_id
     # Load scheduler, tokenizer and models.
     noise_scheduler = DDPMScheduler.from_pretrained(pretrained_model_name_or_path, subfolder="scheduler")
-    tokenizer = CLIPTokenizer.from_pretrained(
-        pretrained_model_name_or_path, subfolder="tokenizer", revision=revision
+    tokenizer = CLIPTokenizer.from_pretrained(pretrained_model_name_or_path, subfolder="tokenizer", revision=revision
     )
     text_encoder = CLIPTextModel.from_pretrained(
         pretrained_model_name_or_path, subfolder="text_encoder", revision=revision
@@ -516,7 +514,6 @@ def main():
             dirs = [d for d in dirs if d.startswith("checkpoint")]
             dirs = sorted(dirs, key=lambda x: int(x.split("-")[1]))
             path = dirs[-1] if len(dirs) > 0 else None
-            print(path)
 
         if path is None:
             accelerator.print(
@@ -693,11 +690,11 @@ def main():
     for _ in range(num_validation_images):
         images.append(pipeline(validation_prompt, num_inference_steps=30, generator=generator).images[0])
 
-    if accelerator.is_main_process:
-        for tracker in accelerator.trackers:
-            if tracker.name == "tensorboard":
-                np_images = np.stack([np.asarray(img) for img in images])
-                tracker.writer.add_images("test", np_images, epoch, dataformats="NHWC")
+    # if accelerator.is_main_process:
+    #     for tracker in accelerator.trackers:
+    #         if tracker.name == "tensorboard":
+    #             np_images = np.stack([np.asarray(img) for img in images])
+    #             tracker.writer.add_images("test", np_images, epoch, dataformats="NHWC")
             # if tracker.name == "wandb":
             #     tracker.log(
             #         {
