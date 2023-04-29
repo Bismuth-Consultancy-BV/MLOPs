@@ -23,7 +23,7 @@ def is_relevant_parm(kwargs, parmtype):
 def return_downloaded_checkpoints(subfolder="", replace_sign="-_-"):
     model_paths = ["$MLOPS_MODEL", "$MLOPS_MODEL"]
     root = hou.text.expandString("$MLOPS_MODELS")
-    full_path = root + '/' + subfolder
+    full_path = os.path.join(root, subfolder)
     for f in os.scandir(full_path):
         if f.is_dir():
             if f.name != "cache":
