@@ -106,7 +106,7 @@ image_column = "image"
 caption_column = "text"
 # "The column of the dataset containing a caption or a list of captions."
 
-validation_prompt = 1
+validation_prompt = "cute dragon creature"
 # "A prompt that is sampled during training for inference."
 
 num_validation_images = 4
@@ -119,11 +119,11 @@ output_dir = "sd-model-finetuned-lora"
 
 cache_dir = None
 
-seed = 1234
+seed = 42
 
 resolution = 512
 
-center_crop = True
+center_crop = False
 
 random_flip = True
 
@@ -137,7 +137,7 @@ gradient_accumulation_steps = 4
 
 gradient_checkpointing = False
 
-learning_rate = 1e-4
+learning_rate = 1e-04
 
 scale_lr = False
 
@@ -176,7 +176,7 @@ report_to = "tensorboard"
 
 local_rank = -1
 
-checkpointing_steps=500
+checkpointing_steps=5000
 
 checkpoints_total_limit = None
 
@@ -238,33 +238,27 @@ def main():
         diffusers.utils.logging.set_verbosity_error()
 
     # If passed along, set the training seed now.
-    if seed is not None:
-        set_seed(seed)
+    set_seed(seed)
 
     # Handle the repository creation
     if accelerator.is_main_process:
         if output_dir is not None:
             os.makedirs(output_dir, exist_ok=True)
 
-        if push_to_hub:
-            repo_id = create_repo(
-                repo_id=hub_model_id or Path(output_dir).name, exist_ok=True, token=hub_token
-            ).repo_id
+        # if push_to_hub:
+        #     repo_id = create_repo(
+        #         repo_id=hub_model_id or Path(output_dir).name, exist_ok=True, token=hub_token
+        #     ).repo_id
     # Load scheduler, tokenizer and models.
     noise_scheduler = DDPMScheduler.from_pretrained(pretrained_model_name_or_path, subfolder="scheduler")
-    tokenizer = CLIPTokenizer.from_pretrained(pretrained_model_name_or_path, subfolder="tokenizer", revision=revision
-    )
-    text_encoder = CLIPTextModel.from_pretrained(
-        pretrained_model_name_or_path, subfolder="text_encoder", revision=revision
-    )
+    tokenizer = CLIPTokenizer.from_pretrained(pretrained_model_name_or_path, subfolder="tokenizer", revision=revision)
+    text_encoder = CLIPTextModel.from_pretrained(pretrained_model_name_or_path, subfolder="text_encoder", revision=revision)
     vae = AutoencoderKL.from_pretrained(pretrained_model_name_or_path, subfolder="vae", revision=revision)
-    unet = UNet2DConditionModel.from_pretrained(
-        pretrained_model_name_or_path, subfolder="unet", revision=revision
-    )
+    unet = UNet2DConditionModel.from_pretrained(pretrained_model_name_or_path, subfolder="unet", revision=revision)
+    
     # freeze parameters of models to save more memory
     unet.requires_grad_(False)
     vae.requires_grad_(False)
-
     text_encoder.requires_grad_(False)
 
     # For mixed precision training we cast the text_encoder and vae weights to half-precision
@@ -335,18 +329,18 @@ def main():
             learning_rate * gradient_accumulation_steps * train_batch_size * accelerator.num_processes
         )
 
-    # Initialize the optimizer
-    if use_8bit_adam:
-        try:
-            import bitsandbytes as bnb
-        except ImportError:
-            raise ImportError(
-                "Please install bitsandbytes to use 8-bit Adam. You can do so by running `pip install bitsandbytes`"
-            )
+    # # Initialize the optimizer
+    # if use_8bit_adam:
+    #     try:
+    #         import bitsandbytes as bnb
+    #     except ImportError:
+    #         raise ImportError(
+    #             "Please install bitsandbytes to use 8-bit Adam. You can do so by running `pip install bitsandbytes`"
+    #         )
 
-        optimizer_cls = bnb.optim.AdamW8bit
-    else:
-        optimizer_cls = torch.optim.AdamW
+    #     optimizer_cls = bnb.optim.AdamW8bit
+    # else:
+    optimizer_cls = torch.optim.AdamW
 
     optimizer = optimizer_cls(
         lora_layers.parameters(),
@@ -659,36 +653,21 @@ def main():
         unet = unet.to(torch.float32)
         unet.save_attn_procs(output_dir)
 
-        # if push_to_hub:
-        #     save_model_card(
-        #         repo_id,
-        #         images=images,
-        #         base_model=pretrained_model_name_or_path,
-        #         dataset_name=dataset_name,
-        #         repo_folder=output_dir,
-        #     )
-        #     upload_folder(
-        #         repo_id=repo_id,
-        #         folder_path=output_dir,
-        #         commit_message="End of training",
-        #         ignore_patterns=["step_*", "epoch_*"],
-        #     )
+    # # Final inference
+    # # Load previous pipeline
+    # pipeline = DiffusionPipeline.from_pretrained(
+    #     pretrained_model_name_or_path, revision=revision, torch_dtype=weight_dtype
+    # )
+    # pipeline = pipeline.to(accelerator.device)
 
-    # Final inference
-    # Load previous pipeline
-    pipeline = DiffusionPipeline.from_pretrained(
-        pretrained_model_name_or_path, revision=revision, torch_dtype=weight_dtype
-    )
-    pipeline = pipeline.to(accelerator.device)
+    # # load attention processors
+    # pipeline.unet.load_attn_procs(output_dir)
 
-    # load attention processors
-    pipeline.unet.load_attn_procs(output_dir)
-
-    # run inference
-    generator = torch.Generator(device=accelerator.device).manual_seed(seed)
-    images = []
-    for _ in range(num_validation_images):
-        images.append(pipeline(validation_prompt, num_inference_steps=30, generator=generator).images[0])
+    # # run inference
+    # generator = torch.Generator(device=accelerator.device).manual_seed(seed)
+    # images = []
+    # for _ in range(num_validation_images):
+    #     images.append(pipeline(validation_prompt, num_inference_steps=30, generator=generator).images[0])
 
     # if accelerator.is_main_process:
     #     for tracker in accelerator.trackers:
