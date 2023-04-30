@@ -69,7 +69,7 @@ from . import schedulers_lookup
 
 
 
-def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True):
+def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model="CompVis/stable-diffusion-v1-4", local_cache_only=True, seamless_gen=False):
 
     no_half = 'mps' == torch_device
     dtype_unet = torch.float32 if no_half else torch.float16
@@ -86,6 +86,11 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
 
     unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only, torch_dtype=dtype_unet)
     unet.to(torch_device)
+
+    if(seamless_gen):
+        for module in unet.modules():
+            if isinstance(module, torch.nn.Conv2d):
+                module.padding_mode = "circular"
 
     if attention_slicing:
         unet.set_attention_slice("auto")
