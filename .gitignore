@@ -4,6 +4,7 @@
 hip/backup/
 checkpoints/*/
 scripts/sd-model-finetuned-lora/*
+data/*/
 
 #ignore other unimportant expanded HDA files
 *.OPfallbacks
