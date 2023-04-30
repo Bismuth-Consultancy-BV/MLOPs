@@ -1,0 +1,126 @@
+# Dialog script for mlops::sd_controlnet_conditioning::1.0 automatically generated
+
+{
+    name	mlops::sd_controlnet_conditioning::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs SD ControlNet Conditioning"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Conditioning"
+
+        parm {
+            name    "conditioning"
+            label   "Conditioning"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cannydetector" "Canny Detector"
+                "segment"       "Semantic Segmentation"
+                "openpose"      "Openpose"
+                "mlsd"          "MLSD Detector"
+                "depth"         "Depth Estimation"
+                "hed"           "HED Detector"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cache_only"
+            label   "Use Local Cache"
+            type    toggle
+            default { "1" }
+            disablewhen "{ modelcache == 1 }"
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "folder1"
+            label   "Canny"
+            disablewhen "{ conditioning != cannydetector }"
+
+            parm {
+                name    "canny_low"
+                label   "Low"
+                type    integer
+                default { "100" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "canny_high"
+                label   "High"
+                type    integer
+                default { "300" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    groupsimple {
+        name    "folder3"
+        label   "Semantic Segmentation"
+        disablewhen "{ conditioning != segment }"
+
+        parm {
+            name    "segment_path"
+            label   "Segmentation Model"
+            type    string
+            default { "openmmlab/upernet-convnext-small" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder2"
+        label   "Openpose"
+        disablewhen "{ conditioning != openpose }"
+
+        parm {
+            name    "openpose_path"
+            label   "Openpose Model"
+            type    string
+            default { "lllyasviel/ControlNet" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder4"
+        label   "M-LSD"
+        disablewhen "{ conditioning != mlsd }"
+
+        parm {
+            name    "mlsd_path"
+            label   "MLSD Model"
+            type    string
+            default { "lllyasviel/ControlNet" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder5"
+        label   "HED"
+        disablewhen "{ conditioning != hed }"
+
+        parm {
+            name    "hed_path"
+            label   "HED Model"
+            type    string
+            default { "lllyasviel/ControlNet" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}
