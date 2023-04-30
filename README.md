@@ -43,3 +43,4 @@ Both of the above varibles can be changed in the `MLOPS.json` to suit your prefe
 
 # Notes
 - We have provided a basic example file in this repo. You can find it in the `hip/` folder.
+- This plugin installs quite a few dependencies. You can find them in `requirements.txt`
