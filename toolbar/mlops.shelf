@@ -80,13 +80,8 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
     operation.updateProgress(percentage=count/total)
     count+=1
 
-    hou.ui.setStatusMessage("Installing openai, omegaconf, transformers, accelerate, scipy, opencv-contrib-python, controlnet_aux, torchmetrics, clip_interrogator")    
+    hou.ui.setStatusMessage("Installing requirements.txt")    
     mlops_utils.pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
-    #p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "-r", hou.text.expandString("$MLOPS/requirements.txt")], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
-   #out, err = p.communicate()
-    #if err:
-    #   raise hou.Error(out.decode())
-    #operation.updateProgress(percentage=count/total)
     count+=1
 
 
