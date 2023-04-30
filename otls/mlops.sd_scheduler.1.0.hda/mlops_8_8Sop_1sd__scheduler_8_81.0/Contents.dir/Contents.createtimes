@@ -5,6 +5,7 @@
 	"hdaroot/merge1.def":1681470096,
 	"hdaroot/image_to_points1.def":1681469679,
 	"hdaroot/attribcopy6.def":1681468857,
+	"hdaroot/attribcreate4.def":1682861844,
 	"hdaroot/MASK_LATENTS.def":1681468146,
 	"hdaroot/pack1.def":1681470078,
 	"hdaroot/IMAGE_ENCODER.def":1681468133,
@@ -25,5 +26,5 @@
 	"hdaroot/scheduler.def":1680691542,
 	"hdaroot/sd_mask_encode1.def":1681469475,
 	"hdaroot/attribcopy1.def":1680980920,
-	"hdaroot.def":1681490330
+	"hdaroot.def":1682867788
 }

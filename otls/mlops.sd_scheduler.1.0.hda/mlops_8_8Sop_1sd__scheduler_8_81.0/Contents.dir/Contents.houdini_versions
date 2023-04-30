@@ -1,7 +1,8 @@
 {
-	"values":["19.5.538"
+	"values":["19.5.534"
 	],
 	"indexes":{
+		"hdaroot/attribcreate4.userdata":0,
 		"hdaroot/attribcreate2.userdata":0,
 		"hdaroot/attribcopy7.userdata":0,
 		"hdaroot/attribcopy6.userdata":0,

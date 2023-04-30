@@ -134,6 +134,11 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
 
         controlnet = MultiControlNetModel(controlnet_model)
 
+        if(seamless_gen):
+            for module in controlnet.modules():
+                if isinstance(module, torch.nn.Conv2d):
+                    module.padding_mode = "circular"
+
     timesteps = scheduler.timesteps[t_start:].to(torch_device)
     latents = init_latents
 

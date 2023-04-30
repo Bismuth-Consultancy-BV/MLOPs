@@ -32,28 +32,26 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -3.19138 -6.50796
-connectornextid 3
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -5.54991 -7.15105
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-2 "output1"
+0 "output1"
 }
 inputsNamed3
 {
-0 	sd_scheduler 1 1 "input1"
-1 	null1 1 1 "input2"
+1 	sd_scheduler1 0 1 "input1"
 }
 inputs
 {
-0 	sd_scheduler 0 1
-1 	null1 0 1
+0 	sd_scheduler1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Shass@Whitetower
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -161,6 +159,7 @@ unconditional_embeddings = numpy.array(embeddings.pointFloatAttribValues(\"uncon
 tensor_shape = list(geo1.attribValue(\"tensor_dimension\") )
 cfg_scale = geo1.attribValue(\"cfg_scale\")
 latent_dimension = list(geo1.attribValue(\"latent_dimension\"))
+seamless = geo1.attribValue(\"seamless\")
 
 text_embeddings = {}
 text_embeddings[\"unconditional_embedding\"] = unconditional_embeddings
@@ -177,7 +176,7 @@ scheduler_data[\"image_provided\"] = geo1.attribValue(\"image_provided\")
  
 # Solve
 model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
-latents = image_solve.run(num_inference_steps, latent_dimension, text_embeddings, controlnet_geo, bool(attention_slicing), cfg_scale, scheduler_data, device, model_path, local_cache_only=bool(cache_only))
+latents = image_solve.run(num_inference_steps, latent_dimension, text_embeddings, controlnet_geo, bool(attention_slicing), cfg_scale, scheduler_data, device, model_path, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
 
 # Export
 geo.setPointFloatAttribValues(\"latent\", list(map(float,latents.flatten())))
@@ -291,7 +290,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.6 0.7 0.77 
 delscript ""
 exprlanguage hscript
 end
@@ -565,7 +564,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.6 0.7 0.77 
 delscript ""
 exprlanguage hscript
 end
@@ -646,7 +645,7 @@ destgrouptype	[ 0	locks=0 ]	(	"points"	)
 matchbyattribute	[ 0	locks=0 ]	(	"off"	)
 attributetomatch	[ 0	locks=0 ]	(	piece	)
 attrib	[ 0	locks=0 ]	(	"otherattrib"	)
-attribname	[ 0	locks=0 ]	(	"latent_dimension image_dimension"	)
+attribname	[ 0	locks=0 ]	(	"latent_dimension image_dimension seamless"	)
 copyp	[ 0	locks=0 ]	(	"on"	)
 usenewname	[ 0	locks=0 ]	(	"off"	)
 newname	[ 0	locks=0 ]	(	""	)
@@ -702,7 +701,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 1 0.7 
 delscript ""
 exprlanguage hscript
 end
@@ -778,7 +777,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.6 0.7 0.77 
 delscript ""
 exprlanguage hscript
 end
@@ -839,7 +838,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.6 0.7 0.77 
 delscript ""
 exprlanguage hscript
 end

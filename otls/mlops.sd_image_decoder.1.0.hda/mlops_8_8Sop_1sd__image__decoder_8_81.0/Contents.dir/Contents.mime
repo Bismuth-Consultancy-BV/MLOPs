@@ -32,16 +32,16 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 7.20319 4.68766
+position -5.54991 -9.2049
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-1 "output1"
+0 "output1"
 }
 inputsNamed3
 {
-0 	sd_solver1 1 1 "input1"
+1 	sd_solver1 2 1 "input1"
 }
 inputs
 {
@@ -144,10 +144,11 @@ device = node.parent().parm(\"device\").evalAsString()
 # Attributes
 latents = numpy.array(geo1.pointFloatAttribValues(\"latent\"), dtype=numpy.float32)
 latent_dimension = list(geo1.attribValue(\"latent_dimension\"))#[node.parent().parm(\"latentwidth\").evalAsInt(),node.parent().parm(\"latentheight\").evalAsInt()]
+seamless = geo1.attribValue(\"seamless\")
 
 # Solve
 model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
-latents = image_decode.run(latents, latent_dimension, device, model_path, local_cache_only=bool(cache_only))
+latents = image_decode.run(latents, latent_dimension, device, model_path, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
 
 permuted_tensor = latents.transpose(1, 2, 0)
 permuted_tensor = permuted_tensor[:, ::-1, :]
