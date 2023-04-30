@@ -5,7 +5,7 @@ hip/backup/
 checkpoints/*/
 
 #ignore other unimportant expanded HDA files
-.OPfallbacks
-.OPdummydefs
-.createtimes
-.modtimes
+*.OPfallbacks
+*.OPdummydefs
+*.createtimes
+*.modtimes

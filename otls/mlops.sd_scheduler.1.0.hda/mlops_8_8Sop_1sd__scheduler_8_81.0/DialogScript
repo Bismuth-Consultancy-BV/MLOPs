@@ -101,16 +101,8 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
-            name    "sepparm"
-            label   "Spacer"
-            type    separator
-            default { "" }
-            parmtag { "sidefx::layout_height" "medium" }
-            parmtag { "sidefx::look" "blank" }
-        }
-        parm {
             name    "seamless"
-            label   "Seamless Generation"
+            label   "Tiling"
             type    toggle
             default { "0" }
             parmtag { "script_callback_language" "python" }

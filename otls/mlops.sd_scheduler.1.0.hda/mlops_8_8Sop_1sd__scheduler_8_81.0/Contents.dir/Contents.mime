@@ -32,28 +32,30 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.9215 -4.33032
-connectornextid 3
+position -1.35375 -1.50846
+connectornextid 4
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
+2 "output1"
 }
 inputsNamed3
 {
-1 	sd_text_encoder1 1 1 "input1"
-2 	sd_latent_noise_generate1 0 1 "input2"
+0 	sd_text_encoder1 2 1 "input1"
+1 	sd_latent_noise_generate1 0 1 "input2"
+3 	sd_image_encoder1 1 1 "input3"
 }
 inputs
 {
 0 	sd_text_encoder1 0 1
 1 	sd_latent_noise_generate1 0 1
+2 	sd_image_encoder1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Shass@Whitetower
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
