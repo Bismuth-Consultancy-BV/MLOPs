@@ -1,6 +1,11 @@
 import os
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
+import subprocess
+
+PIP_FOLDER = os.path.normpath(
+    os.path.join(hou.text.expandString("$HOUDINI_USER_PREF_DIR"), "scripts", "python")
+)
 
 
 def generate_gpt_code_from_prompt(prompt, wrapper, model="gpt-3.5-turbo"):
@@ -59,6 +64,47 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
 
     snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, local_dir_use_symlinks=True, local_files_only=cache_only, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
     return path.replace("\\", "/")
+
+def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
+    flags = 0
+    if os.name == "nt":
+        flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
+    cmd = [
+            "hython",
+            "-m",
+            "pip",
+            "install",
+            "--target",
+            PIP_FOLDER
+        ]
+
+    if upgrade:
+        cmd.append("--upgrade")
+
+    if not dep_is_txt:
+        cmd.extend(dependencies)
+    else:
+        cmd.append("-r")
+        cmd.append(dependencies)
+
+    env = os.environ.copy() 
+    if "PYTHONPATH" in env: 
+        del env["PYTHONPATH"] 
+
+    p = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        creationflags=flags,
+        env=env
+    )
+
+    while p.poll() is None:
+        line = p.stdout.readline().decode().strip()
+        if line and verbose:
+            print(line)
+    if p.returncode != 0:
+        raise hou.Error("Installation failed.")
 
 
 class MLOPSCheckpointDownloader(QtWidgets.QDialog):
@@ -229,3 +275,129 @@ class MLOPSConvertModel(QtWidgets.QDialog):
 
         self.setMinimumSize(hou.ui.scaledSize(500), hou.ui.scaledSize(100))
         self.show()
+
+
+class MLOPSPipInstall(QtWidgets.QDialog):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setWindowFlags(self.windowFlags() ^ QtCore.Qt.WindowContextHelpButtonHint)
+        self.buildUI()
+        self.resize(self.minimumSizeHint())
+
+    def closeEvent(self, event):
+        pass
+
+    def on_accept(self):
+        user_input = self.dep_field.text()
+        result = None
+        if user_input:
+            user_input = user_input.split(",")
+            user_input = [x.strip() for x in user_input]
+            result = user_input
+
+        if not result:
+            print("Canceled")
+            self.close()
+            return
+
+        with hou.InterruptableOperation(
+            "Pip Install", "Installing Dependencies", open_interrupt_dialog=True
+        ) as operation:
+
+            operation.updateLongProgress(
+                percentage=-1.0, long_op_status=f"Installing dependencies"
+            )
+            pip_install(result, upgrade=True, verbose=True)
+
+            # Informing user about the change
+            hou.ui.displayMessage(
+                "Install Complete",
+                buttons=("OK",),
+                severity=hou.severityType.Message,
+                title="MLOPs Plugin",
+            )
+
+        self.close()
+
+    def list_existing(self):
+        try:
+            from pip._vendor import pkg_resources
+
+            dists = pkg_resources.find_on_path(None, PIP_FOLDER)
+            dists = sorted(dists, key=lambda item: str(item))
+            return dists
+        except Exception as e:
+            print(e, file=sys.stderr)
+            return []
+
+    def on_cancel(self):
+        self.close()
+
+    def buildUI(self):
+        layout = QtWidgets.QVBoxLayout(self)
+
+        self.setWindowTitle("MLOPs - Pip Install")
+        message_widget = QtWidgets.QLabel(
+            "Enter a comma-separated list of dependencies to install"
+        )
+        layout.addWidget(message_widget)
+
+        # the dependency input field
+        input_layout = QtWidgets.QHBoxLayout()
+        dep_label = QtWidgets.QLabel("Dependencies: ")
+        self.dep_field = QtWidgets.QLineEdit("")
+        input_layout.addWidget(dep_label)
+        input_layout.addWidget(self.dep_field)
+
+        layout.addLayout(input_layout)
+
+        layout.addStretch(1)
+
+        buttonlayout = QtWidgets.QHBoxLayout()
+        install_button = QtWidgets.QPushButton("Install")
+        install_button.clicked.connect(self.on_accept)
+        buttonlayout.addWidget(install_button)
+
+        cancel_button = QtWidgets.QPushButton("Cancel")
+        cancel_button.clicked.connect(self.on_cancel)
+        buttonlayout.addWidget(cancel_button)
+
+        # detail panel toggle
+        self.detail_toggle = QtWidgets.QPushButton("Show Installed")
+        self.detail_toggle.clicked.connect(self.toggle_detail_panel)
+        buttonlayout.addWidget(self.detail_toggle)
+
+        # closable detail panel for installed packages
+        self.detail_panel = QtWidgets.QWidget()
+        detail_panel_layout = QtWidgets.QVBoxLayout()
+
+        detail_label = QtWidgets.QLabel("Installed Packages:")
+        detail_panel_layout.addWidget(detail_label)
+
+        scroll_area = QtWidgets.QScrollArea(self.detail_panel)
+        scroll_area.setWidgetResizable(True)
+
+        installed_label = QtWidgets.QLabel(
+            "\n".join([str(x) for x in self.list_existing()])
+        )
+
+        scroll_area.setWidget(installed_label)
+        detail_panel_layout.addWidget(scroll_area)
+
+        self.detail_panel.setLayout(detail_panel_layout)
+        self.detail_panel.hide()
+        layout.addWidget(self.detail_panel)
+        layout.addLayout(buttonlayout)
+
+        self.setMinimumSize(hou.ui.scaledSize(300), hou.ui.scaledSize(150))
+        self.show()
+
+    def toggle_detail_panel(self):
+        if self.detail_panel.isHidden():
+            self.detail_panel.show()
+            self.detail_toggle.setText("Hide Installed")
+
+        else:
+            self.detail_panel.hide()
+            self.detail_toggle.setText("Show Installed")
+

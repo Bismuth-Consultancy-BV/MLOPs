@@ -7,20 +7,21 @@
 
   <toolshelf name="mlops" label="MLOPs">
     <memberTool name="mlops_install"/>
+    <memberTool name="mlops_pip_install"/>
     <memberTool name="mlops_download_model"/>
     <memberTool name="mlops_convert_model"/>
   </toolshelf>
 
   <tool name="mlops_install" label="Install Dependencies" icon="$MLOPs/help/icons/mlops.svg">
-    <script scriptType="python"><![CDATA[
-import subprocess
+    <script scriptType="python"><![CDATA[import subprocess
 import os
 import hashlib
 from urllib import request
 import ssl
+import mlops_utils
 
 FOLDER = os.path.normpath(os.path.join(hou.text.expandString("$HOUDINI_TEMP_DIR"), "MLOPs"))
-PIP_FOLDER = os.path.normpath(os.path.join(hou.text.expandString("$HOUDINI_USER_PREF_DIR"), "scripts", "python"))
+PIP_FOLDER = mlops_utils.PIP_FOLDER
 PIPINSTALLFILE = os.path.normpath(os.path.join(FOLDER, "get-pip.py"))
 
 # Downloading pip installation file   
@@ -34,9 +35,14 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
     flags = 0
     if os.name == 'nt':
         flags = subprocess.CREATE_NO_WINDOW
+        
+    env = os.environ.copy() 
+    if "PYTHONPATH" in env: 
+        del env["PYTHONPATH"] 
+
     # Trying to download get-pip with curl , this can quietly fail when behind proxy 
     hou.ui.setStatusMessage("curl download get-pip.py")
-    p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
+    p = subprocess.Popen(["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"], env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
         raise hou.Error(out.decode())
@@ -72,19 +78,15 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
 
     # Installing pip to Houdini
     hou.ui.setStatusMessage("Installing pip to Houdini")
-    p = subprocess.Popen(["hython", PIPINSTALLFILE], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
+    p = subprocess.Popen(["hython", PIPINSTALLFILE], env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
         raise hou.Error(out.decode())
     operation.updateProgress(percentage=count/total)
     count+=1
 
-    hou.ui.setStatusMessage("Installing openai, omegaconf, transformers, accelerate, scipy, opencv-contrib-python, controlnet_aux, torchmetrics, clip_interrogator")    
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "-r", hou.text.expandString("$MLOPS/requirements.txt")], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
-    out, err = p.communicate()
-    if err:
-       raise hou.Error(out.decode())
-    operation.updateProgress(percentage=count/total)
+    hou.ui.setStatusMessage("Installing requirements.txt")    
+    mlops_utils.pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
     count+=1
 
 
@@ -106,5 +108,16 @@ from imp import reload
 reload(mlops_utils)
 
 mlops_utils.MLOPSConvertModel(hou.qt.mainWindow())]]></script>
+  </tool>
+
+  <tool name="mlops_pip_install" label="Pip Install" icon="$MLOPS/help/icons/mlops.svg">
+    <script scriptType="python"><![CDATA[import mlops_utils
+from imp import reload
+reload(mlops_utils)
+
+mlops_utils.MLOPSPipInstall(hou.qt.mainWindow())
+
+
+]]></script>
   </tool>
 </shelfDocument>
