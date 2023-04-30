@@ -1,0 +1,11 @@
+{
+	"values":["1","2","19.5.538"
+	],
+	"indexes":{
+		"hdaroot/partitionbyattribute1.userdata":0,
+		"hdaroot/output0.userdata":2,
+		"hdaroot/attributecreate1.userdata":1,
+		"hdaroot/filecopy1.userdata":0,
+		"hdaroot/fileremove1.userdata":0
+	}
+}
