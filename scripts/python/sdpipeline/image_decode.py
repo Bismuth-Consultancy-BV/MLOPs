@@ -7,7 +7,7 @@ def run(input_latents, latent_dimension, torch_device, model, local_cache_only=T
     vae = AutoencoderKL.from_pretrained(model, subfolder="vae", local_files_only=local_cache_only)
     vae.to(torch_device)
 
-    if(seamless_gen):
+    if seamless_gen:
         for module in vae.modules():
             if isinstance(module, torch.nn.Conv2d):
                 module.padding_mode = "circular"
