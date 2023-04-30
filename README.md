@@ -43,4 +43,5 @@ Both of the above varibles can be changed in the `MLOPS.json` to suit your prefe
 
 # Notes
 - We have provided a basic example file in this repo. You can find it in the `hip/` folder.
-- This plugin installs quite a few dependencies. You can find them in `requirements.txt`
+- This plugin installs quite a few dependencies. You can find them in `requirements.txt`.
+- Digital Assets (HDAs) are stored and distributed in the expanded format. You can use [hotl](https://www.sidefx.com/docs/houdini/ref/utils/hotl.html) to collapse them if need be.
