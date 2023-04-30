@@ -65,6 +65,47 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
     snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, local_dir_use_symlinks=True, local_files_only=cache_only, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
     return path.replace("\\", "/")
 
+def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
+    flags = 0
+    if os.name == "nt":
+        flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
+    cmd = [
+            "hython",
+            "-m",
+            "pip",
+            "install",
+            "--target",
+            PIP_FOLDER
+        ]
+
+    if upgrade:
+        cmd.append("--upgrade")
+
+    if not dep_is_txt:
+        cmd.extend(dependencies)
+    else:
+        cmd.append("-r")
+        cmd.append(dependencies)
+
+    env = os.environ.copy() 
+    if "PYTHONPATH" in env: 
+        del env["PYTHONPATH"] 
+
+    p = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        creationflags=flags,
+        env=env
+    )
+
+    while p.poll() is None:
+        line = p.stdout.readline().decode().strip()
+        if line and verbose:
+            print(line)
+    if p.returncode != 0:
+        raise hou.Error("Installation failed.")
+
 
 class MLOPSCheckpointDownloader(QtWidgets.QDialog):
     def __init__(self, parent):
@@ -360,44 +401,3 @@ class MLOPSPipInstall(QtWidgets.QDialog):
             self.detail_panel.hide()
             self.detail_toggle.setText("Show Installed")
 
-
-def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
-    flags = 0
-    if os.name == "nt":
-        flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
-    cmd = [
-            "hython",
-            "-m",
-            "pip",
-            "install",
-            "--target",
-            PIP_FOLDER
-        ]
-
-    if upgrade:
-        cmd.append("--upgrade")
-
-    if not dep_is_txt:
-        cmd.extend(dependencies)
-    else:
-        cmd.append("-r")
-        cmd.append(dependencies)
-
-    env = os.environ.copy() 
-    if "PYTHONPATH" in env: 
-        del env["PYTHONPATH"] 
-
-    p = subprocess.Popen(
-        cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        creationflags=flags,
-        env=env
-    )
-
-    while p.poll() is None:
-        line = p.stdout.readline().decode().strip()
-        if line and verbose:
-            print(line)
-    if p.returncode != 0:
-        raise hou.Error("Installation failed.")
