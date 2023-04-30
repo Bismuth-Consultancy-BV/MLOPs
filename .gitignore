@@ -4,3 +4,10 @@
 hip/backup/
 checkpoints/*/
 scripts/sd-model-finetuned-lora/*
+
+#ignore other unimportant expanded HDA files
+*.OPfallbacks
+*.OPdummydefs
+*.createtimes
+*.modtimes
+

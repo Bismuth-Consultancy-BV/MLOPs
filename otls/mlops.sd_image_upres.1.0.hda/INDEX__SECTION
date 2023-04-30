@@ -1,0 +1,14 @@
+Operator:     mlops::sd_image_upres::1.0
+Label:        MLOPs SD Image Upres
+Path:         oplib:/mlops::Sop/sd_image_upres::1.0?mlops::Sop/sd_image_upres::1.0
+Icon:         SOP_subnet
+Table:        Sop
+License:      
+Extra:        inputcolors='2 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       2 to 2
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Tue Apr 11 18:42:03 2023
+

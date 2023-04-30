@@ -13,7 +13,13 @@ def run(input_latents, latent_dimension, image_latents, guiding_strength, infere
         print(f"Unexpected {err}, {type(err)}")
 
     scheduler_object.set_timesteps(inference_steps)
-    noise_latents = torch.from_numpy(numpy.array([input_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+    noise_latents = torch.from_numpy(numpy.array([input_latents.reshape(4, latent_dimension[0], latent_dimension[1])]))
+
+    # If torch_device is `mps``, make sure dtype is set to float32
+    # as currently MPS cannot handle float64
+    if torch_device == 'mps':
+        noise_latents = noise_latents.to(torch.float32)
+    noise_latents = noise_latents.to(torch_device)
 
     scheduler = {}
     scheduler["guided_latents"] = noise_latents.cpu().numpy()[0]
@@ -28,7 +34,11 @@ def run(input_latents, latent_dimension, image_latents, guiding_strength, infere
 
     if len(image_latents) != 0:
         if guiding_strength > 0.05 and guiding_strength < 1.0:
-            image_latents = torch.from_numpy(numpy.array([image_latents.reshape(4, latent_dimension[0], latent_dimension[1])])).to(torch_device)
+            image_latents = torch.from_numpy(numpy.array([image_latents.reshape(4, latent_dimension[0], latent_dimension[1])]))
+            # for mps device, make sure dtype is set to float32
+            if torch_device == 'mps':
+                image_latents = image_latents.to(torch.float32)
+            image_latents = image_latents.to(torch_device)
             guided_latents = scheduler_object.add_noise(image_latents, noise_latents, timesteps)
             scheduler["guided_latents"] = guided_latents.cpu().numpy()[0]
             t_start = max(inference_steps - init_timestep, 0)

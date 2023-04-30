@@ -1,0 +1,40 @@
+# Dialog script for mlops::resize_image::1.0 automatically generated
+
+{
+    name	mlops::resize_image::1.0
+    script	labs::wfc_initialize
+    label	"MLOPs Resize Image"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "height"
+            label   "Width"
+            type    integer
+            default { "768" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "width"
+            label   "Height"
+            type    integer
+            default { "768" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}
