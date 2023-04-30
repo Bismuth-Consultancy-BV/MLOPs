@@ -1,0 +1,16 @@
+setuptools
+openai
+omegaconf
+transformers
+accelerate
+scipy
+opencv-contrib-python
+controlnet_aux
+torchmetrics
+clip_interrogator
+diffusers
+
+--extra-index-url "https://download.pytorch.org/whl/cu117"
+torch
+torchvision
+torchaudio
