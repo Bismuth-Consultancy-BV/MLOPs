@@ -259,18 +259,14 @@ class MLOPSPipInstall(QtWidgets.QDialog):
             self.close()
             return
 
-        count = 0
-        total = len(result)
-
         with hou.InterruptableOperation(
             "Pip Install", "Installing Dependencies", open_interrupt_dialog=True
         ) as operation:
-            for dep in result:
-                operation.updateLongProgress(
-                    percentage=count / total, long_op_status=f"Installing {dep}"
-                )
-                pip_install(dep)
-                count += 1
+
+            operation.updateLongProgress(
+                percentage=-1.0, long_op_status=f"Installing dependencies"
+            )
+            pip_install(result, upgrade=True, verbose=True)
 
             # Informing user about the change
             hou.ui.displayMessage(
@@ -301,7 +297,7 @@ class MLOPSPipInstall(QtWidgets.QDialog):
 
         self.setWindowTitle("MLOPs - Pip Install")
         message_widget = QtWidgets.QLabel(
-            "Enter a comma-separated list of dependencies"
+            "Enter a comma-separated list of dependencies to install"
         )
         layout.addWidget(message_widget)
 
@@ -365,28 +361,37 @@ class MLOPSPipInstall(QtWidgets.QDialog):
             self.detail_toggle.setText("Show Installed")
 
 
-def pip_install(dep):
+def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
     flags = 0
     if os.name == "nt":
         flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
-    p = subprocess.Popen(
-        [
+    cmd = [
             "hython",
             "-m",
             "pip",
             "install",
-            "--upgrade",
             "--target",
-            PIP_FOLDER,
-            dep,
-        ],
+            PIP_FOLDER
+        ]
+
+    if upgrade:
+        cmd.append("--upgrade")
+
+    if not dep_is_txt:
+        cmd.extend(dependencies)
+    else:
+        cmd.append("-r")
+        cmd.append(dependencies)
+
+    p = subprocess.Popen(
+        cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         creationflags=flags,
     )
     while p.poll() is None:
         line = p.stdout.readline().decode().strip()
-        if line:
+        if line and verbose:
             print(line)
     if p.returncode != 0:
         raise hou.Error("Installation failed.")
