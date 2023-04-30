@@ -109,7 +109,7 @@
             }
         }
 
-        group {
+        groupsimple {
             name    "albedo"
             label   "Color"
             tabbreak
