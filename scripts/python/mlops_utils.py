@@ -383,12 +383,18 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
         cmd.append("-r")
         cmd.append(dependencies)
 
+    env = os.environ.copy() 
+    if "PYTHONPATH" in env: 
+        del env["PYTHONPATH"] 
+
     p = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         creationflags=flags,
+        env=env
     )
+
     while p.poll() is None:
         line = p.stdout.readline().decode().strip()
         if line and verbose:
