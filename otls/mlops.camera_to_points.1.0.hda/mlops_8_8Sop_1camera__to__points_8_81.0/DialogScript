@@ -1,0 +1,139 @@
+# Dialog script for mlops::camera_to_points::1.0 automatically generated
+
+{
+    name	mlops::camera_to_points::1.0
+    script	leuns::dev::MLOPS_depth_reader::1.0
+    label	"MLOPs Camera to Points"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "mode"
+            label   "Mode"
+            type    ordinal
+            default { "0" }
+            menu {
+                "depth"     "Depth"
+                "normal"    "Normal"
+                "segment"   "Segmentation"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "camerapath"
+            label   "Camera Path"
+            type    oppath
+            default { "/obj/cam1/" }
+            help    "Camera that will be rendered"
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "opfilter" "/obj/camera" }
+            parmtag { "oprelative" "." }
+        }
+        parm {
+            name    "width"
+            label   "Width"
+            type    integer
+            default { "512" }
+            help    "Image pixel width (should match SD settings)"
+            range   { 1! 50 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "height"
+            label   "Height"
+            type    integer
+            default { "512" }
+            help    "Image pixel height (should match SD settings)"
+            range   { 1! 50 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "folder1"
+            label   "Depth"
+            disablewhen "{ mode != depth }"
+
+            parm {
+                name    "minchoke"
+                label   "Min Choke"
+                type    float
+                default { "0" }
+                help    "Change the minimum depth clipping plane"
+                range   { 0 1 }
+                parmtag { "autoscope" "0000000000000000" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "maxchoke"
+                label   "Max Choke"
+                type    float
+                default { "0" }
+                help    "Change the maximum depth clipping plane"
+                range   { 0 1 }
+                parmtag { "autoscope" "0000000000000000" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    groupsimple {
+        name    "folder2"
+        label   "Objects"
+
+        multiparm {
+            name    "numobj"
+            label    "Number of Objects"
+            default 1
+            parmtag { "autoscope" "0000000000000000" }
+
+            parm {
+                name    "enable#"
+                label   "Enable Merge #"
+                type    toggle
+                default { "1" }
+            }
+            parm {
+                name    "objpath#"
+                label   "Object #"
+                type    oppath
+                default { "" }
+                parmtag { "opfilter" "!!SOP!!" }
+                parmtag { "oprelative" "." }
+            }
+            parm {
+                name    "group#"
+                label   "Group #"
+                type    string
+                default { "" }
+            }
+            parm {
+                name    "expand#"
+                label   "Expand Group #"
+                type    toggle
+                default { "0" }
+            }
+            parm {
+                name    "sepparm2_#_3"
+                label   "Separator"
+                type    separator
+                default { "" }
+            }
+        }
+
+    }
+
+}

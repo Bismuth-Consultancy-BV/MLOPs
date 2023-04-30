@@ -1,0 +1,62 @@
+# Dialog script for mlops::sd_image_encoder::1.0 automatically generated
+
+{
+    name	mlops::sd_image_encoder::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs SD Image Encoder"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Image Latents"
+
+    groupsimple {
+        name    "folder0"
+        label   "Model"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "Vae Model"
+            type    string
+            default { "$MLOPS_MODEL" }
+            menureplace {
+                [ "import mlops_utils" ]
+                [ "return mlops_utils.return_downloaded_checkpoints()" ]
+                language python
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

@@ -1,0 +1,46 @@
+# Dialog script for mlops::sd_tokenizer::1.0 automatically generated
+
+{
+    name	mlops::sd_tokenizer::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs SD Tokenizer"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Prompt String"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Semantically Labeled Tokens"
+
+    groupsimple {
+        name    "folder0"
+        label   "Model"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            joinnext
+            default { "1" }
+            disablewhen "{ modelcache == 1 }"
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "Tokenizer Model"
+            type    string
+            default { "$MLOPS_MODEL" }
+            disablewhen "{ modelcache == 1 }"
+            menureplace {
+                [ "import mlops_utils" ]
+                [ "return mlops_utils.return_downloaded_checkpoints()" ]
+                language python
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

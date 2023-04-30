@@ -3,3 +3,9 @@
 /otls/backup/
 hip/backup/
 checkpoints/*/
+
+#ignore other unimportant expanded HDA files
+.OPfallbacks
+.OPdummydefs
+.createtimes
+.modtimes

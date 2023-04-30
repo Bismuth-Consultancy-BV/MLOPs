@@ -1,0 +1,14 @@
+Operator:     mlops::sd_prompt_create::1.0
+Label:        MLOPs SD Prompt Create
+Path:         oplib:/mlops::Sop/sd_prompt_create::1.0?mlops::Sop/sd_prompt_create::1.0
+Icon:         opdef:/mlops::Sop/sd_prompt_create::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       0 to 0
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed Apr 26 17:59:50 2023
+

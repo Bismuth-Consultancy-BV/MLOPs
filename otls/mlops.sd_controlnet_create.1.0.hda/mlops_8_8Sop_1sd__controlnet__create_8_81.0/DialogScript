@@ -1,0 +1,59 @@
+# Dialog script for mlops::sd_controlnet_create::1.0 automatically generated
+
+{
+    name	mlops::sd_controlnet_create::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs SD ControlNet Create"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	ControlNet
+
+    groupsimple {
+        name    "folder0"
+        label   "Model"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "ControlNet Model"
+            type    string
+            default { "lllyasviel/sd-controlnet-seg" }
+            disablewhen "{ modelcache == 1 }"
+            menureplace {
+                [ "import mlops_utils" ]
+                [ "return mlops_utils.return_downloaded_checkpoints()" ]
+                language python
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+
+        parm {
+            name    "conditioningscale"
+            label   "Conditioning Scale"
+            type    float
+            default { "1" }
+            range   { 0! 1! }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}
