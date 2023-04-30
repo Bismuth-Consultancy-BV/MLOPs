@@ -100,6 +100,13 @@
             range   { 0 1 }
             parmtag { "script_callback_language" "python" }
         }
+        parm {
+            name    "seamless"
+            label   "Tiling"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
     }
 
 }
