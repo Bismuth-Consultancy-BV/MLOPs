@@ -135,118 +135,13 @@ mlops_utils.MLOPSConvertModel(hou.qt.mainWindow())]]></script>
   </tool>
 
   <tool name="mlops_pip_install" label="Pip Install" icon="$MLOPS/help/icons/mlops.svg">
-    <script scriptType="python"><![CDATA[import subprocess
-import os
-import hashlib
-from urllib import request
-import ssl
+    <script scriptType="python"><![CDATA[import mlops_utils
+from imp import reload
+reload(mlops_utils)
 
-PIP_FOLDER = os.path.normpath(
-    os.path.join(hou.text.expandString("$HOUDINI_USER_PREF_DIR"), "scripts", "python")
-)
-
-from PySide2 import QtWidgets, QtGui
-
-count = 1
-total = 1
-flags = 0
-if os.name == "nt":
-    flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
+mlops_utils.MLOPSPipInstall(hou.qt.mainWindow())
 
 
-class ListInputDialog(QtWidgets.QDialog):
-    def __init__(self):
-        super(ListInputDialog, self).__init__()
-        self.setWindowTitle("Pip Install")
-        self.setFixedSize(300, 150)
-
-        layout = QtWidgets.QVBoxLayout()
-
-        prompt_label = QtWidgets.QLabel("Enter a comma-separated list of dependencies:")
-        layout.addWidget(prompt_label)
-
-        self.text_edit = QtWidgets.QLineEdit()
-        layout.addWidget(self.text_edit)
-
-        buttons_layout = QtWidgets.QHBoxLayout()
-        confirm_button = QtWidgets.QPushButton("Confirm")
-        confirm_button.clicked.connect(self.confirm)
-        buttons_layout.addWidget(confirm_button)
-
-        cancel_button = QtWidgets.QPushButton("Cancel")
-        cancel_button.clicked.connect(self.exit)
-        buttons_layout.addWidget(cancel_button)
-
-        layout.addLayout(buttons_layout)
-
-        self.setLayout(layout)
-
-    def confirm(self):
-        global total
-        user_input = self.text_edit.text()
-        self.result = None
-        if user_input:
-            user_input = user_input.split(",")
-            user_input = [x.strip() for x in user_input]
-            total = len(user_input)
-            self.result = user_input
-
-        self.accept()
-
-    def exit(self):
-        self.result = None
-        self.accept()
-
-
-dialog = ListInputDialog()
-result = dialog.exec_()
-if result == QtWidgets.QDialog.Accepted and dialog.result:
-    user_input = dialog.result
-    with hou.InterruptableOperation(
-        "Pip Install", "Installing Dependencies", open_interrupt_dialog=True
-    ) as operation:
-
-        def pip_install(dep):
-            global count, flags
-            operation.updateLongProgress(
-                percentage=count / total, long_op_status=f"Installing {dep}"
-            )
-            p = subprocess.Popen(
-                [
-                    "hython",
-                    "-m",
-                    "pip",
-                    "install",
-                    "--upgrade",
-                    "--target",
-                    PIP_FOLDER,
-                    dep,
-                ],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                creationflags=flags,
-            )
-            while p.poll() is None:
-                line = p.stdout.readline().decode().strip()
-                if line:
-                    print(line)
-            if p.returncode != 0:
-                raise hou.Error("Installation failed.")
-            count += 1
-
-        for dep in user_input:
-            pip_install(dep)
-
-    # Informing user about the change
-    hou.ui.displayMessage(
-        "Install Complete",
-        buttons=("OK",),
-        severity=hou.severityType.Message,
-        title="MLOPs Plugin",
-    )
-
-else:
-    print("User cancelled the input dialog.")
 ]]></script>
   </tool>
 </shelfDocument>
