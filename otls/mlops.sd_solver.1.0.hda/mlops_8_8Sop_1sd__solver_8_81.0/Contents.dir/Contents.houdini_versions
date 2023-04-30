@@ -1,0 +1,17 @@
+{
+	"values":["19.5.534"
+	],
+	"indexes":{
+		"hdaroot/null3.userdata":0,
+		"hdaroot/attribcopy1.userdata":0,
+		"hdaroot/unpack1.userdata":0,
+		"hdaroot/attribcreate1.userdata":0,
+		"hdaroot/pointgenerate2.userdata":0,
+		"hdaroot/switchif1.userdata":0,
+		"hdaroot/null1.userdata":0,
+		"hdaroot/null2.userdata":0,
+		"hdaroot/output0.userdata":0,
+		"hdaroot/null5.userdata":0,
+		"hdaroot/solver.userdata":0
+	}
+}

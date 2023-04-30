@@ -28,7 +28,7 @@ PIPINSTALLFILE = os.path.normpath(os.path.join(FOLDER, "get-pip.py"))
 if not os.path.isdir(FOLDER):
     os.makedirs(FOLDER)
 
-total = 7
+total = 3
 count = 1
 with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", open_interrupt_dialog=True) as operation:
     
@@ -80,39 +80,14 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
     operation.updateProgress(percentage=count/total)
     count+=1
 
-
-    # Installing / Upgrading setuptools because on py3.9 some modules need to be rebuilt
-    hou.ui.setStatusMessage("Installing / Upgrading setuptools ")
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--upgrade", PIP_FOLDER, "setuptools"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
-    out, err = p.communicate()
-    if err:
-        raise hou.Error(out.decode())
-    operation.updateProgress(percentage=count/total)
-    count+=1
-        
-    hou.ui.setStatusMessage("Installing torch ")
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "torch", "--index-url", "https://download.pytorch.org/whl/cu117"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
-    out, err = p.communicate()
-    if err:
-        raise hou.Error(out.decode())
-    operation.updateProgress(percentage=count/total)
-    count+=1
-
     hou.ui.setStatusMessage("Installing openai, omegaconf, transformers, accelerate, scipy, opencv-contrib-python, controlnet_aux, torchmetrics, clip_interrogator")    
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "openai", "omegaconf", "transformers", "accelerate", "scipy", "opencv-contrib-python", "controlnet_aux", "torchmetrics", "clip_interrogator"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = flags)
+    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "-r", hou.text.expandString("$MLOPS/requirements.txt")], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags = flags)
     out, err = p.communicate()
     if err:
        raise hou.Error(out.decode())
     operation.updateProgress(percentage=count/total)
     count+=1
 
-    hou.ui.setStatusMessage("Installing diffusers 0.15.0 ")
-    p = subprocess.Popen(["hython", "-m", "pip", "install", "--target", PIP_FOLDER, "diffusers==0.15.0"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,creationflags = flags)
-    out, err = p.communicate()
-    if err:
-       raise hou.Error(out.decode())
-    operation.updateProgress(percentage=count/total)
-    count+=1
 
 # Informing user about the change
 hou.ui.displayMessage("You have now installed the required dependencies for this build of Houdini.\nPlease restart Houdini for it to take effect", buttons=('OK',), severity=hou.severityType.Message, title="MLOPs Plugin")]]></script>

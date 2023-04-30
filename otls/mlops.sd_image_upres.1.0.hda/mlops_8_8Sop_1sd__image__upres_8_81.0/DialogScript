@@ -1,0 +1,98 @@
+# Dialog script for mlops::sd_image_upres::1.0 automatically generated
+
+{
+    name	mlops::sd_image_upres::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs SD Image Upres"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Text Embeddings"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    parm {
+        name    "modelcache"
+        label   "Model Cache"
+        type    ordinal
+        joinnext
+        default { "0" }
+        menu {
+            "0" "Huggingface"
+            "1" "Disk"
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "device"
+        label   "Compute Device"
+        type    ordinal
+        default { "0" }
+        menu {
+            "cuda"  "cuda"
+            "cpu"   "cpu"
+            "mps"   "mps"
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "model"
+        label   "Decoder Model"
+        type    string
+        default { "stabilityai/stable-diffusion-x4-upscaler" }
+        disablewhen "{ modelcache == 1 }"
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "cache_only"
+        label   "Use Local Cache"
+        type    toggle
+        default { "1" }
+        disablewhen "{ modelcache == 1 }"
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "modelpath"
+        label   "Upres Model Path"
+        type    directory
+        default { "" }
+        disablewhen "{ modelcache == 0 }"
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "latentwidth"
+        label   "Latent Width"
+        type    integer
+        default { "96" }
+        range   { 0 10 }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "latentheight"
+        label   "Latent Height"
+        type    integer
+        default { "96" }
+        range   { 0 10 }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "seed"
+        label   "Seed"
+        type    integer
+        default { "44" }
+        range   { 0 10 }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "steps"
+        label   "Num Inference Steps"
+        type    integer
+        default { "75" }
+        range   { 0 10 }
+        parmtag { "script_callback_language" "python" }
+    }
+}
