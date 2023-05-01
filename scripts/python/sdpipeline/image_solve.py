@@ -69,7 +69,7 @@ from . import schedulers_lookup
 
 
 
-def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model, local_cache_only=True, seamless_gen=False):
+def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model, attn_proc_model, local_cache_only=True, seamless_gen=False):
 
     no_half = 'mps' == torch_device
     dtype_unet = torch.float32 if no_half else torch.float16
@@ -85,6 +85,8 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
     timesteps = scheduler.timesteps
 
     unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only, torch_dtype=dtype_unet)
+    if attn_proc_model != "":
+        unet.load_attn_procs(attn_proc_model, use_safetensors=attn_proc_model.endswith(".safetensors"))
     unet.to(torch_device)
 
     if seamless_gen:

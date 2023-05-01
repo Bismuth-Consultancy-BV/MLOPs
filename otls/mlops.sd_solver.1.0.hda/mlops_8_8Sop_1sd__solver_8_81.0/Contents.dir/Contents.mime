@@ -32,16 +32,16 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -5.54991 -7.15105
+position -1.35375 -2.60407
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
+1 "output1"
 }
 inputsNamed3
 {
-1 	sd_scheduler1 0 1 "input1"
+0 	sd_scheduler1 2 1 "input1"
 }
 inputs
 {
@@ -51,7 +51,7 @@ stat
 {
   create -1
   modify -1
-  author Shass@Whitetower
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -151,6 +151,7 @@ device = node.parent().parm(\"device\").evalAsString()
 model = node.parent().parm(\"model\").evalAsString()
 cache_only = node.parent().parm(\"cache_only\").evalAsInt()
 attention_slicing = node.parent().parm(\"attentionslicing\").evalAsInt()
+attn_proc_model = node.parent().parm(\"loraweights\").evalAsString()
 
 # Attributes
 num_inference_steps = geo1.attribValue(\"num_inference_steps\")
@@ -173,10 +174,14 @@ scheduler_data[\"guided_latent\"] = numpy.array(geo1.pointFloatAttribValues(\"gu
 scheduler_data[\"image_latent\"] = numpy.array(geo1.pointFloatAttribValues(\"image_latent\"), dtype=numpy.float32)
 scheduler_data[\"mask_latent\"] = numpy.array(geo1.pointFloatAttribValues(\"mask_latent\"), dtype=numpy.float32)
 scheduler_data[\"image_provided\"] = geo1.attribValue(\"image_provided\")
- 
+
+
+
+    
+    
 # Solve
 model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
-latents = image_solve.run(num_inference_steps, latent_dimension, text_embeddings, controlnet_geo, bool(attention_slicing), cfg_scale, scheduler_data, device, model_path, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
+latents = image_solve.run(num_inference_steps, latent_dimension, text_embeddings, controlnet_geo, bool(attention_slicing), cfg_scale, scheduler_data, device, model_path, attn_proc_model, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
 
 # Export
 geo.setPointFloatAttribValues(\"latent\", list(map(float,latents.flatten())))
@@ -290,7 +295,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -564,7 +569,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -701,7 +706,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 1 0.7 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -777,7 +782,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -838,7 +843,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
