@@ -9,6 +9,7 @@ controlnet_aux
 torchmetrics
 clip_interrogator
 diffusers
+xformers
 
 --extra-index-url "https://download.pytorch.org/whl/cu117"
 torch

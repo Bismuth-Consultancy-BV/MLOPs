@@ -203,7 +203,7 @@ DATASET_NAME_MAPPING = {
 
 
 def main():
-    global logging_dir, learning_rate, image_column, caption_column, max_train_steps, num_train_epochs
+    global logging_dir, learning_rate, max_train_steps, num_train_epochs
     global lr_scheduler, resume_from_checkpoint
     logging_dir = os.path.join(output_dir, logging_dir)
 
@@ -355,47 +355,45 @@ def main():
 
     # In distributed training, the load_dataset function guarantees that only one local process can concurrently
     # download the dataset.
-    if dataset_name is not None:
-        # Downloading and loading a dataset from the hub.
-        dataset = load_dataset(
-            dataset_name,
-            dataset_config_name,
-            cache_dir=cache_dir,
-        )
-    else:
-        data_files = {}
-        if train_data_dir is not None:
-            data_files["train"] = os.path.join(train_data_dir, "**")
-        dataset = load_dataset(
-            "imagefolder",
-            data_files=data_files,
-            cache_dir=cache_dir,
-        )
+    # if dataset_name is not None:
+    #     # Downloading and loading a dataset from the hub.
+    #     dataset = load_dataset(
+    #         dataset_name,
+    #         dataset_config_name,
+    #         cache_dir=cache_dir,
+    #     )
+    # else:
+    #     data_files = {}
+    #     if train_data_dir is not None:
+    #         data_files["train"] = os.path.join(train_data_dir, "**")
+    #     dataset = load_dataset(
+    #         "imagefolder",
+    #         data_files=data_files,
+    #         cache_dir=cache_dir,
+    #     )
         # See more about loading custom images at
         # https://huggingface.co/docs/datasets/v2.4.0/en/image_load#imagefolder
 
+    # TODO: MAKE MLOPS LOADER
+    dataset = datasets.load_dataset(path=r"H:\MLOPS\my_dataset\MyDataset.py", name="train", data_dir=r"H:/MLOPS/my_dataset/")
+
     # Preprocessing the datasets.
     # We need to tokenize inputs and targets.
-    column_names = dataset["train"].column_names
+    # column_names = dataset["train"].column_names
 
     # 6. Get the column names for input/target.
-    dataset_columns = DATASET_NAME_MAPPING.get(dataset_name, None)
-    if image_column is None:
-        image_column = dataset_columns[0] if dataset_columns is not None else column_names[0]
-    else:
-        image_column = image_column
-        if image_column not in column_names:
-            raise ValueError(
-                f"--image_column' value '{image_column}' needs to be one of: {', '.join(column_names)}"
-            )
-    if caption_column is None:
-        caption_column = dataset_columns[1] if dataset_columns is not None else column_names[1]
-    else:
-        caption_column = caption_column
-        if caption_column not in column_names:
-            raise ValueError(
-                f"--caption_column' value '{caption_column}' needs to be one of: {', '.join(column_names)}"
-            )
+    
+    # image_column = image_column
+    # if image_column not in column_names:
+    #     raise ValueError(
+    #         f"--image_column' value '{image_column}' needs to be one of: {', '.join(column_names)}"
+    #     )
+
+    # caption_column = caption_column
+    # if caption_column not in column_names:
+    #     raise ValueError(
+    #         f"--caption_column' value '{caption_column}' needs to be one of: {', '.join(column_names)}"
+    #     )
 
     # Preprocessing the datasets.
     # We need to tokenize input captions and transform the images.
