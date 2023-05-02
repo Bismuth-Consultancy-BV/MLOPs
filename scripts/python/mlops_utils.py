@@ -4,9 +4,8 @@ from hutil.Qt import QtCore, QtGui, QtWidgets
 import subprocess
 
 PIP_FOLDER = os.path.normpath(
-    os.path.join(hou.text.expandString("$HOUDINI_USER_PREF_DIR"), "scripts", "python")
+    os.path.join(hou.text.expandString("$MLOPS"), "data", "dependencies", "python")
 )
-
 
 def generate_gpt_code_from_prompt(prompt, wrapper, model="gpt-3.5-turbo"):
     import openai
@@ -93,10 +92,10 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
 
     p = subprocess.Popen(
         cmd,
+        env=env,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         creationflags=flags,
-        env=env,
     )
 
     out, err = p.communicate()

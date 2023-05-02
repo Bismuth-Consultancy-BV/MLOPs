@@ -9,3 +9,4 @@ checkpoints/*/
 *.OPdummydefs
 *.createtimes
 *.modtimes
+/data/dependencies/python/
