@@ -1,0 +1,26 @@
+# Dialog script for mlops::import_colored_points::1.0 automatically generated
+
+{
+    name	mlops::import_colored_points::1.0
+    script	mlops::import_colored_points::1.0
+    label	"MLOPs Import Colored Points"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"C Plane"
+
+    parm {
+        name    "image"
+        label   "Image"
+        type    oppath
+        default { "" }
+        parmtag { "oprelative" "." }
+        parmtag { "script_callback_language" "python" }
+    }
+}
