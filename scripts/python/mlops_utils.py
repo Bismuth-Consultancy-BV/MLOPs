@@ -96,15 +96,12 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         creationflags=flags,
-        env=env
+        env=env,
     )
 
-    while p.poll() is None:
-        line = p.stdout.readline().decode().strip()
-        if line and verbose:
-            print(line)
-    if p.returncode != 0:
-        raise hou.Error("Installation failed.")
+    out, err = p.communicate()
+    if err:
+        raise hou.Error(out.decode())
 
 
 class MLOPSCheckpointDownloader(QtWidgets.QDialog):
