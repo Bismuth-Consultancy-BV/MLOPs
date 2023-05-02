@@ -69,7 +69,7 @@ from . import schedulers_lookup
 
 
 
-def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model, attn_proc_model, local_cache_only=True, seamless_gen=False):
+def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model, lora, local_cache_only=True, seamless_gen=False):
 
     no_half = 'mps' == torch_device
     dtype_unet = torch.float32 if no_half else torch.float16
@@ -85,8 +85,8 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
     timesteps = scheduler.timesteps
 
     unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only, torch_dtype=dtype_unet)
-    if attn_proc_model != "":
-        unet.load_attn_procs(attn_proc_model, use_safetensors=attn_proc_model.endswith(".safetensors"))
+    if lora["weights"] != "":
+        unet.load_attn_procs(lora["weights"], use_safetensors=lora["weights"].endswith(".safetensors"))
     unet.to(torch_device)
 
     if seamless_gen:
@@ -150,14 +150,16 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
             latent_model_input = torch.cat([latents] * 2)
             latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t).to(dtype_unet)
 
+            cross_attention_kwargs = {"scale": lora["scale"]}
             if controlnet_geo:
                 down_block_res_samples, mid_block_res_sample = controlnet(latent_model_input, t.to(dtype_unet), encoder_hidden_states=text_embeddings, controlnet_cond=controlnet_image, conditioning_scale=controlnet_scale, return_dict=False,)
 
                 with torch.no_grad():
-                    noise_pred = unet(latent_model_input, t.to(dtype_unet), encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, ).sample
+                    noise_pred = unet(latent_model_input, t.to(dtype_unet), encoder_hidden_states=text_embeddings, down_block_additional_residuals=down_block_res_samples, mid_block_additional_residual=mid_block_res_sample, cross_attention_kwargs=cross_attention_kwargs).sample
             else:
                 with torch.no_grad():
-                    noise_pred = unet(latent_model_input, t.to(dtype_unet), encoder_hidden_states=text_embeddings).sample
+                    
+                    noise_pred = unet(latent_model_input, t.to(dtype_unet), encoder_hidden_states=text_embeddings, cross_attention_kwargs=cross_attention_kwargs).sample
 
             # perform guidance
             noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
