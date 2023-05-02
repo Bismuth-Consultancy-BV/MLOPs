@@ -11,4 +11,5 @@ data/*/
 *.OPdummydefs
 *.createtimes
 *.modtimes
+/data/dependencies/python/
 
