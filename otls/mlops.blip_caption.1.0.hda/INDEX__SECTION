@@ -1,0 +1,14 @@
+Operator:     mlops::blip_caption::1.0
+Label:        MLOPs Blip Caption
+Path:         oplib:/mlops::Sop/blip_caption::1.0?mlops::Sop/blip_caption::1.0
+Icon:         opdef:/mlops::Sop/blip_caption::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='2 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 2
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed May  3 23:08:10 2023
+

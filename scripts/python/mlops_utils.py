@@ -24,9 +24,9 @@ def is_relevant_parm(kwargs, parmtype):
             return False
     return True
 
-def return_downloaded_checkpoints(subfolder="", replace_sign="-_-"):
+def return_downloaded_checkpoints(root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"):
     model_paths = ["$MLOPS_MODEL", "$MLOPS_MODEL"]
-    root = hou.text.expandString("$MLOPS_MODELS")
+    root = hou.text.expandString(root)
     full_path = os.path.join(root, subfolder)
     for f in os.scandir(full_path):
         if f.is_dir():
@@ -35,7 +35,7 @@ def return_downloaded_checkpoints(subfolder="", replace_sign="-_-"):
                 model_paths.append(f.name.replace(replace_sign, "/"))
     return model_paths
 
-def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
+def ensure_huggingface_model_local(model_name, model_path, cache_only=False, model_type="stablediffusion"):
     from huggingface_hub import snapshot_download
     from diffusers import StableDiffusionPipeline
     from diffusers.utils import WEIGHTS_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME
@@ -50,15 +50,20 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False):
         return path.replace("\\", "/")
 
     model_name = model_name.replace("-_-", "/")
-    allow_patterns = []
-    try:
-        config_dict = StableDiffusionPipeline.load_config(model_name, cache_dir=cache, resume_download=True, force_download=False)
-        folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
-        allow_patterns += [os.path.join(k, "*") for k in folder_names]
-        allow_patterns.append(StableDiffusionPipeline.config_name)
-    except:
-        pass
-    allow_patterns += [WEIGHTS_NAME, SCHEDULER_CONFIG_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME, "*.json"]
+    allow_patterns = ["*.json", "*.txt"]
+
+    if model_type == "stablediffusion":
+        try:
+            config_dict = StableDiffusionPipeline.load_config(model_name, cache_dir=cache, resume_download=True, force_download=False)
+            folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
+            allow_patterns += [os.path.join(k, "*") for k in folder_names]
+            allow_patterns.append(StableDiffusionPipeline.config_name)
+        except:
+            pass
+        allow_patterns += [WEIGHTS_NAME, SCHEDULER_CONFIG_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME, "*.json"]
+    if model_type == "transformers":
+        allow_patterns.append("*.bin")
+
     ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
 
     snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, local_dir_use_symlinks=True, local_files_only=cache_only, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
