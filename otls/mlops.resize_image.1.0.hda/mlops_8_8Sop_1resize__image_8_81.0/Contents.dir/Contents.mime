@@ -32,19 +32,17 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 5.03169 -1.87772
-connectornextid 1
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position -11.4657 0.114185
+connectornextid 0
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	image_to_points1 0 1 "input1"
 }
 inputs
 {
-0 	image_to_points1 0 1
 }
 stat
 {
@@ -585,7 +583,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end

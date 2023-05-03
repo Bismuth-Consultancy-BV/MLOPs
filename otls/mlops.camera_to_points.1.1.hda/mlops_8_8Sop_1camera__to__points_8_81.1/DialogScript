@@ -112,7 +112,6 @@
         groupsimple {
             name    "albedo"
             label   "Color"
-            tabbreak
             hidewhen "{ mode != albedo }"
 
             parm {

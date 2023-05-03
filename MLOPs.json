@@ -8,10 +8,10 @@
             "MLOPS": "H:/Github/MLOPs/MLOPs"
         },
         {
-            "MLOPS_MODELS": "$MLOPS/checkpoints/"
+            "MLOPS_MODELS": "$MLOPS/data/models/"
         },
         {
-            "MLOPS_MODEL": "$MLOPS/checkpoints/stabilityai-_-stable-diffusion-2-1"
+            "MLOPS_SD_MODEL": "$MLOPS/data/models/diffusers/stabilityai-_-stable-diffusion-2-1"
         },
         {
             "OPENAI_API_KEY": "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"

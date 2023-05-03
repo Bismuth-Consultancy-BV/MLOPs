@@ -31,7 +31,7 @@
             name    "model"
             label   "Text Encoder Model"
             type    string
-            default { "$MLOPS_MODEL" }
+            default { "$MLOPS_SD_MODEL" }
             menureplace {
                 [ "import mlops_utils, os" ]
                 [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\")" ]

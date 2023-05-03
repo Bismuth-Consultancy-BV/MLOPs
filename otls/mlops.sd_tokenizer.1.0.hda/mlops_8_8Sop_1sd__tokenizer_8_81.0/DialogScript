@@ -32,7 +32,7 @@
             name    "model"
             label   "Tokenizer Model"
             type    string
-            default { "$MLOPS_MODEL" }
+            default { "$MLOPS_SD_MODEL" }
             disablewhen "{ modelcache == 1 }"
             menureplace {
                 [ "import mlops_utils, os" ]

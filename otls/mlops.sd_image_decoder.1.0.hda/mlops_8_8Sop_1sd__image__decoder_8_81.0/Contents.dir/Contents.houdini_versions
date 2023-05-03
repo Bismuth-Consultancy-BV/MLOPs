@@ -1,10 +1,10 @@
 {
-	"values":["19.5.534"
+	"values":["19.5.538"
 	],
 	"indexes":{
 		"hdaroot/null1.userdata":0,
 		"hdaroot/pointgenerate1.userdata":0,
 		"hdaroot/output0.userdata":0,
-		"hdaroot/text_encoder.userdata":0
+		"hdaroot/image_decoder.userdata":0
 	}
 }

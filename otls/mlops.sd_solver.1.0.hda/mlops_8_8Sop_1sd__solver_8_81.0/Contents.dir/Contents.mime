@@ -133,6 +133,7 @@ version 0.8
 python	[ 0	locks=0 ]	(	"import numpy
 from sdpipeline import image_solve
 import mlops_utils
+import os
 from imp import reload
 reload(image_solve)
 
@@ -183,7 +184,7 @@ scheduler_data[\"image_provided\"] = geo1.attribValue(\"image_provided\")
     
     
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
 latents = image_solve.run(num_inference_steps, latent_dimension, text_embeddings, controlnet_geo, bool(attention_slicing), cfg_scale, scheduler_data, device, model_path, lora, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
 
 # Export

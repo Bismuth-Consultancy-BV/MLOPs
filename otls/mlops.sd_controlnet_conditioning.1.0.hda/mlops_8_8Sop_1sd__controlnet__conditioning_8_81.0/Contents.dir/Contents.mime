@@ -34,7 +34,7 @@ sopflags sopflags =
 comment ""
 position 9.15069 -0.617615
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -92,7 +92,7 @@ sopflags sopflags =
 comment ""
 position -4.58347 3.34928
 connectornextid 1
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -151,7 +151,7 @@ sopflags sopflags =
 comment ""
 position -4.58347 6.43864
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -207,7 +207,7 @@ g = numpy.array(geo1.pointFloatAttribValues(\"g\"), dtype=numpy.float16).reshape
 b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float16).reshape(width, height) * 255
 input_colors = numpy.stack((r,g,b), axis=0)
 input_image = input_colors.astype('uint8')
-cache = hou.text.expandString(os.path.join(\"$MLOPS/checkpoints/\", \"cache\"))
+cache = hou.text.expandString(os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\", \"cache\"))
 
 
 if model_type == \"cannydetector\":
@@ -230,7 +230,7 @@ elif model_type == \"hed\":
     image = image.reshape(-1, 3)
 
 elif model_type == \"depth\":
-    depth_estimator = pipeline('depth-estimation')
+    depth_estimator = pipeline(task='depth-estimation')
     input_colors = input_colors.astype(numpy.uint8)
     image = Image.fromarray(input_colors.transpose(1, 2, 0))
     image = depth_estimator(image)['depth']
@@ -624,8 +624,8 @@ Content-Type: text/plain
 {
 version 0.8
 folder0	[ 0	locks=0 ]	(	0	)
-width	[ 0	locks=0 ]	(	512	)
 height	[ 0	locks=0 ]	(	512	)
+width	[ 0	locks=0 ]	(	512	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY

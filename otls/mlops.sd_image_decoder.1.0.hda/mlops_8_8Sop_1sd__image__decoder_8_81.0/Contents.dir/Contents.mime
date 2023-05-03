@@ -32,16 +32,16 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -5.54991 -9.2049
+position -1.35375 -3.50846
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
+1 "output1"
 }
 inputsNamed3
 {
-1 	sd_solver1 2 1 "input1"
+0 	sd_solver1 1 1 "input1"
 }
 inputs
 {
@@ -51,7 +51,7 @@ stat
 {
   create -1
   modify -1
-  author Shass@Whitetower
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -78,14 +78,14 @@ Content-Type: text/plain
 0 -1.0076299888241291 9.1081699346405234 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.init"
+Content-Disposition: attachment; filename="hdaroot/image_decoder.init"
 Content-Type: text/plain
 
 type = python
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.def"
+Content-Disposition: attachment; filename="hdaroot/image_decoder.def"
 Content-Type: text/plain
 
 sopflags sopflags = 
@@ -120,7 +120,7 @@ exprlanguage hscript
 end
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.parm"
+Content-Disposition: attachment; filename="hdaroot/image_decoder.parm"
 Content-Type: text/plain
 
 {
@@ -128,6 +128,7 @@ version 0.8
 python	[ 0	locks=0 ]	(	"import numpy 
 from sdpipeline import image_decode
 import mlops_utils
+import os
 from imp import reload
 reload(image_decode)
 
@@ -147,7 +148,7 @@ latent_dimension = list(geo1.attribValue(\"latent_dimension\"))#[node.parent().p
 seamless = geo1.attribValue(\"seamless\")
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
 latents = image_decode.run(latents, latent_dimension, device, model_path, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
 
 permuted_tensor = latents.transpose(1, 2, 0)
@@ -175,7 +176,7 @@ maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.userdata"
+Content-Disposition: attachment; filename="hdaroot/image_decoder.userdata"
 Content-Type: text/plain
 
 {
@@ -266,11 +267,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	text_encoder 0 1 "input1"
+0 	image_decoder 0 1 "input1"
 }
 inputs
 {
-0 	text_encoder 0 1
+0 	image_decoder 0 1
 }
 stat
 {
@@ -724,7 +725,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -755,7 +756,7 @@ Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
 6
-text_encoder
+image_decoder
 output0
 attribwrangle1
 pointgenerate1

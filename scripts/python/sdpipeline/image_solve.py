@@ -84,8 +84,10 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
     scheduler.set_timesteps(inference_steps)
     timesteps = scheduler.timesteps
 
+    cross_attention_kwargs = {}
     unet = UNet2DConditionModel.from_pretrained(model, subfolder="unet", local_files_only=local_cache_only, torch_dtype=dtype_unet)
     if lora["weights"] != "":
+        cross_attention_kwargs = {"scale": lora["scale"]}
         unet.load_attn_procs(lora["weights"], use_safetensors=lora["weights"].endswith(".safetensors"))
     unet.to(torch_device)
 
@@ -150,7 +152,7 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
             latent_model_input = torch.cat([latents] * 2)
             latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t).to(dtype_unet)
 
-            cross_attention_kwargs = {"scale": lora["scale"]}
+            
             if controlnet_geo:
                 down_block_res_samples, mid_block_res_sample = controlnet(latent_model_input, t.to(dtype_unet), encoder_hidden_states=text_embeddings, controlnet_cond=controlnet_image, conditioning_scale=controlnet_scale, return_dict=False,)
 

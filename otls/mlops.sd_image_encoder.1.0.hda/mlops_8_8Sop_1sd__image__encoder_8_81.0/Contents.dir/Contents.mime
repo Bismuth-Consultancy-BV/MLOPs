@@ -32,26 +32,26 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.9439 1.92853
+position 3.95615 0.114185
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
 }
 inputsNamed3
 {
-0 	image_to_points3 0 1 "input1"
+0 	image_to_points1 0 1 "input1"
 }
 inputs
 {
-0 	image_to_points3 0 1
+0 	image_to_points1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@M16AMTA
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -78,14 +78,14 @@ Content-Type: text/plain
 0 -1.0076299888241291 11.262078766673277 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.init"
+Content-Disposition: attachment; filename="hdaroot/image_encoder.init"
 Content-Type: text/plain
 
 type = python
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.def"
+Content-Disposition: attachment; filename="hdaroot/image_encoder.def"
 Content-Type: text/plain
 
 sopflags sopflags = 
@@ -120,7 +120,7 @@ exprlanguage hscript
 end
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.parm"
+Content-Disposition: attachment; filename="hdaroot/image_encoder.parm"
 Content-Type: text/plain
 
 {
@@ -128,6 +128,7 @@ version 0.8
 python	[ 0	locks=0 ]	(	"import numpy 
 from sdpipeline import image_encode
 import mlops_utils
+import os
 from imp import reload  
 reload(image_encode)  
 
@@ -150,7 +151,7 @@ b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape
 input_colors = numpy.stack((r,g,b), axis=0)
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
 latents = image_encode.run(input_colors, device, model_path, local_cache_only=bool(cache_only)) 
 
 # Export
@@ -172,7 +173,7 @@ maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/text_encoder.userdata"
+Content-Disposition: attachment; filename="hdaroot/image_encoder.userdata"
 Content-Type: text/plain
 
 {
@@ -344,12 +345,12 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	text_encoder 0 1 "input1"
+0 	image_encoder 0 1 "input1"
 2 	attribwrangle2 1 1 "input2"
 }
 inputs
 {
-0 	text_encoder 0 1
+0 	image_encoder 0 1
 1 	attribwrangle2 0 1
 }
 stat
@@ -401,7 +402,7 @@ Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
 4
-text_encoder
+image_encoder
 output0
 attribwrangle2
 attribcopy1
