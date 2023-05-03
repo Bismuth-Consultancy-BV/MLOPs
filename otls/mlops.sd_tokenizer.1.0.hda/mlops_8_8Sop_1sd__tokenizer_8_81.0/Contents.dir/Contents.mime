@@ -20,7 +20,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -5.44307 1.03871
+position -5.3706 1.03871
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -115,6 +115,7 @@ Content-Type: text/plain
 version 0.8
 python	[ 0	locks=0	autoscope=1	autosel=4294967295 ]	(	"from sdpipeline import tokenizer 
 import mlops_utils
+import os
 from imp import reload
 reload(tokenizer)
 reload(mlops_utils)
@@ -133,7 +134,7 @@ point = geo1.points()[0]
 prompt = point.attribValue(\"prompt\")
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
 tokens = tokenizer.run(prompt, model_path, local_cache_only=bool(cache_only)) 
 
 # Export
@@ -327,7 +328,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end

@@ -35,8 +35,9 @@
             default { "$MLOPS_MODEL" }
             disablewhen "{ modelcache == 1 }"
             menureplace {
-                [ "import mlops_utils" ]
-                [ "return mlops_utils.return_downloaded_checkpoints()" ]
+                [ "import mlops_utils, os" ]
+                [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\")" ]
+                [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
                 language python
             }
             parmtag { "script_callback_language" "python" }
