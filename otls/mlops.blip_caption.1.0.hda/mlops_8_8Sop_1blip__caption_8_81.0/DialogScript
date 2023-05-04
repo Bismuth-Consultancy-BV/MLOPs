@@ -9,11 +9,11 @@
 	""
     }
 
-    inputlabel	1	"Image Latents"
+    inputlabel	1	"Colored Points"
     inputlabel	2	"Conditional Prompt"
     inputlabel	3	"Sub-Network Input #3"
     inputlabel	4	"Sub-Network Input #4"
-    outputlabel	1	"Colored Points"
+    outputlabel	1	Prompt
 
     groupsimple {
         name    "folder0"
