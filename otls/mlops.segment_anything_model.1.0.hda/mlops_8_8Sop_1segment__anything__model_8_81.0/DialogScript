@@ -34,7 +34,7 @@
             default { "facebook/sam-vit-huge" }
             menureplace {
                 [ "import mlops_utils, os" ]
-                [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"misc\")" ]
+                [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\")" ]
                 [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
                 language python
             }
