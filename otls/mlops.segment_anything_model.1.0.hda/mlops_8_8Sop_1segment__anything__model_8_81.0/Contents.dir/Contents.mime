@@ -32,8 +32,8 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.44221 -0.46395
-connectornextid 2
+position -9.44221 -0.559247
+connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
@@ -42,10 +42,12 @@ outputsNamed3
 inputsNamed3
 {
 0 	image_to_points1 0 1 "input1"
+2 	add1 0 1 "input2"
 }
 inputs
 {
 0 	image_to_points1 0 1
+1 	add1 0 1
 }
 stat
 {
@@ -93,7 +95,7 @@ sopflags sopflags =
 comment ""
 position -0.519726 1.12678
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -128,79 +130,6 @@ outputidx	[ 0	locks=0 ]	(	0	)
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/output0.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointgenerate1.init"
-Content-Type: text/plain
-
-type = pointgenerate
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointgenerate1.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 5.88981 8.9695
-connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-0 "output1"
-}
-inputsNamed3
-{
-}
-inputs
-{
-}
-stat
-{
-  create -1
-  modify -1
-  author Paul@M16AMTA
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointgenerate1.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-group	[ 0	locks=0 ]	(	""	)
-keep	[ 0	locks=0 ]	(	"off"	)
-ptsperpt	[ 0	locks=0 ]	(	"off"	)
-npts	[ 8	locks=0 ]	(	1	)
-nptsperpt	[ 0	locks=0 ]	(	10	)
-doattrib	[ 0	locks=0 ]	(	"off"	)
-attrib	[ 0	locks=0 ]	(	""	)
-seed	[ 0	locks=0 ]	(	0	)
-dogroup	[ 0	locks=0 ]	(	"off"	)
-ggroup	[ 0	locks=0 ]	(	generated	)
-dopointnum	[ 0	locks=0 ]	(	"off"	)
-spointnum	[ 0	locks=0 ]	(	pointnum	)
-dopointidx	[ 0	locks=0 ]	(	"off"	)
-spointidx	[ 0	locks=0 ]	(	pointidx	)
-docopyattribs	[ 0	locks=0 ]	(	"off"	)
-attribstocopy	[ 0	locks=0 ]	(	*	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointgenerate1.userdata"
 Content-Type: text/plain
 
 {
@@ -285,6 +214,11 @@ g = numpy.array(geo1.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape
 b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
 input_colors = numpy.stack((r,g,b), axis=0)
 
+points = []
+for point in geo2.points():
+    pos = point.position()
+    points.append([height-int(pos[2]), int(pos[0])])
+
 # Parameters
 device = node.parent().parm(\"device\").evalAsString()
 cache_only = bool(node.parent().parm(\"cache_only\").evalAsInt())
@@ -292,11 +226,11 @@ model = node.parent().parm(\"model\").evalAsString()
    
 # Solve  
 model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"all\")
-channel = sam.run(model_path, input_colors, device, cache_only)  
-out = numpy.flip(channel, axis=1).flatten()
+channel = sam.run(model_path, input_colors, points, device, cache_only)  
+out = numpy.flip(channel, axis=1).flatten() 
 
 # Export     
-geo.setPointIntAttribValues(\"channel\", list(map(int, out)))            "	)
+geo.setPointIntAttribValues(\"channel\", list(map(int, out)))                          "	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -487,7 +421,7 @@ sopflags sopflags =
 comment ""
 position 4.09422 6.76264
 connectornextid 3
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 2 "output1"
@@ -495,12 +429,12 @@ outputsNamed3
 inputsNamed3
 {
 0 	(1) "" 1 "input1"
-1 	pointgenerate1 0 1 "input2"
+1 	null2 0 1 "input2"
 }
 inputs
 {
 0 	(1) 0 1
-1 	pointgenerate1 0 1
+1 	null2 0 1
 }
 stat
 {
@@ -1002,7 +936,7 @@ sopflags sopflags =
 comment ""
 position -0.519726 4.12678
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -1230,6 +1164,65 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/null2.init"
+Content-Type: text/plain
+
+type = null
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/null2.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 5.95662 8.11395
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/null2.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+copyinput	[ 0	locks=0 ]	(	"on"	)
+cacheinput	[ 0	locks=0 ]	(	"off"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/null2.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/__dot1.networkdotinit"
 Content-Type: text/plain
 
@@ -1248,7 +1241,6 @@ Content-Type: text/plain
 
 12
 output0
-pointgenerate1
 python1
 attribwrangle2
 attribcreate1
@@ -1259,6 +1251,7 @@ attribwrangle3
 color1
 color2
 attribcopy1
+null2
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
