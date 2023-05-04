@@ -63,6 +63,8 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False, mod
         allow_patterns += [WEIGHTS_NAME, SCHEDULER_CONFIG_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME, "*.json"]
     if model_type == "transformers":
         allow_patterns.append("*.bin")
+    if model_type == "all":
+        allow_patterns.append("*")
 
     ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
 
