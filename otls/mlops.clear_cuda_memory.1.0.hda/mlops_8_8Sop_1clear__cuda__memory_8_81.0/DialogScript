@@ -1,0 +1,18 @@
+# Dialog script for mlops::clear_cuda_memory::1.0 automatically generated
+
+{
+    name	mlops::clear_cuda_memory::1.0
+    script	mlops::clear_cuda_memory::1.0
+    label	"MLOPs Clear CUDA Memory"
+
+    help {
+	""
+    }
+
+    inputlabel	1	Misc
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	Misc
+
+}
