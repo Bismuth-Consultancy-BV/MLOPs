@@ -1,0 +1,63 @@
+# Dialog script for mlops::segment_anything_model::1.0 automatically generated
+
+{
+    name	mlops::segment_anything_model::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs Segment Anything Model"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Mask Points"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Model"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "SAM Model"
+            type    string
+            default { "facebook/sam-vit-huge" }
+            menureplace {
+                [ "import mlops_utils, os" ]
+                [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"misc\")" ]
+                [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
+                language python
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}
