@@ -40,7 +40,7 @@ import torch
 
 input_dataset = "huggan/facades" #"Dataset to use"
 starting_epoch = 0 #"epoch to start training from")
-total_epochs = 5 #"number of epochs of training"
+total_epochs = 500 #"number of epochs of training"
 batch_size = 1 #"size of the batches"
 lr = 0.0002 #"adam: learning rate"
 b1 = 0.5 #"adam: decay of first order momentum of gradient"
@@ -142,7 +142,7 @@ def training_function(config):
         fake_B = generator(real_A)
         img_sample = torch.cat((real_A.data, fake_B.data, real_B.data), -2)
         if accelerator.is_main_process:
-            save_image(img_sample, "images/%s/%s.png" % (input_dataset, batches_done), nrow=5, normalize=True)
+            save_image(img_sample, f"images/{batches_done}.png", nrow=5, normalize=True)
 
     generator, discriminator, optimizer_G, optimizer_D, dataloader, val_dataloader = accelerator.prepare(generator, discriminator, optimizer_G, optimizer_D, dataloader, val_dataloader)
 
@@ -153,6 +153,7 @@ def training_function(config):
     prev_time = time.time()
 
     for epoch in range(starting_epoch, total_epochs):
+        print("")
         for i, batch in enumerate(dataloader):
 
             # Model inputs
@@ -233,13 +234,13 @@ def training_function(config):
             if batches_done % sample_interval == 0:
                 sample_images(batches_done, accelerator)
 
-        if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
-            if accelerator.is_main_process:
-                unwrapped_generator = accelerator.unwrap_model(generator)
-                unwrapped_discriminator = accelerator.unwrap_model(discriminator)
-                # Save model checkpoints
-                torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (input_dataset, epoch))
-                torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (input_dataset, epoch))
+        # if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
+        #     if accelerator.is_main_process:
+        #         unwrapped_generator = accelerator.unwrap_model(generator)
+        #         unwrapped_discriminator = accelerator.unwrap_model(discriminator)
+        #         # Save model checkpoints
+        #         torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (input_dataset, epoch))
+        #         torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (input_dataset, epoch))
 
     if accelerator.is_main_process:
         unwrapped_generator = accelerator.unwrap_model(generator)
