@@ -87,7 +87,7 @@ class GeneratorUNet(nn.Module):
         self.up7 = UNetUp(256, 64)
 
         self.final = nn.Sequential(
-            nn.Upsample(scale_factor=2),
+            nn.Upsample(scale_factor=2, mode='bilinear'),
             nn.ZeroPad2d((1, 0, 1, 0)),
             nn.Conv2d(128, out_channels, 4, padding=1),
             nn.Tanh(),
