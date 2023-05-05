@@ -1,17 +1,5 @@
-#!/usr/bin/env python
-# coding=utf-8
-# Copyright (c) 2022 Erik Linder-Norén and The HuggingFace Inc. team. All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions.
+# pylint: disable=C0103
+# pylint: disable=C0116
 
 import argparse
 import os
@@ -28,21 +16,20 @@ from torch.utils.data import DataLoader
 from modeling_pix2pix import GeneratorUNet, Discriminator
 from datasets import load_dataset
 from accelerate import Accelerator
-from torch import nn
-
+from torch.optim import lr_scheduler
 
 
 input_dataset = "huggan/facades" #"Dataset to use"
 starting_epoch = 0 #"epoch to start training from")
-total_epochs = 500 #"number of epochs of training"
+total_epochs = 100 #"number of epochs of training"
+decay_epochs = 50 # Number of epochs with reducing LR
 batch_size = 1 #"size of the batches"
 lr = 0.0002 #"adam: learning rate"
 b1 = 0.5 #"adam: decay of first order momentum of gradient"
 b2 = 0.999 #"adam: decay of first order momentum of gradient"
-decay_epoch = 100 #"epoch from which to start lr decay"
 image_size = 256 #"size of images for training"
 sample_interval = 500 #"interval between sampling of images from generators"
-checkpoint_interval = -1 #"interval between model checkpoints"
+checkpoint_interval = 10 #"interval between model checkpoints"
 mixed_precision = "no" #["no", "fp16", "bf16"]
 use_cpu = False #"If passed, will train on the CPU."
 lambda_L1 = 100 # Loss weight of L1 pixel-wise loss between translated image and real image
@@ -136,52 +123,30 @@ def training_function():
     splits = transformed_dataset['train'].train_test_split(test_size=0.1)
     train_ds = splits['train']
     val_ds = splits['test']
+    del splits
 
     dataloader = DataLoader(train_ds, shuffle=True, batch_size=batch_size, num_workers=0)
     val_dataloader = DataLoader(val_ds, batch_size=10, shuffle=True, num_workers=0)
 
     netG, netD, optimizer_G, optimizer_D, dataloader, val_dataloader = accelerator.prepare(netG, netD, optimizer_G, optimizer_D, dataloader, val_dataloader)
 
-    # ----------
-    #  Training
-    # ----------
-
-            # def forward():
-            #     fake_B = netG(real_A)
-
-            # def backward_D():
-            #     pred_fake = netD(fake_B.detach(), real_A)
-            #     loss_D_fake = criterionGAN(pred_fake, fake)
-
-            #     pred_real = netD(real_B, real_A)
-            #     loss_D_real = criterionGAN(pred_real, valid)
-
-            #     loss_D = (loss_D_fake + loss_D_real) * 0.5
-            #     accelerator.backward(loss_D)
-
-            # def backward_G():
-            #     pred_fake = netD(fake_B, real_A)
-            #     loss_G_GAN = criterionGAN(pred_fake, valid)
-
-            #     loss_G_L1 = criterionL1(fake_B, real_B) * lambda_L1
-            #     loss_G = loss_G_GAN + loss_G_L1
-            #     accelerator.backward(loss_G)
-
-            # def optimize_parameters():
-            #     forward()
-            #     # Update D
-            #     optimizer_D.zero_grad()
-            #     backward_D()
-            #     optimizer_D.step()
-            #     # Update G
-            #     optimizer_G.zero_grad()
-            #     backward_G()
-            #     optimizer_G.step()
-
-
     prev_time = time.time()
 
-    for epoch in range(starting_epoch, total_epochs):
+
+    def lambda_rule(epoch):
+        lr_l = 1.0 - max(0, epoch - total_epochs) / float(decay_epochs + 1)
+        return lr_l
+    scheduler = lr_scheduler.LambdaLR(optimizer_G, lr_lambda=lambda_rule)
+
+    final_epoch = total_epochs+decay_epochs
+    for epoch in range(starting_epoch, final_epoch):
+        print("\n")
+
+        old_lr = optimizer_G.param_groups[0]['lr']
+        scheduler.step()
+        new_lr = optimizer_G.param_groups[0]['lr']
+        print(old_lr, new_lr)
+
         print("")
         for i, batch in enumerate(dataloader):
 
@@ -193,6 +158,9 @@ def training_function():
 
             # def forward():
             fake_B = netG(real_A)
+
+            for param in netD.parameters():
+                param.requires_grad = True
 
             # Update D
             optimizer_D.zero_grad()
@@ -207,7 +175,10 @@ def training_function():
 
             # Update D
             optimizer_D.step()
+
             # Update G
+            for param in netD.parameters():
+                param.requires_grad = False
             optimizer_G.zero_grad()
 
             # def backward_G():
@@ -219,13 +190,9 @@ def training_function():
 
             optimizer_G.step()
 
-            # --------------
-            #  Log Progress
-            # --------------
-
             # Determine approximate time left
             batches_done = epoch * len(dataloader) + i
-            batches_left = total_epochs * len(dataloader) - batches_done
+            batches_left = final_epoch * len(dataloader) - batches_done
             time_left = datetime.timedelta(seconds=batches_left * (time.time() - prev_time))
             prev_time = time.time()
 
@@ -234,7 +201,7 @@ def training_function():
                 "\r[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f, pixel: %f, adv: %f] ETA: %s"
                 % (
                     epoch+1,
-                    total_epochs,
+                    final_epoch,
                     i+1,
                     len(dataloader),
                     loss_D.item(),
@@ -249,13 +216,13 @@ def training_function():
             if batches_done % sample_interval == 0:
                 sample_images(batches_done, accelerator, val_dataloader, netG)
 
-        # if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
-        #     if accelerator.is_main_process:
-        #         unwrapped_generator = accelerator.unwrap_model(netG)
-        #         unwrapped_discriminator = accelerator.unwrap_model(netD)
-        #         # Save model checkpoints
-        #         torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (input_dataset, epoch))
-        #         torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (input_dataset, epoch))
+        if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
+            if accelerator.is_main_process:
+                unwrapped_generator = accelerator.unwrap_model(netG)
+                unwrapped_discriminator = accelerator.unwrap_model(netD)
+                # Save model checkpoints
+                torch.save(unwrapped_generator.state_dict(), f"saved_models/generator_{epoch}.pth")
+                torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator_{epoch}")
 
     if accelerator.is_main_process:
         unwrapped_generator = accelerator.unwrap_model(netG)
@@ -263,6 +230,5 @@ def training_function():
 
         torch.save(unwrapped_generator.state_dict(), f"saved_models/generator.pth")
         torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator.pth")
-
 
 training_function()
