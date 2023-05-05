@@ -38,28 +38,20 @@ from torch import nn
 import torch
 
 
-def parse_args(args=None):
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, default="huggan/facades", help="Dataset to use")
-    parser.add_argument("--epoch", type=int, default=0, help="epoch to start training from")
-    parser.add_argument("--n_epochs", type=int, default=5, help="number of epochs of training")
-    parser.add_argument("--batch_size", type=int, default=1, help="size of the batches")
-    parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
-    parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
-    parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of first order momentum of gradient")
-    parser.add_argument("--decay_epoch", type=int, default=100, help="epoch from which to start lr decay")
-    parser.add_argument("--n_cpu", type=int, default=0, help="number of cpu threads to use during batch generation")
-    parser.add_argument("--image_size", type=int, default=256, help="size of images for training")
-    parser.add_argument("--channels", type=int, default=3, help="number of image channels")
-    parser.add_argument("--sample_interval", type=int, default=500, help="interval between sampling of images from generators")
-    parser.add_argument("--checkpoint_interval", type=int, default=-1, help="interval between model checkpoints")
-    parser.add_argument("--mixed_precision", type=str, default="no", choices=["no", "fp16", "bf16"],
-        help="Whether to use mixed precision. Choose"
-        "between fp16 and bf16 (bfloat16). Bf16 requires PyTorch >= 1.10."
-        "and an Nvidia Ampere GPU.",
-    )
-    parser.add_argument("--cpu", action="store_true", help="If passed, will train on the CPU.")
-    return parser.parse_args(args=args)
+input_dataset = "huggan/facades" #"Dataset to use"
+starting_epoch = 0 #"epoch to start training from")
+total_epochs = 5 #"number of epochs of training"
+batch_size = 1 #"size of the batches"
+lr = 0.0002 #"adam: learning rate"
+b1 = 0.5 #"adam: decay of first order momentum of gradient"
+b2 = 0.999 #"adam: decay of first order momentum of gradient"
+decay_epoch = 100 #"epoch from which to start lr decay"
+image_size = 256 #"size of images for training"
+sample_interval = 500 #"interval between sampling of images from generators"
+checkpoint_interval = -1 #"interval between model checkpoints"
+mixed_precision = "no" #["no", "fp16", "bf16"]
+use_cpu = False #"If passed, will train on the CPU."
+
 
 # Custom weights initialization called on Generator and Discriminator
 def weights_init_normal(m):
@@ -70,11 +62,11 @@ def weights_init_normal(m):
         torch.nn.init.normal_(m.weight.data, 1.0, 0.02)
         torch.nn.init.constant_(m.bias.data, 0.0)
 
-def training_function(config, args):
-    accelerator = Accelerator(cpu=args.cpu, mixed_precision=args.mixed_precision)
+def training_function(config):
+    accelerator = Accelerator(cpu=use_cpu, mixed_precision=mixed_precision)
 
-    os.makedirs("images/%s" % args.dataset, exist_ok=True)
-    os.makedirs("saved_models/%s" % args.dataset, exist_ok=True)
+    os.makedirs("images/%s" % input_dataset, exist_ok=True)
+    os.makedirs("saved_models/%s" % input_dataset, exist_ok=True)
 
     # Loss functions
     criterion_GAN = torch.nn.MSELoss()
@@ -84,29 +76,29 @@ def training_function(config, args):
     lambda_pixel = 100
 
     # Calculate output of image discriminator (PatchGAN)
-    patch = (1, args.image_size // 2 ** 4, args.image_size // 2 ** 4)
+    patch = (1, image_size // 2 ** 4, image_size // 2 ** 4)
 
     # Initialize generator and discriminator
     generator = GeneratorUNet()
     discriminator = Discriminator()
 
-    if args.epoch != 0:
+    if starting_epoch != 0:
         # Load pretrained models
-        generator.load_state_dict(torch.load(f"saved_models/{args.dataset}/generator_{args.epoch}.pth"))
-        discriminator.load_state_dict(torch.load(f"saved_models/{args.dataset}/discriminator_{args.epoch}.pth"))
+        generator.load_state_dict(torch.load(f"saved_models/{input_dataset}/generator_{starting_epoch}.pth"))
+        discriminator.load_state_dict(torch.load(f"saved_models/{input_dataset}/discriminator_{starting_epoch}.pth"))
     else:
         # Initialize weights
         generator.apply(weights_init_normal)
         discriminator.apply(weights_init_normal)
 
     # Optimizers
-    optimizer_G = torch.optim.Adam(generator.parameters(), lr=args.lr, betas=(args.b1, args.b2))
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=args.lr, betas=(args.b1, args.b2))
+    optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b2, b2))
+    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b2, b2))
 
     # Configure dataloaders
     transform = Compose(
             [
-                Resize((args.image_size, args.image_size), Image.BICUBIC),
+                Resize((image_size, image_size), Image.BICUBIC),
                 ToTensor(),
                 Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
             ]
@@ -132,14 +124,14 @@ def training_function(config, args):
 
         return examples
 
-    dataset = load_dataset(args.dataset)
+    dataset = load_dataset(input_dataset)
     transformed_dataset = dataset.with_transform(transforms)
 
     splits = transformed_dataset['train'].train_test_split(test_size=0.1)
     train_ds = splits['train']
     val_ds = splits['test']
 
-    dataloader = DataLoader(train_ds, shuffle=True, batch_size=args.batch_size, num_workers=0)
+    dataloader = DataLoader(train_ds, shuffle=True, batch_size=batch_size, num_workers=0)
     val_dataloader = DataLoader(val_ds, batch_size=10, shuffle=True, num_workers=0)
 
     def sample_images(batches_done, accelerator):
@@ -150,7 +142,7 @@ def training_function(config, args):
         fake_B = generator(real_A)
         img_sample = torch.cat((real_A.data, fake_B.data, real_B.data), -2)
         if accelerator.is_main_process:
-            save_image(img_sample, "images/%s/%s.png" % (args.dataset, batches_done), nrow=5, normalize=True)
+            save_image(img_sample, "images/%s/%s.png" % (input_dataset, batches_done), nrow=5, normalize=True)
 
     generator, discriminator, optimizer_G, optimizer_D, dataloader, val_dataloader = accelerator.prepare(generator, discriminator, optimizer_G, optimizer_D, dataloader, val_dataloader)
 
@@ -160,8 +152,7 @@ def training_function(config, args):
 
     prev_time = time.time()
 
-    for epoch in range(args.epoch, args.n_epochs):
-        print("Epoch:", epoch)
+    for epoch in range(starting_epoch, total_epochs):
         for i, batch in enumerate(dataloader):
 
             # Model inputs
@@ -218,7 +209,7 @@ def training_function(config, args):
 
             # Determine approximate time left
             batches_done = epoch * len(dataloader) + i
-            batches_left = args.n_epochs * len(dataloader) - batches_done
+            batches_left = total_epochs * len(dataloader) - batches_done
             time_left = datetime.timedelta(seconds=batches_left * (time.time() - prev_time))
             prev_time = time.time()
 
@@ -226,9 +217,9 @@ def training_function(config, args):
             sys.stdout.write(
                 "\r[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f, pixel: %f, adv: %f] ETA: %s"
                 % (
-                    epoch,
-                    args.n_epochs,
-                    i,
+                    epoch+1,
+                    total_epochs,
+                    i+1,
                     len(dataloader),
                     loss_D.item(),
                     loss_G.item(),
@@ -239,16 +230,16 @@ def training_function(config, args):
             )
 
             # If at sample interval save image
-            if batches_done % args.sample_interval == 0:
+            if batches_done % sample_interval == 0:
                 sample_images(batches_done, accelerator)
 
-        if args.checkpoint_interval != -1 and epoch % args.checkpoint_interval == 0:
+        if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
             if accelerator.is_main_process:
                 unwrapped_generator = accelerator.unwrap_model(generator)
                 unwrapped_discriminator = accelerator.unwrap_model(discriminator)
                 # Save model checkpoints
-                torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (args.dataset, epoch))
-                torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (args.dataset, epoch))
+                torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (input_dataset, epoch))
+                torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (input_dataset, epoch))
 
     if accelerator.is_main_process:
         unwrapped_generator = accelerator.unwrap_model(generator)
@@ -257,12 +248,5 @@ def training_function(config, args):
         torch.save(unwrapped_generator.state_dict(), f"saved_models/generator.pth")
         torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator.pth")
 
-def main():
-    args = parse_args()
-    print(args)
 
-    training_function({}, args)
-
-
-if __name__ == "__main__":
-    main()
+training_function({})

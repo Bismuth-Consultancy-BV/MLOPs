@@ -45,7 +45,6 @@ class UNetDown(nn.Module):
     def forward(self, x):
         return self.model(x)
 
-
 class UNetUp(nn.Module):
     def __init__(self, in_size, out_size, dropout=0.0):
         super(UNetUp, self).__init__()
