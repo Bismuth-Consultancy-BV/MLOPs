@@ -46,8 +46,8 @@ def weights_init_normal(m):
 def initialize_networks(netG, netD):
     if starting_epoch != 0:
         # Load pretrained models
-        netG.load_state_dict(torch.load(f"saved_models/{input_dataset}/generator_{starting_epoch}.pth"))
-        netD.load_state_dict(torch.load(f"saved_models/{input_dataset}/discriminator_{starting_epoch}.pth"))
+        netG.load_state_dict(torch.load(f"saved_models/generator_{starting_epoch}.pth"))
+        netD.load_state_dict(torch.load(f"saved_models/discriminator_{starting_epoch}.pth"))
     else:
         # Initialize weights
         netG.apply(weights_init_normal)

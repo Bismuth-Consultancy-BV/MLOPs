@@ -16,3 +16,4 @@ data/dependencies/
 
 
 scripts/python/pix2pixpipeline/images/
+scripts/python/pix2pixpipeline/saved_models/
