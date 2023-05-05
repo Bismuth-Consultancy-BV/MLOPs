@@ -38,7 +38,7 @@ from accelerate import Accelerator
 import torch.nn as nn
 import torch
 
-from huggan.utils.hub import get_full_repo_name
+# from huggan.utils.hub import get_full_repo_name
 from huggingface_hub import create_repo
 
 
@@ -46,48 +46,23 @@ def parse_args(args=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="huggan/facades", help="Dataset to use")
     parser.add_argument("--epoch", type=int, default=0, help="epoch to start training from")
-    parser.add_argument("--n_epochs", type=int, default=200, help="number of epochs of training")
+    parser.add_argument("--n_epochs", type=int, default=5, help="number of epochs of training")
     parser.add_argument("--batch_size", type=int, default=1, help="size of the batches")
     parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
     parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
     parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of first order momentum of gradient")
     parser.add_argument("--decay_epoch", type=int, default=100, help="epoch from which to start lr decay")
-    parser.add_argument("--n_cpu", type=int, default=8, help="number of cpu threads to use during batch generation")
+    parser.add_argument("--n_cpu", type=int, default=0, help="number of cpu threads to use during batch generation")
     parser.add_argument("--image_size", type=int, default=256, help="size of images for training")
     parser.add_argument("--channels", type=int, default=3, help="number of image channels")
-    parser.add_argument(
-        "--sample_interval", type=int, default=500, help="interval between sampling of images from generators"
-    )
+    parser.add_argument("--sample_interval", type=int, default=500, help="interval between sampling of images from generators")
     parser.add_argument("--checkpoint_interval", type=int, default=-1, help="interval between model checkpoints")
-    parser.add_argument("--fp16", action="store_true", help="If passed, will use FP16 training.")
-    parser.add_argument(
-        "--mixed_precision",
-        type=str,
-        default="no",
-        choices=["no", "fp16", "bf16"],
+    parser.add_argument("--mixed_precision", type=str, default="no", choices=["no", "fp16", "bf16"],
         help="Whether to use mixed precision. Choose"
         "between fp16 and bf16 (bfloat16). Bf16 requires PyTorch >= 1.10."
         "and an Nvidia Ampere GPU.",
     )
     parser.add_argument("--cpu", action="store_true", help="If passed, will train on the CPU.")
-    parser.add_argument(
-        "--push_to_hub",
-        action="store_true",
-        help="Whether to push the model to the HuggingFace hub after training.",
-        )
-    parser.add_argument(
-        "--model_name",
-        required="--push_to_hub" in sys.argv,
-        type=str,
-        help="Name of the model on the hub.",
-    )
-    parser.add_argument(
-        "--organization_name",
-        required=False,
-        default="huggan",
-        type=str,
-        help="Organization name to push to, in case args.push_to_hub is specified.",
-    )
     return parser.parse_args(args=args)
 
 # Custom weights initialization called on Generator and Discriminator
@@ -100,15 +75,15 @@ def weights_init_normal(m):
         torch.nn.init.constant_(m.bias.data, 0.0)
 
 def training_function(config, args):
-    accelerator = Accelerator(fp16=args.fp16, cpu=args.cpu, mixed_precision=args.mixed_precision)
+    accelerator = Accelerator(cpu=args.cpu, mixed_precision=args.mixed_precision)
 
     os.makedirs("images/%s" % args.dataset, exist_ok=True)
     os.makedirs("saved_models/%s" % args.dataset, exist_ok=True)
     
-    repo_name = get_full_repo_name(args.model_name, args.organization_name)
-    if args.push_to_hub:
-        if accelerator.is_main_process:
-            repo_url = create_repo(repo_name, exist_ok=True)
+    # repo_name = get_full_repo_name(args.model_name, args.organization_name)
+    # if args.push_to_hub:
+    #     if accelerator.is_main_process:
+    #         repo_url = create_repo(repo_name, exist_ok=True)
     # Loss functions
     criterion_GAN = torch.nn.MSELoss()
     criterion_pixelwise = torch.nn.L1Loss()
@@ -172,8 +147,8 @@ def training_function(config, args):
     train_ds = splits['train']
     val_ds = splits['test']
 
-    dataloader = DataLoader(train_ds, shuffle=True, batch_size=args.batch_size, num_workers=args.n_cpu)
-    val_dataloader = DataLoader(val_ds, batch_size=10, shuffle=True, num_workers=1)
+    dataloader = DataLoader(train_ds, shuffle=True, batch_size=args.batch_size, num_workers=0)
+    val_dataloader = DataLoader(val_ds, batch_size=10, shuffle=True, num_workers=0)
 
     def sample_images(batches_done, accelerator):
         """Saves a generated sample from the validation set"""
@@ -282,18 +257,13 @@ def training_function(config, args):
                 # Save model checkpoints
                 torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (args.dataset, epoch))
                 torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (args.dataset, epoch))
+    
+    if accelerator.is_main_process:
+        unwrapped_generator = accelerator.unwrap_model(generator)
+        unwrapped_discriminator = accelerator.unwrap_model(discriminator)
 
-        # Optionally push to hub
-        if args.push_to_hub:
-            if accelerator.is_main_process:
-                with tempfile.TemporaryDirectory() as temp_dir:
-                    unwrapped_generator = accelerator.unwrap_model(generator)
-                    unwrapped_generator.push_to_hub(
-                        repo_path_or_name=temp_dir,
-                        repo_url=repo_url,
-                        commit_message=f"Training in progress, epoch {epoch}",
-                        skip_lfs_files=True
-                    )
+        torch.save(unwrapped_generator.state_dict(), f"saved_models/generator_{epoch}.pth")
+        torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator_{epoch}.pth")
 
 def main():
     args = parse_args()

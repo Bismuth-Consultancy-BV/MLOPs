@@ -17,9 +17,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-from huggan.pytorch.huggan_mixin import HugGANModelHubMixin
-
-
 def weights_init_normal(m):
     classname = m.__class__.__name__
     if classname.find("Conv") != -1:
@@ -69,7 +66,7 @@ class UNetUp(nn.Module):
         return x
 
 
-class GeneratorUNet(nn.Module, HugGANModelHubMixin):
+class GeneratorUNet(nn.Module):
     def __init__(self, in_channels=3, out_channels=3):
         super(GeneratorUNet, self).__init__()
 
