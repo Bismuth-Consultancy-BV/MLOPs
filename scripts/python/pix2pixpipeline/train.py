@@ -93,6 +93,12 @@ def sample_images(batches_done, accelerator, val_dataloader, netG):
     if accelerator.is_main_process:
         save_image(img_sample, f"images/{batches_done}.png", nrow=5, normalize=True)
 
+def save_checkpoint(accelerator, netG, netD, epoch):
+    if accelerator.is_main_process:
+        unwrapped_generator = accelerator.unwrap_model(netG)
+        unwrapped_discriminator = accelerator.unwrap_model(netD)
+        torch.save(unwrapped_generator.state_dict(), f"saved_models/generator_{epoch}.pth")
+        torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator_{epoch}.pth")
 
 def training_function():
     accelerator = Accelerator(cpu=use_cpu, mixed_precision=mixed_precision)
@@ -138,16 +144,15 @@ def training_function():
         return lr_l
     scheduler = lr_scheduler.LambdaLR(optimizer_G, lr_lambda=lambda_rule)
 
-    final_epoch = total_epochs+decay_epochs
+    final_epoch = total_epochs + decay_epochs
     for epoch in range(starting_epoch, final_epoch):
         print("\n")
 
         old_lr = optimizer_G.param_groups[0]['lr']
         scheduler.step()
         new_lr = optimizer_G.param_groups[0]['lr']
-        print(old_lr, new_lr)
+        print(f"Prev LR: {old_lr} New LR: {new_lr}")
 
-        print("")
         for i, batch in enumerate(dataloader):
 
             # Model inputs
@@ -217,18 +222,8 @@ def training_function():
                 sample_images(batches_done, accelerator, val_dataloader, netG)
 
         if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
-            if accelerator.is_main_process:
-                unwrapped_generator = accelerator.unwrap_model(netG)
-                unwrapped_discriminator = accelerator.unwrap_model(netD)
-                # Save model checkpoints
-                torch.save(unwrapped_generator.state_dict(), f"saved_models/generator_{epoch}.pth")
-                torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator_{epoch}")
-
-    if accelerator.is_main_process:
-        unwrapped_generator = accelerator.unwrap_model(netG)
-        unwrapped_discriminator = accelerator.unwrap_model(netD)
-
-        torch.save(unwrapped_generator.state_dict(), f"saved_models/generator.pth")
-        torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator.pth")
+            save_checkpoint(accelerator, netG, netD, epoch)
+            
+    save_checkpoint(accelerator, netG, netD, epoch)
 
 training_function()
