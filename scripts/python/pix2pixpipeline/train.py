@@ -262,8 +262,8 @@ def training_function(config, args):
         unwrapped_generator = accelerator.unwrap_model(generator)
         unwrapped_discriminator = accelerator.unwrap_model(discriminator)
 
-        torch.save(unwrapped_generator.state_dict(), f"saved_models/generator_{epoch}.pth")
-        torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator_{epoch}.pth")
+        torch.save(unwrapped_generator.state_dict(), f"saved_models/generator.pth")
+        torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator.pth")
 
 def main():
     args = parse_args()
