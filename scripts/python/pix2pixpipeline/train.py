@@ -15,14 +15,13 @@
 
 import argparse
 import os
-from pathlib import Path
-import numpy as np
 import time
 import datetime
 import sys
-import tempfile
+import numpy as np
 
-from torchvision.transforms import Compose, Resize, ToTensor, Normalize, RandomVerticalFlip
+
+from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from torchvision.utils import save_image
 
 from PIL import Image
@@ -35,11 +34,8 @@ from datasets import load_dataset
 
 from accelerate import Accelerator
 
-import torch.nn as nn
+from torch import nn
 import torch
-
-# from huggan.utils.hub import get_full_repo_name
-from huggingface_hub import create_repo
 
 
 def parse_args(args=None):
@@ -79,11 +75,7 @@ def training_function(config, args):
 
     os.makedirs("images/%s" % args.dataset, exist_ok=True)
     os.makedirs("saved_models/%s" % args.dataset, exist_ok=True)
-    
-    # repo_name = get_full_repo_name(args.model_name, args.organization_name)
-    # if args.push_to_hub:
-    #     if accelerator.is_main_process:
-    #         repo_url = create_repo(repo_name, exist_ok=True)
+
     # Loss functions
     criterion_GAN = torch.nn.MSELoss()
     criterion_pixelwise = torch.nn.L1Loss()
@@ -100,8 +92,8 @@ def training_function(config, args):
 
     if args.epoch != 0:
         # Load pretrained models
-        generator.load_state_dict(torch.load("saved_models/%s/generator_%d.pth" % (args.dataset, args.epoch)))
-        discriminator.load_state_dict(torch.load("saved_models/%s/discriminator_%d.pth" % (args.dataset, args.epoch)))
+        generator.load_state_dict(torch.load(f"saved_models/{args.dataset}/generator_{args.epoch}.pth"))
+        discriminator.load_state_dict(torch.load(f"saved_models/{args.dataset}/discriminator_{args.epoch}.pth"))
     else:
         # Initialize weights
         generator.apply(weights_init_normal)
@@ -129,8 +121,8 @@ def training_function(config, args):
                 imageA = Image.fromarray(np.array(imageA)[:, ::-1, :], "RGB")
                 imageB = Image.fromarray(np.array(imageB)[:, ::-1, :], "RGB")
             imagesA.append(imageA)
-            imagesB.append(imageB)  
-        
+            imagesB.append(imageB)
+
         # transforms
         examples["A"] = [transform(image.convert("RGB")) for image in imagesA]
         examples["B"] = [transform(image.convert("RGB")) for image in imagesB]
@@ -175,7 +167,7 @@ def training_function(config, args):
             # Model inputs
             real_A = batch["A"]
             real_B = batch["B"]
-            
+
             # Adversarial ground truths
             valid = torch.ones((real_A.size(0), *patch), device=accelerator.device)
             fake = torch.zeros((real_A.size(0), *patch), device=accelerator.device)
@@ -257,7 +249,7 @@ def training_function(config, args):
                 # Save model checkpoints
                 torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (args.dataset, epoch))
                 torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (args.dataset, epoch))
-    
+
     if accelerator.is_main_process:
         unwrapped_generator = accelerator.unwrap_model(generator)
         unwrapped_discriminator = accelerator.unwrap_model(discriminator)
