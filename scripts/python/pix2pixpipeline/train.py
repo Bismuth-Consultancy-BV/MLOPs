@@ -18,24 +18,18 @@ import os
 import time
 import datetime
 import sys
-import numpy as np
-
+import numpy
+import torch
 
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from torchvision.utils import save_image
-
 from PIL import Image
-
 from torch.utils.data import DataLoader
-
 from modeling_pix2pix import GeneratorUNet, Discriminator
-
 from datasets import load_dataset
-
 from accelerate import Accelerator
-
 from torch import nn
-import torch
+
 
 
 input_dataset = "huggan/facades" #"Dataset to use"
@@ -51,7 +45,7 @@ sample_interval = 500 #"interval between sampling of images from generators"
 checkpoint_interval = -1 #"interval between model checkpoints"
 mixed_precision = "no" #["no", "fp16", "bf16"]
 use_cpu = False #"If passed, will train on the CPU."
-
+lambda_L1 = 100 # Loss weight of L1 pixel-wise loss between translated image and real image
 
 # Custom weights initialization called on Generator and Discriminator
 def weights_init_normal(m):
@@ -62,39 +56,18 @@ def weights_init_normal(m):
         torch.nn.init.normal_(m.weight.data, 1.0, 0.02)
         torch.nn.init.constant_(m.bias.data, 0.0)
 
-def training_function(config):
-    accelerator = Accelerator(cpu=use_cpu, mixed_precision=mixed_precision)
-
-    os.makedirs("images/%s" % input_dataset, exist_ok=True)
-    os.makedirs("saved_models/%s" % input_dataset, exist_ok=True)
-
-    # Loss functions
-    criterion_GAN = torch.nn.MSELoss()
-    criterion_pixelwise = torch.nn.L1Loss()
-
-    # Loss weight of L1 pixel-wise loss between translated image and real image
-    lambda_pixel = 100
-
-    # Calculate output of image discriminator (PatchGAN)
-    patch = (1, image_size // 2 ** 4, image_size // 2 ** 4)
-
-    # Initialize generator and discriminator
-    generator = GeneratorUNet()
-    discriminator = Discriminator()
-
+def initialize_networks(netG, netD):
     if starting_epoch != 0:
         # Load pretrained models
-        generator.load_state_dict(torch.load(f"saved_models/{input_dataset}/generator_{starting_epoch}.pth"))
-        discriminator.load_state_dict(torch.load(f"saved_models/{input_dataset}/discriminator_{starting_epoch}.pth"))
+        netG.load_state_dict(torch.load(f"saved_models/{input_dataset}/generator_{starting_epoch}.pth"))
+        netD.load_state_dict(torch.load(f"saved_models/{input_dataset}/discriminator_{starting_epoch}.pth"))
     else:
         # Initialize weights
-        generator.apply(weights_init_normal)
-        discriminator.apply(weights_init_normal)
+        netG.apply(weights_init_normal)
+        netD.apply(weights_init_normal)
+    return netG, netD
 
-    # Optimizers
-    optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b2, b2))
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b2, b2))
-
+def transforms(examples):
     # Configure dataloaders
     transform = Compose(
             [
@@ -104,25 +77,58 @@ def training_function(config):
             ]
         )
 
-    def transforms(examples):
-        # random vertical flip
-        imagesA = []
-        imagesB = []
-        for imageA, imageB in zip(examples['imageA'], examples['imageB']):
-            if np.random.random() < 0.5:
-                imageA = Image.fromarray(np.array(imageA)[:, ::-1, :], "RGB")
-                imageB = Image.fromarray(np.array(imageB)[:, ::-1, :], "RGB")
-            imagesA.append(imageA)
-            imagesB.append(imageB)
+    # random vertical flip
+    imagesA = []
+    imagesB = []
+    for imageA, imageB in zip(examples['imageA'], examples['imageB']):
+        if numpy.random.random() < 0.5:
+            imageA = Image.fromarray(numpy.array(imageA)[:, ::-1, :], "RGB")
+            imageB = Image.fromarray(numpy.array(imageB)[:, ::-1, :], "RGB")
+        imagesA.append(imageA)
+        imagesB.append(imageB)
 
-        # transforms
-        examples["A"] = [transform(image.convert("RGB")) for image in imagesA]
-        examples["B"] = [transform(image.convert("RGB")) for image in imagesB]
+    # transforms
+    examples["A"] = [transform(image.convert("RGB")) for image in imagesA]
+    examples["B"] = [transform(image.convert("RGB")) for image in imagesB]
 
-        del examples["imageA"]
-        del examples["imageB"]
+    del examples["imageA"]
+    del examples["imageB"]
 
-        return examples
+    return examples
+
+def sample_images(batches_done, accelerator, val_dataloader, netG):
+    """Saves a generated sample from the validation set"""
+    batch = next(iter(val_dataloader))
+    real_A = batch["A"]
+    real_B = batch["B"]
+    fake_B = netG(real_A)
+    img_sample = torch.cat((real_A.data, fake_B.data, real_B.data), -2)
+    if accelerator.is_main_process:
+        save_image(img_sample, f"images/{batches_done}.png", nrow=5, normalize=True)
+
+
+def training_function():
+    accelerator = Accelerator(cpu=use_cpu, mixed_precision=mixed_precision)
+
+    os.makedirs("images/", exist_ok=True)
+    os.makedirs("saved_models/", exist_ok=True)
+
+    # Calculate output of image discriminator (PatchGAN)
+    patch = (1, image_size // 2 ** 4, image_size // 2 ** 4)
+
+    # Define Networks
+    netG = GeneratorUNet()
+    netD = Discriminator()
+
+    # Define Loss functions
+    criterionGAN = torch.nn.MSELoss() #TODO: CHECK
+    criterionL1 = torch.nn.L1Loss()
+
+    # Define Optimizers
+    optimizer_G = torch.optim.Adam(netG.parameters(), lr=lr, betas=(b2, b2))
+    optimizer_D = torch.optim.Adam(netD.parameters(), lr=lr, betas=(b2, b2))
+
+    netG, netD = initialize_networks(netG, netD)
 
     dataset = load_dataset(input_dataset)
     transformed_dataset = dataset.with_transform(transforms)
@@ -134,21 +140,44 @@ def training_function(config):
     dataloader = DataLoader(train_ds, shuffle=True, batch_size=batch_size, num_workers=0)
     val_dataloader = DataLoader(val_ds, batch_size=10, shuffle=True, num_workers=0)
 
-    def sample_images(batches_done, accelerator):
-        """Saves a generated sample from the validation set"""
-        batch = next(iter(val_dataloader))
-        real_A = batch["A"]
-        real_B = batch["B"]
-        fake_B = generator(real_A)
-        img_sample = torch.cat((real_A.data, fake_B.data, real_B.data), -2)
-        if accelerator.is_main_process:
-            save_image(img_sample, f"images/{batches_done}.png", nrow=5, normalize=True)
-
-    generator, discriminator, optimizer_G, optimizer_D, dataloader, val_dataloader = accelerator.prepare(generator, discriminator, optimizer_G, optimizer_D, dataloader, val_dataloader)
+    netG, netD, optimizer_G, optimizer_D, dataloader, val_dataloader = accelerator.prepare(netG, netD, optimizer_G, optimizer_D, dataloader, val_dataloader)
 
     # ----------
     #  Training
     # ----------
+
+            # def forward():
+            #     fake_B = netG(real_A)
+
+            # def backward_D():
+            #     pred_fake = netD(fake_B.detach(), real_A)
+            #     loss_D_fake = criterionGAN(pred_fake, fake)
+
+            #     pred_real = netD(real_B, real_A)
+            #     loss_D_real = criterionGAN(pred_real, valid)
+
+            #     loss_D = (loss_D_fake + loss_D_real) * 0.5
+            #     accelerator.backward(loss_D)
+
+            # def backward_G():
+            #     pred_fake = netD(fake_B, real_A)
+            #     loss_G_GAN = criterionGAN(pred_fake, valid)
+
+            #     loss_G_L1 = criterionL1(fake_B, real_B) * lambda_L1
+            #     loss_G = loss_G_GAN + loss_G_L1
+            #     accelerator.backward(loss_G)
+
+            # def optimize_parameters():
+            #     forward()
+            #     # Update D
+            #     optimizer_D.zero_grad()
+            #     backward_D()
+            #     optimizer_D.step()
+            #     # Update G
+            #     optimizer_G.zero_grad()
+            #     backward_G()
+            #     optimizer_G.step()
+
 
     prev_time = time.time()
 
@@ -159,50 +188,36 @@ def training_function(config):
             # Model inputs
             real_A = batch["A"]
             real_B = batch["B"]
-
-            # Adversarial ground truths
-            valid = torch.ones((real_A.size(0), *patch), device=accelerator.device)
             fake = torch.zeros((real_A.size(0), *patch), device=accelerator.device)
+            valid = torch.ones((real_A.size(0), *patch), device=accelerator.device)
 
-            # ------------------
-            #  Train Generators
-            # ------------------
+            # def forward():
+            fake_B = netG(real_A)
 
+            # Update D
+            optimizer_D.zero_grad()
+
+            # def backward_D():
+            pred_fake = netD(fake_B.detach(), real_A)
+            loss_D_fake = criterionGAN(pred_fake, fake)
+            pred_real = netD(real_B, real_A)
+            loss_D_real = criterionGAN(pred_real, valid)
+            loss_D = (loss_D_fake + loss_D_real) * 0.5
+            accelerator.backward(loss_D)
+
+            # Update D
+            optimizer_D.step()
+            # Update G
             optimizer_G.zero_grad()
 
-            # GAN loss
-            fake_B = generator(real_A)
-            pred_fake = discriminator(fake_B, real_A)
-            loss_GAN = criterion_GAN(pred_fake, valid)
-            # Pixel-wise loss
-            loss_pixel = criterion_pixelwise(fake_B, real_B)
-
-            # Total loss
-            loss_G = loss_GAN + lambda_pixel * loss_pixel
-
+            # def backward_G():
+            pred_fake = netD(fake_B, real_A)
+            loss_G_GAN = criterionGAN(pred_fake, valid)
+            loss_G_L1 = criterionL1(fake_B, real_B) * lambda_L1
+            loss_G = loss_G_GAN + loss_G_L1
             accelerator.backward(loss_G)
 
             optimizer_G.step()
-
-            # ---------------------
-            #  Train Discriminator
-            # ---------------------
-
-            optimizer_D.zero_grad()
-
-            # Real loss
-            pred_real = discriminator(real_B, real_A)
-            loss_real = criterion_GAN(pred_real, valid)
-
-            # Fake loss
-            pred_fake = discriminator(fake_B.detach(), real_A)
-            loss_fake = criterion_GAN(pred_fake, fake)
-
-            # Total loss
-            loss_D = 0.5 * (loss_real + loss_fake)
-
-            accelerator.backward(loss_D)
-            optimizer_D.step()
 
             # --------------
             #  Log Progress
@@ -224,30 +239,30 @@ def training_function(config):
                     len(dataloader),
                     loss_D.item(),
                     loss_G.item(),
-                    loss_pixel.item(),
-                    loss_GAN.item(),
+                    loss_G_L1.item(),
+                    loss_G_GAN.item(),
                     time_left,
                 )
             )
 
             # If at sample interval save image
             if batches_done % sample_interval == 0:
-                sample_images(batches_done, accelerator)
+                sample_images(batches_done, accelerator, val_dataloader, netG)
 
         # if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
         #     if accelerator.is_main_process:
-        #         unwrapped_generator = accelerator.unwrap_model(generator)
-        #         unwrapped_discriminator = accelerator.unwrap_model(discriminator)
+        #         unwrapped_generator = accelerator.unwrap_model(netG)
+        #         unwrapped_discriminator = accelerator.unwrap_model(netD)
         #         # Save model checkpoints
         #         torch.save(unwrapped_generator.state_dict(), "saved_models/%s/generator_%d.pth" % (input_dataset, epoch))
         #         torch.save(unwrapped_discriminator.state_dict(), "saved_models/%s/discriminator_%d.pth" % (input_dataset, epoch))
 
     if accelerator.is_main_process:
-        unwrapped_generator = accelerator.unwrap_model(generator)
-        unwrapped_discriminator = accelerator.unwrap_model(discriminator)
+        unwrapped_generator = accelerator.unwrap_model(netG)
+        unwrapped_discriminator = accelerator.unwrap_model(netD)
 
         torch.save(unwrapped_generator.state_dict(), f"saved_models/generator.pth")
         torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator.pth")
 
 
-training_function({})
+training_function()
