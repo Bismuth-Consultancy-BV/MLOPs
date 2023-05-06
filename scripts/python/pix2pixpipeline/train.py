@@ -13,7 +13,7 @@ from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from torchvision.utils import save_image
 from PIL import Image
 from torch.utils.data import DataLoader
-from modeling_pix2pix import GeneratorUNet, Discriminator
+from modeling_pix2pix import GeneratorUNet, Discriminator, weights_init_normal
 from datasets import load_dataset
 from accelerate import Accelerator
 from torch.optim import lr_scheduler
@@ -33,15 +33,6 @@ checkpoint_interval = 10 #"interval between model checkpoints"
 mixed_precision = "no" #["no", "fp16", "bf16"]
 use_cpu = False #"If passed, will train on the CPU."
 lambda_L1 = 100 # Loss weight of L1 pixel-wise loss between translated image and real image
-
-# Custom weights initialization called on Generator and Discriminator
-def weights_init_normal(m):
-    classname = m.__class__.__name__
-    if classname.find("Conv") != -1:
-        torch.nn.init.normal_(m.weight.data, 0.0, 0.02)
-    elif classname.find("BatchNorm2d") != -1:
-        torch.nn.init.normal_(m.weight.data, 1.0, 0.02)
-        torch.nn.init.constant_(m.bias.data, 0.0)
 
 def initialize_networks(netG, netD):
     if starting_epoch != 0:
@@ -142,14 +133,16 @@ def training_function():
     def lambda_rule(epoch):
         lr_l = 1.0 - max(0, epoch - total_epochs) / float(decay_epochs + 1)
         return lr_l
-    scheduler = lr_scheduler.LambdaLR(optimizer_G, lr_lambda=lambda_rule)
+    scheduler_G = lr_scheduler.LambdaLR(optimizer_G, lr_lambda=lambda_rule)
+    scheduler_D = lr_scheduler.LambdaLR(optimizer_D, lr_lambda=lambda_rule)
 
     final_epoch = total_epochs + decay_epochs
     for epoch in range(starting_epoch, final_epoch):
         print("\n")
 
         old_lr = optimizer_G.param_groups[0]['lr']
-        scheduler.step()
+        scheduler_G.step()
+        scheduler_D.step()
         new_lr = optimizer_G.param_groups[0]['lr']
         print(f"Prev LR: {old_lr} New LR: {new_lr}")
 
