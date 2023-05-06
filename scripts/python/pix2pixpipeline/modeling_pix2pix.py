@@ -35,7 +35,7 @@ class UNetDown(nn.Module):
         super(UNetDown, self).__init__()
         layers = [nn.Conv2d(in_size, out_size, 4, 2, 1, bias=False)]
         if normalize:
-            layers.append(nn.InstanceNorm2d(out_size))
+            layers.append(nn.InstanceNorm2d(out_size, affine=True))
         layers.append(nn.LeakyReLU(0.2))
         if dropout:
             layers.append(nn.Dropout(dropout))
@@ -126,7 +126,7 @@ class Discriminator(nn.Module):
             """Returns downsampling layers of each discriminator block"""
             layers = [nn.Conv2d(in_filters, out_filters, 4, stride=2, padding=1)]
             if normalization:
-                layers.append(nn.InstanceNorm2d(out_filters))
+                layers.append(nn.InstanceNorm2d(out_filters, affine=True))
             layers.append(nn.LeakyReLU(0.2, inplace=True))
             return layers
 

@@ -21,15 +21,15 @@ from torch.optim import lr_scheduler
 
 input_dataset = "huggan/facades" #"Dataset to use"
 starting_epoch = 0 #"epoch to start training from")
-total_epochs = 100 #"number of epochs of training"
-decay_epochs = 50 # Number of epochs with reducing LR
+total_epochs = 500 #"number of epochs of training"
+decay_epochs = 100 # Number of epochs with reducing LR
 batch_size = 1 #"size of the batches"
 lr = 0.0002 #"adam: learning rate"
 b1 = 0.5 #"adam: decay of first order momentum of gradient"
 b2 = 0.999 #"adam: decay of first order momentum of gradient"
 image_size = 256 #"size of images for training"
 sample_interval = 500 #"interval between sampling of images from generators"
-checkpoint_interval = 10 #"interval between model checkpoints"
+checkpoint_interval = 20 #"interval between model checkpoints"
 mixed_precision = "no" #["no", "fp16", "bf16"]
 use_cpu = False #"If passed, will train on the CPU."
 lambda_L1 = 100 # Loss weight of L1 pixel-wise loss between translated image and real image
@@ -91,6 +91,10 @@ def save_checkpoint(accelerator, netG, netD, epoch):
         torch.save(unwrapped_generator.state_dict(), f"saved_models/generator_{epoch}.pth")
         torch.save(unwrapped_discriminator.state_dict(), f"saved_models/discriminator_{epoch}.pth")
 
+def lambda_rule(epoch):
+    lr_l = 1.0 - max(0, epoch - total_epochs) / float(decay_epochs + 1)
+    return lr_l
+
 def training_function():
     accelerator = Accelerator(cpu=use_cpu, mixed_precision=mixed_precision)
 
@@ -112,6 +116,10 @@ def training_function():
     optimizer_G = torch.optim.Adam(netG.parameters(), lr=lr, betas=(b2, b2))
     optimizer_D = torch.optim.Adam(netD.parameters(), lr=lr, betas=(b2, b2))
 
+
+    scheduler_G = lr_scheduler.LambdaLR(optimizer_G, lr_lambda=lambda_rule)
+    scheduler_D = lr_scheduler.LambdaLR(optimizer_D, lr_lambda=lambda_rule)
+
     netG, netD = initialize_networks(netG, netD)
 
     dataset = load_dataset(input_dataset)
@@ -125,16 +133,9 @@ def training_function():
     dataloader = DataLoader(train_ds, shuffle=True, batch_size=batch_size, num_workers=0)
     val_dataloader = DataLoader(val_ds, batch_size=10, shuffle=True, num_workers=0)
 
-    netG, netD, optimizer_G, optimizer_D, dataloader, val_dataloader = accelerator.prepare(netG, netD, optimizer_G, optimizer_D, dataloader, val_dataloader)
+    netG, netD, optimizer_G, optimizer_D, scheduler_G, scheduler_D, dataloader, val_dataloader = accelerator.prepare(netG, netD, optimizer_G, optimizer_D, scheduler_G, scheduler_D, dataloader, val_dataloader)
 
     prev_time = time.time()
-
-
-    def lambda_rule(epoch):
-        lr_l = 1.0 - max(0, epoch - total_epochs) / float(decay_epochs + 1)
-        return lr_l
-    scheduler_G = lr_scheduler.LambdaLR(optimizer_G, lr_lambda=lambda_rule)
-    scheduler_D = lr_scheduler.LambdaLR(optimizer_D, lr_lambda=lambda_rule)
 
     final_epoch = total_epochs + decay_epochs
     for epoch in range(starting_epoch, final_epoch):
@@ -216,7 +217,7 @@ def training_function():
 
         if checkpoint_interval != -1 and epoch % checkpoint_interval == 0:
             save_checkpoint(accelerator, netG, netD, epoch)
-            
+
     save_checkpoint(accelerator, netG, netD, epoch)
 
 training_function()
