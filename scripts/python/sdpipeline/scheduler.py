@@ -46,5 +46,8 @@ def run(input_latents, latent_dimension, image_latents, guiding_strength, infere
     config = scheduler_object.config
     config["init_timesteps"] = t_start
     config["type"] = scheduler_model
+    # A bit of a lame way to add Karras sigmas : just check if the menu label contains "Karras". bandaid.
+    if 'karras' in str(scheduler_model).lower():
+        config["use_karras_sigmas"] = True
     scheduler["config"] = config
     return scheduler
