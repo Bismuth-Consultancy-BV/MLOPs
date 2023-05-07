@@ -41,6 +41,13 @@
             default { "$HIP/out/$OS.$F.jpg" }
             parmtag { "script_callback_language" "python" }
         }
+        parm {
+            name    "exif"
+            label   "EXIF Data"
+            type    string
+            default { "Generated using MLOPs" }
+            parmtag { "script_callback_language" "python" }
+        }
     }
 
 }

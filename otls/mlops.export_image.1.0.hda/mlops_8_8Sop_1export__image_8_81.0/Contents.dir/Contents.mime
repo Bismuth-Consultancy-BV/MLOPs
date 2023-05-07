@@ -32,23 +32,25 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -10.2283 -1.10767
-connectornextid 0
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -1.35375 -4.60407
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
+0 	sd_image_decoder1 1 1 "input1"
 }
 inputs
 {
+0 	sd_image_decoder1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -1160,8 +1162,11 @@ image = image.convert('RGB')
 dir_path = os.path.dirname(path)
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
-   
-image.save(path)"	)
+
+exif = image.getexif() 
+description = node.parent().parm(\"exif\").evalAsString()
+exif[0x010E] = description
+image.save(path, exif=exif) "	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
