@@ -1,22 +1,26 @@
-from diffusers import DDIMScheduler,DDPMScheduler,DEISMultistepScheduler,DPMSolverMultistepScheduler,DPMSolverSinglestepScheduler,EulerAncestralDiscreteScheduler,EulerDiscreteScheduler,PNDMScheduler,UniPCMultistepScheduler,LMSDiscreteScheduler
+from diffusers import HeunDiscreteScheduler,KDPM2DiscreteScheduler,KDPM2AncestralDiscreteScheduler,DDIMScheduler,DDPMScheduler,DEISMultistepScheduler,DPMSolverMultistepScheduler,DPMSolverSinglestepScheduler,EulerAncestralDiscreteScheduler,EulerDiscreteScheduler,UniPCMultistepScheduler,LMSDiscreteScheduler
 
 schedulers = {
 	"unipc" : UniPCMultistepScheduler,
-	"euler_discrete" : EulerDiscreteScheduler,
-	"euler_ancestral" : EulerAncestralDiscreteScheduler,
-	"lms_discrete" : LMSDiscreteScheduler,
+	"euler" : EulerDiscreteScheduler,
+	"euler a" : EulerAncestralDiscreteScheduler,
+	"LMS" : LMSDiscreteScheduler,
+	"Heun" : HeunDiscreteScheduler,
+	"Heun Karras" : HeunDiscreteScheduler,
 	"ddim" : DDIMScheduler,
 	#"DDIMInverse" : DDIMInverseScheduler,
 	"DDPM" : DDPMScheduler,
 	"DEIS_Multistep" : DEISMultistepScheduler,
-	"DPM_Multistep" : DPMSolverMultistepScheduler,
-	"DPM_Singlestep" : DPMSolverSinglestepScheduler,
-	#"HeunDiscrete" : HeunDiscreteScheduler,
+	"DPM2 Karras" : KDPM2DiscreteScheduler,
+	"DPM2 a Karras" : KDPM2AncestralDiscreteScheduler,
+	"DPM++ 2S" : DPMSolverSinglestepScheduler,
+	# No argument to "turn" the following into Karras version yet
+	# "DPM++ 2S Karras" : DPMSolverSinglestepScheduler(use_karras_sigmas=True),
+	"DPM++ 2M" : DPMSolverMultistepScheduler,
+	"DPM++ 2M Karras" : DPMSolverMultistepScheduler,
 	#"IPNDM" : IPNDMScheduler,
-	#"KDPM2Ancestral" : KDPM2AncestralDiscreteScheduler,
-	#"KDPM2" : KDPM2DiscreteScheduler,
 	#"KarrasVe" : KarrasVeScheduler,
-	"PNDM" : PNDMScheduler,
+	#"PNDM" : PNDMScheduler,
 	#"RePaint" : RePaintScheduler,
 	#"UnCLIP" : UnCLIPScheduler,
 	#"VQDiffusion" : VQDiffusionScheduler
