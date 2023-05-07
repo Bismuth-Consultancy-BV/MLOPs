@@ -146,6 +146,8 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
     # if True:
         for i, t in enumerate(tqdm(timesteps, disable=True)):
             latent_model_input = torch.cat([latents] * 2)
+            #converting timestep to cpu for compatibility with all samplers
+            t = t.to('cpu')
             latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t).to(dtype_unet)
 
             if controlnet_geo:
