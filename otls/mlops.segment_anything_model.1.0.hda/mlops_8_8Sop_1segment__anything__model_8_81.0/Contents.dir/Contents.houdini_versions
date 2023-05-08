@@ -2,6 +2,8 @@
 	"values":["19.5.538"
 	],
 	"indexes":{
+		"hdaroot/switchif2.userdata":0,
+		"hdaroot/attribcreate2.userdata":0,
 		"hdaroot/attribcopy1.userdata":0,
 		"hdaroot/switchif1.userdata":0,
 		"hdaroot/null1.userdata":0,
