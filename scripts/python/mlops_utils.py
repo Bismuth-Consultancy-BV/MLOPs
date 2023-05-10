@@ -148,7 +148,7 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
 
         layout_model = QtWidgets.QHBoxLayout()
         model_path_label = QtWidgets.QLabel("Model Name: ")
-        self.model_path_field = QtWidgets.QLineEdit("stabilityai/stable-diffusion-2-1")
+        self.model_path_field = QtWidgets.QLineEdit("runwayml/stable-diffusion-v1-5")
         layout_model.addWidget(model_path_label)
         layout_model.addWidget(self.model_path_field)
 
