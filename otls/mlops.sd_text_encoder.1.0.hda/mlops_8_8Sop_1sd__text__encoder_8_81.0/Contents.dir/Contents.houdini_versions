@@ -1,12 +1,14 @@
 {
-	"values":["19.5.538"
+	"values":["19.5.569"
 	],
 	"indexes":{
+		"hdaroot/error1.userdata":0,
 		"hdaroot/attribcreate2.userdata":0,
-		"hdaroot/switchif1.userdata":0,
 		"hdaroot/null1.userdata":0,
+		"hdaroot/switchif1.userdata":0,
 		"hdaroot/pointgenerate1.userdata":0,
 		"hdaroot/attribcreate1.userdata":0,
+		"hdaroot/switchif3.userdata":0,
 		"hdaroot/output0.userdata":0,
 		"hdaroot/text_encoder.userdata":0
 	}
