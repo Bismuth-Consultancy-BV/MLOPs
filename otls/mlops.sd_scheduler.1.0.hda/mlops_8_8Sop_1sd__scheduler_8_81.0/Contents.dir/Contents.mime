@@ -32,24 +32,21 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.799747 -4.41352
-connectornextid 4
-flags =  lock off model off template on footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -0.50407 -3.55659
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-3 "output1"
 }
 inputsNamed3
 {
 0 	sd_text_encoder1 1 1 "input1"
 1 	sd_latent_noise_generate1 0 1 "input2"
-2 	sd_image_encoder1 1 1 "input3"
 }
 inputs
 {
 0 	sd_text_encoder1 0 1
 1 	sd_latent_noise_generate1 0 1
-2 	sd_image_encoder1 0 1
 }
 stat
 {
@@ -80,8 +77,8 @@ Content-Type: text/plain
 
 4
 0 -2.7123009386119357 2.1977009074410447 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
-1 -2.0018406584640114 11.655467656249924 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
-2 1.6793500111758708 12.941612675393754 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
+1 -2.1348606584640115 14.221407485356 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
+2 1.5463300111758707 15.507552504499831 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
 3 7.4972902560398209 9.0224822405912342 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -1135,7 +1132,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.86882 10.2089
+position -2.00184 12.7748
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -1205,11 +1202,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	error2 1 1 "input1"
+0 	switchif5 2 1 "input1"
 }
 inputs
 {
-0 	error2 0 1
+0 	switchif5 0 1
 }
 stat
 {
@@ -2540,7 +2537,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 4.63453 10.7764
+position 4.50151 13.3423
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -2603,7 +2600,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 1.67935 11.8085
+position 1.54633 14.3744
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -2664,9 +2661,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 1.67935 10.2089
+position 1.54633 12.7748
 connectornextid 3
-flags =  lock off model off template on footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 2 "output1"
@@ -2760,7 +2757,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.110867 9.42038
+position -0.0304771 10.1488
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -2852,7 +2849,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 1.67935 9.16951
+position 3.70166 11.6222
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -2933,7 +2930,7 @@ sopflags sopflags =
 comment ""
 position -2.06565 -0.822058
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -2996,7 +2993,7 @@ sopflags sopflags =
 comment ""
 position -3.97027 -2.18261
 connectornextid 3
-flags =  lock off model off template on footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 2 "output1"
@@ -3062,10 +3059,90 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif5.init"
+Content-Type: text/plain
+
+type = switchif
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif5.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 1.67935 10.4986
+connectornextid 3
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+2 "output1"
+}
+inputsNamed3
+{
+0 	switchif3 2 1 "input1"
+1 	error2 1 1 "input2"
+}
+inputs
+{
+0 	switchif3 0 1
+1 	error2 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@M16AMTA
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif5.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+mergecondition	[ 0	locks=0 ]	(	"all"	)
+testinput	[ 0	locks=0 ]	(	"first"	)
+tests	[ 0	locks=0 ]	(	1	)
+enable1	[ 0	locks=0 ]	(	"on"	)
+type1	[ 0	locks=0 ]	(	"count"	)
+expr1	[ 0	locks=0 ]	(	1	)
+attribtype1	[ 0	locks=0 ]	(	"all"	)
+attribowner1	[ 0	locks=0 ]	(	"point"	)
+attributes1	[ 0	locks=0 ]	(	""	)
+attribvaltype1	[ 0	locks=0 ]	(	"flt"	)
+attribfloatcomp1	[ 0	locks=0 ]	(	"equal"	)
+attribstringcomp1	[ 0	locks=0 ]	(	"equal"	)
+attribval1	[ 0	locks=0 ]	(	0	)
+attribsval1	[ 0	locks=0 ]	(	""	)
+counttype1	[ 0	locks=0 ]	(	"points"	)
+countgroup1	[ 0	locks=0 ]	(	""	)
+countcomp1	[ 0	locks=0 ]	(	"greater"	)
+countval1	[ 0	locks=0 ]	(	0	)
+hasinputtype1	[ 0	locks=0 ]	(	"wired"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif5.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-34
+35
 scheduler
 output0
 null1
@@ -3100,6 +3177,7 @@ attribwrangle3
 error2
 error3
 switchif4
+switchif5
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
