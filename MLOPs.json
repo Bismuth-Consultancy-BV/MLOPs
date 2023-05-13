@@ -20,7 +20,7 @@
             "HUGGINGFACE_HUB_CACHE": "$MLOPS_MODELS/cache/"
         },
         {
-            "HOUDINI_SCRIPT_PATH": "$MLOPS/data/dependencies/"
+            "PYTHONPATH" : "$MLOPS/data/dependencies/python/"
         }
     ]
 }
