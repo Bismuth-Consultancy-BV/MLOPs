@@ -47,7 +47,15 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False, mod
     if os.path.isdir(model_name):
         return model_name
     if cache_only:
-        return path.replace("\\", "/")
+        path = path.replace("\\", "/")
+        if os.path.isdir(path):
+            return path
+        else:
+            # text = "The specified model does not exist locally. Because the 'Local Cache' checkbox for this node is enabled, it also wont be downloaded automatically. Would you like to try downloading the model now?"
+            # value = hou.ui.displayConfirmation(text, severity=hou.severityType.Message, title="MLOPs Missing Model")
+            # if not value:
+            raise hou.NodeError("The specified model does not exist locally. Because the 'Local Cache' checkbox for this node is enabled, it also wont be downloaded automatically. Specify a valid local model or disable the 'Local Cache' parameter")
+            #cache_only = False
 
     model_name = model_name.replace("-_-", "/")
     allow_patterns = ["*.json", "*.txt"]
