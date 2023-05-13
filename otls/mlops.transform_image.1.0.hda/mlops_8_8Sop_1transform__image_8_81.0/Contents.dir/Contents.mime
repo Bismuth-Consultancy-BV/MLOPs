@@ -32,9 +32,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 2.74593 -1.49197
+position -1.88545 -0.0979148
 connectornextid 1
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -125,7 +125,7 @@ Content-Type: text/plain
 {
 version 0.8
 python	[ 0	locks=0 ]	(	"import numpy
-from skimage.transform import resize
+from skimage.transform import resize, warp
 
 # Input Geometry
 node = hou.pwd()
@@ -138,6 +138,8 @@ target_height = node.parent().parm(\"height\").evalAsInt()
 mode = node.parent().parm(\"mode\").evalAsString()
 tilex = node.parent().parm(\"tilex\").evalAsInt()
 tiley = node.parent().parm(\"tiley\").evalAsInt()
+offsetx = node.parent().parm(\"offsetx\").evalAsInt()
+offsety = node.parent().parm(\"offsety\").evalAsInt()
 
 # Attributes
 width = int(geo1.attribValue(\"image_dimension\")[0])
@@ -153,6 +155,8 @@ if mode == \"resize\":
 elif mode == \"tile\":
 	resampled_data = numpy.tile(input_colors, (1, tiley, tilex))
 	resampled_data = resize(resampled_data, (3, width, height))
+elif mode == \"offset\":
+	resampled_data = numpy.roll(input_colors, (-offsetx, -offsety), axis=(2,1))
 else:
 	resampled_data = input_colors
 

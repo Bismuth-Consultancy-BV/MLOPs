@@ -27,6 +27,7 @@
             menu {
                 "resize"    "Resize"
                 "tile"      "Tile"
+                "offset"    "Offset"
             }
             parmtag { "script_callback_language" "python" }
         }
@@ -72,6 +73,28 @@
                 type    integer
                 default { "2" }
                 range   { 1! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupsimple {
+            name    "folder3"
+            label   "Offset"
+
+            parm {
+                name    "offsetx"
+                label   "Offset Width"
+                type    integer
+                default { "0" }
+                range   { -512 512 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "offsety"
+                label   "Offset Height"
+                type    integer
+                default { "0" }
+                range   { -512 512 }
                 parmtag { "script_callback_language" "python" }
             }
         }
