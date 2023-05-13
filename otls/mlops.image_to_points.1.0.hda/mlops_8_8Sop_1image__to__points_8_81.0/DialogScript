@@ -40,7 +40,7 @@
             name    "height"
             label   "Width"
             type    integer
-            default { "768" }
+            default { "512" }
             range   { 0 10 }
             parmtag { "script_callback_language" "python" }
         }
@@ -48,7 +48,7 @@
             name    "width"
             label   "Height"
             type    integer
-            default { "768" }
+            default { "512" }
             range   { 0 10 }
             parmtag { "script_callback_language" "python" }
         }
