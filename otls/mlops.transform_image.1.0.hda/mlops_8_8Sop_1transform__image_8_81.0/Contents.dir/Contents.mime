@@ -23,7 +23,7 @@ Sop
 Content-Disposition: attachment; filename="hdaroot.init"
 Content-Type: text/plain
 
-type = mlops::resize_image::1.0
+type = mlops::transform_image::1.0
 matchesdef = 0
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -32,23 +32,25 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -11.4657 0.114185
-connectornextid 0
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position 2.74593 -1.49197
+connectornextid 1
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
+0 	image_to_points1 0 1 "input1"
 }
 inputs
 {
+0 	image_to_points1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Paul@M16AMTA
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -133,6 +135,9 @@ geo1 = node.inputs()[1].geometry()
 # Parameters
 target_width = node.parent().parm(\"width\").evalAsInt()
 target_height = node.parent().parm(\"height\").evalAsInt()
+mode = node.parent().parm(\"mode\").evalAsString()
+tilex = node.parent().parm(\"tilex\").evalAsInt()
+tiley = node.parent().parm(\"tiley\").evalAsInt()
 
 # Attributes
 width = int(geo1.attribValue(\"image_dimension\")[0])
@@ -143,7 +148,15 @@ b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape
 input_colors = numpy.stack((r,g,b), axis=0)
 
 # Solve
-resampled_data = resize(input_colors, (3, target_width, target_height))
+if mode == \"resize\":
+	resampled_data = resize(input_colors, (3, target_width, target_height))
+elif mode == \"tile\":
+	resampled_data = numpy.tile(input_colors, (1, tiley, tilex))
+	resampled_data = resize(resampled_data, (3, width, height))
+else:
+	resampled_data = input_colors
+
+
 permuted_tensor = resampled_data.transpose(1, 2, 0)
 reshaped_tensor = permuted_tensor.reshape(-1, 3)
 

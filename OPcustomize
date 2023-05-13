@@ -1,3 +1,4 @@
 ophide Sop mlops::sd_image_upres::1.0 // Not working
 ophide Sop mlops::sd_mask_encode::1.0
-opalias Sop mlops::export_image::1.0 mlops::sd_export_image::1.0 
+opalias Sop mlops::export_image::1.0 mlops::sd_export_image::1.0
+opalias Sop mlops::transform_image::1.0 mlops::resize_image::1.0 

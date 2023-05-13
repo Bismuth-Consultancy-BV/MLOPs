@@ -1,0 +1,81 @@
+# Dialog script for mlops::transform_image::1.0 automatically generated
+
+{
+    name	mlops::transform_image::1.0
+    script	labs::wfc_initialize
+    label	"MLOPs Transform Image"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "mode"
+            label   "Mode"
+            type    ordinal
+            default { "0" }
+            menu {
+                "resize"    "Resize"
+                "tile"      "Tile"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "folder1"
+            label   "Resize"
+            disablewhen "{ mode != resize }"
+
+            parm {
+                name    "height"
+                label   "Width"
+                type    integer
+                default { "512" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "width"
+                label   "Height"
+                type    integer
+                default { "512" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupsimple {
+            name    "folder2"
+            label   "Tile"
+            disablewhen "{ mode != tile }"
+
+            parm {
+                name    "tilex"
+                label   "Tile Width"
+                type    integer
+                default { "2" }
+                range   { 1! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tiley"
+                label   "Tile Height"
+                type    integer
+                default { "2" }
+                range   { 1! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+}
