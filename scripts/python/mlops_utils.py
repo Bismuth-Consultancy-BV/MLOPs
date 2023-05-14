@@ -28,11 +28,12 @@ def return_downloaded_checkpoints(root="$MLOPS_MODELS", subfolder="", replace_si
     model_paths = ["$MLOPS_SD_MODEL", "$MLOPS_SD_MODEL"]
     root = hou.text.expandString(root)
     full_path = os.path.join(root, subfolder)
-    for f in os.scandir(full_path):
-        if f.is_dir():
-            if f.name != "cache":
-                model_paths.append(f.name.replace(replace_sign, "/"))
-                model_paths.append(f.name.replace(replace_sign, "/"))
+    if os.path.isdir(full_path):
+        for f in os.scandir(full_path):
+            if f.is_dir():
+                if f.name != "cache":
+                    model_paths.append(f.name.replace(replace_sign, "/"))
+                    model_paths.append(f.name.replace(replace_sign, "/"))
     return model_paths
 
 def ensure_huggingface_model_local(model_name, model_path, cache_only=False, model_type="stablediffusion"):
@@ -161,7 +162,7 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
 
         layout_browse = QtWidgets.QHBoxLayout()
         download_path_label = QtWidgets.QLabel("Download Directory: ")
-        self.download_directory_field = QtWidgets.QLineEdit("$MLOPS_MODELS")
+        self.download_directory_field = QtWidgets.QLineEdit("$MLOPS_MODELS/diffusers/")
         layout_browse.addWidget(download_path_label)
         layout_browse.addWidget(self.download_directory_field)
 

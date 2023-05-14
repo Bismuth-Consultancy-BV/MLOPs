@@ -1,19 +1,19 @@
-setuptools
-openai
-omegaconf
+setuptools==67.7.2
+openai==0.27.6
+omegaconf==2.3.0
 transformers>=4.25.1
-accelerate>=0.16.0
-scipy
-opencv-contrib-python
-controlnet_aux
-torchmetrics
-clip_interrogator
-diffusers
-xformers
-ftfy
-Jinja2
-tensorboard
-rembg[gpu]
+accelerate==0.18.0
+scipy==1.10.1
+opencv-contrib-python==4.7.0.72
+controlnet_aux==0.0.3
+torchmetrics==0.11.4
+clip_interrogator==0.6.0
+diffusers==0.16.1
+xformers==0.0.19
+ftfy==6.1.1
+Jinja2==3.1.2
+tensorboard==2.13.0
+rembg[gpu]==2.0.36
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
 torch
