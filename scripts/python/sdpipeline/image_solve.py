@@ -71,7 +71,7 @@ from . import schedulers_lookup
 
 def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model, lora, local_cache_only=True, seamless_gen=False):
 
-    no_half = 'mps' == torch_device
+    no_half = (torch_device in ["mps", "cpu"])
     dtype_unet = torch.float32 if no_half else torch.float16
     dtype_controlnet = numpy.float32 if no_half else numpy.float16
     scheduler_config = input_scheduler["config"]
@@ -110,6 +110,7 @@ def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, att
     text_embeddings = numpy.array(input_embeddings["conditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     uncond_embeddings = numpy.array(input_embeddings["unconditional_embedding"]).reshape(input_embeddings["tensor_shape"])
     text_embeddings = torch.from_numpy(numpy.array([uncond_embeddings, text_embeddings])).to(torch_device)
+    
     if not no_half:
         text_embeddings = text_embeddings.half()
 
