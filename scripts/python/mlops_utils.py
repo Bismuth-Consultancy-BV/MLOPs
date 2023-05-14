@@ -25,7 +25,7 @@ def is_relevant_parm(kwargs, parmtype):
     return True
 
 def return_downloaded_checkpoints(root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"):
-    model_paths = ["$MLOPS_MODEL", "$MLOPS_MODEL"]
+    model_paths = ["$MLOPS_SD_MODEL", "$MLOPS_SD_MODEL"]
     root = hou.text.expandString(root)
     full_path = os.path.join(root, subfolder)
     for f in os.scandir(full_path):
@@ -47,7 +47,7 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False, mod
     if os.path.isdir(model_name):
         return model_name
     if cache_only:
-        path = path.replace("\\", "/")
+        path = os.path.normpath(path)
         if os.path.isdir(path):
             return path
         else:
@@ -75,7 +75,6 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False, mod
         allow_patterns.append("*")
 
     ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
-
     snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, local_dir_use_symlinks=True, local_files_only=cache_only, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
     return path.replace("\\", "/")
 
