@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.35375 -4.60407
+position -3.3022 -1.53339
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -40,17 +40,17 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	sd_image_decoder1 1 1 "input1"
+0 	attribwrangle1 1 1 "input1"
 }
 inputs
 {
-0 	sd_image_decoder1 0 1
+0 	attribwrangle1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@M16AMTA
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -1131,12 +1131,7 @@ version 0.8
 python	[ 0	locks=0 ]	(	"import numpy
 import os
 from PIL import Image
-
-def numpy_to_pil(images): 
-    images = images[None, ...]
-    images = ((images ** (1.0/2.2)) * 255).round().astype(\"uint8\")
-    pil_images = [Image.fromarray(image) for image in images]
-    return pil_images
+import mlops_image_utils
 
 # Input Geometry
 node = hou.pwd()
@@ -1151,13 +1146,11 @@ height = int(geo.attribValue(\"image_dimension\")[1])
 r = numpy.array(geo.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
 g = numpy.array(geo.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
 b = numpy.array(geo.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
-input_colors = numpy.stack((r,g,b), axis=0)
-input_colors = input_colors.transpose(1, 2, 0)
-input_colors = input_colors[:, ::-1, :] 
+a = numpy.array(geo.pointFloatAttribValues(\"a\"), dtype=numpy.float32).reshape(width, height)
+input_colors = numpy.stack((r,g,b,a), axis=0)
 
 # Export
-image = numpy_to_pil(input_colors)[0]
-image = image.convert('RGB')
+image = mlops_image_utils.colors_numpy_array_to_pil(input_colors)
 
 dir_path = os.path.dirname(path)
 if not os.path.exists(dir_path):
@@ -1295,7 +1288,11 @@ vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
 snippet	[ 0	locks=0 ]	(	"f@r = v@Cd.r;
 f@g = v@Cd.g;
-f@b = v@Cd.b;"	)
+f@b = v@Cd.b;
+f@a = 1.0;
+
+if (haspointattrib(0, \"Alpha\"))
+    f@a = f@Alpha;"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)

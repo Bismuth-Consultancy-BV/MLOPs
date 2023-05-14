@@ -38,7 +38,7 @@
             name    "path"
             label   "Export Path"
             type    image
-            default { "$HIP/out/$OS.$F.jpg" }
+            default { "$HIP/out/$OS.$F.png" }
             parmtag { "script_callback_language" "python" }
         }
         parm {

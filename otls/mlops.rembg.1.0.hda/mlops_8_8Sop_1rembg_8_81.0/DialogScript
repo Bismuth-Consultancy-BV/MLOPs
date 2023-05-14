@@ -23,7 +23,7 @@
             name    "model"
             label   "RemBG Model"
             type    string
-            default { "isnet-general-use" }
+            default { "u2net" }
             menureplace {
                 "u2net"             "u2net"
                 "u2netp"            "u2netp"
@@ -41,6 +41,13 @@
             size    3
             default { "0" "0" "0" }
             range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "alpha"
+            label   "Generate Alpha Attribute"
+            type    toggle
+            default { "1" }
             parmtag { "script_callback_language" "python" }
         }
         parm {
