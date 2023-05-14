@@ -41,6 +41,7 @@ Both of the above varibles can be changed in the `MLOPS.json` to suit your prefe
 - If you get an error with "Could not load library cudnn_cnn_infer64_8.dll" and you have Octane installed as a plugin for Houdini, try disabling it and restart Houdini.
 - If you get an error similar to: "Unexpected self.size(-1) must be divisible by 4 to view Byte as Float (different element sizes), but got 2683502, <class 'RuntimeError'>". Try deleting the model cache in `$MLOPS_MODELS/cache/[your model]` and try again. This is likely caused by a corrupt cache.
 - Other plugins we know cause issues installing MLOPS dependencies: Renderman, Octane. Disable these while installing MLOPs and its dependencies. After installing MLOPs and its dependencies you can re-enable them.
+- If you get strange Python errors and you have tried several things already, make sure you dont have a conflicting `PYTHONPATH` environment variable set. If that is the case remove it and restart Houdini (And the Launcher if you use it)
 
 # Notes
 - We have provided a basic example file in this repo. You can find it in the `hip/` folder.
