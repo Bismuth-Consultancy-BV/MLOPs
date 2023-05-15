@@ -14,6 +14,7 @@ ftfy==6.1.1
 Jinja2==3.1.2
 tensorboard==2.13.0
 rembg[gpu]==2.0.36
+basicsr>=1.4.2
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
 torch
