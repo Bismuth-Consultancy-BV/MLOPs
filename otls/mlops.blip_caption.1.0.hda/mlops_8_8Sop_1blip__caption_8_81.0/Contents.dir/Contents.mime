@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -11.846 -1.12104
+position -3.69583 -0.258794
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -507,7 +507,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 1 0.7 
 delscript ""
 exprlanguage hscript
 end
@@ -630,78 +630,10 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python2.init"
-Content-Type: text/plain
-
-type = python
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python2.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 3.15849 5.12678
-connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-}
-inputsNamed3
-{
-0 	attribwrangle2 1 1 "input1"
-}
-inputs
-{
-0 	attribwrangle2 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author Paul@DESKTOP-PAFFS1R
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python2.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-python	[ 0	locks=0 ]	(	"node = hou.pwd()
-geo = node.geometry()
-
-# Add code to modify contents of geo.
-# Use drop down menu to select examples.
-
-from transformers import BlipProcessor
-
-test = BlipProcessor.from_pretrained(\"Salesforce/blip-image-captioning-base\", resume_download=True, force_download=False)"	)
-maintainstate	[ 0	locks=0 ]	(	"off"	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python2.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-8
+7
 output0
 pointgenerate1
 python1
@@ -709,7 +641,6 @@ attribwrangle2
 attribcreate1
 switchif1
 attribwrangle1
-python2
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
