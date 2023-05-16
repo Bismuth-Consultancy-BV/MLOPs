@@ -20,118 +20,72 @@
         label   "Settings"
 
         parm {
-            name    "mode"
-            label   "Mode"
+            name    "model"
+            label   "Model"
             type    ordinal
             default { "0" }
             menu {
-                "resize"    "Resize"
-                "tile"      "Tile"
-                "offset"    "Offset"
-                "zoom"      "Zoom"
+                "RealESRGAN_x4plus"     "RealESRGAN_x4plus"
+                "RealESRNet_x4plus"     "RealESRNet_x4plus"
+                "RealESRGAN_x2plus"     "RealESRGAN_x2plus"
+                "realesr-general-x4v3"  "realesr-general-x4v3"
             }
             parmtag { "script_callback_language" "python" }
         }
-        groupsimple {
-            name    "folder1"
-            label   "Resize"
-            disablewhen "{ mode != resize }"
-
-            parm {
-                name    "height"
-                label   "Width"
-                type    integer
-                default { "512" }
-                range   { 256 2048 }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "width"
-                label   "Height"
-                type    integer
-                default { "512" }
-                range   { 256 2048 }
-                parmtag { "script_callback_language" "python" }
-            }
+        parm {
+            name    "outscale"
+            label   "Upscale Factor"
+            type    integer
+            default { "4" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
         }
-
-        groupsimple {
-            name    "folder2"
+        parm {
+            name    "denoise"
+            label   "Denoise Strength"
+            type    float
+            default { "0.5" }
+            range   { 0! 1! }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "tile"
             label   "Tile"
-            disablewhen "{ mode != tile }"
-
-            parm {
-                name    "tilex"
-                label   "Tile Width"
-                type    integer
-                default { "2" }
-                range   { 1! 10 }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "tiley"
-                label   "Tile Height"
-                type    integer
-                default { "2" }
-                range   { 1! 10 }
-                parmtag { "script_callback_language" "python" }
-            }
+            type    integer
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
         }
-
-        groupsimple {
-            name    "folder3"
-            label   "Offset"
-            disablewhen "{ mode != offset }"
-
-            parm {
-                name    "offsetx"
-                label   "Offset Width"
-                type    integer
-                default { "0" }
-                range   { -512 512 }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "offsety"
-                label   "Offset Height"
-                type    integer
-                default { "0" }
-                range   { -512 512 }
-                parmtag { "script_callback_language" "python" }
-            }
+        parm {
+            name    "tilepad"
+            label   "Tile Pad"
+            type    integer
+            default { "10" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
         }
-
-        groupsimple {
-            name    "folder4"
-            label   "Zoom"
-            disablewhen "{ mode != zoom }"
-
-            parm {
-                name    "pivotx"
-                label   "Pivot Width"
-                type    float
-                default { "0.5" }
-                range   { -512 512 }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "pivoty"
-                label   "Pivot Height"
-                type    float
-                default { "0.5" }
-                range   { -512 512 }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "zoom"
-                label   "Zoom"
-                type    float
-                default { "1" }
-                range   { 1! 10 }
-                parmtag { "script_callback_language" "python" }
-            }
+        parm {
+            name    "prepad"
+            label   "Pre Pad"
+            type    integer
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
         }
-
+        parm {
+            name    "faceenhance"
+            label   "Face Enhance"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "fp32"
+            label   "32bit Precision"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
     }
 
 }
