@@ -9,7 +9,7 @@
 	""
     }
 
-    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	1	"Colored Points"
     inputlabel	2	"Sub-Network Input #2"
     inputlabel	3	"Sub-Network Input #3"
     inputlabel	4	"Sub-Network Input #4"
@@ -41,51 +41,57 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
-            name    "denoise"
-            label   "Denoise Strength"
-            type    float
-            default { "0.5" }
-            range   { 0! 1! }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
-            name    "tile"
-            label   "Tile"
-            type    integer
-            default { "0" }
-            range   { 0 10 }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
-            name    "tilepad"
-            label   "Tile Pad"
-            type    integer
-            default { "10" }
-            range   { 0 10 }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
-            name    "prepad"
-            label   "Pre Pad"
-            type    integer
-            default { "0" }
-            range   { 0 10 }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
             name    "faceenhance"
             label   "Face Enhance"
             type    toggle
             default { "1" }
             parmtag { "script_callback_language" "python" }
         }
-        parm {
-            name    "fp32"
-            label   "32bit Precision"
-            type    toggle
-            default { "0" }
-            parmtag { "script_callback_language" "python" }
+        groupsimple {
+            name    "folder1"
+            label   "Solve"
+
+            parm {
+                name    "denoise"
+                label   "Denoise Strength"
+                type    float
+                default { "0.5" }
+                range   { 0! 1! }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tile"
+                label   "Tile"
+                type    integer
+                default { "0" }
+                range   { 0! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tilepad"
+                label   "Tile Pad"
+                type    integer
+                default { "10" }
+                range   { 0! 50 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "prepad"
+                label   "Pre Pad"
+                type    integer
+                default { "0" }
+                range   { 0! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "fp32"
+                label   "32bit Precision"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
         }
+
     }
 
 }
