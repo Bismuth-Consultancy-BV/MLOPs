@@ -18,6 +18,22 @@ By downloading or using the plugin (or any of its contents), you are agreeing to
 
 Please note that the plugin is currently in beta, and may change at anytime without notice.
 
+
+
+## Features
+### Stable Diffusion - Modular Pipeline
+#### Viewport Rendering
+#### Dreambooth + LoRa Training
+### HuggingFace Dataset Creation
+### RemBG
+### SAM - Segment Anything Model
+### BLIP Caption
+### CLIP Interrogate
+### Image Manipulation
+### Real-ESRGAN
+
+
+
 # Installing for Houdini
 [Video Tutorial](https://youtu.be/rtgghkYKKLY)
 
