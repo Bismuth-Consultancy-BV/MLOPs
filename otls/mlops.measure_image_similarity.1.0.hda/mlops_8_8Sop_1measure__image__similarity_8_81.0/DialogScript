@@ -1,16 +1,16 @@
-# Dialog script for MLOPs_Image_Similarity automatically generated
+# Dialog script for mlops::measure_image_similarity::1.0 automatically generated
 
 {
-    name	MLOPs_Image_Similarity
+    name	mlops::measure_image_similarity::1.0
     script	MLOPs_Image_Similarity
-    label	MLOPs_Image_Similarity
+    label	"MLOPs Measure Image Similarity"
 
     help {
 	""
     }
 
-    inputlabel	1	"Image 1"
-    inputlabel	2	"Image 2"
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Colored Points"
     inputlabel	3	"Sub-Network Input #3"
     inputlabel	4	"Sub-Network Input #4"
     outputlabel	1	"Image Similarity"

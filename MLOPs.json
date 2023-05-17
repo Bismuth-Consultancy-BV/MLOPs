@@ -5,7 +5,7 @@
     "enable": true,
     "env": [
         {
-            "MLOPS": "H:/Github/MLOPs/MLOPs"
+            "MLOPS": "C:/Users/Mo/Documents/GitHub/MLOPs"
         },
         {
             "MLOPS_MODELS": "$MLOPS/data/models/"

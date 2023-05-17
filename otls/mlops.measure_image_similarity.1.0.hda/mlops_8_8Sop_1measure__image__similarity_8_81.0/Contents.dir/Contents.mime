@@ -23,7 +23,7 @@ Sop
 Content-Disposition: attachment; filename="hdaroot.init"
 Content-Type: text/plain
 
-type = MLOPs_Image_Similarity
+type = mlops::measure_image_similarity::1.0
 matchesdef = 0
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 8.13774 -2.06271
+position -2.47967 -1.70691
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -40,13 +40,13 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	image_to_points5 0 1 "input1"
-1 	image_to_points4 0 1 "input2"
+0 	image_to_points1 0 1 "input1"
+1 	image_to_points2 0 1 "input2"
 }
 inputs
 {
-0 	image_to_points5 0 1
-1 	image_to_points4 0 1
+0 	image_to_points1 0 1
+1 	image_to_points2 0 1
 }
 stat
 {
@@ -640,9 +640,9 @@ grouptype	[ 0	locks=0 ]	(	"guess"	)
 class	[ 0	locks=0 ]	(	"point"	)
 vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
-snippet	[ 0	locks=0 ]	(	"f@__r = @Cd.r;
-f@__g = @Cd.g;
-f@__b = @Cd.b;"	)
+snippet	[ 0	locks=0 ]	(	"f@r = @Cd.r;
+f@g = @Cd.g;
+f@b = @Cd.b;"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)
@@ -727,9 +727,9 @@ grouptype	[ 0	locks=0 ]	(	"guess"	)
 class	[ 0	locks=0 ]	(	"point"	)
 vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
-snippet	[ 0	locks=0 ]	(	"f@__r = @Cd.r;
-f@__g = @Cd.g;
-f@__b = @Cd.b;"	)
+snippet	[ 0	locks=0 ]	(	"f@r = @Cd.r;
+f@g = @Cd.g;
+f@b = @Cd.b;"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)
@@ -818,8 +818,6 @@ geo = node.geometry()
 # Add code to modify contents of geo.
 # Use drop down menu to select examples.
 
-from PIL import Image
-import requests
 from transformers import AutoProcessor, CLIPModel
 from sdpipeline import PILTools as pt
 import torch
@@ -828,40 +826,40 @@ import mlops_utils
 import os
 from imp import reload
 import torchvision
-
-import mlops_utils
-import os
-from imp import reload
+import mlops_image_utils as imutils
+import numpy
 
 device = node.parent().parm(\"device\").evalAsString()
 model = node.parent().parm(\"model\").evalAsString()
 cache_only = node.parent().parm(\"cache_only\").evalAsInt()
 
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only), model_type=\"transformers\")
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"transformers\")
 model = CLIPModel.from_pretrained(model_path)
 
 processor = AutoProcessor.from_pretrained(model_path)
 
-input_geo_01 = hou.pwd().inputGeometry(1)
-input_geo_02 = hou.pwd().inputGeometry(2)
+geo1 = hou.pwd().inputGeometry(1)
+geo2 = hou.pwd().inputGeometry(2)
 
-image1 = pt.PointCloudToImage(input_geo_01, -1, -1)
-image2 = pt.PointCloudToImage(input_geo_02, -1, -1)
+# Attributes
+width = int(geo1.attribValue(\"image_dimension\")[0])
+height = int(geo1.attribValue(\"image_dimension\")[1])
+r = numpy.array(geo1.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
+g = numpy.array(geo1.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
+b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
+input_colors = numpy.stack((r,g,b), axis=0)
+image1 = imutils.colors_numpy_array_to_pil(input_colors)
 
-# Get the sizes of the images
-size1 = image1.size
-size2 = image2.size
+# Attributes
+width = int(geo2.attribValue(\"image_dimension\")[0])
+height = int(geo2.attribValue(\"image_dimension\")[1])
+r = numpy.array(geo2.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
+g = numpy.array(geo2.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
+b = numpy.array(geo2.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
+input_colors = numpy.stack((r,g,b), axis=0)
+image2 = imutils.colors_numpy_array_to_pil(input_colors)
 
-# Check if the sizes are different
-if size1 != size2:
-    # Determine the maximum size among the two images
-    max_width = max(size1[0], size2[0])
-    max_height = max(size1[1], size2[1])
-
-    # Resize the images to the maximum size
-    image1 = image1.resize((max_width, max_height))
-    image2 = image2.resize((max_width, max_height))
-    
+image1, image2 = imutils.ensure_same_pil_image_dimensions(image1, image2)
 
 transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
 transform(image1).to(device)
