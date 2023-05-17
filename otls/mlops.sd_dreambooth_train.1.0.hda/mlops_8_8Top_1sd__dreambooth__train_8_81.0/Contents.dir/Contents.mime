@@ -1,0 +1,701 @@
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY"
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename=".OPfallbacks"
+Content-Type: application/external-reference
+
+.OPfallbacks
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename=".OPdummydefs"
+Content-Type: application/external-reference
+
+.OPdummydefs
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="node_type"
+Content-Type: text/plain
+
+Top
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.init"
+Content-Type: text/plain
+
+type = mlops::sd_dreambooth_train::1.0
+matchesdef = 0
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.def"
+Content-Type: text/plain
+
+comment ""
+position -7.76339 -0.410514
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display on render off highlight off unload off savedata off compress off colordefault on exposed on
+outputsNamed3
+{
+}
+inputsNamed3
+{
+0 	genericgenerator1 0 1 "input1"
+}
+inputs
+{
+0 	genericgenerator1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.inp"
+Content-Type: text/plain
+
+1
+0 -1.3529411764705885 7.3529411764705888 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pythonscript1.init"
+Content-Type: text/plain
+
+type = pythonscript
+matchesdef = 0
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pythonscript1.def"
+Content-Type: text/plain
+
+comment ""
+position -1.35294 6.28594
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render on highlight off unload off savedata off compress off colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+1 	(0) "" 1 "input1"
+}
+inputs
+{
+0 	(0) 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pythonscript1.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Script"
+
+        parm {
+            name    "pdg_workitemgeneration"
+            baseparm
+            label   "Generate When"
+            export  none
+        }
+        parm {
+            name    "inprocess"
+            baseparm
+            label   "Evaluate Script During"
+            invisible
+            export  none
+        }
+        parm {
+            name    "pdg_cooktype"
+            baseparm
+            label   "Evaluate Script During"
+            export  none
+        }
+        parm {
+            name    "pdgservicename"
+            baseparm
+            label   "Service Name"
+            invisible
+            export  none
+        }
+        parm {
+            name    "pdg_servicename"
+            baseparm
+            label   "Service Name"
+            export  none
+        }
+        parm {
+            name    "sepparm2"
+            baseparm
+            label   "Separator"
+            invisible
+            export  none
+        }
+        parm {
+            name    "expandscript"
+            baseparm
+            label   "Expand Variables in Script"
+            export  none
+        }
+        parm {
+            name    "expandstrings"
+            baseparm
+            label   "Expand Variables in String Attributes"
+            export  none
+        }
+        groupcollapsible {
+            name    "exectuable2"
+            label   "Python Executable"
+            disablewhen "{ pdg_cooktype != 2 }"
+
+            parm {
+                name    "pythonbin"
+                baseparm
+                label   "Python Bin"
+                export  none
+            }
+            parm {
+                name    "python"
+                baseparm
+                label   "Custom Python Bin"
+                export  none
+            }
+            parm {
+                name    "resetpython"
+                baseparm
+                label   "Reset Python Path Variables"
+                export  none
+            }
+            parm {
+                name    "sepparm3"
+                baseparm
+                label   "Separator"
+                export  none
+            }
+            parm {
+                name    "pythonargs"
+                baseparm
+                label   "Python Arguments"
+                export  none
+            }
+            parm {
+                name    "extraargs"
+                baseparm
+                label   "Script Arguments"
+                export  none
+            }
+        }
+
+        parm {
+            name    "sepparm"
+            baseparm
+            label   "Separator"
+            export  none
+        }
+        parm {
+            name    "script"
+            baseparm
+            label   "Python Code"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Caching and Output Files"
+
+        parm {
+            name    "pdg_cachemode"
+            baseparm
+            label   "Cache Mode"
+            export  none
+        }
+        parm {
+            name    "copyoutputs"
+            baseparm
+            label   "Copy Inputs to Outputs"
+            export  none
+        }
+        parm {
+            name    "sepparm5"
+            baseparm
+            label   "Separator"
+            export  none
+        }
+        parm {
+            name    "expectedoutputsfrom"
+            baseparm
+            label   "Expected Outputs From"
+            export  none
+        }
+        parm {
+            name    "expectedoutputattr"
+            baseparm
+            label   "Attribute Name"
+            export  none
+        }
+        parm {
+            name    "useexpectedoutputtag"
+            baseparm
+            label   "Use Custom Tag"
+            nolabel
+            joinnext
+            export  none
+        }
+        parm {
+            name    "expectedoutputtag"
+            baseparm
+            label   "Custom File Tag"
+            export  none
+        }
+        multiparm {
+            name    "expectedoutputfiles"
+            label    "Expected Outputs"
+            baseparm
+            hidewhen "{ expectedoutputsfrom != 2 }"
+
+            parm {
+                name    "expectedoutputfile#"
+                baseparm
+                label   "Output File"
+                export  none
+            }
+            parm {
+                name    "useexpectedoutputtag#"
+                baseparm
+                label   "Use Custom Tag"
+                nolabel
+                export  none
+            }
+            parm {
+                name    "expectedoutputtag#"
+                baseparm
+                label   "Custom File Tag"
+                export  none
+            }
+        }
+
+    }
+
+    group {
+        name    "folder1_2"
+        label   "Schedulers"
+        tabbreak
+
+        parm {
+            name    "topscheduler"
+            baseparm
+            label   "TOP Scheduler Override"
+            joinnext
+            export  none
+        }
+        parm {
+            name    "addjobparms"
+            baseparm
+            label   "Add Job Parms"
+            nolabel
+            export  none
+        }
+        parm {
+            name    "pdg_useschedulewhen"
+            baseparm
+            label   "Use Schedule When"
+            nolabel
+            joinnext
+            export  none
+        }
+        parm {
+            name    "pdg_schedulewhen"
+            baseparm
+            label   "Schedule When"
+            export  none
+        }
+        parm {
+            name    "sepparm4"
+            baseparm
+            label   "Separator"
+            export  none
+        }
+        parm {
+            name    "pdg_workitemlabel"
+            baseparm
+            label   "Work Item Label"
+            joinnext
+            export  none
+        }
+        parm {
+            name    "pdg_workitemlabelexpr"
+            baseparm
+            label   "Label Expression"
+            nolabel
+            export  none
+        }
+        parm {
+            name    "pdg_workitempriority"
+            baseparm
+            label   "Work Item Priority"
+            joinnext
+            export  none
+        }
+        parm {
+            name    "pdg_workitempriorityexpr"
+            baseparm
+            label   "Priority Expression"
+            nolabel
+            export  none
+        }
+    }
+
+    groupsimple {
+        name    "folder2"
+        label   "Folder Name"
+
+        parm {
+            name    "testing"
+            label   "Label"
+            type    integer
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pythonscript1.chn"
+Content-Type: text/plain
+
+{
+    channel extraargs {
+      lefttype = extend
+      righttype = extend
+      defaultString = "\"--test \\\"hello\\\"\""
+      flags = 0
+      start = 7.708333333333333
+      segment { options = {	 autoslope  ai ao }
+
+	 length = 0 accel = 0.33333333333333331 0.33333333333333331 expr = "import hou
+
+node = hou.pwd().parent()
+parms = node.parms()
+
+arguments = []
+
+for parm in parms:
+    if \"Training Arguments\" in parm.containingFolders():
+        parmtype = parm.parmTemplate().type()
+        
+        if parmtype == hou.parmTemplateType.Toggle:
+            if parm.evalAsInt() == 1:
+                arguments.append(f\"--{parm.name()}\")
+        else:
+            arguments.append(f\"--{parm.name()}\")
+            arguments.append(f'\"{parm.eval()}\"')
+
+return \" \".join(arguments)" language = python }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pythonscript1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	0	)
+pdg_workitemgeneration	[ 0	locks=0 ]	(	"3"	)
+inprocess	[ 0	locks=0 ]	(	"on"	)
+pdg_cooktype	[ 0	locks=0 ]	(	"2"	)
+pdgservicename	[ 0	locks=0 ]	(	pythonscript	)
+pdg_servicename	[ 0	locks=0 ]	(	pythonscript	)
+sepparm2	[ 0	locks=0 ]	(	)
+expandscript	[ 0	locks=0 ]	(	"off"	)
+expandstrings	[ 0	locks=0 ]	(	"off"	)
+exectuable	[ 0	locks=0 ]	(	1	)
+pythonbin	[ 0	locks=0 ]	(	"0"	)
+python	[ 0	locks=0 ]	(	__PDG_PYTHON__	)
+resetpython	[ 0	locks=0 ]	(	"off"	)
+sepparm3	[ 0	locks=0 ]	(	)
+pythonargs	[ 0	locks=0 ]	(	""	)
+extraargs	[ 0	locks=0	autoscope=1	autosel=4294967295 ]	(	[ extraargs	"" ] 	)
+sepparm	[ 0	locks=0 ]	(	)
+script	[ 0	locks=0 ]	(	"import subprocess
+import hou
+import sys
+import os
+import mlops_utils
+
+env = os.environ.copy()
+env[\"WANDB_DISABLE_CODE\"]=\"true\" 
+
+script = hou.text.expandString(\"$MLOPS/scripts/python/sdpipeline/train_dreambooth_lora.py\")
+cmd = [\"python\", script]
+
+arguments = sys.argv[1:]
+
+cache_only = False
+if arguments[0] == \"--cache_only\":
+    cache_only = True
+    arguments.pop(0)
+
+model = arguments[1]
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+
+arguments[1] = model_path
+cmd.extend(arguments)
+
+
+p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, env=env)
+out, err = p.communicate()"	)
+pdg_cachemode	[ 0	locks=0 ]	(	"0"	)
+copyoutputs	[ 0	locks=0 ]	(	"2"	)
+sepparm5	[ 0	locks=0 ]	(	)
+expectedoutputsfrom	[ 0	locks=0 ]	(	"0"	)
+expectedoutputattr	[ 0	locks=0 ]	(	""	)
+useexpectedoutputtag	[ 0	locks=0 ]	(	"off"	)
+expectedoutputtag	[ 0	locks=0 ]	(	file	)
+expectedoutputfiles	[ 0	locks=0 ]	(	0	)
+topscheduler	[ 0	locks=0 ]	(	""	)
+addjobparms	[ 0	locks=0 ]	(	0	)
+pdg_useschedulewhen	[ 0	locks=0 ]	(	"off"	)
+pdg_schedulewhen	[ 0	locks=0 ]	(	1	)
+sepparm4	[ 0	locks=0 ]	(	)
+pdg_workitemlabel	[ 0	locks=0 ]	(	"0"	)
+pdg_workitemlabelexpr	[ 0	locks=0 ]	(	""	)
+pdg_workitempriority	[ 0	locks=0 ]	(	"0"	)
+pdg_workitempriorityexpr	[ 0	locks=0 ]	(	0	)
+folder1	[ 0	locks=0 ]	(	0	0	0	)
+exectuable2	[ 0	locks=0 ]	(	1	)
+folder2	[ 0	locks=0 ]	(	0	)
+testing	[ 0	locks=0 ]	(	0	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pythonscript1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	},
+	"___toolcount___":{
+		"type":"string",
+		"value":"1"
+	},
+	"___toolid___":{
+		"type":"string",
+		"value":"object_cop2plane"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.init"
+Content-Type: text/plain
+
+type = output
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.def"
+Content-Type: text/plain
+
+comment ""
+position -1.35294 3.86332
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display on render off highlight off unload off savedata off compress off colordefault on exposed on
+outputsNamed3
+{
+}
+inputsNamed3
+{
+0 	attributecreate1 1 1 "input1"
+}
+inputs
+{
+0 	attributecreate1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+outputidx	[ 0	locks=0 ]	(	0	)
+pdg_workitemlabel	[ 0	locks=0 ]	(	"0"	)
+pdg_workitemlabelexpr	[ 0	locks=0 ]	(	""	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate1.init"
+Content-Type: text/plain
+
+type = attributecreate
+matchesdef = 0
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate1.def"
+Content-Type: text/plain
+
+comment ""
+position -1.35294 4.98372
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress off colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	pythonscript1 0 1 "input1"
+}
+inputs
+{
+0 	pythonscript1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	)
+pdg_workitemgeneration	[ 0	locks=0 ]	(	"2"	)
+usecondition	[ 0	locks=0 ]	(	"off"	)
+condition	[ 0	locks=0 ]	(	0	)
+folder2	[ 0	locks=0 ]	(	0	)
+copyoutputs	[ 0	locks=0 ]	(	"2"	)
+pdg_workitempriority	[ 0	locks=0 ]	(	"0"	)
+pdg_workitempriorityexpr	[ 0	locks=0 ]	(	0	)
+useindex	[ 0	locks=0 ]	(	"off"	)
+indexvalue	[ 0	locks=0 ]	(	0	)
+useframe	[ 0	locks=0 ]	(	"off"	)
+framevalue	[ 0	locks=0 ]	(	0	)
+usepriority	[ 0	locks=0 ]	(	"off"	)
+priorityvalue	[ 0	locks=0 ]	(	0	)
+folder1	[ 0	locks=0 ]	(	0	)
+stringattribs	[ 0	locks=0 ]	(	2	)
+intattribs	[ 0	locks=0 ]	(	0	)
+floatattribs	[ 0	locks=0 ]	(	0	)
+pyobjectattribs	[ 0	locks=0 ]	(	0	)
+resultdata	[ 0	locks=0 ]	(	1	)
+resultenable1	[ 0	locks=0 ]	(	"on"	)
+resultmenu1	[ 0	locks=0 ]	(	"0"	)
+resultattrname1	[ 0	locks=0 ]	(	""	)
+resultconflict1	[ 0	locks=0 ]	(	"0"	)
+resultscope1	[ 0	locks=0 ]	(	"0"	)
+sepparm1	[ 0	locks=0 ]	(	)
+resultvalue1	[ 0	locks=0 ]	(	`chs(\"../output_dir\")`pytorch_lora_weights.bin	)
+resulttag1	[ 0	locks=0 ]	(	file	)
+resultown1	[ 0	locks=0 ]	(	"off"	)
+resultcopy1	[ 0	locks=0 ]	(	"off"	)
+sepparm1_2	[ 0	locks=0 ]	(	)
+resultcheckfilepath1	[ 0	locks=0 ]	(	"on"	)
+checkpathwhen1	[ 0	locks=0 ]	(	"0"	)
+existsattrib1	[ 0	locks=0 ]	(	file_exists	)
+stringenable1	[ 0	locks=0 ]	(	"on"	)
+stringname1	[ 0	locks=0 ]	(	model	)
+stringconflict1	[ 0	locks=0 ]	(	"0"	)
+stringscope1	[ 0	locks=0 ]	(	"0"	)
+stringvalue1	[ 0	locks=0 ]	(	`chs(\"../pretrained_model_name_or_path\")`	)
+sepparm1_3	[ 0	locks=0 ]	(	)
+stringenable2	[ 0	locks=0 ]	(	"on"	)
+stringname2	[ 0	locks=0 ]	(	lora_weights	)
+stringconflict2	[ 0	locks=0 ]	(	"0"	)
+stringscope2	[ 0	locks=0 ]	(	"0"	)
+stringvalue2	[ 0	locks=0 ]	(	`chs(\"../output_dir\")`pytorch_lora_weights.bin	)
+sepparm2_3	[ 0	locks=0 ]	(	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.order"
+Content-Type: text/plain
+
+3
+pythonscript1
+output0
+attributecreate1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.net"
+Content-Type: text/plain
+
+1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY--
