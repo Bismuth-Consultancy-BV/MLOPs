@@ -7,7 +7,7 @@ scipy==1.10.1
 controlnet_aux==0.0.3
 torchmetrics==0.11.4
 clip_interrogator==0.6.0
-diffusers @ git+https://github.com/huggingface/diffusers
+diffusers @ git+https://github.com/huggingface/diffusers@2858d7e15eaf445ec37fc77b204a85f84affbeef
 xformers==0.0.19
 ftfy==6.1.1
 Jinja2==3.1.2
