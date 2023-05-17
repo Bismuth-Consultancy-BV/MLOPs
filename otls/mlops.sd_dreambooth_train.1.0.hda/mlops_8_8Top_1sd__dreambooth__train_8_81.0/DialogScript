@@ -50,7 +50,7 @@
         parm {
             name    "instance_data_dir"
             label   "Instance Data Dir"
-            type    string
+            type    directory
             default { "$MLOPs/data/testing/minnie/" }
             parmtag { "script_callback_language" "python" }
         }
@@ -64,7 +64,7 @@
         parm {
             name    "class_data_dir"
             label   "Class Data Dir"
-            type    string
+            type    directory
             default { "" }
             parmtag { "script_callback_language" "python" }
         }
@@ -73,6 +73,14 @@
             label   "Class Prompt"
             type    string
             default { "" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "num_class_images"
+            label   "Number Class Images"
+            type    integer
+            default { "100" }
+            range   { 0 10 }
             parmtag { "script_callback_language" "python" }
         }
         parm {
