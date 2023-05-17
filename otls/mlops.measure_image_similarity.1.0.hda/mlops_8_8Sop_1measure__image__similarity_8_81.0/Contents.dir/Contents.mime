@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.47967 -1.70691
+position -2.42276 0.906911
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -72,58 +72,12 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/__netbox1.netboxinit"
-Content-Type: text/plain
-
-2
-2
-{
-	autofit := 0;
-	color := "UT_Color RGB 0.52 0.52 0.52 ";
-	comment := SSIM;
-	height := 3.3728101559173291;
-	minimized := 0;
-	width := 8.2696209452082066;
-	x_position := -2.2100935033929572;
-	y_position := -2.6448956380359379;
-}
-{
-  create -1
-  modify -1
-  author Mo@MO-GPU
-  access 0777
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/__netbox2.netboxinit"
-Content-Type: text/plain
-
-2
-2
-{
-	autofit := 0;
-	color := "UT_Color RGB 0.52 0.52 0.52 ";
-	comment := clip_embedding_cosine_similarity;
-	height := 2.5363150069618228;
-	minimized := 0;
-	width := 8.2035829950408932;
-	x_position := 8.0017933962190018;
-	y_position := -1.8084004890804315;
-}
-{
-  create -1
-  modify -1
-  author Mo@MO-GPU
-  access 0777
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.inp"
 Content-Type: text/plain
 
 2
-0 0 6 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
-1 3 6.5 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
+0 5.4832662901420592 2.4499365685618719 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
+1 8.538757478666648 2.4499365685618719 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/output0.init"
@@ -283,14 +237,14 @@ outputsNamed3
 inputsNamed3
 {
 0 	null1 0 1 "input1"
-1 	pointwrangle1 1 1 "input2"
-2 	pointwrangle2 1 1 "input3"
+1 	Cd_to_rgb_01 1 1 "input2"
+2 	Cd_to_rgb_02 1 1 "input3"
 }
 inputs
 {
 0 	null1 0 1
-1 	pointwrangle1 0 1
-2 	pointwrangle2 0 1
+1 	Cd_to_rgb_01 0 1
+2 	Cd_to_rgb_02 0 1
 }
 stat
 {
@@ -310,33 +264,31 @@ Content-Type: text/plain
 
 {
 version 0.8
-python	[ 0	locks=0 ]	(	"node = hou.pwd()
+python	[ 0	locks=0 ]	(	"import mlops_image_utils as imutils
+from imagepipeline import similarity
+
+node = hou.pwd()
 geo = node.geometry()
 
-import mlops_image_utils as iu
-from PIL import Image
-from sdpipeline import PILTools as pt
+geo1 = hou.pwd().inputGeometry(1)
+geo2 = hou.pwd().inputGeometry(2)
 
-input_geo_01 = hou.pwd().inputGeometry(1)
-input_geo_02 = hou.pwd().inputGeometry(2)
+# read in image through input 1
+input_colors = imutils.colored_points_to_numpy_array(geo1)
+image1 = imutils.colors_numpy_array_to_pil(input_colors)
 
-image1 = pt.PointCloudToImage(input_geo_01, -1, -1)
-image2 = pt.PointCloudToImage(input_geo_02, -1, -1)
+# read in image through input 2
+input_colors = imutils.colored_points_to_numpy_array(geo2)
+image2 = imutils.colors_numpy_array_to_pil(input_colors)
 
-sim = iu.SSIM(image1, image2)
+sim = similarity.ssim(image1, image2)
 
 # create new point, write back similarity
 point = geo.createPoint()
-geo.addAttrib(hou.attribType.Point, \"similarity\", 0.0)
-point.setAttribValue(\"similarity\", sim)"	)
+geo.addAttrib(hou.attribType.Point, \"similarity_score\", 0.0, create_local_variable=False)
+point.setAttribValue(\"similarity_score\", sim)"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/measure_SSIM.netbox"
-Content-Type: text/plain
-
-__netbox1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/measure_SSIM.userdata"
@@ -350,19 +302,19 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle1.init"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_01.init"
 Content-Type: text/plain
 
 type = attribwrangle
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle1.def"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_01.def"
 Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.278576 -0.240687
+position 5.39278 0.391998
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -390,7 +342,7 @@ exprlanguage hscript
 end
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle1.parm"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_01.parm"
 Content-Type: text/plain
 
 {
@@ -401,9 +353,9 @@ grouptype	[ 0	locks=0 ]	(	"guess"	)
 class	[ 0	locks=0 ]	(	"point"	)
 vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
-snippet	[ 0	locks=0 ]	(	"f@__r = @Cd.r;
-f@__g = @Cd.g;
-f@__b = @Cd.b;"	)
+snippet	[ 0	locks=0 ]	(	"f@r = @Cd.r;
+f@g = @Cd.g;
+f@b = @Cd.b;"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)
@@ -420,13 +372,7 @@ vex_precision	[ 0	locks=0 ]	(	auto	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle1.netbox"
-Content-Type: text/plain
-
-__netbox1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle1.userdata"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_01.userdata"
 Content-Type: text/plain
 
 {
@@ -437,19 +383,19 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle2.init"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_02.init"
 Content-Type: text/plain
 
 type = attribwrangle
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle2.def"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_02.def"
 Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 3.2637 -0.240687
+position 8.3779 0.391998
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -477,7 +423,7 @@ exprlanguage hscript
 end
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle2.parm"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_02.parm"
 Content-Type: text/plain
 
 {
@@ -488,9 +434,9 @@ grouptype	[ 0	locks=0 ]	(	"guess"	)
 class	[ 0	locks=0 ]	(	"point"	)
 vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
-snippet	[ 0	locks=0 ]	(	"f@__r = @Cd.r;
-f@__g = @Cd.g;
-f@__b = @Cd.b;"	)
+snippet	[ 0	locks=0 ]	(	"f@r = @Cd.r;
+f@g = @Cd.g;
+f@b = @Cd.b;"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)
@@ -507,13 +453,7 @@ vex_precision	[ 0	locks=0 ]	(	auto	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle2.netbox"
-Content-Type: text/plain
-
-__netbox1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle2.userdata"
+Content-Disposition: attachment; filename="hdaroot/Cd_to_rgb_02.userdata"
 Content-Type: text/plain
 
 {
@@ -536,7 +476,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.95699 -0.244687
+position 3.15721 0.387998
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -572,12 +512,6 @@ cacheinput	[ 0	locks=0 ]	(	"off"	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/null1.netbox"
-Content-Type: text/plain
-
-__netbox1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/null1.userdata"
 Content-Type: text/plain
 
@@ -585,180 +519,6 @@ Content-Type: text/plain
 	"___Version___":{
 		"type":"string",
 		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle3.init"
-Content-Type: text/plain
-
-type = attribwrangle
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle3.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 10.8207 0.129215
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-1 "output1"
-}
-inputsNamed3
-{
-0 	(0) "" 1 "input1"
-}
-inputs
-{
-0 	(0) 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author Mo@MO-GPU
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle3.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-folder0	[ 0	locks=0 ]	(	0	0	)
-group	[ 0	locks=0 ]	(	""	)
-grouptype	[ 0	locks=0 ]	(	"guess"	)
-class	[ 0	locks=0 ]	(	"point"	)
-vex_numcount	[ 0	locks=0 ]	(	10	)
-vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
-snippet	[ 0	locks=0 ]	(	"f@r = @Cd.r;
-f@g = @Cd.g;
-f@b = @Cd.b;"	)
-exportlist	[ 0	locks=0 ]	(	*	)
-vex_strict	[ 0	locks=0 ]	(	"off"	)
-autobind	[ 0	locks=0 ]	(	"on"	)
-bindings	[ 0	locks=0 ]	(	0	)
-groupautobind	[ 0	locks=0 ]	(	"on"	)
-groupbindings	[ 0	locks=0 ]	(	0	)
-vex_cwdpath	[ 0	locks=0 ]	(	.	)
-vex_outputmask	[ 0	locks=0 ]	(	*	)
-vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
-vex_matchattrib	[ 0	locks=0 ]	(	id	)
-vex_inplace	[ 0	locks=0 ]	(	"off"	)
-vex_selectiongroup	[ 0	locks=0 ]	(	""	)
-vex_precision	[ 0	locks=0 ]	(	auto	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle3.netbox"
-Content-Type: text/plain
-
-__netbox2
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle3.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":""
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle4.init"
-Content-Type: text/plain
-
-type = attribwrangle
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle4.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 13.8058 0.129215
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-1 "output1"
-}
-inputsNamed3
-{
-0 	(1) "" 1 "input1"
-}
-inputs
-{
-0 	(1) 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author Mo@MO-GPU
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle4.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-folder0	[ 0	locks=0 ]	(	0	0	)
-group	[ 0	locks=0 ]	(	""	)
-grouptype	[ 0	locks=0 ]	(	"guess"	)
-class	[ 0	locks=0 ]	(	"point"	)
-vex_numcount	[ 0	locks=0 ]	(	10	)
-vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
-snippet	[ 0	locks=0 ]	(	"f@r = @Cd.r;
-f@g = @Cd.g;
-f@b = @Cd.b;"	)
-exportlist	[ 0	locks=0 ]	(	*	)
-vex_strict	[ 0	locks=0 ]	(	"off"	)
-autobind	[ 0	locks=0 ]	(	"on"	)
-bindings	[ 0	locks=0 ]	(	0	)
-groupautobind	[ 0	locks=0 ]	(	"on"	)
-groupbindings	[ 0	locks=0 ]	(	0	)
-vex_cwdpath	[ 0	locks=0 ]	(	.	)
-vex_outputmask	[ 0	locks=0 ]	(	*	)
-vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
-vex_matchattrib	[ 0	locks=0 ]	(	id	)
-vex_inplace	[ 0	locks=0 ]	(	"off"	)
-vex_selectiongroup	[ 0	locks=0 ]	(	""	)
-vex_precision	[ 0	locks=0 ]	(	auto	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle4.netbox"
-Content-Type: text/plain
-
-__netbox2
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/pointwrangle4.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":""
 	}
 }
 
@@ -784,15 +544,15 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	null2 0 1 "input1"
-1 	pointwrangle3 1 1 "input2"
-2 	pointwrangle4 1 1 "input3"
+0 	null1 0 1 "input1"
+1 	Cd_to_rgb_01 1 1 "input2"
+2 	Cd_to_rgb_02 1 1 "input3"
 }
 inputs
 {
-0 	null2 0 1
-1 	pointwrangle3 0 1
-2 	pointwrangle4 0 1
+0 	null1 0 1
+1 	Cd_to_rgb_01 0 1
+2 	Cd_to_rgb_02 0 1
 }
 stat
 {
@@ -812,96 +572,43 @@ Content-Type: text/plain
 
 {
 version 0.8
-python	[ 0	locks=0 ]	(	"node = hou.pwd()
-geo = node.geometry()
-
-# Add code to modify contents of geo.
-# Use drop down menu to select examples.
-
-from transformers import AutoProcessor, CLIPModel
-from sdpipeline import PILTools as pt
+python	[ 0	locks=0 ]	(	"from transformers import AutoProcessor, CLIPModel
 import torch
 import torch.nn.functional as F
 import mlops_utils
 import os
-from imp import reload
-import torchvision
 import mlops_image_utils as imutils
-import numpy
+from imagepipeline import similarity
+
+node = hou.pwd()
+geo = node.geometry()
 
 device = node.parent().parm(\"device\").evalAsString()
 model = node.parent().parm(\"model\").evalAsString()
 cache_only = node.parent().parm(\"cache_only\").evalAsInt()
 
 model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"transformers\")
-model = CLIPModel.from_pretrained(model_path)
-
-processor = AutoProcessor.from_pretrained(model_path)
 
 geo1 = hou.pwd().inputGeometry(1)
 geo2 = hou.pwd().inputGeometry(2)
 
-# Attributes
-width = int(geo1.attribValue(\"image_dimension\")[0])
-height = int(geo1.attribValue(\"image_dimension\")[1])
-r = numpy.array(geo1.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
-g = numpy.array(geo1.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
-b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
-input_colors = numpy.stack((r,g,b), axis=0)
+# read in image through input 1
+input_colors = imutils.colored_points_to_numpy_array(geo1)
 image1 = imutils.colors_numpy_array_to_pil(input_colors)
 
-# Attributes
-width = int(geo2.attribValue(\"image_dimension\")[0])
-height = int(geo2.attribValue(\"image_dimension\")[1])
-r = numpy.array(geo2.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
-g = numpy.array(geo2.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
-b = numpy.array(geo2.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
-input_colors = numpy.stack((r,g,b), axis=0)
+# read in image through input 2
+input_colors = imutils.colored_points_to_numpy_array(geo2)
 image2 = imutils.colors_numpy_array_to_pil(input_colors)
 
-image1, image2 = imutils.ensure_same_pil_image_dimensions(image1, image2)
-
-transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
-transform(image1).to(device)
-transform(image2).to(device)
-
-inputs1 = processor(images=image1, return_tensors=\"pt\")
-image_features1 = model.get_image_features(**inputs1)
-
-inputs2 = processor(images=image2, return_tensors=\"pt\")
-image_features2 = model.get_image_features(**inputs2)
-
-
-# Reshape the tensors to be 2-D
-tensor1_2d = image_features1.view(2, -1)
-tensor2_2d = image_features2.view(2, -1)
-
-# Normalize the tensors along the last dimension
-#normalized_tensor1 = F.normalize(tensor1_2d, p=2, dim=1)
-#normalized_tensor2 = F.normalize(tensor2_2d, p=2, dim=1)
-
-normalized_tensor1 = F.normalize(image_features1)
-normalized_tensor2 = F.normalize(image_features2)
-
-
-# Calculate the cosine similarity between the normalized tensors
-similarity = torch.matmul(normalized_tensor1, normalized_tensor2.transpose(0, 1))
-sim = similarity.item()
-sim = (sim +  1.0) * .5
-#print(sim)
+sim = similarity.clip_embedding_similarity(image1, image2, model_path)
 
 # create new point, write back similarity
 point = geo.createPoint()
-geo.addAttrib(hou.attribType.Point, \"similarity\", 0.0)
-point.setAttribValue(\"similarity\", sim)"	)
+geo.addAttrib(hou.attribType.Point, \"similarity_score\", 0.0, create_local_variable=False)
+point.setAttribValue(\"similarity_score\", sim)
+"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python2.netbox"
-Content-Type: text/plain
-
-__netbox2
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/python2.userdata"
@@ -915,85 +622,17 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/null2.init"
-Content-Type: text/plain
-
-type = null
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/null2.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 8.25489 0.125215
-connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-0 "output1"
-}
-inputsNamed3
-{
-}
-inputs
-{
-}
-stat
-{
-  create -1
-  modify -1
-  author Mo@MO-GPU
-  access 0777
-}
-color UT_Color RGB 0.6 0.7 0.77 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/null2.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-copyinput	[ 0	locks=0 ]	(	"on"	)
-cacheinput	[ 0	locks=0 ]	(	"off"	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/null2.netbox"
-Content-Type: text/plain
-
-__netbox2
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/null2.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-10
+7
 output0
 switch1
 measure_SSIM
-pointwrangle1
-pointwrangle2
+Cd_to_rgb_01
+Cd_to_rgb_02
 null1
-pointwrangle3
-pointwrangle4
 python2
-null2
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"

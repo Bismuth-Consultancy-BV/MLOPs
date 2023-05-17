@@ -1,7 +1,5 @@
 import numpy
 from PIL import Image
-from torchmetrics import StructuralSimilarityIndexMeasure
-import torchvision.transforms.functional as G
 
 def colors_numpy_array_to_pil(input_colors):
     # Transpose into (width, height, channels)
@@ -43,19 +41,13 @@ def ensure_same_pil_image_dimensions(pil_image1, pil_image2):
     return pil_image1, pil_image2
 
 
-def SSIM(pil_image1, pil_image2, data_range=1.0, kernel_size=11, sigma=1.5, k1=0.01, k2=0.03):
+def colored_points_to_numpy_array(geo):
+    width = int(geo.attribValue("image_dimension")[0])
+    height = int(geo.attribValue("image_dimension")[1])
 
-    pil_image1, pil_image2 = ensure_same_pil_image_dimensions(pil_image1, pil_image2)
-
-    # Create an instance of the SSIM metric
-    ssim_metric = StructuralSimilarityIndexMeasure(data_range, kernel_size, sigma, K=(k1, k2))
-
-    # Compute SSIM
-    ssim_value_tensor = ssim_metric(G.to_tensor(pil_image1).unsqueeze(0), G.to_tensor(pil_image2).unsqueeze(0))
-    ssim_value = ssim_value_tensor.item()
-
-    # remap cosine similarity (-1. to +1.) into 0 to 1 range
-    ssim_value = (ssim_value + 1.) * .5
-
-    # Print the similarity measure
-    return ssim_value
+    r = numpy.array(geo.pointFloatAttribValues("r"), dtype=numpy.float32).reshape(width, height)
+    g = numpy.array(geo.pointFloatAttribValues("g"), dtype=numpy.float32).reshape(width, height)
+    b = numpy.array(geo.pointFloatAttribValues("b"), dtype=numpy.float32).reshape(width, height)
+    
+    input_colors = numpy.stack((r,g,b), axis=0)
+    return input_colors
