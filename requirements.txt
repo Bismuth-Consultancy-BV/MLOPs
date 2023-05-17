@@ -16,6 +16,8 @@ rembg[gpu]==2.0.36
 basicsr>=1.4.2
 facexlib>=0.2.5
 gfpgan>=1.3.5
+safetensors==0.3.1
+umap-learn==0.5.3
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
 torch

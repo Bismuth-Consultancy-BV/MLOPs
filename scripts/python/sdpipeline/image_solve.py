@@ -67,8 +67,6 @@ from . import schedulers_lookup
 
 #         return down_block_res_samples, mid_block_res_sample
 
-
-
 def run(inference_steps, latent_dimension, input_embeddings, controlnet_geo, attention_slicing, guidance_scale, input_scheduler, torch_device, model, lora, local_cache_only=True, seamless_gen=False):
 
     no_half = (torch_device in ["mps", "cpu"])
