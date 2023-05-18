@@ -109,13 +109,13 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
         cmd,
         env=env,
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
+        stderr=subprocess.PIPE,
         creationflags=flags,
     )
 
-    out, err = p.communicate()
-    if err:
-        raise hou.Error(out.decode())
+    res = p.communicate()
+    if res[1] != "" and p.returncode != 0:
+        raise hou.Error(res[1].decode())
 
 
 class MLOPSCheckpointDownloader(QtWidgets.QDialog):
