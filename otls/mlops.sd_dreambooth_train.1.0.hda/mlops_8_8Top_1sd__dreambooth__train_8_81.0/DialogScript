@@ -154,10 +154,35 @@
             parmtag { "sidefx::look" "blank" }
         }
         parm {
-            name    "instance_data_dir"
-            label   "Instance Data Dir"
+            name    "with_prior_preservation"
+            label   "Use Prior Preservation Loss"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "class_prompt"
+            label   "Class Prompt"
+            type    string
+            default { "A photo of dog" }
+            disablewhen "{ with_prior_preservation == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "num_class_images"
+            label   "Number Class Images"
+            type    integer
+            default { "100" }
+            disablewhen "{ with_prior_preservation == 0 }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "class_data_dir"
+            label   "Class Data Dir"
             type    directory
-            default { "$MLOPs/data/testing/minnie/" }
+            default { "$HIP/export/$OS/generated_class_images/" }
+            disablewhen "{ with_prior_preservation == 0 }"
             parmtag { "script_callback_language" "python" }
         }
         parm {
@@ -168,25 +193,10 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
-            name    "class_data_dir"
-            label   "Class Data Dir"
+            name    "instance_data_dir"
+            label   "Instance Data Dir"
             type    directory
-            default { "" }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
-            name    "class_prompt"
-            label   "Class Prompt"
-            type    string
-            default { "" }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
-            name    "num_class_images"
-            label   "Number Class Images"
-            type    integer
-            default { "100" }
-            range   { 0 10 }
+            default { "$MLOPs/data/testing/minnie/" }
             parmtag { "script_callback_language" "python" }
         }
         parm {
@@ -210,13 +220,6 @@
             type    integer
             default { "50" }
             range   { 0 10 }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
-            name    "with_prior_preservation"
-            label   "Use Prior Preservation Loss"
-            type    toggle
-            default { "0" }
             parmtag { "script_callback_language" "python" }
         }
         parm {
