@@ -31,7 +31,7 @@ Content-Disposition: attachment; filename="hdaroot.def"
 Content-Type: text/plain
 
 comment ""
-position -2.9811 0.521979
+position -3.41229 0.970191
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render off highlight off unload off savedata off compress off colordefault on exposed on
 outputsNamed3
@@ -507,7 +507,7 @@ import mlops_utils
 env = os.environ.copy()
 
 script = os.path.normpath(hou.text.expandString(\"$MLOPS/scripts/python/sdpipeline/train_dreambooth_lora.py\"))
-cmd = [\"python\", script]
+cmd = [\"python\"]
 
 arguments = sys.argv[1:]
 
@@ -516,6 +516,17 @@ if arguments[0] == \"--cache_only\":
     cache_only = True
     arguments.pop(0)
 
+remove_dreambooth = [\"--fulldreambooth\"]
+if \"--fulldreambooth\" in arguments:
+
+    script = os.path.normpath(hou.text.expandString(\"$MLOPS/scripts/python/sdpipeline/train_dreambooth.py\"))
+    for x in remove_dreambooth:
+        arguments.remove(x)
+    index = arguments.index(\"--validation_epochs\")
+    arguments.pop(index)
+    arguments.pop(index)
+
+cmd.append(script)
 model = arguments[1]
 model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.normpath(hou.text.expandString(os.path.join(\"$MLOPs\", \"data\", \"models\", \"diffusers\"))), bool(cache_only))
 

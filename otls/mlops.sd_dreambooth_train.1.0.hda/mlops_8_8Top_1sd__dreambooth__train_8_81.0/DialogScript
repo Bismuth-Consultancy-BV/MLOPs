@@ -146,6 +146,13 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
+            name    "fulldreambooth"
+            label   "Full Dreambooth"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
             name    "sepparm"
             label   "Spacer"
             type    separator
@@ -219,6 +226,7 @@
             label   "Number Validation Epoch"
             type    integer
             default { "50" }
+            disablewhen "{ fulldreambooth == 1 }"
             range   { 0 10 }
             parmtag { "script_callback_language" "python" }
         }
