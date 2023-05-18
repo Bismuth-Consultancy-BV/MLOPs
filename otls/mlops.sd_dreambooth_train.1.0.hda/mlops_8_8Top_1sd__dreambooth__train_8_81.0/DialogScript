@@ -14,6 +14,112 @@
     inputlabel	3	"Input 3"
     inputlabel	4	"Input 4"
 
+    groupcollapsible {
+        name    "folder1_1"
+        label   "Schedulers"
+        grouptag { "visibletabs" "111" }
+
+        parm {
+            name    "topscheduler"
+            label   "TOP Scheduler Override"
+            type    oppath
+            joinnext
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "opfilter" "!!TOP/SCHEDULER!!" }
+            parmtag { "oprelative" "." }
+        }
+        parm {
+            name    "addjobparms"
+            label   "Add Job Parms"
+            type    button
+            nolabel
+            default { "Local" }
+            menu {
+                [ "opmenu -l -a pythonscript1 addjobparms" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_useschedulewhen"
+            label   "Use Schedule When"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_schedulewhen"
+            label   "Schedule When"
+            type    integer
+            default { "1" }
+            disablewhen "{ pdg_useschedulewhen == 0 }"
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+            parmtag { "sidefx::slider" "none" }
+        }
+        parm {
+            name    "sepparm5"
+            label   "Separator"
+            type    separator
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+        }
+        parm {
+            name    "pdg_workitemlabel"
+            label   "Work Item Label"
+            type    ordinal
+            joinnext
+            default { "0" }
+            menu {
+                "0" "Use Default"
+                "1" "Inherit from Upstream Item"
+                "2" "Custom Expression"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitemlabelexpr"
+            label   "Label Expression"
+            type    string
+            nolabel
+            default { "" }
+            disablewhen "{ pdg_workitemlabel != 2 }"
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitempriority"
+            label   "Work Item Priority"
+            type    ordinal
+            joinnext
+            default { "0" }
+            menu {
+                "0" "Inherit from Upstream Item"
+                "1" "Custom Expression"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitempriorityexpr"
+            label   "Priority Expression"
+            type    integer
+            nolabel
+            default { "0" }
+            disablewhen "{ pdg_workitempriority != 1 }"
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+            parmtag { "sidefx::slider" "none" }
+        }
+    }
+
     groupsimple {
         name    "folder0"
         label   "Training Arguments"

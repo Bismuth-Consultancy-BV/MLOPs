@@ -394,15 +394,63 @@ Content-Disposition: attachment; filename="hdaroot/pythonscript1.chn"
 Content-Type: text/plain
 
 {
+    channel topscheduler {
+      lefttype = extend
+      righttype = extend
+      defaultString = \"\"
+      flags = 0
+      segment { length = 0 expr = chsop(\"../topscheduler\") }
+    }
+    channel addjobparms {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../addjobparms\") }
+    }
+    channel pdg_useschedulewhen {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../pdg_useschedulewhen\") }
+    }
+    channel pdg_schedulewhen {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../pdg_schedulewhen\") }
+    }
+    channel pdg_workitemlabel {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../pdg_workitemlabel\") }
+    }
+    channel pdg_workitemlabelexpr {
+      lefttype = extend
+      righttype = extend
+      defaultString = \"\"
+      flags = 0
+      segment { length = 0 expr = chs(\"../pdg_workitemlabelexpr\") }
+    }
+    channel pdg_workitempriority {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../pdg_workitempriority\") }
+    }
+    channel pdg_workitempriorityexpr {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../pdg_workitempriorityexpr\") }
+    }
     channel extraargs {
       lefttype = extend
       righttype = extend
-      defaultString = "\"--test \\\"hello\\\"\""
+      defaultString = \"\"
       flags = 0
-      start = 7.708333333333333
-      segment { options = {	 autoslope  ai ao }
-
-	 length = 0 accel = 0.33333333333333331 0.33333333333333331 expr = "import hou
+      segment { length = 0 expr = "import hou
 
 node = hou.pwd().parent()
 parms = node.parms()
@@ -459,7 +507,7 @@ import mlops_utils
 env = os.environ.copy()
 env[\"WANDB_DISABLE_CODE\"]=\"true\" 
 
-script = hou.text.expandString(\"$MLOPS/scripts/python/sdpipeline/train_dreambooth_lora.py\")
+script = hou.text.expandString(\"H:/Github/MLOPs/MLOPs/scripts/python/sdpipeline/train_dreambooth_lora.py\")
 cmd = [\"python\", script]
 
 arguments = sys.argv[1:]
@@ -470,7 +518,7 @@ if arguments[0] == \"--cache_only\":
     arguments.pop(0)
 
 model = arguments[1]
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"H:/Github/MLOPs/MLOPs\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
 
 arguments[1] = model_path
 cmd.extend(arguments)
@@ -486,16 +534,16 @@ expectedoutputattr	[ 0	locks=0 ]	(	""	)
 useexpectedoutputtag	[ 0	locks=0 ]	(	"off"	)
 expectedoutputtag	[ 0	locks=0 ]	(	file	)
 expectedoutputfiles	[ 0	locks=0 ]	(	0	)
-topscheduler	[ 0	locks=0 ]	(	""	)
-addjobparms	[ 0	locks=0 ]	(	0	)
-pdg_useschedulewhen	[ 0	locks=0 ]	(	"off"	)
-pdg_schedulewhen	[ 0	locks=0 ]	(	1	)
+topscheduler	[ 0	locks=0 ]	(	[ topscheduler	"" ] 	)
+addjobparms	[ 0	locks=0 ]	(	[ addjobparms	0 ] 	)
+pdg_useschedulewhen	[ 0	locks=0 ]	(	[ pdg_useschedulewhen	0 ] 	)
+pdg_schedulewhen	[ 0	locks=0 ]	(	[ pdg_schedulewhen	1 ] 	)
 sepparm4	[ 0	locks=0 ]	(	)
-pdg_workitemlabel	[ 0	locks=0 ]	(	"0"	)
-pdg_workitemlabelexpr	[ 0	locks=0 ]	(	""	)
-pdg_workitempriority	[ 0	locks=0 ]	(	"0"	)
-pdg_workitempriorityexpr	[ 0	locks=0 ]	(	0	)
-folder1	[ 0	locks=0 ]	(	0	0	0	)
+pdg_workitemlabel	[ 0	locks=0 ]	(	[ pdg_workitemlabel	0 ] 	)
+pdg_workitemlabelexpr	[ 0	locks=0 ]	(	[ pdg_workitemlabelexpr	"" ] 	)
+pdg_workitempriority	[ 0	locks=0 ]	(	[ pdg_workitempriority	0 ] 	)
+pdg_workitempriorityexpr	[ 0	locks=0 ]	(	[ pdg_workitempriorityexpr	0 ] 	)
+folder1	[ 0	locks=0 ]	(	2	2	2	)
 exectuable2	[ 0	locks=0 ]	(	1	)
 folder2	[ 0	locks=0 ]	(	0	)
 testing	[ 0	locks=0 ]	(	0	)
