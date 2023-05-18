@@ -1,0 +1,14 @@
+Operator:     mlops::visualize_dimensionality_reduction::1.0
+Label:        MLOPs Visualize Dimensionality Reduction
+Path:         oplib:/mlops::Sop/visualize_dimensionality_reduction::1.0?mlops::Sop/visualize_dimensionality_reduction::1.0
+Icon:         opdef:/mlops::Sop/visualize_dimensionality_reduction::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='2 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       2 to 2
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Thu May 18 15:58:26 2023
+

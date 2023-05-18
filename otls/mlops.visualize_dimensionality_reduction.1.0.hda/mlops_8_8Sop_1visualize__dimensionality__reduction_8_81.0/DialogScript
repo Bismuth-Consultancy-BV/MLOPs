@@ -1,9 +1,9 @@
-# Dialog script for mlops::MLOPs_Visualize_Dimensionality_Reduction::1.0 automatically generated
+# Dialog script for mlops::visualize_dimensionality_reduction::1.0 automatically generated
 
 {
-    name	mlops::MLOPs_Visualize_Dimensionality_Reduction::1.0
+    name	mlops::visualize_dimensionality_reduction::1.0
     script	mlops::dev::MLOPs_Visualize_Dimensionality_Reduction::1.0
-    label	"Mlops Visualize Dimensionality Reduction"
+    label	"MLOPs Visualize Dimensionality Reduction"
 
     help {
 	""

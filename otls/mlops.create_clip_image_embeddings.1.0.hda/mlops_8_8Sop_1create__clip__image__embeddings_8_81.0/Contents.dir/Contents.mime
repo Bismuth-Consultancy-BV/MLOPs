@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 17.6591 -28.2754
+position -1.41115 -0.0774705
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -50,7 +50,7 @@ stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@DESKTOP-PAFFS1R
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -333,14 +333,13 @@ from imagepipeline import similarity
 
 node = hou.pwd()
 geo = node.geometry()
+geo1 = node.inputs()[1].geometry()
 
 device = node.parent().parm(\"device\").evalAsString()
 model = node.parent().parm(\"model\").evalAsString()
 cache_only = node.parent().parm(\"cache_only\").evalAsInt()
 
 model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"transformers\")
-
-geo1 = hou.pwd().inputGeometry(1)
 
 # read in image through input 1
 input_colors = imutils.colored_points_to_numpy_array(geo1)

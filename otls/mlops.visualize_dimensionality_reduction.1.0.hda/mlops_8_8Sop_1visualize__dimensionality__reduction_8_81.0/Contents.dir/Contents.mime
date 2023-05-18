@@ -23,7 +23,7 @@ Sop
 Content-Disposition: attachment; filename="hdaroot.init"
 Content-Type: text/plain
 
-type = mlops::MLOPs_Visualize_Dimensionality_Reduction::1.0
+type = mlops::visualize_dimensionality_reduction::1.0
 matchesdef = 0
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -32,27 +32,23 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 8.42595 -22.1398
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position -3.99501 -0.793699
+connectornextid 0
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	blast1 1 1 "input1"
-1 	MLOPs_Reduce_Dimensionality 0 1 "input2"
 }
 inputs
 {
-0 	blast1 0 1
-1 	MLOPs_Reduce_Dimensionality 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@DESKTOP-PAFFS1R
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 

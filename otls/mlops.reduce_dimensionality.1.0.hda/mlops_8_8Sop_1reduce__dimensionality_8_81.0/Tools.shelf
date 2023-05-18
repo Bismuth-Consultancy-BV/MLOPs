@@ -14,7 +14,6 @@
     </toolMenuContext>
     <toolSubmenu>MLOPs/Analysis</toolSubmenu>
     <script scriptType="python"><![CDATA[import soptoolutils
-
 soptoolutils.genericTool(kwargs, '$HDA_NAME')]]></script>
   </tool>
 </shelfDocument>

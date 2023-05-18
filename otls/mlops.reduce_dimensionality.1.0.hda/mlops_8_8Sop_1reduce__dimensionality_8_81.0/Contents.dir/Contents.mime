@@ -23,7 +23,7 @@ Sop
 Content-Disposition: attachment; filename="hdaroot.init"
 Content-Type: text/plain
 
-type = mlops::MLOPs_Reduce_Dimensionality::1.0
+type = mlops::reduce_dimensionality::1.0
 matchesdef = 0
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -32,25 +32,23 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 19.2488 -17.1381
-connectornextid 1
+position -1.19356 0.0131913
+connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	blast6 1 1 "input1"
 }
 inputs
 {
-0 	blast6 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@DESKTOP-PAFFS1R
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -415,13 +413,11 @@ import umap
 
 node = hou.pwd()
 geo = node.geometry()
-geo1 = hou.pwd().inputGeometry(1)
-geo2 = hou.pwd().inputGeometry(2)
+geo1 = node.inputs()[1].geometry()
 
 clusterdims = geo1.attribValue(\"clusterdim\")
 
-#---UMAP---
-def draw_umap(data, n_neighbors=4, min_dist=.01, n_components=clusterdims, metric='euclidean', title=''):
+def draw_umap(data, n_neighbors=4, min_dist=.01, n_components=clusterdims, metric='euclidean'):
     fit = umap.UMAP(
         n_neighbors=n_neighbors,
         min_dist=min_dist,
@@ -432,10 +428,7 @@ def draw_umap(data, n_neighbors=4, min_dist=.01, n_components=clusterdims, metri
     u = fit.fit_transform(data)
     return u
 
-    
-#---Main---
 num_latent_elements = geo1.attribValue(\"data_size\")
-
 vals = geo1.floatListAttribValue(\"input_data\")
 subarrays = [vals[i:i+num_latent_elements] for i in range(0, len(vals), num_latent_elements)]
 flattened_data = subarrays
@@ -443,9 +436,8 @@ flattened_data = subarrays
 dimred = draw_umap(flattened_data)
 out = dimred.tolist()
 
-n = 0
 geo.addAttrib(hou.attribType.Point, \"class\", -1, create_local_variable=False)
-for subarray in out:
+for n, subarray in enumerate(out):
     point = geo.createPoint()
     if(clusterdims == 3):
         point.setAttribValue(\"P\", [subarray[0], subarray[1], subarray[2]])
@@ -453,9 +445,10 @@ for subarray in out:
         point.setAttribValue(\"P\", [subarray[0], subarray[1], 0.0])
     elif(clusterdims == 1):
         point.setAttribValue(\"P\", [subarray[0], 0.0, 0.0])
-        
+
     point.setAttribValue(\"class\", n)
-    n += 1"	)
+
+"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -933,7 +926,7 @@ Content-Type: text/plain
       lefttype = extend
       righttype = extend
       flags = 0
-      segment { length = 0 expr = ch(\"../Clustering_Dimensions\") }
+      segment { length = 0 expr = ch(\"../clusterdimensions\") }
     }
   }
 
@@ -1204,7 +1197,7 @@ Content-Type: text/plain
       righttype = extend
       defaultString = \"tensor_dimension\"
       flags = 0
-      segment { length = 0 expr = chs(\"../inname2\") }
+      segment { length = 0 expr = chs(\"../sizeattributename\") }
     }
   }
 

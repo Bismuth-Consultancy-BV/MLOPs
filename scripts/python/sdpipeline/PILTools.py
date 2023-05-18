@@ -53,25 +53,6 @@ def ImageToPointCloud(geo, pil_image, rname="__r", gname="__g", bname="__b"):
     geo.setPointFloatAttribValues(gname, g_attrib)
     geo.setPointFloatAttribValues(bname, b_attrib)
 
-def ImageSimilarity(image1, image2):
-    #calculates image similarity by SSIM
-    #Convert the images to NumPy arrays
-    image1_array = np.array(image1)
-    image2_array = np.array(image2)
-
-    # Convert the NumPy arrays to tensors
-    image1_tensor = F.to_tensor(image1_array).unsqueeze(0)  # Add extra dimension for batch size
-    image2_tensor = F.to_tensor(image2_array).unsqueeze(0)  # Add extra dimension for batch size
-
-    # Create an instance of the SSIM metric
-    ssim_metric = StructuralSimilarityIndexMeasure(data_range=1.0, win_size=11, win_sigma=1.5, K=(0.01, 0.03))
-
-    # Compute SSIM
-    ssim_value_tensor = ssim_metric(image1_tensor, image2_tensor)
-    ssim_value = ssim_value_tensor.item()
-    # Print the similarity measure
-    return ssim_value
-
 def PointCloudToCV2(input_geo, w, h, rname="__r", gname="__g", bname="__b"):
     # Get the "r", "g", and "b" attributes from the input geometry
     r_attrib = input_geo.pointFloatAttribValues(rname)

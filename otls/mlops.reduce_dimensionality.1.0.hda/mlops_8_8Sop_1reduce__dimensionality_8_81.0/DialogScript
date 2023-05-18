@@ -1,9 +1,9 @@
-# Dialog script for mlops::MLOPs_Reduce_Dimensionality::1.0 automatically generated
+# Dialog script for mlops::reduce_dimensionality::1.0 automatically generated
 
 {
-    name	mlops::MLOPs_Reduce_Dimensionality::1.0
+    name	mlops::reduce_dimensionality::1.0
     script	mlops::dev::MLOPs_Reduce_Dimensionality::1.0
-    label	"Mlops Reduce Dimensionality"
+    label	"MLOPs Reduce Dimensionality"
 
     help {
 	""
@@ -24,7 +24,7 @@
             label   "Data Attribute"
             type    string
             default { "conditional_embedding" }
-            menutoggle {
+            menureplace {
                 [ "opmenu -l -a attribpromote3 inname" ]
             }
             parmtag { "autoscope" "0000000000000000" }
@@ -39,12 +39,12 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
-            name    "inname2"
+            name    "sizeattributename"
             label   "Data Size Attribute"
             type    string
             default { "tensor_dimension" }
             disablewhen "{ getsizefromattrib == 0 }"
-            menutoggle {
+            menureplace {
                 [ "opmenu -l -a attribpromote1 inname" ]
             }
             parmtag { "autoscope" "0000000000000000" }
@@ -66,7 +66,7 @@
         label   "UMAP Settings"
 
         parm {
-            name    "Clustering_Dimensions"
+            name    "clusterdimensions"
             label   "Clustering Dimensions"
             type    integer
             default { "3" }

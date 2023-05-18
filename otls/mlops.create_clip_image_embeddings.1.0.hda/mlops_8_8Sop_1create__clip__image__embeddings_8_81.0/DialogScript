@@ -16,25 +16,6 @@
     outputlabel	1	"Image Similarity"
 
     groupsimple {
-        name    "folder1"
-        label   "Settings"
-
-        parm {
-            name    "device"
-            label   "Compute Device"
-            type    ordinal
-            default { "0" }
-            menu {
-                "cuda"  "cuda"
-                "cpu"   "cpu"
-                "mps"   "mps"
-            }
-            parmtag { "export_disable" "1" }
-            parmtag { "script_callback_language" "python" }
-        }
-    }
-
-    groupsimple {
         name    "folder0"
         label   "Model"
 
@@ -57,6 +38,25 @@
                 [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
                 language python
             }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "export_disable" "1" }
             parmtag { "script_callback_language" "python" }
         }
     }
