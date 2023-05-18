@@ -1,0 +1,59 @@
+# Dialog script for mlops::sd_controlnet_conditioning::2.0 automatically generated
+
+{
+    name	mlops::sd_controlnet_conditioning::2.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs SD ControlNet Conditioning"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Conditioning"
+
+        parm {
+            name    "cache_only"
+            label   "Use Local Cache"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "Model"
+            type    string
+            default { "lllyasviel/Annotators" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "conditioning"
+            label   "Conditioning"
+            type    ordinal
+            default { "canny" }
+            menu {
+                "hed"           "HED Detector"
+                "midas"         "Midas Detector"
+                "mlsd"          "MLSD Detector"
+                "openpose"      "Openpose Detector"
+                "pidi"          "PidiNet Detector"
+                "bae"           "Normal Bae Detector"
+                "lineartanime"  "LineArt Anime Detector"
+                "zoe"           "Zoe Depth Detector"
+                "canny"         "Canny Edge Detector"
+                "content"       "Content Shuffle Detector"
+                "facedetector"  "MediaPipe Face Detector"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

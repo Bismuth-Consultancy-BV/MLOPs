@@ -4,7 +4,7 @@ omegaconf==2.3.0
 transformers>=4.25.1
 accelerate==0.18.0
 scipy==1.10.1
-controlnet_aux==0.0.3
+controlnet_aux @ git+https://github.com/patrickvonplaten/controlnet_aux@f31dbd95cf7426164d0d0f88fe7339afcfbcb668
 torchmetrics==0.11.4
 clip_interrogator==0.6.0
 diffusers @ git+https://github.com/huggingface/diffusers@2858d7e15eaf445ec37fc77b204a85f84affbeef
@@ -19,6 +19,7 @@ gfpgan>=1.3.5
 safetensors==0.3.1
 umap-learn==0.5.3
 compel==1.1.5
+mediapipe==0.10.0
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
 torch
