@@ -52,3 +52,16 @@ def ssim(pil_image1, pil_image2, data_range=1.0, kernel_size=11, sigma=1.5, k1=0
 
     # Print the similarity measure
     return ssim_value
+
+def clip_image_embedding(image1, model_path):
+
+	model = CLIPModel.from_pretrained(model_path)
+	processor = AutoProcessor.from_pretrained(model_path)
+
+	inputs1 = processor(images=image1, return_tensors="pt")
+	image_features1 = model.get_image_features(**inputs1)
+
+	# Reshape the tensors to be 2-D
+	# tensor1_2d = image_features1.view(2, -1)
+
+	return image_features1
