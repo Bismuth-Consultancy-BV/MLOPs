@@ -1,0 +1,95 @@
+# Dialog script for mlops::MLOPs_Reduce_Dimensionality::1.0 automatically generated
+
+{
+    name	mlops::MLOPs_Reduce_Dimensionality::1.0
+    script	mlops::dev::MLOPs_Reduce_Dimensionality::1.0
+    label	"Mlops Reduce Dimensionality"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Data To Cluster"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Clustered Data Points"
+
+    groupsimple {
+        name    "importsettings"
+        label   "Data Import Settings"
+
+        parm {
+            name    "inname"
+            label   "Data Attribute"
+            type    string
+            default { "conditional_embedding" }
+            menutoggle {
+                [ "opmenu -l -a attribpromote3 inname" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "getsizefromattrib"
+            label   "Data Size From Attribute"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inname2"
+            label   "Data Size Attribute"
+            type    string
+            default { "tensor_dimension" }
+            disablewhen "{ getsizefromattrib == 0 }"
+            menutoggle {
+                [ "opmenu -l -a attribpromote1 inname" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "manualdatasize"
+            label   "Data Size (Number of Elements)"
+            type    integer
+            default { "59136" }
+            disablewhen "{ getsizefromattrib == 1 }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "UMAP Settings"
+
+        parm {
+            name    "Clustering_Dimensions"
+            label   "Clustering Dimensions"
+            type    integer
+            default { "3" }
+            range   { 1 3 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "do_matchsize"
+            label   "Scale to 1x1x1"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "value1v1"
+            label   "pscale"
+            type    float
+            default { "0.3" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

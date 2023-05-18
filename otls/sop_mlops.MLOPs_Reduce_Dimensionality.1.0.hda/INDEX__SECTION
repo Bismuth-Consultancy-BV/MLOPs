@@ -1,0 +1,14 @@
+Operator:     mlops::MLOPs_Reduce_Dimensionality::1.0
+Label:        Mlops Reduce Dimensionality
+Path:         oplib:/mlops::Sop/MLOPs_Reduce_Dimensionality::1.0?mlops::Sop/MLOPs_Reduce_Dimensionality::1.0
+Icon:         opdef:/mlops::Sop/MLOPs_Reduce_Dimensionality::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Thu May 18 15:19:16 2023
+
