@@ -31,6 +31,7 @@ Please note that the plugin is currently in beta, and may change at anytime with
 ### CLIP Interrogate
 ### Image Manipulation
 ### Real-ESRGAN
+### Dimensionality Reduction
 
 
 
