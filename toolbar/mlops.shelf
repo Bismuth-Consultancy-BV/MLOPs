@@ -87,10 +87,13 @@ with hou.InterruptableOperation("Installing Dependencies, downloading ~5Gb", ope
         raise hou.Error(out.decode())
     operation.updateProgress(percentage=count/total)
     count+=1
-
+    
     dependencies_dir = os.path.normpath(os.path.join(hou.text.expandString("$MLOPS"), "data", "dependencies", "python"))
-    if os.path.isdir(dependencies_dir):
-        shutil.rmtree(dependencies_dir)
+    try:
+        if os.path.isdir(dependencies_dir):
+            shutil.rmtree(dependencies_dir)
+    except:
+        raise hou.Error(f"Please close Houdini and delete {dependencies_dir}\nAfter deleting the specified folder restart Houdini and install dependencies again.")
 
     hou.ui.setStatusMessage("Installing requirements.txt")    
     mlops_utils.pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
