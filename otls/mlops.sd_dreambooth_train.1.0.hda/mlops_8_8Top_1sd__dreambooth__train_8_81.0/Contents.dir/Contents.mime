@@ -71,7 +71,7 @@ Content-Disposition: attachment; filename="hdaroot.inp"
 Content-Type: text/plain
 
 1
-0 -1.3529411764705885 7.3529411764705888 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
+0 -1.3529399888241291 7.9731998990847206 2 0 __NO_OWNER_NETWORK_BOX__ "FROMOUTPUT"
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/pythonscript1.init"
@@ -411,6 +411,9 @@ arguments = []
 
 for parm in parms:
     if \"Training Arguments\" in parm.containingFolders():
+        if parm.name().startswith(\"_ui_\"):
+            continue
+            
         parmtype = parm.parmTemplate().type()
         
         if parmtype == hou.parmTemplateType.Toggle:
