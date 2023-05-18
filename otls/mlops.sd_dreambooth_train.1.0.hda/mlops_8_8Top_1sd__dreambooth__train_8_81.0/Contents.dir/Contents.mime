@@ -31,7 +31,7 @@ Content-Disposition: attachment; filename="hdaroot.def"
 Content-Type: text/plain
 
 comment ""
-position -10.4301 -0.332653
+position -2.9811 0.521979
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render off highlight off unload off savedata off compress off colordefault on exposed on
 outputsNamed3
@@ -505,9 +505,8 @@ import os
 import mlops_utils
 
 env = os.environ.copy()
-env[\"WANDB_DISABLE_CODE\"]=\"true\" 
 
-script = hou.text.expandString(\"H:/Github/MLOPs/MLOPs/scripts/python/sdpipeline/train_dreambooth_lora.py\")
+script = os.path.normpath(hou.text.expandString(\"$MLOPS/scripts/python/sdpipeline/train_dreambooth_lora.py\"))
 cmd = [\"python\", script]
 
 arguments = sys.argv[1:]
@@ -518,7 +517,7 @@ if arguments[0] == \"--cache_only\":
     arguments.pop(0)
 
 model = arguments[1]
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"H:/Github/MLOPs/MLOPs\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.normpath(hou.text.expandString(os.path.join(\"$MLOPs\", \"data\", \"models\", \"diffusers\"))), bool(cache_only))
 
 arguments[1] = model_path
 cmd.extend(arguments)
@@ -543,7 +542,7 @@ pdg_workitemlabel	[ 0	locks=0 ]	(	[ pdg_workitemlabel	0 ] 	)
 pdg_workitemlabelexpr	[ 0	locks=0 ]	(	[ pdg_workitemlabelexpr	"" ] 	)
 pdg_workitempriority	[ 0	locks=0 ]	(	[ pdg_workitempriority	0 ] 	)
 pdg_workitempriorityexpr	[ 0	locks=0 ]	(	[ pdg_workitempriorityexpr	0 ] 	)
-folder1	[ 0	locks=0 ]	(	2	2	2	)
+folder1	[ 0	locks=0 ]	(	0	0	0	)
 exectuable2	[ 0	locks=0 ]	(	1	)
 folder2	[ 0	locks=0 ]	(	0	)
 testing	[ 0	locks=0 ]	(	0	)
