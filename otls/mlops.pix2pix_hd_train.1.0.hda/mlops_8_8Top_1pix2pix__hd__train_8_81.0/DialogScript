@@ -349,7 +349,7 @@
         }
         parm {
             name    "no_instance"
-            label   "Instance Maps"
+            label   "No Instance Maps"
             type    toggle
             default { "1" }
             parmtag { "script_callback_language" "python" }
