@@ -15,25 +15,6 @@
     inputlabel	4	"Sub-Network Input #4"
     outputlabel	1	"Colored Points"
 
-    group {
-        name    "folder2"
-        label   "Settings"
-        tabbreak
-
-        parm {
-            name    "device"
-            label   "Compute Device"
-            type    ordinal
-            default { "0" }
-            menu {
-                "cuda"  "cuda"
-                "cpu"   "cpu"
-                "mps"   "mps"
-            }
-            parmtag { "script_callback_language" "python" }
-        }
-    }
-
     groupsimple {
         name    "folder0"
         label   "Model"
@@ -62,8 +43,26 @@
     }
 
     groupsimple {
+        name    "folder2"
+        label   "Settings"
+
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
         name    "folder1"
-        label   "pix2pix"
+        label   "Pix2Pix"
 
         parm {
             name    "seed"

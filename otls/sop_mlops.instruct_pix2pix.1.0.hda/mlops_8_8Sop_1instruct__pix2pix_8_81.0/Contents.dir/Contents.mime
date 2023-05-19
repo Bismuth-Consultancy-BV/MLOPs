@@ -32,9 +32,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -3.20325 -0.271951
+position -5.83759 0.160219
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -52,7 +52,7 @@ stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@DESKTOP-PAFFS1R
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -93,19 +93,19 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 3 0.717687
+position 3 0.38524
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	pointwrangle1 1 1 "input1"
+0 	attribdelete1 1 1 "input1"
 }
 inputs
 {
-0 	pointwrangle1 0 1
+0 	attribdelete1 0 1
 }
 stat
 {
@@ -154,7 +154,7 @@ sopflags sopflags =
 comment ""
 position 3 3.78041
 connectornextid 4
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault off exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault off exposed on
 outputsNamed3
 {
 1 "output1"
@@ -287,22 +287,25 @@ from imp import reload
 reload(mlops_utils)
 reload(imutils)
 
+
+# Inputs
 node = hou.pwd()
 geo = node.geometry()
 geo1 = hou.pwd().inputGeometry(1)
 geo2 = hou.pwd().inputGeometry(2)
 geo3 = hou.pwd().inputGeometry(3)
 
+# Parameters
 device = node.parent().parm(\"device\").evalAsString()
 model = node.parent().parm(\"model\").evalAsString()
 cache_only = node.parent().parm(\"cache_only\").evalAsInt()
+myseed = hou.pwd().parm(\"seed\").eval()
+guidescale = hou.pwd().parm(\"guidescale\").eval()
+imgguidance = hou.pwd().parm(\"imgguidance\").eval()
+inferencesteps = hou.pwd().parm(\"infsteps\").eval()
 
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"transformers\")
 
-# read in image through input 1
-input_colors = imutils.colored_points_to_numpy_array(geo)
-image = imutils.colors_numpy_array_to_pil(input_colors)
-
+# Attributes
 point = geo1.points()[0]
 prompt = point.attribValue(\"prompt\")
 
@@ -313,21 +316,24 @@ if has_negprompt_input_geo:
 else:
     negprompt = \"\"
 
-#read node's parameters
-myseed = hou.pwd().parm(\"seed\").eval()
-guidescale = hou.pwd().parm(\"guidescale\").eval()
-imgguidance = hou.pwd().parm(\"imgguidance\").eval()
-inferencesteps = hou.pwd().parm(\"infsteps\").eval()
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+
+# read in image through input 1
+input_colors = imutils.colored_points_to_numpy_array(geo)
+image = imutils.colors_numpy_array_to_pil(input_colors) 
 
 #load model and set up pipeline
 pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_path, torch_dtype=torch.float16, revision=\"fp16\", safety_checker=None)
 pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
-pipe.to(\"cuda\")
+pipe.to(device)
 pipe.enable_attention_slicing()
-generator = torch.Generator(device=\"cuda\").manual_seed(myseed)
+pipe.set_progress_bar_config(disable=True)
+generator = torch.Generator(device=device).manual_seed(myseed)
 
 #generate image and write back to points
-outimg = pipe(prompt, image=image, num_inference_steps=inferencesteps, guidance_scale = guidescale, image_guidance_scale=imgguidance, negative_prompt = negprompt, generator=generator).images[0]
+with hou.InterruptableOperation(\"Solving Pix2Pix\", open_interrupt_dialog=True) as operation:
+    outimg = pipe(prompt, image=image, num_inference_steps=inferencesteps, guidance_scale=guidescale, image_guidance_scale=imgguidance, negative_prompt=negprompt, generator=generator).images[0]
+    operation.updateProgress(-1.0)
 
 outimg = ImageOps.mirror(outimg)
 imutils.pil_to_colored_points(geo, outimg)
@@ -511,14 +517,85 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribdelete1.init"
+Content-Type: text/plain
+
+type = attribdelete
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribdelete1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.99655 1.38524
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	pointwrangle1 1 1 "input1"
+}
+inputs
+{
+0 	pointwrangle1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribdelete1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+usereference	[ 0	locks=0 ]	(	"off"	)
+negate	[ 0	locks=0 ]	(	"off"	)
+doptdel	[ 0	locks=0 ]	(	"on"	)
+ptdel	[ 0	locks=0 ]	(	"b g r"	)
+dovtxdel	[ 0	locks=0 ]	(	"on"	)
+vtxdel	[ 0	locks=0 ]	(	""	)
+doprimdel	[ 0	locks=0 ]	(	"on"	)
+primdel	[ 0	locks=0 ]	(	""	)
+dodtldel	[ 0	locks=0 ]	(	"on"	)
+dtldel	[ 0	locks=0 ]	(	""	)
+updatevar	[ 0	locks=0 ]	(	"on"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribdelete1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-4
+5
 output0
 diffusers_instructpix2pix
 Cd_to_r_g_b
 pointwrangle1
+attribdelete1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
