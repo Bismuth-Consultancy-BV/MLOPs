@@ -6,9 +6,9 @@ Table:        Sop
 License:      
 Extra:        inputcolors='3 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
 User:         
-Inputs:       3 to 3
+Inputs:       2 to 3
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Fri May 19 09:17:56 2023
+Modified:     Fri May 19 09:38:01 2023
 

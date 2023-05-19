@@ -32,24 +32,21 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -15.4327 -7.47711
-connectornextid 4
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -3.20325 -0.271951
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
 }
 inputsNamed3
 {
-1 	image_to_points1 0 1 "input1"
-2 	sd_prompt_create1 0 1 "input2"
-3 	sd_prompt_create2 0 1 "input3"
+0 	image_to_points1 0 1 "input1"
+1 	sd_prompt_create1 0 1 "input2"
 }
 inputs
 {
 0 	image_to_points1 0 1
 1 	sd_prompt_create1 0 1
-2 	sd_prompt_create2 0 1
 }
 stat
 {
@@ -308,8 +305,13 @@ image = imutils.colors_numpy_array_to_pil(input_colors)
 
 point = geo1.points()[0]
 prompt = point.attribValue(\"prompt\")
-point = geo2.points()[0]
-negprompt = point.attribValue(\"prompt\")
+
+has_negprompt_input_geo = bool(geo2)
+if has_negprompt_input_geo:
+    point = geo2.points()[0]
+    negprompt = point.attribValue(\"prompt\")
+else:
+    negprompt = \"\"
 
 #read node's parameters
 myseed = hou.pwd().parm(\"seed\").eval()
