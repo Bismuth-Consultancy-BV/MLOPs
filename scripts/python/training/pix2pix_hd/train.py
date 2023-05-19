@@ -2,7 +2,6 @@ import math
 import os
 import time
 from collections import OrderedDict
-from subprocess import call
 
 import numpy as np
 import torch
@@ -16,7 +15,6 @@ def lcm(a, b):
 import util.util as util
 from data.data_loader import CreateDataLoader
 from models.models import create_model
-from options.train_options import TrainOptions
 from util.visualizer import Visualizer
 
 

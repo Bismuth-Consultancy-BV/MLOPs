@@ -2,32 +2,6 @@ import numpy
 import torch
 from diffusers import StableDiffusionUpscalePipeline
 
-# ## Helper functions
-# def load_image(p):
-#     '''
-#     Function to load images from a defined path
-#     '''
-#     from PIL import Image
-#     return Image.open(p).convert('RGB').resize((128,128))
-
-# def numpy_to_pil(images):
-#     """
-#     Convert a numpy image or a batch of images to a PIL image.
-#     """
-#     from PIL import Image
-
-#     if images.ndim == 3:
-#         images = images[None, ...]
-#     images = (images * 255).round().astype("uint8")
-#     if images.shape[-1] == 1:
-#         # special case for grayscale (single channel) images
-#         pil_images = [Image.fromarray(image.squeeze(), mode="L") for image in images]
-#     else:
-#         pil_images = [Image.fromarray(image) for image in images]
-
-#     return pil_images
-
-
 def run(
     positive_embeds,
     negative_embeds,

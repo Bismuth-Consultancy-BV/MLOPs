@@ -1,10 +1,8 @@
 import ntpath
 import os
 import time
-from io import BytesIO  # Python 3.x
 
 import numpy as np
-import scipy.misc
 
 from . import html, util
 
@@ -20,7 +18,7 @@ class Visualizer:
             from torch.utils.tensorboard import SummaryWriter
 
             self.log_dir = os.path.join(opt.checkpoints_dir, opt.name, "logs")
-            self.writer = SummaryWriter(log_dir=self.log_dir)
+            self.writer = SummaryWriter(log_dir=os.path.join(self.log_dir, opt.run))
 
         if self.use_html:
             self.web_dir = os.path.join(opt.checkpoints_dir, opt.name, "web")
