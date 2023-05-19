@@ -23,12 +23,13 @@
             name    "mode"
             label   "Mode"
             type    ordinal
-            default { "0" }
+            default { "4" }
             menu {
                 "depth"     "Depth"
                 "normal"    "Normal"
                 "segment"   "Segmentation"
                 "albedo"    "Color"
+                "shading"   "Shading"
             }
             parmtag { "script_callback_language" "python" }
         }
@@ -40,6 +41,15 @@
             help    "Camera that will be rendered"
             parmtag { "autoscope" "0000000000000000" }
             parmtag { "opfilter" "/obj/camera" }
+            parmtag { "oprelative" "." }
+        }
+        parm {
+            name    "scenepath"
+            label   "Scene Path"
+            type    oppath
+            default { "/obj" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "opfilter" "!!OBJ!!" }
             parmtag { "oprelative" "." }
         }
         parm {
@@ -171,7 +181,7 @@
                 name    "xformtype#"
                 label   "Transform"
                 type    ordinal
-                default { "object" }
+                default { "local" }
                 menu {
                     "none"  "None"
                     "local" "Into This Object"
