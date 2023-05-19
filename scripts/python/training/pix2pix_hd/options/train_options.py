@@ -12,12 +12,6 @@ class TrainOptions(BaseOptions):
             help="frequency of showing training results on screen",
         )
         self.parser.add_argument(
-            "--run",
-            type=str,
-            default="Houdini Run",
-            help="frequency of showing training results on console",
-        )
-        self.parser.add_argument(
             "--print_freq",
             type=int,
             default=100,

@@ -227,7 +227,7 @@ class BaseOptions:
         print("-------------- End ----------------")
 
         # save to the disk
-        expr_dir = os.path.join(self.opt.checkpoints_dir, self.opt.name)
+        expr_dir = os.path.join(self.opt.checkpoints_dir)
         util.mkdirs(expr_dir)
         if save and not self.opt.continue_train:
             file_name = os.path.join(expr_dir, "opt.txt")
