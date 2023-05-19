@@ -24,7 +24,7 @@ def pil_to_colors_numpy_array(pil_image):
     return input_colors
 
 def ensure_same_pil_image_dimensions(pil_image1, pil_image2):
-        # Get the sizes of the images
+    # Get the sizes of the images
     size1 = pil_image1.size
     size2 = pil_image2.size
 
@@ -51,3 +51,29 @@ def colored_points_to_numpy_array(geo):
     
     input_colors = numpy.stack((r,g,b), axis=0)
     return input_colors
+
+def pil_to_colored_points(geo, pil_image):
+    # Convert the PIL image to a numpy array
+    cd_array = numpy.array(pil_image)
+
+    # Split the color data into separate "r", "g", and "b" arrays
+    r_attrib = cd_array[:,:,0].ravel() / 255.0
+    g_attrib = cd_array[:,:,1].ravel() / 255.0
+    b_attrib = cd_array[:,:,2].ravel() / 255.0
+
+    # Set the "r", "g", and "b" attributes on the points
+    geo.setPointFloatAttribValues("r", r_attrib)
+    geo.setPointFloatAttribValues("g", g_attrib)
+    geo.setPointFloatAttribValues("b", b_attrib)
+
+def numpy_array_to_colored_points(geo, cd_array):
+    # Split the color data into separate "r", "g", and "b" arrays
+    r_attrib = cd_array[:,:,0].ravel() / 255.0
+    g_attrib = cd_array[:,:,1].ravel() / 255.0
+    b_attrib = cd_array[:,:,2].ravel() / 255.0
+
+    # Set the "r", "g", and "b" attributes on the points
+    geo.setPointFloatAttribValues("r", r_attrib)
+    geo.setPointFloatAttribValues("g", g_attrib)
+    geo.setPointFloatAttribValues("b", b_attrib)
+    

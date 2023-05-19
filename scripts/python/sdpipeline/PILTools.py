@@ -7,7 +7,7 @@ import torchvision.transforms.functional as F
 from torchmetrics import StructuralSimilarityIndexMeasure
 import cv2
 
-def PointCloudToImage(input_geo, w, h, rname="__r", gname="__g", bname="__b"):
+def PointCloudToImage(input_geo, w, h, rname="r", gname="g", bname="b"):
     # Get the "r", "g", and "b" attributes from the input geometry
     r_attrib = input_geo.pointFloatAttribValues(rname)
     g_attrib = input_geo.pointFloatAttribValues(gname)
@@ -39,7 +39,7 @@ def PointCloudToImage(input_geo, w, h, rname="__r", gname="__g", bname="__b"):
 
     return pil_image
 
-def ImageToPointCloud(geo, pil_image, rname="__r", gname="__g", bname="__b"):
+def ImageToPointCloud(geo, pil_image):
     # Convert the PIL image to a numpy array
     cd_array = np.array(pil_image)
 
@@ -49,11 +49,11 @@ def ImageToPointCloud(geo, pil_image, rname="__r", gname="__g", bname="__b"):
     b_attrib = cd_array[:,:,2].ravel() / 255.0
 
     # Set the "r", "g", and "b" attributes on the points
-    geo.setPointFloatAttribValues(rname, r_attrib)
-    geo.setPointFloatAttribValues(gname, g_attrib)
-    geo.setPointFloatAttribValues(bname, b_attrib)
+    geo.setPointFloatAttribValues("r", r_attrib)
+    geo.setPointFloatAttribValues("g", g_attrib)
+    geo.setPointFloatAttribValues("b", b_attrib)
 
-def PointCloudToCV2(input_geo, w, h, rname="__r", gname="__g", bname="__b"):
+def PointCloudToCV2(input_geo, w, h, rname="r", gname="g", bname="b"):
     # Get the "r", "g", and "b" attributes from the input geometry
     r_attrib = input_geo.pointFloatAttribValues(rname)
     g_attrib = input_geo.pointFloatAttribValues(gname)
@@ -85,7 +85,7 @@ def PointCloudToCV2(input_geo, w, h, rname="__r", gname="__g", bname="__b"):
 
     return cv2_image
 
-def CV2ToPointCloud(geo, cv2_image, rname="__r", gname="__g", bname="__b"):
+def CV2ToPointCloud(geo, cv2_image, rname="r", gname="g", bname="b"):
     # Split the color data into separate "r", "g", and "b" arrays
     r_attrib = cv2_image[:,:,2].ravel() / 255.0
     g_attrib = cv2_image[:,:,1].ravel() / 255.0
