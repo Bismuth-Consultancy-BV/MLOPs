@@ -590,7 +590,7 @@ Content-Disposition: attachment; filename="hdaroot/output0.def"
 Content-Type: text/plain
 
 comment ""
-position -1.35294 3.86332
+position -1.49965 0.544694
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display on render off highlight off unload off savedata off compress off colordefault on exposed on
 outputsNamed3
@@ -598,11 +598,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	attributecreate1 1 1 "input1"
+0 	switch1 1 1 "input1"
 }
 inputs
 {
-0 	attributecreate1 0 1
+0 	switch1 0 1
 }
 stat
 {
@@ -650,7 +650,7 @@ Content-Disposition: attachment; filename="hdaroot/attributecreate1.def"
 Content-Type: text/plain
 
 comment ""
-position -1.35294 4.98372
+position -1.35294 4.72498
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress off colordefault on exposed on
 outputsNamed3
@@ -698,7 +698,91 @@ framevalue	[ 0	locks=0 ]	(	0	)
 usepriority	[ 0	locks=0 ]	(	"off"	)
 priorityvalue	[ 0	locks=0 ]	(	0	)
 folder1	[ 0	locks=0 ]	(	0	)
-stringattribs	[ 0	locks=0 ]	(	2	)
+stringattribs	[ 0	locks=0 ]	(	1	)
+intattribs	[ 0	locks=0 ]	(	0	)
+floatattribs	[ 0	locks=0 ]	(	0	)
+pyobjectattribs	[ 0	locks=0 ]	(	0	)
+resultdata	[ 0	locks=0 ]	(	0	)
+stringenable1	[ 0	locks=0 ]	(	"on"	)
+stringname1	[ 0	locks=0 ]	(	input_model	)
+stringconflict1	[ 0	locks=0 ]	(	"0"	)
+stringscope1	[ 0	locks=0 ]	(	"0"	)
+stringvalue1	[ 0	locks=0 ]	(	`chs(\"../pretrained_model_name_or_path\")`	)
+sepparm1_3	[ 0	locks=0 ]	(	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate2.init"
+Content-Type: text/plain
+
+type = attributecreate
+matchesdef = 0
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate2.def"
+Content-Type: text/plain
+
+comment ""
+position -2.86004 3.23655
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress off colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	attributecreate1 1 1 "input1"
+}
+inputs
+{
+0 	attributecreate1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate2.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	)
+pdg_workitemgeneration	[ 0	locks=0 ]	(	"2"	)
+usecondition	[ 0	locks=0 ]	(	"off"	)
+condition	[ 0	locks=0 ]	(	0	)
+folder2	[ 0	locks=0 ]	(	0	)
+copyoutputs	[ 0	locks=0 ]	(	"2"	)
+pdg_workitempriority	[ 0	locks=0 ]	(	"0"	)
+pdg_workitempriorityexpr	[ 0	locks=0 ]	(	0	)
+useindex	[ 0	locks=0 ]	(	"off"	)
+indexvalue	[ 0	locks=0 ]	(	0	)
+useframe	[ 0	locks=0 ]	(	"off"	)
+framevalue	[ 0	locks=0 ]	(	0	)
+usepriority	[ 0	locks=0 ]	(	"off"	)
+priorityvalue	[ 0	locks=0 ]	(	0	)
+folder1	[ 0	locks=0 ]	(	0	)
+stringattribs	[ 0	locks=0 ]	(	1	)
 intattribs	[ 0	locks=0 ]	(	0	)
 floatattribs	[ 0	locks=0 ]	(	0	)
 pyobjectattribs	[ 0	locks=0 ]	(	0	)
@@ -717,22 +801,176 @@ sepparm1_2	[ 0	locks=0 ]	(	)
 resultcheckfilepath1	[ 0	locks=0 ]	(	"on"	)
 checkpathwhen1	[ 0	locks=0 ]	(	"0"	)
 existsattrib1	[ 0	locks=0 ]	(	file_exists	)
-stringenable1	[ 0	locks=0 ]	(	"on"	)
-stringname1	[ 0	locks=0 ]	(	model	)
-stringconflict1	[ 0	locks=0 ]	(	"0"	)
-stringscope1	[ 0	locks=0 ]	(	"0"	)
-stringvalue1	[ 0	locks=0 ]	(	`chs(\"../pretrained_model_name_or_path\")`	)
+stringenable1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	"on"	)
+stringname1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	lora_weights	)
+stringconflict1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	"0"	)
+stringscope1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	"0"	)
+stringvalue1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	`chs(\"../output_dir\")`pytorch_lora_weights.bin	)
 sepparm1_3	[ 0	locks=0 ]	(	)
-stringenable2	[ 0	locks=0 ]	(	"on"	)
-stringname2	[ 0	locks=0 ]	(	lora_weights	)
-stringconflict2	[ 0	locks=0 ]	(	"0"	)
-stringscope2	[ 0	locks=0 ]	(	"0"	)
-stringvalue2	[ 0	locks=0 ]	(	`chs(\"../output_dir\")`pytorch_lora_weights.bin	)
-sepparm2_3	[ 0	locks=0 ]	(	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/attributecreate1.userdata"
+Content-Disposition: attachment; filename="hdaroot/attributecreate2.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.init"
+Content-Type: text/plain
+
+type = switch
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.def"
+Content-Type: text/plain
+
+comment ""
+position -1.49965 1.66509
+connectornextid 3
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress off colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+2 	attributecreate2 1 1 "input1"
+0 	attributecreate3 1 1 "input2"
+}
+inputs
+{
+0 	attributecreate2 0 1
+1 	attributecreate3 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 1 0.7 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.chn"
+Content-Type: text/plain
+
+{
+    channel input {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../fulldreambooth\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+input	[ 8	locks=0 ]	(	[ input	0 ] 	)
+invalidate	[ 0	locks=0 ]	(	"on"	)
+keepfailed	[ 0	locks=0 ]	(	"off"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate3.init"
+Content-Type: text/plain
+
+type = attributecreate
+matchesdef = 0
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate3.def"
+Content-Type: text/plain
+
+comment ""
+position -0.0325599 3.06317
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress off colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	attributecreate1 1 1 "input1"
+}
+inputs
+{
+0 	attributecreate1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate3.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	)
+pdg_workitemgeneration	[ 0	locks=0 ]	(	"2"	)
+usecondition	[ 0	locks=0 ]	(	"off"	)
+condition	[ 0	locks=0 ]	(	0	)
+folder2	[ 0	locks=0 ]	(	0	)
+copyoutputs	[ 0	locks=0 ]	(	"2"	)
+pdg_workitempriority	[ 0	locks=0 ]	(	"0"	)
+pdg_workitempriorityexpr	[ 0	locks=0 ]	(	0	)
+useindex	[ 0	locks=0 ]	(	"off"	)
+indexvalue	[ 0	locks=0 ]	(	0	)
+useframe	[ 0	locks=0 ]	(	"off"	)
+framevalue	[ 0	locks=0 ]	(	0	)
+usepriority	[ 0	locks=0 ]	(	"off"	)
+priorityvalue	[ 0	locks=0 ]	(	0	)
+folder1	[ 0	locks=0 ]	(	0	)
+stringattribs	[ 0	locks=0 ]	(	1	)
+intattribs	[ 0	locks=0 ]	(	0	)
+floatattribs	[ 0	locks=0 ]	(	0	)
+pyobjectattribs	[ 0	locks=0 ]	(	0	)
+resultdata	[ 0	locks=0 ]	(	0	)
+stringenable1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	"on"	)
+stringname1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	output_model	)
+stringconflict1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	"0"	)
+stringscope1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	"0"	)
+stringvalue1	[ 0	locks=0	autoscope=0	autosel=4294967295 ]	(	`chs(\"../output_dir\")`	)
+sepparm1_3	[ 0	locks=0 ]	(	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attributecreate3.userdata"
 Content-Type: text/plain
 
 {
@@ -746,10 +984,13 @@ Content-Type: text/plain
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-3
+6
 pythonscript1
 output0
 attributecreate1
+attributecreate2
+switch1
+attributecreate3
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"

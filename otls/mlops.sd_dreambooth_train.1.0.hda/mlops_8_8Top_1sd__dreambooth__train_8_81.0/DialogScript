@@ -399,7 +399,7 @@
                     name    "enable_xformers_memory_efficient_attention"
                     label   "xformers Memory Efficient Attention"
                     type    toggle
-                    default { "0" }
+                    default { "1" }
                     parmtag { "script_callback_language" "python" }
                 }
                 parm {
@@ -459,7 +459,7 @@
                 name    "output_dir"
                 label   "Output Path"
                 type    directory
-                default { "$HIP/export/$OS/" }
+                default { "$HIP/export/$OS/model/" }
                 range   { 0 10 }
                 parmtag { "script_callback_language" "python" }
             }
