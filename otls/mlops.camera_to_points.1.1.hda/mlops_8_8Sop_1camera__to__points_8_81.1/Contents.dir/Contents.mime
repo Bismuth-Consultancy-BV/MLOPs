@@ -32,11 +32,12 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 1.35178 -1.46853
-connectornextid 0
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position -1.801 0.675023
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
+0 "output1"
 }
 inputsNamed3
 {
@@ -48,7 +49,7 @@ stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@DESKTOP-PAFFS1R
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -293,7 +294,7 @@ sopflags sopflags =
 comment ""
 position -17.99 1.95878
 connectornextid 2
-flags =  lock off model off template on footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -2865,7 +2866,7 @@ sopflags sopflags =
 comment ""
 position -6.60649 -34.3881
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -6550,11 +6551,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	rgb_to_Cd1 1 1 "input1"
+0 	transform8 1 1 "input1"
 }
 inputs
 {
-0 	rgb_to_Cd1 0 1
+0 	transform8 0 1
 }
 stat
 {
@@ -7909,11 +7910,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	intersect 2 1 "input1"
+0 	rgb_to_Cd1 1 1 "input1"
 }
 inputs
 {
-0 	intersect 0 1
+0 	rgb_to_Cd1 0 1
 }
 stat
 {
@@ -8285,6 +8286,20 @@ Content-Type: text/plain
       flags = 0
       segment { length = 0 expr = chsop(\"../../scenepath\") }
     }
+    channel res1 {
+      lefttype = extend
+      righttype = extend
+      default = 512
+      flags = 0
+      segment { length = 0 value = 512 512 expr = ch(\"../../width\") }
+    }
+    channel res2 {
+      lefttype = extend
+      righttype = extend
+      default = 512
+      flags = 0
+      segment { length = 0 value = 512 512 expr = ch(\"../../height\") }
+    }
   }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -8298,7 +8313,7 @@ renderdialog	[ 0	locks=0 ]	(	0	)
 trange	[ 0	locks=0 ]	(	"off"	)
 f	[ 0	locks=0 ]	(	1	240	1	)
 take	[ 0	locks=0 ]	(	_current_	)
-stdswitch	[ 0	locks=0 ]	(	1	1	1	1	1	1	1	)
+stdswitch	[ 0	locks=0 ]	(	0	0	0	0	0	0	0	)
 opsource	[ 0	locks=0 ]	(	"obj"	)
 camera	[ 8	locks=0 ]	(	`chsop(\"../../camerapath\")`	)
 scenepath	[ 0	locks=0 ]	(	[ scenepath	/obj ] 	)
@@ -8317,14 +8332,14 @@ purposeguide	[ 0	locks=0 ]	(	"off"	)
 soho_initsim	[ 0	locks=0 ]	(	"off"	)
 soho_viewport_menu	[ 0	locks=0 ]	(	"on"	)
 tres	[ 0	locks=0 ]	(	"on"	)
-res	[ 0	locks=0 ]	(	512	512	)
+res	[ 8	locks=0 ]	(	[ res1	1280 ] 	[ res2	720 ] 	)
 resmenu	[ 0	locks=0 ]	(	0	)
 aspect	[ 0	locks=0 ]	(	1	)
 tsheet	[ 0	locks=0 ]	(	"off"	)
 sheetsize	[ 0	locks=0 ]	(	2	2	)
 bgimage	[ 0	locks=0 ]	(	""	)
 vpcomment	[ 0	locks=0 ]	(	""	)
-picture	[ 8	locks=0 ]	(	HOUDINI_TEMP_DIR/MLOPs_temp/`opname(\"../..\")`_ogl_render_01.png	)
+picture	[ 8	locks=0 ]	(	$HOUDINI_TEMP_DIR/MLOPs_temp/`opname(\"../..\")`_ogl_render_01.png	)
 mkpath	[ 0	locks=0 ]	(	"on"	)
 saveretry	[ 0	locks=0 ]	(	0	)
 imagetype	[ 0	locks=0 ]	(	"image2d"	)
@@ -8464,8 +8479,8 @@ Content-Type: text/plain
 sopflags sopflags = 
 comment ""
 position 0.701558 2.03128
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+connectornextid 3
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -8473,10 +8488,12 @@ outputsNamed3
 inputsNamed3
 {
 0 	Cd_to_rgb1 1 1 "input1"
+2 	object_merge1 0 1 "input2"
 }
 inputs
 {
 0 	Cd_to_rgb1 0 1
+1 	object_merge1 0 1
 }
 stat
 {
@@ -8535,7 +8552,7 @@ outimg = Image.open(path)
 outimg = ImageOps.flip(outimg)
 imutils.pil_to_colored_points(geo, outimg)"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
-temppath	[ 8	locks=0 ]	(	HOUDINI_TEMP_DIR/MLOPs_temp/`opname(\"..\")`_ogl_render_01.png	)
+temppath	[ 8	locks=0 ]	(	`chs(\"../ropnet1/opengl1/picture\")`	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
