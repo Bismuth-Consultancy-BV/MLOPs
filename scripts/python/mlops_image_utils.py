@@ -1,16 +1,18 @@
 import numpy
 from PIL import Image
 
+
 def colors_numpy_array_to_pil(input_colors):
     # Transpose into (width, height, channels)
     input_colors = input_colors.transpose(1, 2, 0)
     # Correct Orientation
     input_colors = input_colors[:, ::-1, :]
     # Gamma Correct
-    input_colors = pow(input_colors, 1.0/2.2)
+    input_colors = pow(input_colors, 1.0 / 2.2)
     # Convert to RGB space
     input_colors = (input_colors * 255).round().astype("uint8")
     return Image.fromarray(input_colors)
+
 
 def pil_to_colors_numpy_array(pil_image):
     # Convert to Numpy Array
@@ -22,6 +24,7 @@ def pil_to_colors_numpy_array(pil_image):
     # Reshape to (number_pixels, channels)
     input_colors = input_colors.reshape(-1, input_colors.shape[2])
     return input_colors
+
 
 def ensure_same_pil_image_dimensions(pil_image1, pil_image2):
     # Get the sizes of the images
@@ -45,35 +48,42 @@ def colored_points_to_numpy_array(geo):
     width = int(geo.attribValue("image_dimension")[0])
     height = int(geo.attribValue("image_dimension")[1])
 
-    r = numpy.array(geo.pointFloatAttribValues("r"), dtype=numpy.float32).reshape(width, height)
-    g = numpy.array(geo.pointFloatAttribValues("g"), dtype=numpy.float32).reshape(width, height)
-    b = numpy.array(geo.pointFloatAttribValues("b"), dtype=numpy.float32).reshape(width, height)
-    
-    input_colors = numpy.stack((r,g,b), axis=0)
+    r = numpy.array(geo.pointFloatAttribValues("r"), dtype=numpy.float32).reshape(
+        width, height
+    )
+    g = numpy.array(geo.pointFloatAttribValues("g"), dtype=numpy.float32).reshape(
+        width, height
+    )
+    b = numpy.array(geo.pointFloatAttribValues("b"), dtype=numpy.float32).reshape(
+        width, height
+    )
+
+    input_colors = numpy.stack((r, g, b), axis=0)
     return input_colors
+
 
 def pil_to_colored_points(geo, pil_image):
     # Convert the PIL image to a numpy array
     cd_array = numpy.array(pil_image)
 
     # Split the color data into separate "r", "g", and "b" arrays
-    r_attrib = cd_array[:,:,0].ravel() / 255.0
-    g_attrib = cd_array[:,:,1].ravel() / 255.0
-    b_attrib = cd_array[:,:,2].ravel() / 255.0
+    r_attrib = cd_array[:, :, 0].ravel() / 255.0
+    g_attrib = cd_array[:, :, 1].ravel() / 255.0
+    b_attrib = cd_array[:, :, 2].ravel() / 255.0
 
     # Set the "r", "g", and "b" attributes on the points
     geo.setPointFloatAttribValues("r", r_attrib)
     geo.setPointFloatAttribValues("g", g_attrib)
     geo.setPointFloatAttribValues("b", b_attrib)
+
 
 def numpy_array_to_colored_points(geo, cd_array):
     # Split the color data into separate "r", "g", and "b" arrays
-    r_attrib = cd_array[:,:,0].ravel() / 255.0
-    g_attrib = cd_array[:,:,1].ravel() / 255.0
-    b_attrib = cd_array[:,:,2].ravel() / 255.0
+    r_attrib = cd_array[:, :, 0].ravel() / 255.0
+    g_attrib = cd_array[:, :, 1].ravel() / 255.0
+    b_attrib = cd_array[:, :, 2].ravel() / 255.0
 
     # Set the "r", "g", and "b" attributes on the points
     geo.setPointFloatAttribValues("r", r_attrib)
     geo.setPointFloatAttribValues("g", g_attrib)
     geo.setPointFloatAttribValues("b", b_attrib)
-    

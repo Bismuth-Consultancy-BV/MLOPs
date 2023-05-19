@@ -3,13 +3,24 @@
 # import sys
 # sys.path.append(os.path.normpath(hou.text.expandString("$MLOPS/data/dependencies/python/controlnet_aux/")))
 
-from controlnet_aux import HEDdetector, MidasDetector, MLSDdetector, OpenposeDetector, PidiNetDetector
-from controlnet_aux import NormalBaeDetector, LineartDetector, LineartAnimeDetector, CannyDetector
-from controlnet_aux import ContentShuffleDetector, ZoeDetector, MediapipeFaceDetector
 import mlops_image_utils
+from controlnet_aux import (
+    CannyDetector,
+    ContentShuffleDetector,
+    HEDdetector,
+    LineartAnimeDetector,
+    LineartDetector,
+    MediapipeFaceDetector,
+    MidasDetector,
+    MLSDdetector,
+    NormalBaeDetector,
+    OpenposeDetector,
+    PidiNetDetector,
+    ZoeDetector,
+)
+
 
 def run(model, mode, input_colors):
-
     img = mlops_image_utils.colors_numpy_array_to_pil(input_colors)
 
     if mode == "hed":

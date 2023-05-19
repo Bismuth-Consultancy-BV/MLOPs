@@ -1,23 +1,45 @@
 import json
-import torch
+
 import numpy
+import torch
+
 from . import schedulers_lookup
 
 
-def run(input_latents, latent_dimension, image_latents, guiding_strength, inference_steps, torch_device, scheduler_model, model, local_cache_only=True):
+def run(
+    input_latents,
+    latent_dimension,
+    image_latents,
+    guiding_strength,
+    inference_steps,
+    torch_device,
+    scheduler_model,
+    model,
+    local_cache_only=True,
+):
     try:
-        scheduler_object = schedulers_lookup.schedulers[scheduler_model].from_pretrained(model, subfolder="scheduler", local_files_only=local_cache_only)
+        scheduler_object = schedulers_lookup.schedulers[
+            scheduler_model
+        ].from_pretrained(
+            model, subfolder="scheduler", local_files_only=local_cache_only
+        )
     except OSError:
-        scheduler_object = schedulers_lookup.schedulers[scheduler_model].from_pretrained(model, local_files_only=local_cache_only)
+        scheduler_object = schedulers_lookup.schedulers[
+            scheduler_model
+        ].from_pretrained(model, local_files_only=local_cache_only)
     except Exception as err:
         print(f"Unexpected {err}, {type(err)}")
 
     scheduler_object.set_timesteps(inference_steps)
-    noise_latents = torch.from_numpy(numpy.array([input_latents.reshape(4, latent_dimension[0], latent_dimension[1])]))
+    noise_latents = torch.from_numpy(
+        numpy.array(
+            [input_latents.reshape(4, latent_dimension[0], latent_dimension[1])]
+        )
+    )
 
     # If torch_device is `mps``, make sure dtype is set to float32
     # as currently MPS cannot handle float64
-    if torch_device == 'mps':
+    if torch_device == "mps":
         noise_latents = noise_latents.to(torch.float32)
     noise_latents = noise_latents.to(torch_device)
 
@@ -34,12 +56,18 @@ def run(input_latents, latent_dimension, image_latents, guiding_strength, infere
 
     if len(image_latents) != 0:
         if guiding_strength > 0.05 and guiding_strength < 1.0:
-            image_latents = torch.from_numpy(numpy.array([image_latents.reshape(4, latent_dimension[0], latent_dimension[1])]))
+            image_latents = torch.from_numpy(
+                numpy.array(
+                    [image_latents.reshape(4, latent_dimension[0], latent_dimension[1])]
+                )
+            )
             # for mps device, make sure dtype is set to float32
-            if torch_device == 'mps':
+            if torch_device == "mps":
                 image_latents = image_latents.to(torch.float32)
             image_latents = image_latents.to(torch_device)
-            guided_latents = scheduler_object.add_noise(image_latents, noise_latents, timesteps)
+            guided_latents = scheduler_object.add_noise(
+                image_latents, noise_latents, timesteps
+            )
             scheduler["guided_latents"] = guided_latents.cpu().numpy()[0]
             t_start = max(inference_steps - init_timestep, 0)
 
@@ -47,7 +75,7 @@ def run(input_latents, latent_dimension, image_latents, guiding_strength, infere
     config["init_timesteps"] = t_start
     config["type"] = scheduler_model
     # A bit of a lame way to add Karras sigmas : just check if the menu label contains "Karras". bandaid.
-    if 'karras' in str(scheduler_model).lower():
+    if "karras" in str(scheduler_model).lower():
         config["use_karras_sigmas"] = True
     scheduler["config"] = config
     return scheduler

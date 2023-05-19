@@ -1,13 +1,13 @@
-from transformers import AutoProcessor, CLIPModel
+import mlops_image_utils as imutils
 import torch
 import torch.nn.functional as F
 import torchvision.transforms.functional as G
 from torchmetrics import StructuralSimilarityIndexMeasure
-import mlops_image_utils as imutils
+from transformers import AutoProcessor, CLIPModel
+
 
 # calculates similarity of cip embeddings of two PIL images
 def clip_embedding_similarity(image1, image2, model_path):
-
     model = CLIPModel.from_pretrained(model_path)
     processor = AutoProcessor.from_pretrained(model_path)
 
@@ -30,15 +30,23 @@ def clip_embedding_similarity(image1, image2, model_path):
 
     return sim
 
-def ssim(pil_image1, pil_image2, data_range=1.0, kernel_size=11, sigma=1.5, k1=0.01, k2=0.03):
 
-    pil_image1, pil_image2 = imutils.ensure_same_pil_image_dimensions(pil_image1, pil_image2)
+def ssim(
+    pil_image1, pil_image2, data_range=1.0, kernel_size=11, sigma=1.5, k1=0.01, k2=0.03
+):
+    pil_image1, pil_image2 = imutils.ensure_same_pil_image_dimensions(
+        pil_image1, pil_image2
+    )
 
     # Create an instance of the SSIM metric
-    ssim_metric = StructuralSimilarityIndexMeasure(data_range, kernel_size, sigma, K=(k1, k2))
+    ssim_metric = StructuralSimilarityIndexMeasure(
+        data_range, kernel_size, sigma, K=(k1, k2)
+    )
 
     # Compute SSIM
-    ssim_value_tensor = ssim_metric(G.to_tensor(pil_image1).unsqueeze(0), G.to_tensor(pil_image2).unsqueeze(0))
+    ssim_value_tensor = ssim_metric(
+        G.to_tensor(pil_image1).unsqueeze(0), G.to_tensor(pil_image2).unsqueeze(0)
+    )
     ssim_value = ssim_value_tensor.item()
 
     # remap cosine similarity (-1. to +1.) into 0 to 1 range
@@ -46,8 +54,8 @@ def ssim(pil_image1, pil_image2, data_range=1.0, kernel_size=11, sigma=1.5, k1=0
 
     return ssim_value
 
-def clip_image_embedding(image1, model_path):
 
+def clip_image_embedding(image1, model_path):
     model = CLIPModel.from_pretrained(model_path)
     processor = AutoProcessor.from_pretrained(model_path)
 

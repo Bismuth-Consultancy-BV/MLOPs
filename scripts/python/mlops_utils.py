@@ -1,22 +1,23 @@
 import os
+import subprocess
+
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
-import subprocess
 
 PIP_FOLDER = os.path.normpath(
     os.path.join(hou.text.expandString("$MLOPS"), "data", "dependencies", "python")
 )
 
+
 def generate_gpt_code_from_prompt(prompt, wrapper, model="gpt-3.5-turbo"):
     import openai
+
     openai.api_key = os.getenv("OPENAI_API_KEY")
     completion = openai.ChatCompletion.create(
-        model=model,
-        messages=[
-            {"role": "user", "content": f"{wrapper} {prompt}"}
-        ]
+        model=model, messages=[{"role": "user", "content": f"{wrapper} {prompt}"}]
     )
     return completion.choices[0].message.content
+
 
 def is_relevant_parm(kwargs, parmtype):
     if parmtype == "wrangle":
@@ -24,7 +25,10 @@ def is_relevant_parm(kwargs, parmtype):
             return False
     return True
 
-def return_downloaded_checkpoints(root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"):
+
+def return_downloaded_checkpoints(
+    root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"
+):
     model_paths = ["$MLOPS_SD_MODEL", "$MLOPS_SD_MODEL"]
     root = hou.text.expandString(root)
     full_path = os.path.join(root, subfolder)
@@ -36,13 +40,18 @@ def return_downloaded_checkpoints(root="$MLOPS_MODELS", subfolder="", replace_si
                     model_paths.append(f.name.replace(replace_sign, "/"))
     return model_paths
 
-def ensure_huggingface_model_local(model_name, model_path, cache_only=False, model_type="stablediffusion"):
-    from huggingface_hub import snapshot_download
-    from diffusers import StableDiffusionPipeline
-    from diffusers.utils import WEIGHTS_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME
-    from diffusers.schedulers.scheduling_utils import SCHEDULER_CONFIG_NAME
 
-    path = hou.text.expandString(os.path.join(model_path, model_name.replace("/", "-_-")))
+def ensure_huggingface_model_local(
+    model_name, model_path, cache_only=False, model_type="stablediffusion"
+):
+    from diffusers import StableDiffusionPipeline
+    from diffusers.schedulers.scheduling_utils import SCHEDULER_CONFIG_NAME
+    from diffusers.utils import CONFIG_NAME, ONNX_WEIGHTS_NAME, WEIGHTS_NAME
+    from huggingface_hub import snapshot_download
+
+    path = hou.text.expandString(
+        os.path.join(model_path, model_name.replace("/", "-_-"))
+    )
     cache = hou.text.expandString(os.path.join(model_path, "cache"))
 
     if os.path.isdir(model_name):
@@ -55,42 +64,54 @@ def ensure_huggingface_model_local(model_name, model_path, cache_only=False, mod
             # text = "The specified model does not exist locally. Because the 'Local Cache' checkbox for this node is enabled, it also wont be downloaded automatically. Would you like to try downloading the model now?"
             # value = hou.ui.displayConfirmation(text, severity=hou.severityType.Message, title="MLOPs Missing Model")
             # if not value:
-            raise hou.NodeError("The specified model does not exist locally. Because the 'Local Cache' checkbox for this node is enabled, it also wont be downloaded automatically. Specify a valid local model or disable the 'Local Cache' parameter")
-            #cache_only = False
+            raise hou.NodeError(
+                "The specified model does not exist locally. Because the 'Local Cache' checkbox for this node is enabled, it also wont be downloaded automatically. Specify a valid local model or disable the 'Local Cache' parameter"
+            )
+            # cache_only = False
 
     model_name = model_name.replace("-_-", "/")
     allow_patterns = ["*.json", "*.txt"]
 
     if model_type == "stablediffusion":
         try:
-            config_dict = StableDiffusionPipeline.load_config(model_name, cache_dir=cache, resume_download=True, force_download=False)
+            config_dict = StableDiffusionPipeline.load_config(
+                model_name, cache_dir=cache, resume_download=True, force_download=False
+            )
             folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
             allow_patterns += [os.path.join(k, "*") for k in folder_names]
             allow_patterns.append(StableDiffusionPipeline.config_name)
         except:
             pass
-        allow_patterns += [WEIGHTS_NAME, SCHEDULER_CONFIG_NAME, CONFIG_NAME, ONNX_WEIGHTS_NAME, "*.json"]
+        allow_patterns += [
+            WEIGHTS_NAME,
+            SCHEDULER_CONFIG_NAME,
+            CONFIG_NAME,
+            ONNX_WEIGHTS_NAME,
+            "*.json",
+        ]
     if model_type == "transformers":
         allow_patterns.append("*.bin")
     if model_type == "all":
         allow_patterns.append("*")
 
     ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
-    snapshot_download(repo_id=model_name, cache_dir=cache, local_dir=path, local_dir_use_symlinks=True, local_files_only=cache_only, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
+    snapshot_download(
+        repo_id=model_name,
+        cache_dir=cache,
+        local_dir=path,
+        local_dir_use_symlinks=True,
+        local_files_only=cache_only,
+        allow_patterns=allow_patterns,
+        ignore_patterns=ignore_patterns,
+    )
     return path.replace("\\", "/")
+
 
 def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
     flags = 0
     if os.name == "nt":
         flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
-    cmd = [
-            "hython",
-            "-m",
-            "pip",
-            "install",
-            "--target",
-            PIP_FOLDER
-        ]
+    cmd = ["hython", "-m", "pip", "install", "--target", PIP_FOLDER]
 
     if upgrade:
         cmd.append("--upgrade")
@@ -101,9 +122,9 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
         cmd.append("-r")
         cmd.append(dependencies)
 
-    env = os.environ.copy() 
-    if "PYTHONPATH" in env: 
-        del env["PYTHONPATH"] 
+    env = os.environ.copy()
+    if "PYTHONPATH" in env:
+        del env["PYTHONPATH"]
 
     p = subprocess.Popen(
         cmd,
@@ -133,7 +154,12 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
         download_dir = hou.text.expandString(self.download_directory_field.text())
 
         ensure_huggingface_model_local(model_name, download_dir)
-        hou.ui.displayMessage(f"You have successfully downloaded or updated the {model_name} model!", buttons=('OK',), severity=hou.severityType.Message, title="MLOPs Plugin")
+        hou.ui.displayMessage(
+            f"You have successfully downloaded or updated the {model_name} model!",
+            buttons=("OK",),
+            severity=hou.severityType.Message,
+            title="MLOPs Plugin",
+        )
 
         self.close()
 
@@ -141,8 +167,12 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
         self.close()
 
     def open_directory_dialog(self):
-
-        directory = hou.ui.selectFile(title="MLOPs - Select Download Directory", file_type=hou.fileType.Directory, multiple_select=False, chooser_mode=hou.fileChooserMode.Read)
+        directory = hou.ui.selectFile(
+            title="MLOPs - Select Download Directory",
+            file_type=hou.fileType.Directory,
+            multiple_select=False,
+            chooser_mode=hou.fileChooserMode.Read,
+        )
         if directory:
             self.download_directory_field.setText(directory)
 
@@ -151,7 +181,9 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
         self.setLayout(layout)
 
         self.setWindowTitle("MLOPs - Model Download")
-        message_widget = QtWidgets.QLabel("Automatically download a checkpoint by name from the Huggingface Hub!")
+        message_widget = QtWidgets.QLabel(
+            "Automatically download a checkpoint by name from the Huggingface Hub!"
+        )
         layout.addWidget(message_widget)
 
         layout_model = QtWidgets.QHBoxLayout()
@@ -201,6 +233,7 @@ class MLOPSConvertModel(QtWidgets.QDialog):
 
     def on_accept(self):
         from sdpipeline import convert_model
+
         model_name = self.model_name_field.text()
         checkpoint_file = hou.text.expandString(self.checkpoint_file_field.text())
         config_file = self.config_file_field.text()
@@ -209,10 +242,23 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         if config_file == "":
             config_file = None
 
-        with hou.InterruptableOperation("Converting Model", open_interrupt_dialog=True) as operation:
-            convert_model.convert(checkpoint_file, config_file, hou.text.expandString(os.path.join("$MLOPS_MODELS", model_name.replace("/", "-_-"))))
+        with hou.InterruptableOperation(
+            "Converting Model", open_interrupt_dialog=True
+        ) as operation:
+            convert_model.convert(
+                checkpoint_file,
+                config_file,
+                hou.text.expandString(
+                    os.path.join("$MLOPS_MODELS", model_name.replace("/", "-_-"))
+                ),
+            )
 
-        hou.ui.displayMessage(f"You have successfully converted the {model_name} model!", buttons=('OK',), severity=hou.severityType.Message, title="MLOPs Plugin")
+        hou.ui.displayMessage(
+            f"You have successfully converted the {model_name} model!",
+            buttons=("OK",),
+            severity=hou.severityType.Message,
+            title="MLOPs Plugin",
+        )
 
         self.close()
 
@@ -220,14 +266,24 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         self.close()
 
     def open_checkpoint_dialog(self):
-
-        directory = hou.ui.selectFile(title="MLOPs - Select Download Directory", file_type=hou.fileType.Any, multiple_select=False, pattern="*.safetensors *.ckpt", chooser_mode=hou.fileChooserMode.Read)
+        directory = hou.ui.selectFile(
+            title="MLOPs - Select Download Directory",
+            file_type=hou.fileType.Any,
+            multiple_select=False,
+            pattern="*.safetensors *.ckpt",
+            chooser_mode=hou.fileChooserMode.Read,
+        )
         if directory:
             self.checkpoint_file_field.setText(directory)
 
     def open_config_dialog(self):
-
-        directory = hou.ui.selectFile(title="MLOPs - Select Download Directory", file_type=hou.fileType.Any, multiple_select=False, pattern="*.yaml", chooser_mode=hou.fileChooserMode.Read)
+        directory = hou.ui.selectFile(
+            title="MLOPs - Select Download Directory",
+            file_type=hou.fileType.Any,
+            multiple_select=False,
+            pattern="*.yaml",
+            chooser_mode=hou.fileChooserMode.Read,
+        )
         if directory:
             self.config_file_field.setText(directory)
 
@@ -236,7 +292,9 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         self.setLayout(layout)
 
         self.setWindowTitle("MLOPs - Convert Model")
-        message_widget = QtWidgets.QLabel("Convert a checkpoint file to the Diffusers model used by this plugin!")
+        message_widget = QtWidgets.QLabel(
+            "Convert a checkpoint file to the Diffusers model used by this plugin!"
+        )
         layout.addWidget(message_widget)
 
         model_name_layout = QtWidgets.QHBoxLayout()
@@ -259,7 +317,6 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         layout.addLayout(model_name_layout)
         layout.addLayout(checkpoint_file_layout)
 
-
         config_file_layout = QtWidgets.QHBoxLayout()
         config_file_label = QtWidgets.QLabel("Config File: ")
         self.config_file_field = QtWidgets.QLineEdit()
@@ -271,7 +328,6 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         self.config_file_button.clicked.connect(self.open_config_dialog)
         config_file_layout.addWidget(self.config_file_button)
         layout.addLayout(config_file_layout)
-
 
         buttonlayout = QtWidgets.QHBoxLayout()
         self.update_button = QtWidgets.QPushButton("Convert")
@@ -314,7 +370,6 @@ class MLOPSPipInstall(QtWidgets.QDialog):
         with hou.InterruptableOperation(
             "Pip Install", "Installing Dependencies", open_interrupt_dialog=True
         ) as operation:
-
             operation.updateLongProgress(
                 percentage=-1.0, long_op_status=f"Installing dependencies"
             )
@@ -411,4 +466,3 @@ class MLOPSPipInstall(QtWidgets.QDialog):
         else:
             self.detail_panel.hide()
             self.detail_toggle.setText("Show Installed")
-

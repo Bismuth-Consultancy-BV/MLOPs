@@ -1,25 +1,40 @@
 import logging
+
 import numpy
-from transformers import CLIPTextModel
-from transformers import CLIPTokenizer
 import torch
 from compel import Compel
+from transformers import CLIPTextModel, CLIPTokenizer
 
 logging.disable(logging.WARNING)
 
-def run(input_prompt_positive, input_prompt_negative, torch_device, model, local_cache_only=True):
+
+def run(
+    input_prompt_positive,
+    input_prompt_negative,
+    torch_device,
+    model,
+    local_cache_only=True,
+):
     try:
-        text_encoder = CLIPTextModel.from_pretrained(model, subfolder="text_encoder", local_files_only=local_cache_only)
+        text_encoder = CLIPTextModel.from_pretrained(
+            model, subfolder="text_encoder", local_files_only=local_cache_only
+        )
     except OSError:
-        text_encoder = CLIPTextModel.from_pretrained(model, local_files_only=local_cache_only)
+        text_encoder = CLIPTextModel.from_pretrained(
+            model, local_files_only=local_cache_only
+        )
     except Exception as err:
         print(f"Unexpected {err}, {type(err)}")
     text_encoder.to(torch_device)
 
     try:
-        tokenizer = CLIPTokenizer.from_pretrained(model, subfolder="tokenizer", local_files_only=local_cache_only)
+        tokenizer = CLIPTokenizer.from_pretrained(
+            model, subfolder="tokenizer", local_files_only=local_cache_only
+        )
     except OSError as error:
-        tokenizer = CLIPTokenizer.from_pretrained(model, local_files_only=local_cache_only)
+        tokenizer = CLIPTokenizer.from_pretrained(
+            model, local_files_only=local_cache_only
+        )
     except Exception as err:
         print(f"Unexpected {err}, {type(err)}")
 
