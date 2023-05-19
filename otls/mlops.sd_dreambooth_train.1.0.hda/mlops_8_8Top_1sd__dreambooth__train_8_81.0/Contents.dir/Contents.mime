@@ -31,7 +31,7 @@ Content-Disposition: attachment; filename="hdaroot.def"
 Content-Type: text/plain
 
 comment ""
-position -3.41229 0.970191
+position -4.00463 1.15727
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render off highlight off unload off savedata off compress off colordefault on exposed on
 outputsNamed3
@@ -506,7 +506,7 @@ import mlops_utils
 
 env = os.environ.copy()
 
-script = os.path.normpath(hou.text.expandString(\"$MLOPS/scripts/python/sdpipeline/train_dreambooth_lora.py\"))
+script = os.path.normpath(hou.text.expandString(\"$MLOPS/scripts/python/training/train_dreambooth_lora.py\"))
 cmd = [\"python\"]
 
 arguments = sys.argv[1:]
@@ -519,7 +519,7 @@ if arguments[0] == \"--cache_only\":
 remove_dreambooth = [\"--fulldreambooth\"]
 if \"--fulldreambooth\" in arguments:
 
-    script = os.path.normpath(hou.text.expandString(\"$MLOPS/scripts/python/sdpipeline/train_dreambooth.py\"))
+    script = os.path.normpath(hou.text.expandString(\"$MLOPS/scripts/python/training/train_dreambooth.py\"))
     for x in remove_dreambooth:
         arguments.remove(x)
     index = arguments.index(\"--validation_epochs\")

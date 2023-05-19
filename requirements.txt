@@ -11,7 +11,6 @@ diffusers @ git+https://github.com/huggingface/diffusers@2858d7e15eaf445ec37fc77
 xformers==0.0.19
 ftfy==6.1.1
 Jinja2==3.1.2
-tensorboard==2.13.0
 rembg[gpu]==2.0.36
 basicsr>=1.4.2
 facexlib>=0.2.5
@@ -20,6 +19,8 @@ safetensors==0.3.1
 umap-learn==0.5.3
 compel==1.1.5
 mediapipe==0.10.0
+bitsandbytes==0.38.1
+dominate==2.7.0
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
 torch
