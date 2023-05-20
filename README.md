@@ -29,6 +29,8 @@ Please note that the plugin is currently in beta, and may change at anytime with
 ### HuggingFace Dataset Creation
 ### Pix2PixHD Training
 ### RemBG
+RemBG is a node that will analyze and attempt to isolate subjects in the provided input image. It offers several models trained on different use-cases, as well as parameters to control and finetune the process.
+
 https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/fe075e82-9edd-410a-9e38-a56163174d43
 
 
