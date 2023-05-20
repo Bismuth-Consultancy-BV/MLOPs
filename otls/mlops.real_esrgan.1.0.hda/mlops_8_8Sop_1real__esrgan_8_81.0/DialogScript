@@ -23,7 +23,7 @@
             name    "model"
             label   "Model"
             type    ordinal
-            default { "0" }
+            default { "RealESRGAN_x4plus" }
             menu {
                 "RealESRGAN_x4plus"     "RealESRGAN_x4plus"
                 "RealESRNet_x4plus"     "RealESRNet_x4plus"
