@@ -27,6 +27,7 @@ Please note that the plugin is currently in beta, and may change at anytime with
 #### Viewport Rendering
 #### Dreambooth + LoRa Training
 ### HuggingFace Dataset Creation
+### Pix2PixHD Training
 ### RemBG
 ### SAM - Segment Anything Model
 ### BLIP Caption
