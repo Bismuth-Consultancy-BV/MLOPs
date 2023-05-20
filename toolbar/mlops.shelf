@@ -27,6 +27,8 @@ FOLDER = os.path.normpath(os.path.join(hou.text.expandString("$HOUDINI_TEMP_DIR"
 PIP_FOLDER = mlops_utils.PIP_FOLDER
 PIPINSTALLFILE = os.path.normpath(os.path.join(FOLDER, "get-pip.py"))
 
+mlops_utils.check_mlops_version()
+
 # Downloading pip installation file   
 if not os.path.isdir(FOLDER):
     os.makedirs(FOLDER)

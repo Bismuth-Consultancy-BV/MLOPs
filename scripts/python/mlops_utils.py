@@ -1,5 +1,6 @@
 import os
 import subprocess
+import json
 
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
@@ -40,6 +41,21 @@ def return_downloaded_checkpoints(
                     model_paths.append(f.name.replace(replace_sign, "/"))
     return model_paths
 
+def check_mlops_version():
+    plugin_json = hou.text.expandString("$MLOPS/MLOPs.json")
+    with open(plugin_json, "r", encoding="utf-8") as infile:
+        data = json.load(infile)
+
+    version = None
+    for entry in data["env"]:
+        if "MLOPS_VERSION" in entry.keys():
+            version = str(entry["MLOPS_VERSION"])
+
+    message = "Please update your packages MLOPs.json to match the MLOPs.json in your $MLOPS download. Configured environment variables may have changed and are required for MLOPs to work properly."
+    if not version:
+        raise hou.Error(message)
+    if version != hou.text.expandString("$MLOPS_VERSION"):
+        raise hou.Error(message)
 
 def ensure_huggingface_model_local(
     model_name, model_path, cache_only=False, model_type="stablediffusion"

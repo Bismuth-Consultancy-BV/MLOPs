@@ -21,6 +21,9 @@
         },
         {
             "PYTHONPATH" : "$MLOPS/data/dependencies/python/"
+        },
+        {
+            "MLOPS_VERSION": "2.0"
         }
     ]
 }
