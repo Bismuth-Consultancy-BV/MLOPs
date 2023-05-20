@@ -45,17 +45,19 @@ def check_mlops_version():
 
     packages = json.loads(hou.ui.packageInfo())
     variables = None
+    installed_json = None
     for package in packages:
         package = packages[package]
         if "Environment variables" in package.keys():
             vars = package["Environment variables"]
             if "MLOPS" in vars.keys():
+                installed_json = os.path.normpath(package["File path"])
                 variables = vars.keys()
                 break
     variables = list(variables)
     variables.remove("HOUDINI_PATH")
 
-    plugin_json = hou.text.expandString("$MLOPS/MLOPs.json")
+    plugin_json = os.path.normpath(hou.text.expandString("$MLOPS/MLOPs.json"))
     with open(plugin_json, "r", encoding="utf-8") as infile:
         data = json.load(infile)
 
@@ -66,14 +68,12 @@ def check_mlops_version():
         if "MLOPS_VERSION" in entry.keys():
             version = str(entry["MLOPS_VERSION"])
 
-    message = "Please update your packages MLOPs.json to match the MLOPs.json in your $MLOPS download. Configured environment variables may have changed and are required for MLOPs to work properly."
+    message = f"Please edit:\n{installed_json}\n\nTo match the contents of:\n{plugin_json}\n\nEnvironment variables may have changed and are required for MLOPs to work properly."
     missing = [x for x in variables_desired if x not in variables]
     if len(missing) > 0:
         raise hou.Error(message + f"\nMissing Variables: {' '.join(missing)}")
-    if not version:
-        raise hou.Error(message)
     if version != hou.text.expandString("$MLOPS_VERSION"):
-        raise hou.Error(message)
+        raise hou.Error(message + f"\nVersion Mismatch. Configured MLOPs environment variables likely dont match those found in {plugin_json}")
 
 def ensure_huggingface_model_local(
     model_name, model_path, cache_only=False, model_type="stablediffusion"
