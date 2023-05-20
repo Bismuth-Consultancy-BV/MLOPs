@@ -38,6 +38,11 @@ https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/fe075e82-9edd-41
 ### BLIP Caption
 ### CLIP Interrogate
 ### Image Manipulation
+MLOPs in addition to all the SOPs found in Houdini also provides some nodes that allow for common image manipulation in geometry space.
+
+https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/1cbb7f8f-1d9b-4845-bdec-1eb6f8232441
+
+
 ### Real-ESRGAN
 ### Dimensionality Reduction
 
