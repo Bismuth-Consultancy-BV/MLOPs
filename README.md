@@ -29,6 +29,9 @@ Please note that the plugin is currently in beta, and may change at anytime with
 ### HuggingFace Dataset Creation
 ### Pix2PixHD Training
 ### RemBG
+https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/fe075e82-9edd-410a-9e38-a56163174d43
+
+
 ### SAM - Segment Anything Model
 ### BLIP Caption
 ### CLIP Interrogate
