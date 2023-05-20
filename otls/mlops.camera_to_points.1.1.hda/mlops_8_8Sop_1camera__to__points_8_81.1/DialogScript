@@ -28,7 +28,7 @@
                 "depth"     "Depth"
                 "normal"    "Normal"
                 "segment"   "Segmentation"
-                "albedo"    "Color"
+                "albedo"    "Albedo (Cd)"
                 "shading"   "Shading"
             }
             parmtag { "script_callback_language" "python" }
@@ -135,62 +135,12 @@
 
     }
 
-    groupsimple {
-        name    "folder2"
-        label   "Objects"
-
-        multiparm {
-            name    "numobj"
-            label    "Number of Objects"
-            default 1
-            parmtag { "autoscope" "0000000000000000" }
-
-            parm {
-                name    "enable#"
-                label   "Enable Merge #"
-                type    toggle
-                default { "1" }
-            }
-            parm {
-                name    "objpath#"
-                label   "Object #"
-                type    oppath
-                default { "" }
-                parmtag { "opfilter" "!!SOP!!" }
-                parmtag { "oprelative" "." }
-            }
-            parm {
-                name    "group#"
-                label   "Group #"
-                type    string
-                default { "" }
-            }
-            parm {
-                name    "expand#"
-                label   "Expand Group #"
-                type    toggle
-                default { "0" }
-            }
-            parm {
-                name    "sepparm2_#_3"
-                label   "Separator"
-                type    separator
-                default { "" }
-            }
-            parm {
-                name    "xformtype#"
-                label   "Transform"
-                type    ordinal
-                default { "local" }
-                menu {
-                    "none"  "None"
-                    "local" "Into This Object"
-                }
-                parmtag { "autoscope" "0000000000000000" }
-                parmtag { "script_callback_language" "python" }
-            }
-        }
-
+    parm {
+        name    "renderme"
+        label   "Render"
+        type    button
+        default { "0" }
+        parmtag { "script_callback" "hou.node(\"./set_objects_to_import\").cook(force=True)" }
+        parmtag { "script_callback_language" "python" }
     }
-
 }
