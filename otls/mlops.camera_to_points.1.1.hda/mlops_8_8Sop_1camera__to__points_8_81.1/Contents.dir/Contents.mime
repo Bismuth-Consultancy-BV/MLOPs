@@ -32,12 +32,11 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.801 0.675023
-connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -8.38297 0.759998
+connectornextid 0
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
 }
 inputsNamed3
 {
@@ -49,7 +48,7 @@ stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -266,11 +265,11 @@ Content-Type: text/plain
 	autofit := 0;
 	color := "UT_Color RGB 0.52 0.52 0.52 ";
 	comment := "ogl rendering";
-	height := 2.8557999877929685;
+	height := 2.9404438049267068;
 	minimized := 0;
-	width := 5.8258162926630739;
-	x_position := 0.3015576468107003;
-	y_position := 0.64188001206398071;
+	width := 6.594137550806046;
+	x_position := 0.37335199057315305;
+	y_position := 0.4054040057666779;
 }
 {
   create -1
@@ -2803,7 +2802,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.60649 -33.3931
+position -6.60649 -35.8959
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -2812,11 +2811,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	groupdelete1 1 1 "input1"
+0 	switch1 1 1 "input1"
 }
 inputs
 {
-0 	groupdelete1 0 1
+0 	switch1 0 1
 }
 stat
 {
@@ -2864,9 +2863,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.60649 -34.3881
+position -6.60649 -36.8909
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -2962,142 +2961,6 @@ cacheinput	[ 0	locks=0 ]	(	"off"	)
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/OUT_BEFORE_REPOSITION.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/object_merge1.init"
-Content-Type: text/plain
-
-type = object_merge
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/object_merge1.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position -2.50125 -1.91532
-connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-0 "output1"
-}
-inputsNamed3
-{
-}
-inputs
-{
-}
-stat
-{
-  create -1
-  modify -1
-  author leuns@DESKTOP-VMT4GO6
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/object_merge1.multiparm"
-Content-Type: text/plain
-
-4
-enable# ../enable#
-objpath# ../objpath#
-group# ../group#
-expand# ../expand#
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/object_merge1.chn"
-Content-Type: text/plain
-
-{
-    channel enable1 {
-      lefttype = extend
-      righttype = extend
-      default = 1
-      flags = 0
-      segment { length = 0 value = 1 1 expr = ch(\"../enable1\") }
-    }
-    channel objpath1 {
-      lefttype = extend
-      righttype = extend
-      defaultString = \"\"
-      flags = 0
-      segment { length = 0 expr = chsop(\"../objpath1\") }
-    }
-    channel group1 {
-      lefttype = extend
-      righttype = extend
-      defaultString = \"\"
-      flags = 0
-      segment { length = 0 expr = chs(\"../group1\") }
-    }
-    channel expand1 {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../expand1\") }
-    }
-    channel numobj {
-      lefttype = extend
-      righttype = extend
-      default = 1
-      flags = 0
-      segment { length = 0 value = 1 1 expr = ch(\"../numobj\") }
-    }
-    channel xformtype {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../xformtype1\") }
-    }
-  }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/object_merge1.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-numobj	[ 0	locks=0 ]	(	[ numobj	1 ] 	)
-_separator	[ 0	locks=0 ]	(	)
-xformtype	[ 8	locks=0 ]	(	[ xformtype	2 ] 	)
-xformpath	[ 0	locks=0 ]	(	""	)
-invertxform	[ 0	locks=0 ]	(	"off"	)
-createptgroups	[ 0	locks=0 ]	(	"off"	)
-ptgroupprefix	[ 0	locks=0 ]	(	_ptgrp_	)
-createprimgroups	[ 0	locks=0 ]	(	"off"	)
-primgroupprefix	[ 0	locks=0 ]	(	_primgrp_	)
-verbosegroups	[ 0	locks=0 ]	(	"off"	)
-suffixfirstgroup	[ 0	locks=0 ]	(	"on"	)
-createptstring	[ 0	locks=0 ]	(	"off"	)
-createprimstring	[ 0	locks=0 ]	(	"off"	)
-pathattrib	[ 0	locks=0 ]	(	objname	)
-pack	[ 0	locks=0 ]	(	"off"	)
-pivot	[ 0	locks=0 ]	(	"centroid"	)
-viewportlod	[ 0	locks=0 ]	(	"full"	)
-addpath	[ 0	locks=0 ]	(	"on"	)
-enable1	[ 0	locks=0 ]	(	[ enable1	1 ] 	)
-objpath1	[ 0	locks=0 ]	(	[ objpath1	"" ] 	)
-group1	[ 0	locks=0 ]	(	[ group1	"" ] 	)
-expand1	[ 0	locks=0 ]	(	[ expand1	0 ] 	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/object_merge1.userdata"
 Content-Type: text/plain
 
 {
@@ -4093,11 +3956,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	object_merge1 0 1 "input1"
+0 	object_merge_geo 0 1 "input1"
 }
 inputs
 {
-0 	object_merge1 0 1
+0 	object_merge_geo 0 1
 }
 stat
 {
@@ -6551,11 +6414,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	transform8 1 1 "input1"
+0 	set_objects_to_import 1 1 "input1"
 }
 inputs
 {
-0 	transform8 0 1
+0 	set_objects_to_import 0 1
 }
 stat
 {
@@ -8187,7 +8050,7 @@ Content-Disposition: attachment; filename="hdaroot/ropnet1.def"
 Content-Type: text/plain
 
 comment ""
-position 3.72737 2.95878
+position 3.43032 1.87563
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8317,10 +8180,10 @@ stdswitch	[ 0	locks=0 ]	(	0	0	0	0	0	0	0	)
 opsource	[ 0	locks=0 ]	(	"obj"	)
 camera	[ 8	locks=0 ]	(	`chsop(\"../../camerapath\")`	)
 scenepath	[ 0	locks=0 ]	(	[ scenepath	/obj ] 	)
-sopsource	[ 0	locks=0 ]	(	"render"	)
-vobjects	[ 0	locks=0 ]	(	`chsop(\"../../objpath1\")`	)
+sopsource	[ 0	locks=0 ]	(	"display"	)
+vobjects	[ 8	locks=0 ]	(	"/obj/testgeometry_pighead1 /obj/testgeometry_squab1 /obj/testgeometry_rubbertoy1 /obj/testgeometry_tommy1"	)
 forceobjects	[ 0	locks=0 ]	(	""	)
-excludeobjects	[ 0	locks=0 ]	(	""	)
+excludeobjects	[ 0	locks=0 ]	(	`opname(\"../../..\")`	)
 alights	[ 0	locks=0 ]	(	*	)
 forcelights	[ 0	locks=0 ]	(	""	)
 excludelights	[ 0	locks=0 ]	(	""	)
@@ -8466,21 +8329,21 @@ Content-Type: text/plain
 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python3.init"
+Content-Disposition: attachment; filename="hdaroot/trigger_ogl_rop.init"
 Content-Type: text/plain
 
 type = python
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python3.def"
+Content-Disposition: attachment; filename="hdaroot/trigger_ogl_rop.def"
 Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.701558 2.03128
-connectornextid 3
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position 0.523352 1.74481
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -8488,12 +8351,10 @@ outputsNamed3
 inputsNamed3
 {
 0 	Cd_to_rgb1 1 1 "input1"
-2 	object_merge1 0 1 "input2"
 }
 inputs
 {
 0 	Cd_to_rgb1 0 1
-1 	object_merge1 0 1
 }
 stat
 {
@@ -8508,7 +8369,7 @@ exprlanguage hscript
 end
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python3.spareparmdef"
+Content-Disposition: attachment; filename="hdaroot/trigger_ogl_rop.spareparmdef"
 Content-Type: text/plain
 
     parm {
@@ -8532,7 +8393,7 @@ Content-Type: text/plain
     }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python3.parm"
+Content-Disposition: attachment; filename="hdaroot/trigger_ogl_rop.parm"
 Content-Type: text/plain
 
 {
@@ -8545,6 +8406,7 @@ node = hou.pwd()
 geo = node.geometry()
 
 path = node.evalParm(\"temppath\")
+
 ogl_rop = hou.node(\"../ropnet1/opengl1\")
 ogl_rop.render()
 
@@ -8552,17 +8414,17 @@ outimg = Image.open(path)
 outimg = ImageOps.flip(outimg)
 imutils.pil_to_colored_points(geo, outimg)"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
-temppath	[ 8	locks=0 ]	(	`chs(\"../ropnet1/opengl1/picture\")`	)
+temppath	[ 0	locks=0 ]	(	`chs(\"../ropnet1/opengl1/picture\")`	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python3.netbox"
+Content-Disposition: attachment; filename="hdaroot/trigger_ogl_rop.netbox"
 Content-Type: text/plain
 
 __netbox4
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/python3.userdata"
+Content-Disposition: attachment; filename="hdaroot/trigger_ogl_rop.userdata"
 Content-Type: text/plain
 
 {
@@ -8585,7 +8447,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.698558 2.95778
+position 0.520352 2.85595
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8594,11 +8456,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	transform8 1 1 "input1"
+0 	set_objects_to_import 1 1 "input1"
 }
 inputs
 {
-0 	transform8 0 1
+0 	set_objects_to_import 0 1
 }
 stat
 {
@@ -8672,7 +8534,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.698558 0.87978
+position 0.520352 0.593304
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8681,11 +8543,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	python3 1 1 "input1"
+0 	trigger_ogl_rop 1 1 "input1"
 }
 inputs
 {
-0 	python3 0 1
+0 	trigger_ogl_rop 0 1
 }
 stat
 {
@@ -8745,14 +8607,351 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/object_merge_geo.init"
+Content-Type: text/plain
+
+type = object_merge
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/object_merge_geo.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -2.50125 -0.383566
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/object_merge_geo.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+numobj	[ 0	locks=0 ]	(	1	)
+_separator	[ 0	locks=0 ]	(	)
+xformtype	[ 0	locks=0 ]	(	"object"	)
+xformpath	[ 0	locks=0 ]	(	""	)
+invertxform	[ 0	locks=0 ]	(	"off"	)
+createptgroups	[ 0	locks=0 ]	(	"off"	)
+ptgroupprefix	[ 0	locks=0 ]	(	_ptgrp_	)
+createprimgroups	[ 0	locks=0 ]	(	"off"	)
+primgroupprefix	[ 0	locks=0 ]	(	_primgrp_	)
+verbosegroups	[ 0	locks=0 ]	(	"off"	)
+suffixfirstgroup	[ 0	locks=0 ]	(	"on"	)
+createptstring	[ 0	locks=0 ]	(	"off"	)
+createprimstring	[ 0	locks=0 ]	(	"off"	)
+pathattrib	[ 0	locks=0 ]	(	objname	)
+pack	[ 0	locks=0 ]	(	"off"	)
+pivot	[ 0	locks=0 ]	(	"centroid"	)
+viewportlod	[ 0	locks=0 ]	(	"full"	)
+addpath	[ 0	locks=0 ]	(	"on"	)
+enable1	[ 0	locks=0 ]	(	"on"	)
+objpath1	[ 0	locks=0 ]	(	"/obj/testgeometry_pighead1 /obj/testgeometry_squab1 /obj/testgeometry_rubbertoy1 /obj/testgeometry_tommy1"	)
+group1	[ 0	locks=0 ]	(	""	)
+expand1	[ 0	locks=0 ]	(	"off"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/object_merge_geo.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_objects_to_import.init"
+Content-Type: text/plain
+
+type = python
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_objects_to_import.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -7.79077 4.3034
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	transform8 1 1 "input1"
+}
+inputs
+{
+0 	transform8 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_objects_to_import.spareparmdef"
+Content-Type: text/plain
+
+    parm {
+        name    "python"
+        baseparm
+        label   "Python Code"
+        export  none
+    }
+    parm {
+        name    "maintainstate"
+        baseparm
+        label   "Maintain State"
+        export  none
+    }
+    parm {
+        name    "temppath"
+        label   "Temp Image Path"
+        type    string
+        default { "" }
+        parmtag { "script_callback_language" "python" }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_objects_to_import.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+python	[ 0	locks=0 ]	(	"import mlops_image_utils as imutils
+from PIL import ImageOps
+from PIL import Image
+
+node = hou.pwd()
+geo = node.geometry()
+obj = hou.node(\"/obj\")
+parentnode = hou.node(\"../../\")
+
+def names(nodes):
+    return [node.name() for node in nodes]
+    
+def flags(nodes):
+    return [node.isDisplayFlagSet() for node in nodes]
+
+parentnodename = parentnode.name()
+
+pattern = \"* ^\" + parentnodename + \" ^cam*\"
+nodes = names(obj.glob(pattern))
+nodeflags = flags(obj.glob(pattern))
+
+filtered_nodes = [s for s, keep in zip(nodes, nodeflags) if keep]
+
+nodestorender = ' /obj/'.join(filtered_nodes)
+nodestorender = \"/obj/\" + nodestorender
+
+ogl_rop = hou.node(\"../ropnet1/opengl1\")
+renderobjects = ogl_rop.parm(\"vobjects\")
+renderobjects.set(nodestorender)
+
+targetnode = hou.node(\"../object_merge_geo\")
+renderobjects = targetnode.parm(\"objpath1\")
+renderobjects.set(nodestorender)
+"	)
+maintainstate	[ 0	locks=0 ]	(	"off"	)
+temppath	[ 0	locks=0 ]	(	`chs(\"../ropnet1/opengl1/picture\")`	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_objects_to_import.netbox"
+Content-Type: text/plain
+
+__netbox2
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_objects_to_import.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.init"
+Content-Type: text/plain
+
+type = switch
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -6.60649 -34.5476
+connectornextid 3
+flags =  lock off model off template off footprint off xray off bypass on display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	groupdelete1 1 1 "input1"
+2 	felt_logical_might_delete 0 1 "input2"
+}
+inputs
+{
+0 	groupdelete1 0 1
+1 	felt_logical_might_delete 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.8 1 0.7 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.chn"
+Content-Type: text/plain
+
+{
+    channel input {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../renderme\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+input	[ 8	locks=0 ]	(	[ input	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/felt_logical_might_delete.init"
+Content-Type: text/plain
+
+type = null
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/felt_logical_might_delete.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -4.33311 -33.4067
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.6 0.7 0.77 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/felt_logical_might_delete.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+copyinput	[ 0	locks=0 ]	(	"on"	)
+cacheinput	[ 0	locks=0 ]	(	"off"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/felt_logical_might_delete.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-51
+54
 OUT_DEPTH_MAKER
 output0
 OUT_BEFORE_REPOSITION
-object_merge1
 pointvop1
 norm_norm
 grid1
@@ -8797,9 +8996,13 @@ albedo
 attribute1
 simple_shading
 ropnet1
-python3
+trigger_ogl_rop
 Cd_to_rgb1
 rgb_to_Cd1
+object_merge_geo
+set_objects_to_import
+switch1
+felt_logical_might_delete
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
