@@ -32,17 +32,21 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -3.48731 -1.15635
-connectornextid 0
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -10.8914 -1.10775
+connectornextid 2
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
+0 	camera_to_points1 0 1 "input1"
+1 	image_to_points1 0 1 "input2"
 }
 inputs
 {
+0 	camera_to_points1 0 1
+1 	image_to_points1 0 1
 }
 stat
 {
@@ -276,7 +280,6 @@ image1 = imutils.colors_numpy_array_to_pil(input_colors)
 # read in image through input 2
 input_colors = imutils.colored_points_to_numpy_array(geo2)
 image2 = imutils.colors_numpy_array_to_pil(input_colors)
-
 sim = similarity.ssim(image1, image2)
 
 # create new point, write back similarity

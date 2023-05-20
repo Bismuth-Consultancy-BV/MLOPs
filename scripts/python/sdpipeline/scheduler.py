@@ -33,7 +33,7 @@ def run(
     scheduler_object.set_timesteps(inference_steps)
     noise_latents = torch.from_numpy(
         numpy.array(
-            [input_latents.reshape(4, latent_dimension[0], latent_dimension[1])]
+            [input_latents.reshape(4, latent_dimension[1], latent_dimension[0])]
         )
     )
 
@@ -58,7 +58,7 @@ def run(
         if guiding_strength > 0.05 and guiding_strength < 1.0:
             image_latents = torch.from_numpy(
                 numpy.array(
-                    [image_latents.reshape(4, latent_dimension[0], latent_dimension[1])]
+                    [image_latents.reshape(4, latent_dimension[1], latent_dimension[0])]
                 )
             )
             # for mps device, make sure dtype is set to float32

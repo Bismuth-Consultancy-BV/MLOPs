@@ -32,19 +32,19 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.41115 -0.0774705
+position -12.3179 -3.50523
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	image_to_points1 0 1 "input1"
+0 	camera_to_points1 0 1 "input1"
 }
 inputs
 {
-0 	image_to_points1 0 1
+0 	camera_to_points1 0 1
 }
 stat
 {

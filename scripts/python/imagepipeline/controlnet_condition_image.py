@@ -62,4 +62,4 @@ def run(model, mode, input_colors):
     else:
         processed_image = img
 
-    return mlops_image_utils.pil_to_colors_numpy_array(processed_image)
+    return processed_image

@@ -32,9 +32,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -0.719036 -0.17249
+position -6.58472 -3.25425
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault off exposed on
 outputsNamed3
 {
 }
@@ -53,7 +53,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.475 0.812 0.204 
 delscript ""
 exprlanguage hscript
 end
@@ -186,8 +186,7 @@ Content-Type: text/plain
 
 {
 version 0.8
-python	[ 0	locks=0 ]	(	"import numpy
-import mlops_image_utils
+python	[ 0	locks=0 ]	(	"import mlops_image_utils
 import mlops_utils
 import os
 from imagepipeline import sam
@@ -200,37 +199,35 @@ reload(sam)
 # Inputs
 node = hou.pwd()
 geo = node.geometry()
-geo1 = node.inputs()[1].geometry() 
-geo2 = node.inputs()[2].geometry()        
-   
-# Attributes 
+geo1 = node.inputs()[1].geometry()
+geo2 = node.inputs()[2].geometry()
+
+# Attributes
 width = int(geo1.attribValue(\"image_dimension\")[0])
 height = int(geo1.attribValue(\"image_dimension\")[1])
-r = numpy.array(geo1.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
-g = numpy.array(geo1.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
-b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
-input_colors = numpy.stack((r,g,b), axis=0)
+input_colors = mlops_image_utils.colored_points_to_numpy_array(geo1)
 
 points = []
 labels = []
 for point in geo2.points():
     pos = point.position()
     label = point.attribValue(\"label\")
-    points.append([height-int(pos[2]), int(pos[0])])
+    points.append([int(pos[0]), int(pos[2])])
     labels.append(label)
 
 # Parameters
 device = node.parent().parm(\"device\").evalAsString()
 cache_only = bool(node.parent().parm(\"cache_only\").evalAsInt())
-model = node.parent().parm(\"model\").evalAsString()  
-   
-# Solve  
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"all\")
-channel = sam.run(model_path, input_colors, points, labels, device, cache_only)  
-out = numpy.flip(channel, axis=1).flatten() 
+model = node.parent().parm(\"model\").evalAsString()
 
-# Export     
-geo.setPointIntAttribValues(\"class\", list(map(int, out)))                          "	)
+# Solve
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"all\")
+channel = sam.run(model_path, input_colors, points, labels, device, cache_only)
+out = channel.flatten()
+
+# Export
+geo.setPointIntAttribValues(\"class\", list(map(int, out)))
+"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -891,7 +888,7 @@ vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
 snippet	[ 0	locks=0 ]	(	"int x = chi(\"x\");
 int y = chi(\"y\");
-v@P = set(@ptnum/y, 0, @ptnum % y);"	)
+v@P = set(@ptnum%y, 0, @ptnum / y);"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)
