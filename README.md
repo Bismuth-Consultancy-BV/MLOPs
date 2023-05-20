@@ -10,42 +10,8 @@ Free and Open Source Machine Learning Plugin for Houdini developed by Ambrosiuss
 
 
 
-
-## Features
-### Stable Diffusion - Modular Pipeline
-#### Viewport Rendering
-#### Dreambooth + LoRa Training
-### HuggingFace Dataset Creation
-### Pix2PixHD Training
-### RemBG
-RemBG is a node that will analyze and attempt to isolate subjects in the provided input image. It offers several models trained on different use-cases, as well as parameters to control and finetune the process.
-
-https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/fe075e82-9edd-410a-9e38-a56163174d43
-
-### SAM - Segment Anything Model
-SAM segements an image into individual masks. You can either have it segment the whole image at once or select specific parts for masking using points.
-
-https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/115803478/1735e269-a08c-4244-aa44-825dab628ae2
-
-### BLIP Caption
-### CLIP Interrogate
-
-https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/115803478/56374b1a-baea-45a8-85bc-a49ffd5b5cbb
-
-### Image Manipulation
-MLOPs in addition to all the SOPs found in Houdini also provides some nodes that allow for common image manipulation in geometry space.
-
-https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/1cbb7f8f-1d9b-4845-bdec-1eb6f8232441
-
-
-### Real-ESRGAN
-Real-ESRGAN allows for upscaling input images while preserving and sometimes enhancing details. It comes with several models tailored to generic use-cases, faces, line-art and more.
-
-https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/bc6fd004-208c-4e53-9f93-33a9572c3914
-
-
-### Dimensionality Reduction
-
+## Promo Video
+Here will be a promo video!
 
 
 # Installing for Houdini
