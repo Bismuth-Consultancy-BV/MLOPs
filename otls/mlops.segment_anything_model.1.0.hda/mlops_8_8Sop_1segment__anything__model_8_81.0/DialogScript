@@ -40,13 +40,6 @@
             }
             parmtag { "script_callback_language" "python" }
         }
-        parm {
-            name    "show_segmentation"
-            label   "Show Segmentation"
-            type    toggle
-            default { "1" }
-            parmtag { "script_callback_language" "python" }
-        }
     }
 
     groupsimple {
@@ -63,6 +56,13 @@
                 "cpu"   "cpu"
                 "mps"   "mps"
             }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "show_segmentation"
+            label   "Show Segmentation"
+            type    toggle
+            default { "1" }
             parmtag { "script_callback_language" "python" }
         }
     }
