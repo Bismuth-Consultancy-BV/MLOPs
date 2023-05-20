@@ -143,4 +143,23 @@
         parmtag { "script_callback" "hou.node(\"./set_objects_to_import\").cook(force=True)" }
         parmtag { "script_callback_language" "python" }
     }
+    parm {
+        name    "vobjects"
+        label   "Objects To Render"
+        type    oplist
+        default { "*" }
+        menureplace {
+            [ "opmenu -l -a ropnet1/opengl1 vobjects" ]
+        }
+        parmtag { "autoscope" "0000000000000000" }
+        parmtag { "opfilter" "!!OBJ/GEOMETRY!!" }
+        parmtag { "oprelative" "/" }
+    }
+    parm {
+        name    "ignore_visibility"
+        label   "Ignore Visibility Flags"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
 }

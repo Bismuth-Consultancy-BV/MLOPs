@@ -2,8 +2,6 @@
 	"values":["19.5.605","1"
 	],
 	"indexes":{
-		"hdaroot/felt_logical_might_delete.userdata":0,
-		"hdaroot/switch1.userdata":0,
 		"hdaroot/trigger_ogl_rop.userdata":0,
 		"hdaroot/ropnet1/opengl1.userdata":0,
 		"hdaroot/switch3.userdata":0,
@@ -33,6 +31,7 @@
 		"hdaroot/rest2.userdata":0,
 		"hdaroot/norm_norm/tospace.userdata":0,
 		"hdaroot/add1.userdata":0,
+		"hdaroot/attribcreate2.userdata":0,
 		"hdaroot/norm_norm.userdata":0,
 		"hdaroot/width.userdata":1,
 		"hdaroot/pointvop1/const1.userdata":0,
