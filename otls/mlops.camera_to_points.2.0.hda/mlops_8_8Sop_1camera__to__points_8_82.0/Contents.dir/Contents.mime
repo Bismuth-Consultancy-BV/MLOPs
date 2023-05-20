@@ -32,12 +32,11 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.83292 4.15912
-connectornextid 1
+position -0.622549 0.830392
+connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
 }
 inputsNamed3
 {
@@ -49,7 +48,7 @@ stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@DESKTOP-PAFFS1R
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -220,11 +219,11 @@ Content-Type: text/plain
 	autofit := 0;
 	color := "UT_Color RGB 0.52 0.52 0.52 ";
 	comment := "Move points back to base";
-	height := 5.4964734750545148;
+	height := 5.4965000059604634;
 	minimized := 0;
 	width := 9.7547499936638467;
 	x_position := -9.7547499936638467;
-	y_position := -27.796473475054515;
+	y_position := -27.796500005960464;
 }
 {
   create -1
@@ -278,38 +277,6 @@ Content-Type: text/plain
   author Mo@MO-GPU
   access 0777
 }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/__stickynote1.postitinit"
-Content-Type: text/plain
-
-type = postitnote
-matchesdef = 0
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/__stickynote1.postitdef"
-Content-Type: text/plain
-
-text "i was tired. sorry.
-needs point reordering to be consistent with top viewport view."
-position -3.531 -27.6465
-size 2.5 2.5
-flags = minimize off
-stat
-{
-  create 1684618370
-  modify 1684618395
-  author Mo@MO-GPU
-  access 0777
-}
-color UT_Color RGB 1 0.969 0.522 
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/__stickynote1.postitnetbox"
-Content-Type: text/plain
-
-__netbox8
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/pointvop1.init"
@@ -2898,7 +2865,7 @@ sopflags sopflags =
 comment ""
 position -6.60649 -36.9042
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -4873,9 +4840,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.81629 -25.5231
+position -8.5 -25.4954
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault off exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -4895,7 +4862,7 @@ stat
   author leuns@DESKTOP-VMT4GO6
   access 0777
 }
-color UT_Color RGB 1 0 0 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -5196,11 +5163,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	attribtransfer1 1 1 "input1"
+0 	transform3 1 1 "input1"
 }
 inputs
 {
-0 	attribtransfer1 0 1
+0 	transform3 0 1
 }
 stat
 {
@@ -6768,7 +6735,7 @@ xOrd	[ 0	locks=0 ]	(	"srt"	)
 rOrd	[ 0	locks=0 ]	(	"xyz"	)
 t	[ 8	locks=0 ]	(	0	0	[ tz	0 ] 	)
 r	[ 0	locks=0 ]	(	0	0	0	)
-s	[ 0	locks=0 ]	(	1	1	1	)
+s	[ 0	locks=0 ]	(	-1	1	1	)
 shear	[ 0	locks=0 ]	(	0	0	0	)
 scale	[ 0	locks=0 ]	(	1	)
 parmgroup_pivotxform	[ 0	locks=0 ]	(	0	)
@@ -8296,7 +8263,7 @@ ogl_rop.render()
 
 outimg = Image.open(path)
 outimg = outimg.transpose(Image.FLIP_TOP_BOTTOM)
-#outimg = outimg.transpose(Image.FLIP_LEFT_RIGHT)
+outimg = outimg.transpose(Image.FLIP_LEFT_RIGHT)
 colors = imutils.pil_to_colors_numpy_array(outimg)
 imutils.numpy_array_to_colored_points(geo, colors, scale_factor=1.0)"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
@@ -8922,231 +8889,10 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/transform9.init"
-Content-Type: text/plain
-
-type = xform
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/transform9.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position -6.00322 -25.5231
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault off exposed on
-outputsNamed3
-{
-1 "output1"
-}
-inputsNamed3
-{
-0 	rest2 1 1 "input1"
-}
-inputs
-{
-0 	rest2 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author leuns@DESKTOP-VMT4GO6
-  access 0777
-}
-color UT_Color RGB 1 0 0 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/transform9.chn"
-Content-Type: text/plain
-
-{
-    channel sx {
-      lefttype = extend
-      righttype = extend
-      default = 1
-      flags = 0
-      segment { length = 0 value = 1 1 expr = ch(\"../width\") }
-    }
-    channel sz {
-      lefttype = extend
-      righttype = extend
-      default = 1
-      flags = 0
-      segment { length = 0 value = 1 1 expr = ch(\"../height\") }
-    }
-    channel tx {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../width\")/2 }
-    }
-    channel tz {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../height\")/2 }
-    }
-    channel rz {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = 180 }
-    }
-  }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/transform9.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-group	[ 0	locks=0 ]	(	""	)
-grouptype	[ 0	locks=0 ]	(	"guess"	)
-xOrd	[ 0	locks=0 ]	(	"rst"	)
-rOrd	[ 0	locks=0 ]	(	"xyz"	)
-t	[ 8	locks=0 ]	(	[ tx	0 ] 	0	[ tz	0 ] 	)
-r	[ 8	locks=0 ]	(	90	180	[ rz	0 ] 	)
-s	[ 8	locks=0 ]	(	[ sx	1 ] 	1	[ sz	1 ] 	)
-shear	[ 0	locks=0 ]	(	0	0	0	)
-scale	[ 0	locks=0 ]	(	1	)
-parmgroup_pivotxform	[ 0	locks=0 ]	(	1	)
-p	[ 0	locks=0 ]	(	0	0	0	)
-pr	[ 0	locks=0 ]	(	0	0	0	)
-parmgroup_prexform	[ 0	locks=0 ]	(	0	)
-prexform_xOrd	[ 0	locks=0 ]	(	"srt"	)
-prexform_rOrd	[ 0	locks=0 ]	(	"xyz"	)
-prexform_t	[ 0	locks=0 ]	(	0	0	0	)
-prexform_r	[ 0	locks=0 ]	(	0	0	0	)
-prexform_s	[ 0	locks=0 ]	(	1	1	1	)
-prexform_shear	[ 0	locks=0 ]	(	0	0	0	)
-movecentroid	[ 0	locks=0 ]	(	0	)
-attribs	[ 0	locks=0 ]	(	*	)
-updatenmls	[ 0	locks=0 ]	(	"off"	)
-updateaffectednmls	[ 0	locks=0 ]	(	"on"	)
-vlength	[ 0	locks=0 ]	(	"on"	)
-invertxform	[ 0	locks=0 ]	(	"off"	)
-addattrib	[ 0	locks=0 ]	(	"off"	)
-outputattrib	[ 0	locks=0 ]	(	xform	)
-outputmerge	[ 0	locks=0 ]	(	"post"	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/transform9.netbox"
-Content-Type: text/plain
-
-__netbox8
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/transform9.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/attribtransfer1.init"
-Content-Type: text/plain
-
-type = attribtransfer
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/attribtransfer1.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position -6.90345 -26.8126
-connectornextid 3
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault off exposed on
-outputsNamed3
-{
-1 "output1"
-}
-inputsNamed3
-{
-0 	transform3 1 1 "input1"
-2 	transform9 1 1 "input2"
-}
-inputs
-{
-0 	transform3 0 1
-1 	transform9 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author Mo@MO-GPU
-  access 0777
-}
-color UT_Color RGB 1 0 0 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/attribtransfer1.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-srcgroups	[ 0	locks=0 ]	(	""	)
-srcgrouptype	[ 0	locks=0 ]	(	"point"	)
-dstgroups	[ 0	locks=0 ]	(	""	)
-dstgrouptype	[ 0	locks=0 ]	(	"point"	)
-cardswitcher	[ 0	locks=0 ]	(	1	1	)
-detailattribs	[ 0	locks=0 ]	(	"off"	)
-detailattriblist	[ 0	locks=0 ]	(	""	)
-primitiveattribs	[ 0	locks=0 ]	(	"off"	)
-primattriblist	[ 0	locks=0 ]	(	""	)
-pointattribs	[ 0	locks=0 ]	(	"on"	)
-pointattriblist	[ 0	locks=0 ]	(	Cd	)
-vertexattribs	[ 0	locks=0 ]	(	"off"	)
-vertexattriblist	[ 0	locks=0 ]	(	""	)
-copyvariable	[ 0	locks=0 ]	(	"on"	)
-matchpattrib	[ 0	locks=0 ]	(	"off"	)
-kernel	[ 0	locks=0 ]	(	elendt	)
-kernelradius	[ 0	locks=0 ]	(	10	)
-maxsamplecount	[ 0	locks=0 ]	(	1	)
-threshold	[ 0	locks=0 ]	(	"on"	)
-thresholddist	[ 0	locks=0 ]	(	10	)
-blendwidth	[ 0	locks=0 ]	(	0	)
-uniformbias	[ 0	locks=0 ]	(	0.5	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/attribtransfer1.netbox"
-Content-Type: text/plain
-
-__netbox8
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/attribtransfer1.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-54
+52
 OUT_DEPTH_MAKER
 output0
 OUT_BEFORE_REPOSITION
@@ -9199,8 +8945,6 @@ set_objects_to_import
 attribcreate2
 attribdelete2
 switch1
-transform9
-attribtransfer1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
