@@ -33,8 +33,11 @@ RemBG is a node that will analyze and attempt to isolate subjects in the provide
 
 https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/fe075e82-9edd-410a-9e38-a56163174d43
 
-
 ### SAM - Segment Anything Model
+SAM segements an image into individual masks. You can either have it segment the whole image at once or select specific parts for masking using points.
+
+https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/115803478/1735e269-a08c-4244-aa44-825dab628ae2
+
 ### BLIP Caption
 ### CLIP Interrogate
 ### Image Manipulation
