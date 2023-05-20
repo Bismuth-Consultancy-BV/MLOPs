@@ -13,6 +13,7 @@ def run(model, mode, input_colors, torch_device):
     clip_interrogator = Interrogator(config)
 
     image = mlops_image_utils.colors_numpy_array_to_pil(input_colors)
+
     if mode == "best":
         prompt = clip_interrogator.interrogate(image)
     elif mode == "classic":

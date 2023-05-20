@@ -32,9 +32,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -3.68676 -0.612375
+position -9.4946 -2.40478
 connectornextid 1
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -272,12 +272,7 @@ geo = node.geometry()
 geo1 = node.inputs()[1].geometry()
 
 # Attributes
-width = int(geo1.attribValue(\"image_dimension\")[0])
-height = int(geo1.attribValue(\"image_dimension\")[1])
-r = numpy.array(geo1.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
-g = numpy.array(geo1.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
-b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height) 
-input_colors = numpy.stack((r,g,b), axis=0)   
+input_colors = mlops_image_utils.colored_points_to_numpy_array(geo1)
 
 # Parameters 
 device = node.parent().parm(\"device\").evalAsString()
@@ -286,7 +281,7 @@ model = node.parent().parm(\"model\").evalAsString()
 
 # Solve
 with hou.InterruptableOperation(\"CLIP Interrogate\", open_interrupt_dialog=True) as operation:
-    text = clip_interrogate.run(model, mode, input_colors, device)
+    text = clip_interrogate.run(model, mode, input_colors, device) 
 
 # Export
 geo.setPointStringAttribValues(\"prompt\", [text])         "	)

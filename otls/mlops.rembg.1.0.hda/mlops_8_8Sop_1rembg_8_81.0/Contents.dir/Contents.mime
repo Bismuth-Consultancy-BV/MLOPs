@@ -32,12 +32,11 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -3.3022 0.466606
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -5.58401 -3.83188
+connectornextid 1
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-1 "output1"
 }
 inputsNamed3
 {
@@ -51,7 +50,7 @@ stat
 {
   create -1
   modify -1
-  author Paul@M16AMTA
+  author Paul@DESKTOP-PAFFS1R
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -217,9 +216,8 @@ backgroundthreshold = node.parent().parm(\"backgroundthreshold\").evalAsInt()
 # Solve  
 colors = rembg.run(input_colors, model, post_process, alphamatting, erodesize, foregroundthreshold, backgroundthreshold) 
 
-# Export     
-a = tuple(map(float, [c[3] for c in colors]))
-geo.setPointFloatAttribValues(\"mask\", a)                       "	)
+
+geo.setPointFloatAttribValues(\"mask\", list(map(float,colors[3].ravel())))                       "	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -519,7 +517,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.6 0.7 0.77 
 delscript ""
 exprlanguage hscript
 end
@@ -800,7 +798,7 @@ vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
 snippet	[ 0	locks=0 ]	(	"int x = chi(\"x\");
 int y = chi(\"y\");
-v@P = set(@ptnum/y, 0, @ptnum % y);"	)
+v@P = set(@ptnum%x, 0, @ptnum / x);"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)

@@ -8,6 +8,7 @@ from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion_controlnet i
 from tqdm.auto import tqdm
 
 from . import schedulers_lookup
+import mlops_image_utils
 
 def run(
     inference_steps,
@@ -64,7 +65,7 @@ def run(
         numpy.array(
             [
                 input_scheduler["mask_latent"].reshape(
-                    4, latent_dimension[0], latent_dimension[1]
+                    4, latent_dimension[1], latent_dimension[0]
                 )
             ]
         )
@@ -75,7 +76,7 @@ def run(
         numpy.array(
             [
                 input_scheduler["image_latent"].reshape(
-                    4, latent_dimension[0], latent_dimension[1]
+                    4, latent_dimension[1], latent_dimension[0]
                 )
             ]
         )
@@ -84,7 +85,7 @@ def run(
         numpy.array(
             [
                 input_scheduler["guided_latent"].reshape(
-                    4, latent_dimension[0], latent_dimension[1]
+                    4, latent_dimension[1], latent_dimension[0]
                 )
             ]
         )
@@ -93,7 +94,7 @@ def run(
         numpy.array(
             [
                 input_scheduler["noise_latent"].reshape(
-                    4, latent_dimension[0], latent_dimension[1]
+                    4, latent_dimension[1], latent_dimension[0]
                 )
             ]
         )
@@ -120,19 +121,8 @@ def run(
         for point in controlnet_geo.points():
             controlnetmodel = point.stringAttribValue("model")
             geo = point.prims()[0].getEmbeddedGeometry()
-            width = int(geo.attribValue("image_dimension")[0])
-            height = int(geo.attribValue("image_dimension")[1])
             controlnet_conditioning_scale = point.attribValue("scale")
-            r = numpy.array(
-                geo.pointFloatAttribValues("r"), dtype=dtype_controlnet
-            ).reshape(width, height)
-            g = numpy.array(
-                geo.pointFloatAttribValues("g"), dtype=dtype_controlnet
-            ).reshape(width, height)
-            b = numpy.array(
-                geo.pointFloatAttribValues("b"), dtype=dtype_controlnet
-            ).reshape(width, height)
-            input_colors = numpy.flip(numpy.stack((r, g, b), axis=0), 2)
+            input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)
 
             controlnet_conditioning_image = torch.from_numpy(
                 numpy.array([input_colors])

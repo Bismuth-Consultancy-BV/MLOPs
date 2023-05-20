@@ -23,7 +23,7 @@ def run(
 
     latents = torch.from_numpy(
         numpy.array(
-            [input_latents.reshape(4, latent_dimension[0], latent_dimension[1])]
+            [input_latents.reshape(4, latent_dimension[1], latent_dimension[0])]
         )
     ).to(torch_device)
     latents = (1.0 / vae.config.scaling_factor) * latents

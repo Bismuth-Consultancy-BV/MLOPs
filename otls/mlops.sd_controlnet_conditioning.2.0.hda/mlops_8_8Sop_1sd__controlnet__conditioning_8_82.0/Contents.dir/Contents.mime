@@ -32,12 +32,11 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.99773 -0.308658
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position 7.79983 -3.66971
+connectornextid 1
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-1 "output1"
 }
 inputsNamed3
 {
@@ -151,7 +150,7 @@ sopflags sopflags =
 comment ""
 position -4.58347 6.43864
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -185,9 +184,11 @@ version 0.8
 python	[ 0	locks=0 ]	(	"import os
 import numpy
 import mlops_utils
+import mlops_image_utils
 from imagepipeline import controlnet_condition_image
 from imp import reload
 reload(mlops_utils)
+reload(mlops_image_utils)
 reload(controlnet_condition_image)
 
 # Input Geometry
@@ -200,23 +201,13 @@ model_type = node.parent().parm(\"conditioning\").evalAsString()
 model = node.parent().parm(\"model\").evalAsString() 
 
 # Attributes
-width = int(geo.attribValue(\"image_dimension\")[0])
-height = int(geo.attribValue(\"image_dimension\")[1]) 
-r = numpy.array(geo.pointFloatAttribValues(\"r\"), dtype=numpy.float16).reshape(width, height)
-g = numpy.array(geo.pointFloatAttribValues(\"g\"), dtype=numpy.float16).reshape(width, height)
-b = numpy.array(geo.pointFloatAttribValues(\"b\"), dtype=numpy.float16).reshape(width, height)
-input_colors = numpy.stack((r,g,b), axis=0)
+input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)
 # cache = hou.text.expandString(os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\", \"cache\"))
 
 image = controlnet_condition_image.run(model, model_type, input_colors)
-
-# Export
-r = tuple(map(float, [c[0] for c in image]))
-geo.setPointFloatAttribValues(\"r\", r)
-g = tuple(map(float, [c[1] for c in image]))
-geo.setPointFloatAttribValues(\"g\", g)
-b = tuple(map(float, [c[2] for c in image]))
-geo.setPointFloatAttribValues(\"b\", b)"	)
+colors = mlops_image_utils.pil_to_colors_numpy_array(image)
+mlops_image_utils.numpy_array_to_colored_points(geo, colors, scale_factor=1.0)
+"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -253,7 +244,7 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	resize_image1 1 1 "input1"
+0 	resize_image1 0 1 "input1"
 }
 inputs
 {
@@ -465,7 +456,7 @@ Content-Type: text/plain
 Content-Disposition: attachment; filename="hdaroot/resize_image1.init"
 Content-Type: text/plain
 
-type = mlops::transform_image::1.0
+type = mlops::transform_image::2.0
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -476,14 +467,14 @@ sopflags sopflags =
 comment ""
 position -5.13714 8.7337
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-1 "output1"
+0 "output1"
 }
 inputsNamed3
 {
-0 	(0) "" 1 "input1"
+1 	(0) "" 1 "input1"
 }
 inputs
 {
@@ -507,21 +498,21 @@ Content-Type: text/plain
 
 {
 version 0.8
-folder0	[ 0	locks=0 ]	(	0	)
-mode	[ 0	locks=0 ]	(	"resize"	)
-folder1	[ 0	locks=0 ]	(	0	)
-height	[ 0	locks=0 ]	(	512	)
-width	[ 0	locks=0 ]	(	512	)
-folder2	[ 0	locks=0 ]	(	0	)
-tilex	[ 0	locks=0 ]	(	2	)
-tiley	[ 0	locks=0 ]	(	2	)
-folder3	[ 0	locks=0 ]	(	0	)
-offsetx	[ 0	locks=0 ]	(	0	)
-offsety	[ 0	locks=0 ]	(	0	)
-folder4	[ 0	locks=0 ]	(	0	)
-pivotx	[ 0	locks=0 ]	(	0.5	)
-pivoty	[ 0	locks=0 ]	(	0.5	)
-zoom	[ 0	locks=0 ]	(	1	)
+folder0	[ 0	locks=0	autoscope=0 ]	(	0	)
+mode	[ 0	locks=0	autoscope=0 ]	(	"resize"	)
+folder1	[ 0	locks=0	autoscope=0 ]	(	0	)
+width	[ 0	locks=0	autoscope=0 ]	(	512	)
+height	[ 0	locks=0	autoscope=0 ]	(	512	)
+folder2	[ 0	locks=0	autoscope=0 ]	(	0	)
+tilex	[ 0	locks=0	autoscope=0 ]	(	2	)
+tiley	[ 0	locks=0	autoscope=0 ]	(	2	)
+folder3	[ 0	locks=0	autoscope=0 ]	(	0	)
+offsetx	[ 0	locks=0	autoscope=0 ]	(	0	)
+offsety	[ 0	locks=0	autoscope=0 ]	(	0	)
+folder4	[ 0	locks=0	autoscope=0 ]	(	0	)
+pivotx	[ 0	locks=0	autoscope=0 ]	(	0.5	)
+pivoty	[ 0	locks=0	autoscope=0 ]	(	0.5	)
+zoom	[ 0	locks=0	autoscope=0 ]	(	1	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
