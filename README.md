@@ -1,4 +1,5 @@
-![MLOPs logo](https://github.com/Bismuth-Consultancy-BV/MLOPs/blob/main/help/images/mlops_banner.png)
+![MLOPs logo](https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/115803478/95c18060-1f3a-465b-8533-ab80e58d8465)
+
 
 # Houdini MLOPs
 Free and Open Source Machine Learning Plugin for Houdini developed by Ambrosiussen Holding and [Entagma](https://entagma.com/), Licensed and Distributed by [Bismuth Consultancy B.V.](https://www.bismuthconsultancy.com/) _By downloading or using the plugin (or any of its contents), you are agreeing to the LICENSE found in this repository and [Terms of Service of Bismuth Consultancy B.V.](https://www.bismuthconsultancy.com/s/EN_Terms_And_Conditions-f5sk.pdf)_
