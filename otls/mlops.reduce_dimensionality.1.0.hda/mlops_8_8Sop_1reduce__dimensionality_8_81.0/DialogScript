@@ -75,6 +75,72 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
+            name    "Number_Of_Neighbours"
+            label   "Number Of Neighbours"
+            type    integer
+            default { "12" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "Min_Distance"
+            label   "Min Distance"
+            type    float
+            default { "0.01" }
+            range   { 0 1 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "Metric"
+            label   "Metric"
+            type    ordinal
+            default { "euclidean" }
+            menu {
+                "euclidean"         "euclidean"
+                "manhattan"         "manhattan"
+                "chebyshev"         "chebyshev"
+                "minkowski"         "minkowski"
+                "canberra"          "canberra"
+                "braycurtis"        "braycurtis"
+                "mahalanobis"       "mahalanobis"
+                "wminkowski"        "wminkowski"
+                "seuclidean"        "seuclidean"
+                "cosine"            "cosine"
+                "correlation"       "correlation"
+                "haversine"         "haversine"
+                "hamming"           "hamming"
+                "jaccard"           "jaccard"
+                "dice"              "dice"
+                "russelrao"         "russelrao"
+                "kulsinski"         "kulsinski"
+                "ll_dirichlet"      "ll_dirichlet"
+                "hellinger"         "hellinger"
+                "rogerstanimoto"    "rogerstanimoto"
+                "sokalmichener"     "sokalmichener"
+                "sokalsneath"       "sokalsneath"
+                "yule"              "yule"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "Seed"
+            label   "Seed"
+            type    integer
+            default { "44" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "sepparm"
+            label   "Separator"
+            type    separator
+            default { "" }
+        }
+        parm {
             name    "do_matchsize"
             label   "Scale to 1x1x1"
             type    toggle

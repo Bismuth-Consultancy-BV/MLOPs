@@ -32,23 +32,26 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.19356 0.0131913
-connectornextid 0
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position -1.31463 -22.1621
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
+1 "output1"
 }
 inputsNamed3
 {
+0 	blast5 1 1 "input1"
 }
 inputs
 {
+0 	blast5 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -416,8 +419,12 @@ geo = node.geometry()
 geo1 = node.inputs()[1].geometry()
 
 clusterdims = geo1.attribValue(\"clusterdim\")
+nneighs = geo1.attribValue(\"numneighs\")
+mindist = geo1.attribValue(\"mindist\")
+umap_metric = geo1.attribValue(\"metric\")
+seed = geo1.attribValue(\"seed\")
 
-def draw_umap(data, n_neighbors=4, min_dist=.01, n_components=clusterdims, metric='euclidean'):
+def draw_umap(data, n_neighbors=nneighs, min_dist=mindist, n_components=clusterdims, metric=umap_metric):
     fit = umap.UMAP(
         n_neighbors=n_neighbors,
         min_dist=min_dist,
@@ -904,14 +911,35 @@ Content-Type: text/plain
     }
 
     parm {
-        name    "Original_Attribute_Name"
-        label   "Original Attribute Name"
+        name    "Clustering_Dimensions"
+        label   "Clustering Dimensions"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "Min_Distance"
+        label   "Min Distance"
+        type    float
+        default { "0" }
+        range   { 0 1 }
+    }
+    parm {
+        name    "Number_Of_Neighbours"
+        label   "Number Of Neighbours"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "Metric"
+        label   "Metric"
         type    string
         default { "" }
     }
     parm {
-        name    "Clustering_Dimensions"
-        label   "Clustering Dimensions"
+        name    "Seed"
+        label   "Seed"
         type    integer
         default { "0" }
         range   { 0 10 }
@@ -928,6 +956,34 @@ Content-Type: text/plain
       flags = 0
       segment { length = 0 expr = ch(\"../clusterdimensions\") }
     }
+    channel Number_Of_Neighbours {
+      lefttype = extend
+      righttype = extend
+      default = 12
+      flags = 0
+      segment { length = 0 value = 12 12 expr = ch(\"../Number_Of_Neighbours\") }
+    }
+    channel Min_Distance {
+      lefttype = extend
+      righttype = extend
+      default = 0.01
+      flags = 0
+      segment { length = 0 value = 0.01 0.01 expr = ch(\"../Min_Distance\") }
+    }
+    channel Metric {
+      lefttype = extend
+      righttype = extend
+      defaultString = \"euclidean\"
+      flags = 0
+      segment { length = 0 expr = chs(\"../Metric\") }
+    }
+    channel Seed {
+      lefttype = extend
+      righttype = extend
+      default = 44
+      flags = 0
+      segment { length = 0 value = 44 44 expr = ch(\"../Seed\") }
+    }
   }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -942,12 +998,23 @@ grouptype	[ 0	locks=0 ]	(	"guess"	)
 class	[ 0	locks=0 ]	(	"detail"	)
 vex_numcount	[ 0	locks=0 ]	(	10	)
 vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
-snippet	[ 0	locks=0 ]	(	"//string attribname = chs(\"Original_Attribute_Name\");
-vector2 size = detail(0, \"data_dim\");
+snippet	[ 0	locks=0 ]	(	"vector2 size = detail(0, \"data_dim\");
 i@data_size = size[0] * size[1];
 
 int clusterdim = chi(\"Clustering_Dimensions\");
-i@clusterdim = clusterdim;"	)
+i@clusterdim = clusterdim;
+
+int numneighs = chi(\"Number_Of_Neighbours\");
+i@numneighs = numneighs;
+
+float mindist = chf(\"Min_Distance\");
+f@mindist = mindist;
+
+string metric = chs(\"Metric\");
+s@metric = metric;
+
+int seed = chi(\"Seed\");
+i@seed = seed;"	)
 exportlist	[ 0	locks=0 ]	(	*	)
 vex_strict	[ 0	locks=0 ]	(	"off"	)
 autobind	[ 0	locks=0 ]	(	"on"	)
@@ -962,8 +1029,11 @@ vex_inplace	[ 0	locks=0 ]	(	"off"	)
 vex_selectiongroup	[ 0	locks=0 ]	(	""	)
 vex_precision	[ 0	locks=0 ]	(	auto	)
 folder1	[ 0	locks=0 ]	(	0	0	)
-Original_Attribute_Name	[ 0	locks=0 ]	(	tensor_dimension	)
 Clustering_Dimensions	[ 0	locks=0 ]	(	[ Clustering_Dimensions	0 ] 	)
+Min_Distance	[ 0	locks=0 ]	(	[ Min_Distance	0 ] 	)
+Number_Of_Neighbours	[ 0	locks=0 ]	(	[ Number_Of_Neighbours	0 ] 	)
+Metric	[ 0	locks=0 ]	(	[ Metric	"" ] 	)
+Seed	[ 0	locks=0 ]	(	[ Seed	0 ] 	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
