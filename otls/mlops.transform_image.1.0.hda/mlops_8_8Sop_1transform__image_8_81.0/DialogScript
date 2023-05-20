@@ -111,7 +111,7 @@
                 label   "Pivot Width"
                 type    float
                 default { "0.5" }
-                range   { -512 512 }
+                range   { 0 1 }
                 parmtag { "script_callback_language" "python" }
             }
             parm {
@@ -119,7 +119,7 @@
                 label   "Pivot Height"
                 type    float
                 default { "0.5" }
-                range   { -512 512 }
+                range   { 0 1 }
                 parmtag { "script_callback_language" "python" }
             }
             parm {
