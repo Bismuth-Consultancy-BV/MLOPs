@@ -50,6 +50,11 @@ https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/1cbb7f8f-1d9b-48
 
 
 ### Real-ESRGAN
+Real-ESRGAN allows for upscaling input images while preserving and sometimes enhancing details. It comes with several models tailored to generic use-cases, faces, line-art and more.
+
+https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/23486196/bc6fd004-208c-4e53-9f93-33a9572c3914
+
+
 ### Dimensionality Reduction
 
 
