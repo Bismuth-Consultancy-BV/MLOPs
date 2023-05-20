@@ -2,6 +2,7 @@
 	"values":["19.5.605","1"
 	],
 	"indexes":{
+		"hdaroot/transform9.userdata":0,
 		"hdaroot/switch1.userdata":0,
 		"hdaroot/trigger_ogl_rop.userdata":0,
 		"hdaroot/ropnet1/opengl1.userdata":0,
@@ -28,6 +29,7 @@
 		"hdaroot/OUT_DEPTH_MAKER.userdata":0,
 		"hdaroot/output0.userdata":0,
 		"hdaroot/norm_norm/input2.userdata":0,
+		"hdaroot/attribtransfer1.userdata":0,
 		"hdaroot/set_objects_to_import.userdata":0,
 		"hdaroot/rest2.userdata":0,
 		"hdaroot/norm_norm/tospace.userdata":0,
