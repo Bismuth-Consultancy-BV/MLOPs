@@ -1,14 +1,14 @@
 ![MLOPs logo](https://github.com/Bismuth-Consultancy-BV/MLOPs/blob/main/help/images/mlops_banner.png)
 
 # Houdini MLOPs
-Free and Open Source Machine Learning Plugin for Houdini developed by Ambrosiussen Holding and Entagma, Licensed and Distributed by Bismuth Consultancy BV.
+Free and Open Source Machine Learning Plugin for Houdini developed by Ambrosiussen Holding and [Entagma](https://entagma.com/), Licensed and Distributed by [Bismuth Consultancy B.V.](https://www.bismuthconsultancy.com/) _By downloading or using the plugin (or any of its contents), you are agreeing to the LICENSE found in this repository and [Terms of Service of Bismuth Consultancy B.V.](https://www.bismuthconsultancy.com/s/EN_Terms_And_Conditions-f5sk.pdf)_
 
 | Paul Ambrosiussen | Entagma | Discord |
 | --------------- | --------------- | --------------- |
 | [![](https://img.shields.io/badge/twitter-%230077B5.svg?style=for-the-badge&logo=twitter)](https://twitter.com/ambrosiussen_p) | [![](https://img.shields.io/badge/twitter-%230077B5.svg?style=for-the-badge&logo=twitter)](https://twitter.com/entagma) | [![](https://img.shields.io/badge/discord-%230077B5.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/rKr5SNZJtM) |
 | [![](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/paulambrosiussen/) |
 
-_By downloading or using the plugin (or any of its contents), you are agreeing to the LICENSE found in this repository and [Terms of Service of Bismuth Consultancy B.V.](https://www.bismuthconsultancy.com/s/EN_Terms_And_Conditions-f5sk.pdf)_
+
 
 
 ## Features
