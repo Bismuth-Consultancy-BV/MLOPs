@@ -1,4 +1,4 @@
-https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/115803478/95c18060-1f3a-465b-8533-ab80e58d8465
+![mlops_banner](https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/115803478/abc396a5-be3c-4bee-bdb9-a3721a829dcd)
 
 
 # Houdini MLOPs
