@@ -86,7 +86,6 @@ def ensure_huggingface_model_local(
     path = hou.text.expandString(
         os.path.join(model_path, model_name.replace("/", "-_-"))
     )
-    cache = hou.text.expandString(os.path.join(model_path, "cache"))
 
     if os.path.isdir(model_name):
         return model_name
@@ -109,7 +108,7 @@ def ensure_huggingface_model_local(
     if model_type == "stablediffusion":
         try:
             config_dict = StableDiffusionPipeline.load_config(
-                model_name, cache_dir=cache, resume_download=True, force_download=False
+                model_name, resume_download=True, force_download=False
             )
             folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
             allow_patterns += [os.path.join(k, "*") for k in folder_names]
@@ -131,12 +130,12 @@ def ensure_huggingface_model_local(
     ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
     snapshot_download(
         repo_id=model_name,
-        cache_dir=cache,
         local_dir=path,
         local_dir_use_symlinks=True,
         local_files_only=cache_only,
         allow_patterns=allow_patterns,
         ignore_patterns=ignore_patterns,
+        resume_download=True,
     )
     return path.replace("\\", "/")
 

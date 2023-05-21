@@ -2,9 +2,7 @@ import hou
 import numpy
 import torch
 from diffusers import ControlNetModel, UNet2DConditionModel
-from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion_controlnet import (
-    MultiControlNetModel,
-)
+from diffusers.pipelines.controlnet.multicontrolnet import MultiControlNetModel
 from tqdm.auto import tqdm
 
 from . import schedulers_lookup
