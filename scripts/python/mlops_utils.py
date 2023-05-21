@@ -104,6 +104,7 @@ def ensure_huggingface_model_local(
 
     model_name = model_name.replace("-_-", "/")
     allow_patterns = ["*.json", "*.txt"]
+    ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
 
     if model_type == "stablediffusion":
         try:
@@ -126,8 +127,8 @@ def ensure_huggingface_model_local(
         allow_patterns.append("*.bin")
     if model_type == "all":
         allow_patterns.append("*")
+        ignore_patterns = []
 
-    ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
     snapshot_download(
         repo_id=model_name,
         local_dir=path,
