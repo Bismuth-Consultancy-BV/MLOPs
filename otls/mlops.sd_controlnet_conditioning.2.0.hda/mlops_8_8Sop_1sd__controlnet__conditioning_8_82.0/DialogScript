@@ -51,6 +51,7 @@
                 "canny"         "Canny Edge Detector"
                 "content"       "Content Shuffle Detector"
                 "facedetector"  "MediaPipe Face Detector"
+                "segment"       "Semantic Segmentation"
             }
             parmtag { "script_callback_language" "python" }
         }

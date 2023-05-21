@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 7.79983 -3.66971
+position -5.08532 -3.62145
 connectornextid 1
 flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -91,7 +91,7 @@ sopflags sopflags =
 comment ""
 position -4.58347 3.34928
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -189,7 +189,7 @@ from imagepipeline import controlnet_condition_image
 from imp import reload
 reload(mlops_utils)
 reload(mlops_image_utils)
-reload(controlnet_condition_image)
+reload(controlnet_condition_image) 
 
 # Input Geometry
 node = hou.pwd()
@@ -204,7 +204,7 @@ model = node.parent().parm(\"model\").evalAsString()
 input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)
 # cache = hou.text.expandString(os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\", \"cache\"))
 
-image = controlnet_condition_image.run(model, model_type, input_colors)
+image = controlnet_condition_image.run(model, model_type, input_colors, bool(cache_only))
 colors = mlops_image_utils.pil_to_colors_numpy_array(image)
 mlops_image_utils.numpy_array_to_colored_points(geo, colors, scale_factor=1.0)
 "	)
@@ -467,7 +467,7 @@ sopflags sopflags =
 comment ""
 position -5.13714 8.7337
 connectornextid 2
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 0 "output1"
