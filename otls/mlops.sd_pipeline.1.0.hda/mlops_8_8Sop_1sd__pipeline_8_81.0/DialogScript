@@ -53,7 +53,7 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
-            name    "height"
+            name    "width"
             label   "Width"
             type    integer
             default { "512" }
@@ -62,7 +62,7 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
-            name    "width"
+            name    "height"
             label   "Height"
             type    integer
             default { "512" }
