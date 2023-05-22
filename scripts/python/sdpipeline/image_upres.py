@@ -2,6 +2,7 @@ import numpy
 import torch
 from diffusers import StableDiffusionUpscalePipeline
 
+
 def run(
     positive_embeds,
     negative_embeds,

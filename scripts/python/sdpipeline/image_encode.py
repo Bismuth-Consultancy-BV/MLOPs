@@ -2,6 +2,7 @@ import numpy
 import torch
 from diffusers import AutoencoderKL
 
+
 def run(input_vectors, torch_device, model, local_cache_only=True):
     vae = AutoencoderKL.from_pretrained(
         model, subfolder="vae", local_files_only=local_cache_only

@@ -1,4 +1,5 @@
 import hou
+import mlops_image_utils
 import numpy
 import torch
 from diffusers import ControlNetModel, UNet2DConditionModel
@@ -6,7 +7,7 @@ from diffusers.pipelines.controlnet.multicontrolnet import MultiControlNetModel
 from tqdm.auto import tqdm
 
 from . import schedulers_lookup
-import mlops_image_utils
+
 
 def run(
     inference_steps,

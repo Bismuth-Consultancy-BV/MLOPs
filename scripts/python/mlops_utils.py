@@ -1,6 +1,10 @@
-import os
-import subprocess
+import hashlib
 import json
+import os
+import shutil
+import ssl
+import subprocess
+from urllib import request
 
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
@@ -8,6 +12,126 @@ from hutil.Qt import QtCore, QtGui, QtWidgets
 PIP_FOLDER = os.path.normpath(
     os.path.join(hou.text.expandString("$MLOPS"), "data", "dependencies", "python")
 )
+
+
+def install_mlops_dependencies():
+    FOLDER = os.path.normpath(
+        os.path.join(hou.text.expandString("$HOUDINI_TEMP_DIR"), "MLOPs")
+    )
+    PIPINSTALLFILE = os.path.normpath(os.path.join(FOLDER, "get-pip.py"))
+
+    check_mlops_version()
+
+    # Downloading pip installation file
+    if not os.path.isdir(FOLDER):
+        os.makedirs(FOLDER)
+
+    total = 3
+    count = 1
+    with hou.InterruptableOperation(
+        "Installing Dependencies, downloading ~6Gb", open_interrupt_dialog=True
+    ) as operation:
+        flags = 0
+        if os.name == "nt":
+            flags = subprocess.CREATE_NO_WINDOW
+
+        env = os.environ.copy()
+        if "PYTHONPATH" in env:
+            del env["PYTHONPATH"]
+
+        # Trying to download get-pip with curl , this can quietly fail when behind proxy
+        hou.ui.setStatusMessage("curl download get-pip.py")
+        p = subprocess.Popen(
+            ["curl", "-o", PIPINSTALLFILE, "https://bootstrap.pypa.io/get-pip.py"],
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            creationflags=flags,
+        )
+        out, err = p.communicate()
+        if err:
+            raise hou.Error(out.decode())
+
+        # Checking if get-pip downloaded with curl , otherwise try download previous get-pip using urllib with SSL certification and test Md5 hash for safety
+        if not os.path.isfile(PIPINSTALLFILE):
+            hou.ui.setStatusMessage(
+                "curl failed to download get-pip.py , trying urllib."
+            )
+            remote_url = "https://github.com/pypa/get-pip/raw/2b873b978dbfdfc5e15ef5c3adf4354084612432/public/get-pip.py"  # last known get-pip.py from 20230422
+            # Create an SSL context with certificate verification
+            context = ssl.create_default_context()
+            context.check_hostname = True
+            context.verify_mode = ssl.CERT_REQUIRED
+            with request.urlopen(remote_url, context=context) as response:
+                with open(PIPINSTALLFILE, "wb") as file:
+                    while True:
+                        chunk = response.read(1024)
+                        if not chunk:
+                            break
+                        file.write(chunk)
+            if os.path.isfile(PIPINSTALLFILE):
+                hou.ui.setStatusMessage("testing get-pip.py MD5.")
+                safe_md5 = "6f33e0cffbbd2093f2406f8d0839b01f"  # last known get-pip.py MD5 hash from 20230422
+                test_md5 = hashlib.md5(open(PIPINSTALLFILE, "rb").read()).hexdigest()
+                if safe_md5 != test_md5:
+                    os.remove(
+                        PIPINSTALLFILE
+                    )  # delete the unsafe get-pip.py if doesnt match
+                    raise hou.Error(
+                        "unsafe get-pip.py downloaded with incorrect MD5hash. safe_MD5 = "
+                        + safe_md5
+                        + " != "
+                        + test_md5
+                    )
+
+        # If that also fails to download , then error out and ask for manual download
+        if not os.path.isfile(PIPINSTALLFILE):
+            raise hou.Error(
+                "Failed to download get-pip.py , please download get-pip.py manually from https://bootstrap.pypa.io/ , and place in here = "
+                + PIPINSTALLFILE
+            )
+        operation.updateProgress(percentage=count / total)
+        count += 1
+
+        # Installing pip to Houdini
+        hou.ui.setStatusMessage("Installing pip to Houdini")
+        p = subprocess.Popen(
+            ["hython", PIPINSTALLFILE],
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            creationflags=flags,
+        )
+        out, err = p.communicate()
+        if err:
+            raise hou.Error(out.decode())
+        operation.updateProgress(percentage=count / total)
+        count += 1
+
+        dependencies_dir = os.path.normpath(
+            os.path.join(
+                hou.text.expandString("$MLOPS"), "data", "dependencies", "python"
+            )
+        )
+        try:
+            if os.path.isdir(dependencies_dir):
+                shutil.rmtree(dependencies_dir)
+        except:
+            raise hou.Error(
+                f"Please close Houdini and delete {dependencies_dir}\nAfter deleting the specified folder restart Houdini and install dependencies again."
+            )
+
+        hou.ui.setStatusMessage("Installing requirements.txt")
+        pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
+        count += 1
+
+    # Informing user about the change
+    hou.ui.displayMessage(
+        "You have now installed the required dependencies for this build of Houdini.\nPlease restart Houdini for it to take effect",
+        buttons=("OK",),
+        severity=hou.severityType.Message,
+        title="MLOPs Plugin",
+    )
 
 
 def generate_gpt_code_from_prompt(prompt, wrapper, model="gpt-3.5-turbo"):
@@ -41,8 +165,8 @@ def return_downloaded_checkpoints(
                     model_paths.append(f.name.replace(replace_sign, "/"))
     return model_paths
 
-def check_mlops_version():
 
+def check_mlops_version():
     packages = json.loads(hou.ui.packageInfo())
     variables = None
     installed_json = None
@@ -73,7 +197,11 @@ def check_mlops_version():
     if len(missing) > 0:
         raise hou.Error(message + f"\nMissing Variables: {' '.join(missing)}")
     if version != hou.text.expandString("$MLOPS_VERSION"):
-        raise hou.Error(message + f"\nVersion Mismatch. Configured MLOPs environment variables likely dont match those found in {plugin_json}")
+        raise hou.Error(
+            message
+            + f"\nVersion Mismatch. Configured MLOPs environment variables likely dont match those found in {plugin_json}"
+        )
+
 
 def ensure_huggingface_model_local(
     model_name, model_path, cache_only=False, model_type="stablediffusion"
