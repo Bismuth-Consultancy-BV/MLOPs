@@ -195,6 +195,7 @@
             name    "vobjects"
             label   "Objects To Render"
             type    oplist
+            joinnext
             default { "*" }
             menutoggle {
                 [ "obj_context = hou.node(\"/obj\")  # Get the /obj context node" ]
