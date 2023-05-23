@@ -36,7 +36,7 @@
         }
         parm {
             name    "renderme"
-            label   "Render"
+            label   "Render / Refresh"
             type    button
             default { "0" }
             parmtag { "script_callback" "hou.node(\"./set_objects_to_import\").cook(force=True)" }
@@ -196,8 +196,20 @@
             label   "Objects To Render"
             type    oplist
             default { "*" }
-            menureplace {
-                [ "opmenu -l -a ropnet1/opengl1 vobjects" ]
+            menutoggle {
+                [ "obj_context = hou.node(\"/obj\")  # Get the /obj context node" ]
+                [ "obj_nodes = obj_context.children()  # Get all child nodes within /obj" ]
+                [ "" ]
+                [ "node_paths = []" ]
+                [ "for node in obj_nodes:" ]
+                [ "    node_paths.append(node.path())" ]
+                [ "    node_paths.append(node.name())" ]
+                [ "" ]
+                [ "return node_paths" ]
+                [ "" ]
+                [ "print()" ]
+                [ "print(node_paths)" ]
+                language python
             }
             parmtag { "autoscope" "0000000000000000" }
             parmtag { "opfilter" "!!OBJ/GEOMETRY!!" }
@@ -209,6 +221,30 @@
             type    toggle
             default { "0" }
             parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "alights"
+            label   "Lights To Render"
+            type    oplist
+            default { "*" }
+            menutoggle {
+                [ "obj_context = hou.node(\"/obj\")  # Get the /obj context node" ]
+                [ "obj_nodes = obj_context.children()  # Get all child nodes within /obj" ]
+                [ "" ]
+                [ "node_paths = []" ]
+                [ "for node in obj_nodes:" ]
+                [ "    node_paths.append(node.path())" ]
+                [ "    node_paths.append(node.name())" ]
+                [ "" ]
+                [ "return node_paths" ]
+                [ "" ]
+                [ "print()" ]
+                [ "print(node_paths)" ]
+                language python
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "opfilter" "!!OBJ/LIGHT!!" }
+            parmtag { "oprelative" "/" }
         }
     }
 
