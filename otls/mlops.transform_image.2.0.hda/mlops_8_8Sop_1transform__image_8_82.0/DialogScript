@@ -1,0 +1,144 @@
+# Dialog script for mlops::transform_image::2.0 automatically generated
+
+{
+    name	mlops::transform_image::2.0
+    script	labs::wfc_initialize
+    label	"MLOPs Transform Image"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "mode"
+            label   "Mode"
+            type    ordinal
+            default { "0" }
+            menu {
+                "resize"    "Resize"
+                "tile"      "Tile"
+                "offset"    "Offset"
+                "zoom"      "Zoom"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "folder1"
+            label   "Resize"
+            disablewhen "{ mode != resize }"
+
+            parm {
+                name    "width"
+                label   "Width"
+                type    integer
+                default { "512" }
+                range   { 256 2048 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "height"
+                label   "Height"
+                type    integer
+                default { "512" }
+                range   { 256 2048 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupsimple {
+            name    "folder2"
+            label   "Tile"
+            disablewhen "{ mode != tile }"
+
+            parm {
+                name    "tileorigsize"
+                label   "Each Tile Original Size"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tilex"
+                label   "Tile Width"
+                type    integer
+                default { "2" }
+                range   { 1! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tiley"
+                label   "Tile Height"
+                type    integer
+                default { "2" }
+                range   { 1! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupsimple {
+            name    "folder3"
+            label   "Offset"
+            disablewhen "{ mode != offset }"
+
+            parm {
+                name    "offsetx"
+                label   "Offset Width"
+                type    integer
+                default { "0" }
+                range   { -512 512 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "offsety"
+                label   "Offset Height"
+                type    integer
+                default { "0" }
+                range   { -512 512 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupsimple {
+            name    "folder4"
+            label   "Zoom"
+            disablewhen "{ mode != zoom }"
+
+            parm {
+                name    "pivotx"
+                label   "Pivot Width"
+                type    float
+                default { "0.5" }
+                range   { 0 1 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "pivoty"
+                label   "Pivot Height"
+                type    float
+                default { "0.5" }
+                range   { 0 1 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "zoom"
+                label   "Zoom"
+                type    float
+                default { "1" }
+                range   { 1! 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+}
