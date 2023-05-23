@@ -3040,7 +3040,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.88149 -34.436
+position -8.88149 -35.298
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -3101,7 +3101,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.88149 -36.3109
+position -8.75021 -38.1838
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -3109,11 +3109,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	OUT_DEPTH_MAKER 1 1 "input1"
+0 	transform1 1 1 "input1"
 }
 inputs
 {
-0 	OUT_DEPTH_MAKER 0 1
+0 	transform1 0 1
 }
 stat
 {
@@ -4208,8 +4208,8 @@ normalattrib	[ 0	locks=0 ]	(	N	)
 construct	[ 0	locks=0 ]	(	0	)
 docompute	[ 0	locks=0 ]	(	"on"	)
 type	[ 0	locks=0 ]	(	"typevertex"	)
-cuspangle	[ 0	locks=0 ]	(	24	)
-method	[ 0	locks=0 ]	(	1	)
+cuspangle	[ 0	locks=0 ]	(	75.099999999999994	)
+method	[ 0	locks=0 ]	(	2	)
 origifzero	[ 0	locks=0 ]	(	"on"	)
 modify	[ 0	locks=0 ]	(	0	)
 normalize	[ 0	locks=0 ]	(	"off"	)
@@ -4906,7 +4906,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.88494 -31.5889
+position -8.88494 -32.4509
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -4948,7 +4948,7 @@ vtxdel	[ 0	locks=0 ]	(	""	)
 doprimdel	[ 0	locks=0 ]	(	"off"	)
 primdel	[ 0	locks=0 ]	(	""	)
 dodtldel	[ 0	locks=0 ]	(	"on"	)
-dtldel	[ 0	locks=0 ]	(	maxdepth	)
+dtldel	[ 0	locks=0 ]	(	"maxdepth allobj"	)
 updatevar	[ 0	locks=0 ]	(	"on"	)
 }
 
@@ -5067,7 +5067,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.88149 -32.55
+position -8.88149 -33.412
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6734,7 +6734,7 @@ renderdialog	[ 0	locks=0 ]	(	0	)
 trange	[ 0	locks=0 ]	(	"off"	)
 f	[ 0	locks=0 ]	(	1	240	1	)
 take	[ 0	locks=0 ]	(	_current_	)
-stdswitch	[ 0	locks=0 ]	(	0	0	0	0	0	0	0	)
+stdswitch	[ 0	locks=0 ]	(	2	2	2	2	2	2	2	)
 opsource	[ 0	locks=0 ]	(	"obj"	)
 camera	[ 8	locks=0 ]	(	`chsop(\"../../camerapath\")`	)
 scenepath	[ 8	locks=0 ]	(	[ scenepath	/obj ] 	)
@@ -6786,8 +6786,8 @@ hqlighting	[ 0	locks=0 ]	(	"on"	)
 lightsamples	[ 0	locks=0 ]	(	8	)
 shadows	[ 0	locks=0 ]	(	"on"	)
 shadowquality	[ 0	locks=0 ]	(	"areaaa"	)
-shadowmap	[ 0	locks=0 ]	(	2048	)
-ambocclusion	[ 0	locks=0 ]	(	"off"	)
+shadowmap	[ 0	locks=0 ]	(	4096	)
+ambocclusion	[ 0	locks=0 ]	(	"on"	)
 ambquality	[ 0	locks=0 ]	(	2	)
 transparency	[ 0	locks=0 ]	(	"on"	)
 transquality	[ 0	locks=0 ]	(	"high"	)
@@ -6979,7 +6979,7 @@ ogl_rop = hou.node(\"../ropnet1/opengl1\")
 ogl_rop.render()
 
 outimg = Image.open(path)
-outimg = outimg.transpose(Image.FLIP_TOP_BOTTOM)
+#outimg = outimg.transpose(Image.FLIP_TOP_BOTTOM)
 outimg = outimg.transpose(Image.FLIP_LEFT_RIGHT)
 colors = imutils.pil_to_colors_numpy_array(outimg)
 imutils.numpy_array_to_colored_points(geo, colors, scale_factor=1.0)"	)
@@ -8095,7 +8095,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.11698 -27.5203
+position -9.11698 -28.3823
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8104,12 +8104,12 @@ outputsNamed3
 }
 inputsNamed3
 {
-1 	flip_along_Y 1 1 "input1"
+1 	pointwrangle1 1 1 "input1"
 0 	transform3 1 1 "input2"
 }
 inputs
 {
-0 	flip_along_Y 0 1
+0 	pointwrangle1 0 1
 1 	transform3 0 1
 }
 stat
@@ -8218,12 +8218,11 @@ vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
 snippet	[ 0	locks=0 ]	(	"int width = 512;
 int height = 512;
 
-int point = i@ptnum;  // Starting point index
 int flippedPoint;
 
 // Calculate flipped point index
-int row = point / width;
-int col = point % width;
+int row = i@ptnum / width;
+int col = i@ptnum % width;
 flippedPoint = row * width + (width - col - 1);
 
 vector color =  point(0, \"Cd\", flippedPoint);
@@ -8261,10 +8260,218 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.init"
+Content-Type: text/plain
+
+type = xform
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -8.75021 -36.6194
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	OUT_DEPTH_MAKER 1 1 "input1"
+}
+inputs
+{
+0 	OUT_DEPTH_MAKER 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.chn"
+Content-Type: text/plain
+
+{
+    channel tx {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = "detail(\"../OUT_DEPTH_MAKER/\", \"image_dimension\", 0) *.5" }
+    }
+    channel tz {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = "detail(\"../OUT_DEPTH_MAKER/\", \"image_dimension\", 0) *.5" }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+xOrd	[ 0	locks=0 ]	(	"srt"	)
+rOrd	[ 0	locks=0 ]	(	"xyz"	)
+t	[ 0	locks=0 ]	(	[ tx	0 ] 	0	[ tz	0 ] 	)
+r	[ 0	locks=0 ]	(	0	0	0	)
+s	[ 0	locks=0 ]	(	1	1	1	)
+shear	[ 0	locks=0 ]	(	0	0	0	)
+scale	[ 0	locks=0 ]	(	1	)
+parmgroup_pivotxform	[ 0	locks=0 ]	(	1	)
+p	[ 0	locks=0 ]	(	0	0	0	)
+pr	[ 0	locks=0 ]	(	0	0	0	)
+parmgroup_prexform	[ 0	locks=0 ]	(	0	)
+prexform_xOrd	[ 0	locks=0 ]	(	"srt"	)
+prexform_rOrd	[ 0	locks=0 ]	(	"xyz"	)
+prexform_t	[ 0	locks=0 ]	(	0	0	0	)
+prexform_r	[ 0	locks=0 ]	(	0	0	0	)
+prexform_s	[ 0	locks=0 ]	(	1	1	1	)
+prexform_shear	[ 0	locks=0 ]	(	0	0	0	)
+movecentroid	[ 0	locks=0 ]	(	0	)
+attribs	[ 0	locks=0 ]	(	*	)
+updatenmls	[ 0	locks=0 ]	(	"off"	)
+updateaffectednmls	[ 0	locks=0 ]	(	"on"	)
+vlength	[ 0	locks=0 ]	(	"on"	)
+invertxform	[ 0	locks=0 ]	(	"off"	)
+addattrib	[ 0	locks=0 ]	(	"off"	)
+outputattrib	[ 0	locks=0 ]	(	xform	)
+outputmerge	[ 0	locks=0 ]	(	"post"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointwrangle1.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointwrangle1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -10.5725 -27.2206
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	flip_along_Y 1 1 "input1"
+}
+inputs
+{
+0 	flip_along_Y 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointwrangle1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"int width = 512;
+int height = 512;
+int gridSize = 512;
+
+int flippedPoint;
+/*
+int row = i@ptnum / gridSize;
+int col = i@ptnum % gridSize;
+int flippedCol = gridSize - 1 - col;
+flippedPoint = row * gridSize + flippedCol;
+*/
+int row = i@ptnum / gridSize;
+int col = i@ptnum % gridSize;
+int flippedRow = gridSize - 1 - row;
+flippedPoint = flippedRow * gridSize + col;
+
+vector color =  point(0, \"Cd\", flippedPoint);
+v@Cd = color;"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointwrangle1.netbox"
+Content-Type: text/plain
+
+__netbox8
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointwrangle1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-44
+46
 OUT_DEPTH_MAKER
 output0
 OUT_BEFORE_REPOSITION
@@ -8309,6 +8516,8 @@ switch4
 sort3
 switch6
 flip_along_Y
+transform1
+pointwrangle1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
