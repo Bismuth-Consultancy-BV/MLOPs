@@ -1,7 +1,7 @@
 Operator:     mlops::import_colored_points::1.0
 Label:        MLOPs Import Colored Points
 Path:         oplib:/mlops::Cop2/import_colored_points::1.0?mlops::Cop2/import_colored_points::1.0
-Icon:         opdef:/mlops::Cop2/import_colored_points::1.0?IconSVG
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_IMPORT COLORED POINTS.svg
 Table:        Cop2
 License:      
 Extra:        
@@ -10,5 +10,5 @@ Inputs:       0 to 0
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Tue May  2 16:36:03 2023
+Modified:     Wed May 24 14:07:02 2023
 

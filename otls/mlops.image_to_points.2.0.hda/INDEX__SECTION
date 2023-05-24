@@ -1,7 +1,7 @@
 Operator:     mlops::image_to_points::2.0
 Label:        MLOPs SD Image to Points
 Path:         oplib:/mlops::Sop/image_to_points::2.0?mlops::Sop/image_to_points::2.0
-Icon:         opdef:/mlops::Sop/image_to_points::2.0?IconSVG
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_IMAGE TO POINTS.svg
 Table:        Sop
 License:      
 Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
@@ -10,5 +10,5 @@ Inputs:       0 to 0
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Mon May 22 20:03:58 2023
+Modified:     Wed May 24 14:06:06 2023
 
