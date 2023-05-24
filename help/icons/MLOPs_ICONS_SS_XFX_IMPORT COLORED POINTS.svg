@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #007da4;
+      }
+
+      .cls-2 {
+        fill: #fe3da6;
+      }
+
+      .cls-3 {
+        fill: #938c86;
+      }
+
+      .cls-4 {
+        fill: #fff;
+        font-family: SourceSansPro-Semibold, 'Source Sans Pro';
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .cls-5 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6 {
+        fill: #5e5a58;
+      }
+
+      .cls-7 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-8 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-9 {
+        fill: #7cdee8;
+      }
+
+      .cls-10 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-11 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-12 {
+        fill: #ffbc00;
+      }
+
+      .cls-13 {
+        fill: #5732ba;
+      }
+    </style>
+  </defs>
+  <g id="MLOPS_ICONS" data-name="MLOPS ICONS">
+    <circle class="cls-2" cx="73.56" cy="162.5" r="41.46"/>
+    <circle class="cls-6" cx="164.67" cy="162.5" r="41.46"/>
+    <circle cx="164.67" cy="255.98" r="41.46"/>
+    <circle class="cls-12" cx="255.78" cy="162.5" r="41.46"/>
+    <circle class="cls-9" cx="255.78" cy="255.98" r="41.46"/>
+    <circle class="cls-13" cx="255.78" cy="349.46" r="41.46"/>
+    <circle class="cls-1" cx="346.89" cy="162.5" r="41.46"/>
+    <circle class="cls-3" cx="346.89" cy="255.98" r="41.46"/>
+    <circle class="cls-1" cx="438.01" cy="162.5" r="41.46"/>
+  </g>
+  <g id="TEXT">
+    <text class="cls-4" transform="translate(2.49 -8.58)"><tspan x="0" y="0">IMPO</tspan><tspan class="cls-8" x="68.49" y="0">R</tspan><tspan class="cls-5" x="85.77" y="0">T </tspan><tspan class="cls-7" x="108.15" y="0">C</tspan><tspan x="124.44" y="0">O</tspan><tspan class="cls-10" x="144.66" y="0">L</tspan><tspan x="158.79" y="0">ORED POIN</tspan><tspan class="cls-11" x="303.48" y="0">T</tspan><tspan x="318.9" y="0">S</tspan></text>
+  </g>
+</svg>

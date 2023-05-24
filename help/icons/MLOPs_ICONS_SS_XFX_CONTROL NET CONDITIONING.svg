@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #938c86;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-family: SourceSansPro-Semibold, 'Source Sans Pro';
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .cls-3 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-4 {
+        fill: none;
+        stroke: #5732ba;
+        stroke-miterlimit: 10;
+        stroke-width: 24px;
+      }
+
+      .cls-5 {
+        fill: #5732ba;
+      }
+    </style>
+  </defs>
+  <g id="MLOPS_ICONS" data-name="MLOPS ICONS">
+    <g>
+      <g>
+        <line class="cls-4" x1="108.19" y1="224.08" x2="403.3" y2="224.08"/>
+        <line class="cls-4" x1="255.96" y1="108.7" x2="255.96" y2="221.66"/>
+        <polygon class="cls-5" points="181.09 403.3 255.96 328.43 330.82 403.3 419.9 403.3 255.96 239.35 92.01 403.3 181.09 403.3"/>
+      </g>
+      <polygon points="330.82 451.75 296.56 437.56 255.96 396.96 215.35 437.56 181.09 451.75 92.02 451.75 57.75 369.03 122.76 304.02 108.19 304.02 59.74 255.57 59.74 192.58 108.19 144.13 176.01 144.13 176.01 108.7 224.46 60.25 287.45 60.25 335.9 108.7 335.9 144.13 403.3 144.13 451.76 192.58 451.76 255.57 403.3 304.02 389.15 304.02 454.16 369.03 419.9 451.75 330.82 451.75"/>
+      <polygon class="cls-1" points="272.17 255.57 403.3 255.57 403.3 192.58 287.45 192.58 287.45 108.7 224.46 108.7 224.46 192.58 108.19 192.58 108.19 255.57 239.74 255.57 92.01 403.3 181.09 403.3 255.96 328.43 330.82 403.3 419.9 403.3 272.17 255.57"/>
+    </g>
+  </g>
+  <g id="TEXT">
+    <text class="cls-2" transform="translate(0 -7.95)"><tspan class="cls-3" x="0" y="0">C</tspan><tspan x="16.29" y="0">ONTROL NET </tspan><tspan class="cls-3" x="189.81" y="0">C</tspan><tspan x="206.1" y="0">ONDITIONING</tspan></text>
+  </g>
+</svg>

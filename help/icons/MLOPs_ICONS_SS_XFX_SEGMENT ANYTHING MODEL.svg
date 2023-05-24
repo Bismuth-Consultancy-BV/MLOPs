@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fe3da6;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-family: SourceSansPro-Semibold, 'Source Sans Pro';
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .cls-3 {
+        letter-spacing: -.02em;
+      }
+    </style>
+  </defs>
+  <g id="MLOPS_ICONS" data-name="MLOPS ICONS">
+    <g>
+      <rect class="cls-1" x="284.84" y="129.72" width="103.66" height="103.66"/>
+      <path d="m383.01,135.2v92.69h-92.69v-92.69h92.69m10.97-10.97h-114.62v114.62h114.62v-114.62h0Z"/>
+    </g>
+    <g>
+      <rect class="cls-1" x="123.57" y="279.92" width="103.66" height="103.66"/>
+      <path d="m221.74,285.4v92.69h-92.69v-92.69h92.69m10.97-10.97h-114.62v114.62h114.62v-114.62h0Z"/>
+    </g>
+    <g>
+      <circle cx="175.4" cy="181.54" r="57.41"/>
+      <path d="m175.4,129.61c28.68,0,51.93,23.25,51.93,51.93s-23.25,51.93-51.93,51.93-51.93-23.25-51.93-51.93,23.25-51.93,51.93-51.93m0-10.97c-34.68,0-62.9,28.22-62.9,62.9s28.22,62.9,62.9,62.9,62.9-28.22,62.9-62.9-28.22-62.9-62.9-62.9h0Z"/>
+    </g>
+    <g>
+      <circle cx="308.74" cy="299.39" r="27.22"/>
+      <circle cx="369.15" cy="299.39" r="27.22"/>
+      <circle cx="308.74" cy="359.36" r="27.22"/>
+      <circle cx="369.15" cy="359.36" r="27.22"/>
+    </g>
+  </g>
+  <g id="TEXT">
+    <text class="cls-2" transform="translate(0 -7.39)"><tspan x="0" y="0">SEGMENT AN</tspan><tspan class="cls-3" x="168.3" y="0">Y</tspan><tspan x="182.85" y="0">THING MODEL</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="MLOPS_ICONS" data-name="MLOPS ICONS" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 13px;
+      }
+
+      .cls-2 {
+        fill: #4ebc4c;
+      }
+
+      .cls-3 {
+        fill: #7cdee8;
+      }
+
+      .cls-4 {
+        fill: #5732ba;
+      }
+    </style>
+  </defs>
+  <line class="cls-1" x1="366.96" y1="226.49" x2="54.43" y2="226.49"/>
+  <line class="cls-1" x1="49.46" y1="299.74" x2="366.96" y2="299.74"/>
+  <g>
+    <circle class="cls-3" cx="440.76" cy="226.49" r="33.25"/>
+    <circle class="cls-2" cx="366.96" cy="226.49" r="33.25"/>
+    <circle class="cls-3" cx="366.96" cy="299.74" r="33.25"/>
+  </g>
+  <g>
+    <circle class="cls-4" cx="104.6" cy="256.67" r="69.94" transform="translate(-90.26 59.57) rotate(-22.5)"/>
+    <path d="m104.6,193.24c35.03,0,63.44,28.4,63.44,63.44s-28.4,63.44-63.44,63.44-63.44-28.4-63.44-63.44,28.4-63.44,63.44-63.44m0-13c-42.15,0-76.44,34.29-76.44,76.44s34.29,76.44,76.44,76.44,76.44-34.29,76.44-76.44-34.29-76.44-76.44-76.44h0Z"/>
+  </g>
+</svg>
