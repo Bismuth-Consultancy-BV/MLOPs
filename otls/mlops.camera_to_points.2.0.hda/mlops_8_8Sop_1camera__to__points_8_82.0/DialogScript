@@ -158,27 +158,29 @@
             }
             parm {
                 name    "inname"
-                label   "Segmentation Attribute"
+                label   "Piece Attribute"
                 type    string
-                default { "class" }
+                default { "name" }
                 disablewhen "{ input == 1 }"
-                menutoggle {
-                    [ "opmenu -l -a attribpromote3 inname" ]
-                }
-                parmtag { "autoscope" "0000000000000000" }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "inclass"
-                label   "Segmentation Attribute Class"
-                type    ordinal
-                default { "primitive" }
-                disablewhen "{ input == 1 }"
-                menu {
-                    "detail"    "Detail"
-                    "primitive" "Primitive"
-                    "point"     "Point"
-                    "vertex"    "Vertex"
+                menureplace {
+                    [ "# Assuming you have a geometry object stored in the variable 'geo'" ]
+                    [ "node = hou.node(\"./object_merge_geo\")" ]
+                    [ "geo = node.geometry()" ]
+                    [ "" ]
+                    [ "# Get the names of all point attributes" ]
+                    [ "attribute_names = [str(attr.name()) for attr in geo.pointAttribs()]" ]
+                    [ "attribute_names = attribute_names + [str(attr.name()) for attr in geo.primAttribs()]" ]
+                    [ "attribute_names = attribute_names + [str(attr.name()) for attr in geo.vertexAttribs()]" ]
+                    [ "" ]
+                    [ "# Create menu items as pairs of strings" ]
+                    [ "menu_items = []" ]
+                    [ "for attr_name in attribute_names:" ]
+                    [ "    menu_items.append(attr_name)" ]
+                    [ "    menu_items.append(attr_name)  # You can modify this if needed" ]
+                    [ "" ]
+                    [ "# Return menu items as a pair of strings" ]
+                    [ "return tuple(menu_items)" ]
+                    language python
                 }
                 parmtag { "autoscope" "0000000000000000" }
                 parmtag { "script_callback_language" "python" }
