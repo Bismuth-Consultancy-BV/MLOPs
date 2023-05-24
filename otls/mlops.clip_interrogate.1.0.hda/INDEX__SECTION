@@ -1,7 +1,7 @@
 Operator:     mlops::clip_interrogate::1.0
 Label:        MLOPs CLIP Interrogate
 Path:         oplib:/mlops::Sop/clip_interrogate::1.0?mlops::Sop/clip_interrogate::1.0
-Icon:         opdef:/mlops::Sop/clip_interrogate::1.0?IconSVG
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_BLIP CAPTION.svg
 Table:        Sop
 License:      
 Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
@@ -10,5 +10,5 @@ Inputs:       1 to 1
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Sat May 20 22:14:52 2023
+Modified:     Wed May 24 14:29:03 2023
 
