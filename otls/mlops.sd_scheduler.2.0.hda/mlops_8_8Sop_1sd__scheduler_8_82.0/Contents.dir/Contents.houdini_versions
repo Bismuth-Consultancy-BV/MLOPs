@@ -1,0 +1,35 @@
+{
+	"values":["19.5.605"
+	],
+	"indexes":{
+		"hdaroot/switchif4.userdata":0,
+		"hdaroot/switchif3.userdata":0,
+		"hdaroot/IN_IMAGE_LATENTS.userdata":0,
+		"hdaroot/error1.userdata":0,
+		"hdaroot/attribcreate4.userdata":0,
+		"hdaroot/attribcreate2.userdata":0,
+		"hdaroot/attribcopy7.userdata":0,
+		"hdaroot/attribcopy6.userdata":0,
+		"hdaroot/MASK_LATENTS.userdata":0,
+		"hdaroot/IMAGE_ENCODER.userdata":0,
+		"hdaroot/merge1.userdata":0,
+		"hdaroot/pack1.userdata":0,
+		"hdaroot/switchif2.userdata":0,
+		"hdaroot/attribcopy4.userdata":0,
+		"hdaroot/attribcopy5.userdata":0,
+		"hdaroot/attribcopy2.userdata":0,
+		"hdaroot/null3.userdata":0,
+		"hdaroot/attribcopy1.userdata":0,
+		"hdaroot/error3.userdata":0,
+		"hdaroot/LATENT_NOISE.userdata":0,
+		"hdaroot/null1.userdata":0,
+		"hdaroot/error2.userdata":0,
+		"hdaroot/switchif1.userdata":0,
+		"hdaroot/output0.userdata":0,
+		"hdaroot/scheduler.userdata":0,
+		"hdaroot/TEXT_EMBEDDINGS.userdata":0,
+		"hdaroot/attribcreate1.userdata":0,
+		"hdaroot/attribcreate3.userdata":0,
+		"hdaroot/switchif5.userdata":0
+	}
+}
