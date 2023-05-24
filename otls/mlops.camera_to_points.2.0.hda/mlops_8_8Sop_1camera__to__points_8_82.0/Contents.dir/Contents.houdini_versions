@@ -2,6 +2,8 @@
 	"values":["19.5.605"
 	],
 	"indexes":{
+		"hdaroot/nearclip_used_here1.userdata":0,
+		"hdaroot/custom_aspects.userdata":0,
 		"hdaroot/segementation_attribute_casting/output0.userdata":0,
 		"hdaroot/segementation_attribute_casting/OUT.userdata":0,
 		"hdaroot/segementation_attribute_casting.userdata":0,
@@ -48,6 +50,7 @@
 		"hdaroot/attribpromote2.userdata":0,
 		"hdaroot/pointvop3/bind1.userdata":0,
 		"hdaroot/transform3.userdata":0,
-		"hdaroot/attribcreate1.userdata":0
+		"hdaroot/attribcreate1.userdata":0,
+		"hdaroot/switch7.userdata":0
 	}
 }
