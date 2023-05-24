@@ -5,7 +5,7 @@
  Note, that two definitions of the same element are not allowed in
  a single file. -->
 
-  <tool name="mlops::resize_image::2.0" label="MLOPs Resize Image" icon="$MLOPS/help/icons/mlops.svg">
+  <tool name="mlops::resize_image::2.0" label="MLOPs Resize Image" icon="$MLOPS/help/icons/MLOPs_ICONS_SS_XFX_IMAGE RESIZE.svg">
     <toolMenuContext name="viewer">
       <contextNetType>SOP</contextNetType>
     </toolMenuContext>
