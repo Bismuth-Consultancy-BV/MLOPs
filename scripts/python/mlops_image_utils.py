@@ -63,9 +63,9 @@ def pil_to_colored_points(geo, pil_image):
     cd_array = numpy.array(pil_image)
 
     # Split the color data into separate "r", "g", and "b" arrays
-    r_attrib = cd_array[:, :, 0].ravel() / 255.0
-    g_attrib = cd_array[:, :, 1].ravel() / 255.0
-    b_attrib = cd_array[:, :, 2].ravel() / 255.0
+    r_attrib = cd_array[0:, :].ravel() / 255.0
+    g_attrib = cd_array[1:, :].ravel() / 255.0
+    b_attrib = cd_array[2:, :].ravel() / 255.0
 
     # Set the "r", "g", and "b" attributes on the points
     geo.setPointFloatAttribValues("r", r_attrib)
@@ -75,9 +75,9 @@ def pil_to_colored_points(geo, pil_image):
 
 def numpy_array_to_colored_points(geo, cd_array, scale_factor=255.0):
     # Split the color data into separate "r", "g", and "b" arrays
-    r_attrib = cd_array[:, :, 0].ravel() / scale_factor
-    g_attrib = cd_array[:, :, 1].ravel() / scale_factor
-    b_attrib = cd_array[:, :, 2].ravel() / scale_factor
+    r_attrib = cd_array[0, :, :].ravel() / scale_factor
+    g_attrib = cd_array[1, :, :].ravel() / scale_factor
+    b_attrib = cd_array[2, :, :].ravel() / scale_factor
 
     # Set the "r", "g", and "b" attributes on the points
     geo.setPointFloatAttribValues("r", list(map(float, r_attrib)))
