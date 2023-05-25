@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 1.60503 -0.736721
+position -6.64947 0.897929
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -81,11 +81,11 @@ Content-Type: text/plain
 	autofit := 0;
 	color := "UT_Color RGB 0.52 0.52 0.52 ";
 	comment := "Creates a plane with points respective of image resolution";
-	height := 6.3615106619291337;
+	height := 6.9301024305560768;
 	minimized := 0;
 	width := 6;
 	x_position := -8.8910636377648053;
-	y_position := 13.445291738824624;
+	y_position := 12.876699970197681;
 }
 {
   create -1
@@ -268,7 +268,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.01145 -17.4929
+position -9.01145 -18.4278
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -1732,7 +1732,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.91794 3.71326
+position -8.91794 2.77836
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -3040,7 +3040,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.13888 4.16578
+position -6.13888 3.23088
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -4348,7 +4348,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.7758 -38.0448
+position -8.7758 -38.9797
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -4409,7 +4409,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.7758 -39.6134
+position -8.7758 -40.5483
 connectornextid 1
 flags =  lock off model off template on footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -4468,7 +4468,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.16526 -25.6715
+position -9.16526 -26.6064
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -4814,7 +4814,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.52859 -13.456
+position -6.52859 -14.3909
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -5115,7 +5115,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -11.9891 -17.4929
+position -11.9891 -18.4278
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -5189,7 +5189,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.43153 -17.4939
+position -6.43153 -18.4288
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -5738,7 +5738,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.36952 -20.2564
+position -8.36952 -21.1913
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -5828,7 +5828,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.37252 -23.5965
+position -8.37252 -24.5314
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -5913,7 +5913,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.03664 -28.8842
+position -9.03664 -29.8191
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6045,7 +6045,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.8046 -35.4314
+position -8.8046 -36.3663
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6121,7 +6121,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.01191 15.9995
+position -8.01191 15.0646
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6208,7 +6208,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.80115 -36.3925
+position -8.80115 -37.3274
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6278,7 +6278,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.37297 -22.3609
+position -8.37297 -23.2958
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6383,7 +6383,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.00891 13.9616
+position -8.00891 13.0267
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6458,7 +6458,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.03664 -27.9151
+position -9.03664 -28.85
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6533,7 +6533,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.2385 11.6185
+position -9.2385 10.6836
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6577,7 +6577,7 @@ Content-Type: text/plain
       righttype = extend
       default = 1
       flags = 0
-      segment { length = 0 value = 1 1 expr = "ch(\"../custom_aspects/cam_aspect\") / ch(\"../custom_aspects/custom_aspect\")" }
+      segment { length = 0 value = 1 1 expr = "detail(\"../custom_aspects\",\"cam_aspect\",0) / detail(\"../custom_aspects\",\"custom_aspect\", 0)" }
     }
   }
 
@@ -6647,7 +6647,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.36952 -19.235
+position -8.36952 -20.1699
 connectornextid 6
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -6734,7 +6734,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -11.9886 -18.4745
+position -11.9886 -19.4094
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -7028,7 +7028,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -3.60943 -17.4939
+position -3.60943 -18.4288
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -7463,7 +7463,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 3.3121 -15.2176
+position 3.3121 -16.1525
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8047,7 +8047,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 2.67276 3.36267
+position 2.67276 2.42777
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8166,7 +8166,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 2.66976 4.47381
+position 2.66976 3.53891
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8253,7 +8253,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 2.66976 2.21116
+position 2.66976 1.27626
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8338,7 +8338,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -7.79213 6.54349
+position -7.79213 5.60859
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8489,7 +8489,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -7.79558 7.79296
+position -7.79558 6.85806
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8609,7 +8609,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -7.79558 5.37919
+position -7.79558 4.44429
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -8788,7 +8788,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.31597 2.65673
+position -6.31597 1.72183
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -9072,7 +9072,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -7.81948 1.20169
+position -7.81948 0.26679
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -9153,7 +9153,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.03664 -26.877
+position -9.03664 -27.8119
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass on display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -9243,7 +9243,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -9.03664 -31.3628
+position -9.03664 -32.2977
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -9324,7 +9324,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -10.4922 -30.0491
+position -10.4922 -30.984
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -9623,7 +9623,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -8.7758 -38.7312
+position -8.7758 -39.6661
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -11372,7 +11372,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -7.79213 8.79296
+position -7.79213 7.85806
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -11472,18 +11472,20 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -5.37785 17.2259
-connectornextid 0
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position -5.37785 16.291
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
 }
 inputsNamed3
 {
+0 	attribcreate3 1 1 "input1"
 }
 inputs
 {
+0 	attribcreate3 0 1
 }
 stat
 {
@@ -11602,30 +11604,31 @@ Content-Type: text/plain
 {
 version 0.8
 python	[ 0	locks=0 ]	(	"node = hou.pwd();
-tgtcampath = node.evalParm('camerapath');
-target_node = hou.node(tgtcampath);
-resx = target_node.parm('resx').eval();
-resy = target_node.parm('resy').eval();
-customx = node.parm('customx').eval();
-customy = node.parm('customy').eval();
+geo = node.geometry()
+
+tgtcampath = node.evalParm('camerapath')
+target_node = hou.node(tgtcampath)
+resx = target_node.parm('resx').eval()
+resy = target_node.parm('resy').eval()
+customx = node.parm('customx').eval()
+customy = node.parm('customy').eval()
 
 cam_aspect = resx / resy
 custom_aspect = customx / customy
 
-node.parm('width').set(resx);
-node.parm('height').set(resy);
-node.parm('cam_aspect').set(cam_aspect);
-node.parm('custom_aspect').set(custom_aspect);
-"	)
+geo.setGlobalAttribValue(\"width\", resx)
+geo.setGlobalAttribValue(\"height\", resy)
+geo.setGlobalAttribValue(\"cam_aspect\", cam_aspect)
+geo.setGlobalAttribValue(\"custom_aspect\", custom_aspect)"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
-width	[ 8	locks=0 ]	(	768	)
-height	[ 8	locks=0 ]	(	512	)
+width	[ 8	locks=0 ]	(	1280	)
+height	[ 8	locks=0 ]	(	720	)
 camerapath	[ 8	locks=0 ]	(	`chs(\"../camerapath\")`	)
 newparameter	[ 0	locks=0 ]	(	`chs(\"../../../cam1/resx\")`	)
-cam_aspect	[ 0	locks=0 ]	(	1.5	)
+cam_aspect	[ 0	locks=0 ]	(	1.7777777777777777	)
 customx	[ 0	locks=0 ]	(	[ customx	0 ] 	)
 customy	[ 0	locks=0 ]	(	[ customy	0 ] 	)
-custom_aspect	[ 0	locks=0 ]	(	1.5	)
+custom_aspect	[ 0	locks=0 ]	(	1	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -11658,9 +11661,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.39106 11.6185
+position -6.39106 10.6836
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -11702,7 +11705,7 @@ Content-Type: text/plain
       righttype = extend
       default = 3
       flags = 0
-      segment { length = 0 value = 3 3 expr = "ch(\"../custom_aspects/cam_aspect\") / ch(\"../custom_aspects/custom_aspect\")" }
+      segment { length = 0 value = 3 3 expr = "detail(\"../custom_aspects\",\"cam_aspect\",0) / detail(\"../custom_aspects\",\"custom_aspect\",0)" }
     }
   }
 
@@ -11772,7 +11775,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -7.79213 9.80759
+position -7.79213 8.87269
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -11863,10 +11866,147 @@ Content-Type: text/plain
 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcreate3.init"
+Content-Type: text/plain
+
+type = attribcreate::2.0
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcreate3.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -5.3813 17.3937
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	add1 1 1 "input1"
+}
+inputs
+{
+0 	add1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcreate3.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+encodenames	[ 0	locks=0 ]	(	"off"	)
+numattr	[ 0	locks=0 ]	(	4	)
+enable1	[ 0	locks=0 ]	(	"on"	)
+name1	[ 0	locks=0 ]	(	width	)
+existing1	[ 0	locks=0 ]	(	"better"	)
+createvarmap1	[ 0	locks=0 ]	(	"off"	)
+varname1	[ 0	locks=0 ]	(	""	)
+class1	[ 0	locks=0 ]	(	"detail"	)
+savetoinfo1	[ 0	locks=0 ]	(	"off"	)
+type1	[ 0	locks=0 ]	(	"int"	)
+typeinfo1	[ 0	locks=0 ]	(	"guess"	)
+precision1	[ 0	locks=0 ]	(	"auto"	)
+size1	[ 0	locks=0 ]	(	1	)
+default1v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues1	[ 0	locks=0 ]	(	"on"	)
+uselocal1	[ 0	locks=0 ]	(	"on"	)
+value1v	[ 0	locks=0 ]	(	0	0	0	0	)
+string1	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm1	[ 0	locks=0 ]	(	)
+enable2	[ 0	locks=0 ]	(	"on"	)
+name2	[ 0	locks=0 ]	(	height	)
+existing2	[ 0	locks=0 ]	(	"better"	)
+createvarmap2	[ 0	locks=0 ]	(	"off"	)
+varname2	[ 0	locks=0 ]	(	""	)
+class2	[ 0	locks=0 ]	(	"detail"	)
+savetoinfo2	[ 0	locks=0 ]	(	"off"	)
+type2	[ 0	locks=0 ]	(	"int"	)
+typeinfo2	[ 0	locks=0 ]	(	"guess"	)
+precision2	[ 0	locks=0 ]	(	"auto"	)
+size2	[ 0	locks=0 ]	(	1	)
+default2v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues2	[ 0	locks=0 ]	(	"on"	)
+uselocal2	[ 0	locks=0 ]	(	"on"	)
+value2v	[ 0	locks=0 ]	(	0	0	0	0	)
+string2	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm2	[ 0	locks=0 ]	(	)
+enable3	[ 0	locks=0 ]	(	"on"	)
+name3	[ 0	locks=0 ]	(	cam_aspect	)
+existing3	[ 0	locks=0 ]	(	"better"	)
+createvarmap3	[ 0	locks=0 ]	(	"off"	)
+varname3	[ 0	locks=0 ]	(	""	)
+class3	[ 0	locks=0 ]	(	"detail"	)
+savetoinfo3	[ 0	locks=0 ]	(	"off"	)
+type3	[ 0	locks=0 ]	(	"float"	)
+typeinfo3	[ 0	locks=0 ]	(	"guess"	)
+precision3	[ 0	locks=0 ]	(	"auto"	)
+size3	[ 0	locks=0 ]	(	1	)
+default3v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues3	[ 0	locks=0 ]	(	"on"	)
+uselocal3	[ 0	locks=0 ]	(	"on"	)
+value3v	[ 0	locks=0 ]	(	0	0	0	0	)
+string3	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm3	[ 0	locks=0 ]	(	)
+enable4	[ 0	locks=0 ]	(	"on"	)
+name4	[ 0	locks=0 ]	(	custom_aspect	)
+existing4	[ 0	locks=0 ]	(	"better"	)
+createvarmap4	[ 0	locks=0 ]	(	"off"	)
+varname4	[ 0	locks=0 ]	(	""	)
+class4	[ 0	locks=0 ]	(	"detail"	)
+savetoinfo4	[ 0	locks=0 ]	(	"off"	)
+type4	[ 0	locks=0 ]	(	"float"	)
+typeinfo4	[ 0	locks=0 ]	(	"guess"	)
+precision4	[ 0	locks=0 ]	(	"auto"	)
+size4	[ 0	locks=0 ]	(	1	)
+default4v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues4	[ 0	locks=0 ]	(	"on"	)
+uselocal4	[ 0	locks=0 ]	(	"on"	)
+value4v	[ 0	locks=0 ]	(	0	0	0	0	)
+string4	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm4	[ 0	locks=0 ]	(	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcreate3.netbox"
+Content-Type: text/plain
+
+__netbox1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcreate3.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-51
+52
 OUT_DEPTH_MAKER
 output0
 OUT_BEFORE_REPOSITION
@@ -11918,6 +12058,7 @@ custom_aspects
 nearclip_used_here1
 switch7
 pointvop4
+attribcreate3
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"
