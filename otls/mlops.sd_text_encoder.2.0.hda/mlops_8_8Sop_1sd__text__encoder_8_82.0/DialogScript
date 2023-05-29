@@ -47,13 +47,6 @@
         label   "Settings"
 
         parm {
-            name    "weigthtedprompting"
-            label   "Weighted Prompting"
-            type    toggle
-            default { "1" }
-            parmtag { "script_callback_language" "python" }
-        }
-        parm {
             name    "device"
             label   "Compute Device"
             type    ordinal
