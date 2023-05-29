@@ -3,7 +3,6 @@
 /otls/backup/
 hip/backup/
 checkpoints/*/
-scripts/sd-model-finetuned-lora/*
 data/temp/
 data/models/
 data/dependencies/
@@ -13,7 +12,3 @@ data/dependencies/
 *.OPdummydefs
 *.createtimes
 *.modtimes
-
-
-scripts/python/pix2pixpipeline/images/
-scripts/python/pix2pixpipeline/saved_models/
