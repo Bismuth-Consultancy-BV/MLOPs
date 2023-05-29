@@ -32,28 +32,30 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -6.58472 -3.25425
-connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault off exposed on
+position -0.918359 0.524249
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
 0 	image_to_points1 0 1 "input1"
+1 	add1 0 1 "input2"
 }
 inputs
 {
 0 	image_to_points1 0 1
+1 	add1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Mo@MO-GPU
   access 0777
 }
-color UT_Color RGB 0.475 0.812 0.204 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -863,14 +865,14 @@ Content-Type: text/plain
       righttype = extend
       default = 512
       flags = 0
-      segment { length = 0 value = 512 512 expr = "detail(\"../null1\", \"image_dimension\", 0)" }
+      segment { length = 0 value = 512 512 expr = "detail(\"../null1\", \"image_dimension\", 1)" }
     }
     channel y {
       lefttype = extend
       righttype = extend
       default = 512
       flags = 0
-      segment { length = 0 value = 512 512 expr = "detail(\"../null1\", \"image_dimension\", 1)" }
+      segment { length = 0 value = 512 512 expr = "detail(\"../null1\", \"image_dimension\", 0)" }
     }
   }
 
@@ -903,8 +905,8 @@ vex_inplace	[ 0	locks=0 ]	(	"off"	)
 vex_selectiongroup	[ 0	locks=0 ]	(	""	)
 vex_precision	[ 0	locks=0 ]	(	auto	)
 folder1	[ 0	locks=0 ]	(	0	0	)
-x	[ 0	locks=0 ]	(	[ x	0 ] 	)
-y	[ 0	locks=0 ]	(	[ y	0 ] 	)
+x	[ 8	locks=0 ]	(	[ x	0 ] 	)
+y	[ 8	locks=0 ]	(	[ y	0 ] 	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY

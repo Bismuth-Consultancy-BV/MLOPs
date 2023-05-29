@@ -32,9 +32,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -5.58401 -3.83188
+position -7.2666 4.46096
 connectornextid 1
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -50,7 +50,7 @@ stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -91,7 +91,7 @@ sopflags sopflags =
 comment ""
 position -0.519726 0.12678
 connectornextid 1
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
@@ -197,8 +197,8 @@ geo = node.geometry()
 geo1 = node.inputs()[1].geometry()      
    
 # Attributes 
-width = int(geo1.attribValue(\"image_dimension\")[0])
-height = int(geo1.attribValue(\"image_dimension\")[1])
+width = int(geo1.attribValue(\"image_dimension\")[1])
+height = int(geo1.attribValue(\"image_dimension\")[0])
 r = numpy.array(geo1.pointFloatAttribValues(\"r\"), dtype=numpy.float32).reshape(width, height)
 g = numpy.array(geo1.pointFloatAttribValues(\"g\"), dtype=numpy.float32).reshape(width, height)
 b = numpy.array(geo1.pointFloatAttribValues(\"b\"), dtype=numpy.float32).reshape(width, height)
@@ -952,7 +952,7 @@ sopflags sopflags =
 comment ""
 position -0.519726 2.12678
 connectornextid 3
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
