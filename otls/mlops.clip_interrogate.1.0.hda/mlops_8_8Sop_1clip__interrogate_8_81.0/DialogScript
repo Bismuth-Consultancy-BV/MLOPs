@@ -1,0 +1,60 @@
+# Dialog script for mlops::clip_interrogate::1.0 automatically generated
+
+{
+    name	mlops::clip_interrogate::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs CLIP Interrogate"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Conditional Prompt"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	Prompt
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+
+        parm {
+            name    "model"
+            label   "CLIP Model"
+            type    string
+            default { "ViT-L-14/openai" }
+            menureplace {
+                "ViT-L-14/openai"               "ViT-L-14/openai"
+                "ViT-H-14/laion2b_s32b_b79k"    "ViT-H-14/laion2b_s32b_b79k"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "mode"
+            label   "CLIP Mode"
+            type    string
+            default { "best" }
+            menu {
+                "best"      "Best"
+                "classic"   "Classic"
+                "fast"      "Fast"
+                "negative"  "Negative"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

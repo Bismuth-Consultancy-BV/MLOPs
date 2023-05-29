@@ -1,0 +1,63 @@
+# Dialog script for mlops::visualize_dimensionality_reduction::1.0 automatically generated
+
+{
+    name	mlops::visualize_dimensionality_reduction::1.0
+    script	mlops::dev::MLOPs_Visualize_Dimensionality_Reduction::1.0
+    label	"MLOPs Visualize Dimensionality Reduction"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Image Latents To Copy To Points"
+    inputlabel	2	"Clustered Data Points"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	Images
+
+    groupsimple {
+        name    "folder0"
+        label   "UMAP Visualization"
+
+        parm {
+            name    "input"
+            label   "Point To Camera"
+            type    toggle
+            default { "1" }
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lookatpath"
+            label   "Lookat Camera"
+            type    oppath
+            default { "/obj/cam1" }
+            disablewhen "{ input == 0 }"
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "opfilter" "!!OBJ!!" }
+            parmtag { "oprelative" "." }
+        }
+        parm {
+            name    "upvector"
+            label   "Up-Vector"
+            type    vector
+            size    3
+            default { "0" "1" "0" }
+            disablewhen "{ input == 0 }"
+            range   { -1 1 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "r"
+            label   "Rotate Images"
+            type    vector
+            size    3
+            default { "90" "0" "270" }
+            range   { 0 360 }
+            parmtag { "autoscope" "1110000000000000" }
+        }
+    }
+
+}

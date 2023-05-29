@@ -1,0 +1,14 @@
+Operator:     mlops::sd_latent_noise_generate::2.0
+Label:        MLOPs SD Latent Noise Generate
+Path:         oplib:/mlops::Sop/sd_latent_noise_generate::2.0?mlops::Sop/sd_latent_noise_generate::2.0
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_LATENT NOISE GENERATION.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       0 to 0
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed May 24 13:56:45 2023
+

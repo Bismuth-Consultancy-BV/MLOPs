@@ -1,0 +1,63 @@
+# Dialog script for mlops::sd_mask_encode::2.0 automatically generated
+
+{
+    name	mlops::sd_mask_encode::2.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs SD Mask Encode"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Colored Points (Mask)"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Mask Latents"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "latentwidth"
+            label   "Latent Width"
+            type    integer
+            default { "96" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "latentheight"
+            label   "Latent Height"
+            type    integer
+            default { "96" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "width"
+            label   "Width"
+            type    integer
+            default { "768" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "height"
+            label   "Height"
+            type    integer
+            default { "768" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "invert"
+            label   "Invert"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

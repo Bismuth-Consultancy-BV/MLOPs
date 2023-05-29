@@ -1,0 +1,12 @@
+{
+	"values":["1.0","19.5.605"
+	],
+	"indexes":{
+		"hdaroot/python2.userdata":1,
+		"hdaroot/null1.userdata":1,
+		"hdaroot/measure_SSIM.userdata":1,
+		"hdaroot/switch1.userdata":1,
+		"hdaroot/output0.userdata":1,
+		"hdaroot.userdata":0
+	}
+}

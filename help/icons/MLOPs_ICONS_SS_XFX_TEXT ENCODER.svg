@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        font-family: SourceSansPro-Semibold, 'Source Sans Pro';
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .cls-2 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-3 {
+        letter-spacing: -.02em;
+      }
+    </style>
+  </defs>
+  <g id="MLOPS_ICONS" data-name="MLOPS ICONS">
+    <g>
+      <image width="178" height="73" transform="translate(41 218)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAABJCAYAAACZ33yyAAAACXBIWXMAAAsSAAALEgHS3X78AAABIklEQVR4nO3Yu00EUAxFQS/9khFRABEZBYMIkBDis0v0fDTTgk9yfXl5fnodWO7OASkQMglCJkHIJAiZ9e4fHi9CJkHIJAiZBCGTIGRWex96I2QqhEyCkEkQMglCZq2PoTdCpkLIJAiZBCGTIGRW+jz0RshUCJkEIZMgZBKEzDpfh94ImQohkyBkEoRMgpBZ5buhN0KmQsgkCJkEIZMgZBKEzBo/fSxGyFQImQQhkyBkEoTMCr8NvREyFUImQcgkCJkEIXO8v4beCJkKIZMgZBKETIKQOdo1Q2+ETIWQSRAyCUImQcgc69qhN0KmQsgkCJkEIZMgZI50y9AbIVMhZBKETIKQSRAyx7l16I2QqRAyCUImQcgkCJmj/GfojZBJmJk3teMWPr/JwCUAAAAASUVORK5CYII="/>
+      <image width="161" height="73" transform="translate(41 306)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAABJCAYAAABVRkZZAAAACXBIWXMAAAsSAAALEgHS3X78AAABLElEQVR4nO3Xu00EURBFwV6iwCZOTOLEJgsQBhJCC+xnZs4zqkJoHaPv6fn17X0g9OD4lF6eHk8iJCdCciIkJ0JyIiTzOUpGhKxAhORESE6EJL7+wREhKxAhORGSEyE5EXK476NkRMgKREhOhOREyKF+/oMjQlYgQnIiJCdCciLkMOdGyYiQFYiQnAjJiZBD/PYPjghZgQjJiZCcCMmJkN39NUpGhKxAhORESE6E7Oq/f3BEyApESE6E5ERIToTs5pJRMiJkBSIkJ0JyImQXl/6DI0JWIEJyIiQnQnIiZHPXjJIRISsQITkRkhMhm7r2HxwRsgIRkhMhORGSEyGbuWWUjAhZgQjJiZCcCMmJkE3cOkpGhKxAhORESE6E3O2ef3BEyApESE6EtGbmA4rkD8PIK5EvAAAAAElFTkSuQmCC"/>
+    </g>
+    <image width="104" height="72" transform="translate(41 134)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABICAYAAAAasLCXAAAACXBIWXMAAAsSAAALEgHS3X78AAABAUlEQVR4nO3WuU0EAQAEwTmiwCZOTOLEJgsQBhJCPHcYu21UpdDGzOXx+eV1ZN1J0yZQ2NPD/UWgOIHiBIoTKOp9fyZQn0BxAsUJFCdQ0MdBmEB9AsUJFCdQnEAxnw/CBOoTKE6gOIHiBAr5ehAmUJ9AcQLFCRQnUMR3B2EC9QkUJ1CcQHECxQkU8NODm0B9AsUJFCdQnEAn++0gTKA+geIEihMoTqAT/XUQJlCfQHECxQkUJ9BJrjkIE6hPoDiB4gSKE+gE1x6ECdQnUJxAcQLFCXSwWw7CBOoTKE6gOIHiBDrQrQdhAvUJFCdQnEBxAh3kPwdhAvUJFCdQnEBl294AlDMOQ9iQRTsAAAAASUVORK5CYII="/>
+    <g>
+      <polygon points="218.73 218.47 204.72 290.12 276.83 290.12 290.84 218.47 218.73 218.47"/>
+      <polygon points="185.21 378.09 257.32 378.09 273.11 306.85 201 306.85 185.21 378.09"/>
+    </g>
+    <polygon points="144.28 134.4 130.02 205.64 204.09 205.64 219.9 134.4 144.28 134.4"/>
+    <polygon points="221.23 205.64 292.7 205.64 308.51 134.4 237.04 134.4 221.23 205.64"/>
+    <polygon points="325.65 134.4 309.84 205.64 383.27 205.64 397.53 134.4 325.65 134.4"/>
+  </g>
+  <g id="TEXT">
+    <text class="cls-1" transform="translate(0 -8.09)"><tspan x="0" y="0">TE</tspan><tspan class="cls-3" x="32.52" y="0">X</tspan><tspan x="48.15" y="0">T EN</tspan><tspan class="cls-2" x="106.35" y="0">C</tspan><tspan x="122.64" y="0">ODER</tspan></text>
+  </g>
+</svg>

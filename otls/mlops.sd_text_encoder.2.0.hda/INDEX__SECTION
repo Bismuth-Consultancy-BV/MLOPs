@@ -1,0 +1,14 @@
+Operator:     mlops::sd_text_encoder::2.0
+Label:        MLOPs SD Text Encoder
+Path:         oplib:/mlops::Sop/sd_text_encoder::2.0?mlops::Sop/sd_text_encoder::2.0
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_TEXT ENCODER.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='2 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 2
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Mon May 29 16:17:33 2023
+

@@ -1,0 +1,14 @@
+Operator:     mlops::create_clip_image_embeddings::1.0
+Label:        MLOPs Create CLIP Image Embedding
+Path:         oplib:/mlops::Sop/create_clip_image_embeddings::1.0?mlops::Sop/create_clip_image_embeddings::1.0
+Icon:         opdef:/mlops::Sop/create_clip_image_embeddings::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Sat May 20 22:29:20 2023
+

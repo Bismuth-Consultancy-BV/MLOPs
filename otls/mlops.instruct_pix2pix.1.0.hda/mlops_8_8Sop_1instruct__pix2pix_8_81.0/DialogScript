@@ -1,0 +1,105 @@
+# Dialog script for mlops::instruct_pix2pix::1.0 automatically generated
+
+{
+    name	mlops::instruct_pix2pix::1.0
+    script	mlops::instruct_pix2pix::1.0
+    label	"MLOPs Instruct-pix2pix"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	Prompt
+    inputlabel	3	"Negative Prompt"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Model"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "pix2pix Model"
+            type    string
+            default { "timbrooks/instruct-pix2pix" }
+            menureplace {
+                [ "import mlops_utils, os" ]
+                [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\")" ]
+                [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
+                language python
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder2"
+        label   "Settings"
+
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Pix2Pix"
+
+        parm {
+            name    "seed"
+            label   "Seed"
+            type    integer
+            default { "44" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "guidescale"
+            label   "CFG Scale"
+            type    float
+            default { "7" }
+            range   { 0 20 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "imgguidance"
+            label   "Image Guidance Scale"
+            type    float
+            default { "1" }
+            range   { 0.9 3 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "infsteps"
+            label   "Inference Steps"
+            type    integer
+            default { "20" }
+            range   { 0 80 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

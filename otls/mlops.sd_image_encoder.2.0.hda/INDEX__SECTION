@@ -1,0 +1,14 @@
+Operator:     mlops::sd_image_encoder::2.0
+Label:        MLOPs SD Image Encoder
+Path:         oplib:/mlops::Sop/sd_image_encoder::2.0?mlops::Sop/sd_image_encoder::2.0
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_IMAGE ENCODER.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed May 24 13:58:39 2023
+

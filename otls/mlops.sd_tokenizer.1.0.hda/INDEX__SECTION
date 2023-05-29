@@ -1,7 +1,7 @@
 Operator:     mlops::sd_tokenizer::1.0
 Label:        MLOPs SD Tokenizer
 Path:         oplib:/mlops::Sop/sd_tokenizer::1.0?mlops::Sop/sd_tokenizer::1.0
-Icon:         opdef:/mlops::Sop/sd_tokenizer::1.0?IconSVG
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_TOKENIZER.svg
 Table:        Sop
 License:      
 Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
@@ -10,5 +10,5 @@ Inputs:       1 to 1
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Mon Apr 24 16:06:51 2023
+Modified:     Wed May 24 13:56:14 2023
 

@@ -1,2 +1,21 @@
 ophide Sop mlops::sd_image_upres::1.0 // Not working
-ophide Sop mlops::sd_mask_encode::1.0
+ophide Sop mlops::sd_mask_encode::2.0
+opalias Sop mlops::export_image::2.0 mlops::sd_export_image::1.0
+opalias Sop mlops::transform_image::2.0 mlops::resize_image::1.0 
+
+
+opalias Sop mlops::camera_to_points::2.0 mlops::camera_to_points::1.0
+opalias Sop mlops::camera_to_points::2.0 mlops::camera_to_points::1.1
+opalias Sop mlops::export_image::2.0 mlops::export_image::1.0
+opalias Sop mlops::image_to_points::2.0 mlops::image_to_points::1.0
+opalias Sop mlops::sd_controlnet_conditioning::2.0 mlops::sd_controlnet_conditioning::1.0
+opalias Sop mlops::sd_image_decoder::2.0 mlops::sd_image_decoder::1.0
+opalias Sop mlops::sd_image_encoder::2.0 mlops::sd_image_encoder::1.0
+opalias Sop mlops::sd_latent_noise_generate::2.0 mlops::sd_latent_noise_generate::1.0
+opalias Sop mlops::sd_mask_encode::2.0 mlops::sd_mask_encode::1.0
+opalias Sop mlops::sd_scheduler::2.0 mlops::sd_scheduler::1.0
+opalias Sop mlops::sd_solver::2.0 mlops::sd_solver::1.0
+opalias Sop mlops::sd_text_encoder::2.0 mlops::sd_text_encoder::1.0
+opalias Sop mlops::transform_image::2.0 mlops::transform_image::1.0
+
+

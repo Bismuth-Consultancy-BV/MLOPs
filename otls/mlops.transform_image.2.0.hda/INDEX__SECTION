@@ -1,0 +1,14 @@
+Operator:     mlops::transform_image::2.0
+Label:        MLOPs Transform Image
+Path:         oplib:/mlops::Sop/transform_image::2.0?mlops::Sop/transform_image::2.0
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_IMAGE RESIZE.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed May 24 13:58:21 2023
+

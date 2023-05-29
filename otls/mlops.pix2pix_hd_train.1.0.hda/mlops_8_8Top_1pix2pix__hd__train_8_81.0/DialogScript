@@ -1,0 +1,535 @@
+# Dialog script for mlops::pix2pix_hd_train::1.0 automatically generated
+
+{
+    name	mlops::pix2pix_hd_train::1.0
+    script	mlops::pix2pix_hd_train::1.0
+    label	"MLOPs Pix2PixHD Train"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Input 1"
+    inputlabel	2	"Input 2"
+    inputlabel	3	"Input 3"
+    inputlabel	4	"Input 4"
+
+    groupcollapsible {
+        name    "folder2"
+        label   "Schedulers"
+        grouptag { "visibletabs" "111" }
+
+        parm {
+            name    "topscheduler"
+            label   "TOP Scheduler Override"
+            type    oppath
+            joinnext
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "opfilter" "!!TOP/SCHEDULER!!" }
+            parmtag { "oprelative" "." }
+        }
+        parm {
+            name    "addjobparms"
+            label   "Add Job Parms"
+            type    button
+            nolabel
+            default { "Deadline" }
+            menu {
+                [ "opmenu -l -a pythonscript1 addjobparms" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_useschedulewhen"
+            label   "Use Schedule When"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_schedulewhen"
+            label   "Schedule When"
+            type    integer
+            default { "1" }
+            disablewhen "{ pdg_useschedulewhen == 0 }"
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+            parmtag { "sidefx::slider" "none" }
+        }
+        parm {
+            name    "sepparm4"
+            label   "Separator"
+            type    separator
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+        }
+        parm {
+            name    "pdg_workitemlabel"
+            label   "Work Item Label"
+            type    ordinal
+            joinnext
+            default { "0" }
+            menu {
+                "0" "Use Default"
+                "1" "Inherit from Upstream Item"
+                "2" "Custom Expression"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitemlabelexpr"
+            label   "Label Expression"
+            type    string
+            nolabel
+            default { "" }
+            disablewhen "{ pdg_workitemlabel != 2 }"
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitempriority"
+            label   "Work Item Priority"
+            type    ordinal
+            joinnext
+            default { "0" }
+            menu {
+                "0" "Inherit from Upstream Item"
+                "1" "Custom Expression"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitempriorityexpr"
+            label   "Priority Expression"
+            type    integer
+            nolabel
+            default { "0" }
+            disablewhen "{ pdg_workitempriority != 1 }"
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+            parmtag { "sidefx::slider" "none" }
+        }
+    }
+
+    groupsimple {
+        name    "folder0"
+        label   "Training Arguments"
+
+        parm {
+            name    "name"
+            label   "Name"
+            type    string
+            default { "$OS" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gpu_ids"
+            label   "GPUs to Use"
+            type    string
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "checkpoints_dir"
+            label   "Checkpoints Dir"
+            type    directory
+            default { "$HIP/export/$OS/" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "Model"
+            type    string
+            default { "pix2pixHD" }
+            menu usetokenvalue {
+                "pix2pixHD" "Pix2PixHD"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "norm"
+            label   "Instance Normalization"
+            type    string
+            default { "instance" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "use_dropout"
+            label   "Use Dropout"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "data_type"
+            label   "Bit Precision"
+            type    ordinal
+            default { "32" }
+            menu usetokenvalue {
+                "8"     "8"
+                "16"    "16"
+                "32"    "32"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "fp16"
+            label   "Train using AMP"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "batchSize"
+            label   "Batch Size"
+            type    integer
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "loadSize"
+            label   "Image Load Size"
+            type    integer
+            default { "1024" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "fineSize"
+            label   "Image Crop Size"
+            type    integer
+            default { "512" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "label_nc"
+            label   "Label Channels"
+            type    integer
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "input_nc"
+            label   "Input Channels"
+            type    integer
+            default { "3" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "output_nc"
+            label   "Output Channels"
+            type    integer
+            default { "3" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "dataroot"
+            label   "Dataset Root"
+            type    directory
+            default { "$MLOPS/data/testing/pix2pix_sample" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "resize_or_crop"
+            label   "Image Variations"
+            type    string
+            default { "scale_width" }
+            menureplace {
+                "resize_and_crop"       "Resize and Crop"
+                "crop"                  "Crop"
+                "scale_width"           "Scale Width"
+                "scale_width_and_crop"  "Scale Width and Crop"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "serial_batches"
+            label   "Serial Batches"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "no_flip"
+            label   "No Flip"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "nThreads"
+            label   "Data Loading Threads"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "tf_log"
+            label   "Logging"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "_ui_tensorboardcommand"
+            label   "Tensorboard Command"
+            type    string
+            default { "tensorboard --logdir `chs(\"checkpoints_dir\")`/logs/ --port 6006" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "netG"
+            label   "NetG Model"
+            type    string
+            default { "global" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "ngf"
+            label   "Gen Filters in First Conv Layer"
+            type    integer
+            default { "64" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "n_downsample_global"
+            label   "Downsampling Layers in NetG"
+            type    integer
+            default { "4" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "n_blocks_global"
+            label   "Residual Blocks in Global Generator"
+            type    integer
+            default { "9" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "n_blocks_local"
+            label   "Residual Blocks in Local Enhancer"
+            type    integer
+            default { "3" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "n_local_enhancers"
+            label   "Local Enhancers"
+            type    integer
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "niter_fix_global"
+            label   "Outermost Local Enhancer Training Epochs"
+            type    integer
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "no_instance"
+            label   "No Instance Maps"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "instance_feat"
+            label   "Add Encoded Instance Features"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "label_feat"
+            label   "Add Encoded Label Features"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "feat_num"
+            label   "Encoded Features Vector Length"
+            type    integer
+            default { "3" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "load_features"
+            label   "Precomputed Feature Maps"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "n_downsample_E"
+            label   "Downsampling Layers in Encoder"
+            type    integer
+            default { "4" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "nef"
+            label   "Encoder Filters in First Conv Layer"
+            type    integer
+            default { "16" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "n_clusters"
+            label   "Cluster Features"
+            type    integer
+            default { "10" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "save_latest_freq"
+            label   "Save Latest Frequence"
+            type    integer
+            default { "1000" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "save_epoch_freq"
+            label   "Save Epoch Frequence"
+            type    integer
+            default { "10" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "continue_train"
+            label   "Continue Training"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "which_epoch"
+            label   "Continue Train Epoch"
+            type    string
+            default { "latest" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "niter"
+            label   "Iterations at Starting Learning Rate"
+            type    integer
+            default { "100" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "niter_decay"
+            label   "Iterations to Linearly Decay Learning Rate"
+            type    integer
+            default { "100" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "beta1"
+            label   "Beta 1"
+            type    float
+            default { "0.5" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lr"
+            label   "Learning Rate"
+            type    float
+            default { "0.0002" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "num_D"
+            label   "Discriminators"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "n_layers_D"
+            label   "Discriminator Layers"
+            type    integer
+            default { "3" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "ndf"
+            label   "Discriminator Filters in First Conv Layer"
+            type    integer
+            default { "64" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lambda_feat"
+            label   "Feature Matching Loss"
+            type    float
+            default { "10" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "no_ganFeat_loss"
+            label   "No Discriminator Feature Matching Loss"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "no_vgg_loss"
+            label   "No VGG Feature Matching Loss"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "no_lsgan"
+            label   "Least Square GAN"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pool_size"
+            label   "Image Buffer"
+            type    integer
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

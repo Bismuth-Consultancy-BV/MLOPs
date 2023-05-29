@@ -1,0 +1,102 @@
+# Dialog script for mlops::rembg::1.0 automatically generated
+
+{
+    name	mlops::rembg::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs RemBG"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Mask Points"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+
+        parm {
+            name    "model"
+            label   "RemBG Model"
+            type    string
+            default { "u2net" }
+            menureplace {
+                "u2net"             "u2net"
+                "u2netp"            "u2netp"
+                "u2net_human_seg"   "u2net_human_seg"
+                "u2net_cloth_seg"   "u2net_cloth_seg"
+                "silueta"           "silueta"
+                "isnet-general-use" "isnet-general-use"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "bgcolor"
+            label   "Background Color"
+            type    color
+            size    3
+            default { "0" "0" "0" }
+            range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "alpha"
+            label   "Generate Alpha Attribute"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "postprocess"
+            label   "Post Process Mask"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "folder0"
+            label   "Alpha Matting"
+
+            parm {
+                name    "alphamatting"
+                label   "Enable Alpha Matting"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "foregroundthreshold"
+                label   "Foreground Threshold"
+                type    integer
+                default { "270" }
+                disablewhen "{ alphamatting != 1 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "backgroundthreshold"
+                label   "Background Threshold"
+                type    integer
+                default { "20" }
+                disablewhen "{ alphamatting != 1 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "erodesize"
+                label   "Erode Size"
+                type    integer
+                default { "11" }
+                disablewhen "{ alphamatting != 1 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+}

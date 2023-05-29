@@ -3,10 +3,17 @@
 /otls/backup/
 hip/backup/
 checkpoints/*/
+scripts/sd-model-finetuned-lora/*
+data/temp/
+data/models/
+data/dependencies/
 
 #ignore other unimportant expanded HDA files
 *.OPfallbacks
 *.OPdummydefs
 *.createtimes
 *.modtimes
-/data/dependencies/python/
+
+
+scripts/python/pix2pixpipeline/images/
+scripts/python/pix2pixpipeline/saved_models/

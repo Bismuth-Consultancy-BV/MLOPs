@@ -1,0 +1,15 @@
+{
+	"values":["19.5.538"
+	],
+	"indexes":{
+		"hdaroot/primitive1.userdata":0,
+		"hdaroot/transform1.userdata":0,
+		"hdaroot/switch1.userdata":0,
+		"hdaroot/pack1.userdata":0,
+		"hdaroot/foreach_begin1_metadata1.userdata":0,
+		"hdaroot/copytopoints1.userdata":0,
+		"hdaroot/output0.userdata":0,
+		"hdaroot/foreach_begin1.userdata":0,
+		"hdaroot/foreach_end1.userdata":0
+	}
+}

@@ -20,19 +20,19 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -14.5171 -3.04609
+position -6.55687 -0.252694
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	sd_tokenizer1 1 1 "input1"
+0 	sd_tokenizer2 1 1 "input1"
 }
 inputs
 {
-0 	sd_tokenizer1 0 1
+0 	sd_tokenizer2 0 1
 }
 stat
 {
@@ -114,6 +114,7 @@ Content-Type: text/plain
 version 0.8
 python	[ 0	locks=0 ]	(	"from sdpipeline import detokenizer
 import mlops_utils
+import os
 from imp import reload 
 reload(detokenizer)
 reload(mlops_utils)
@@ -132,7 +133,7 @@ skip_special_tokens = node.parent().parm(\"skipspecialtokens\").evalAsInt()
 tokens = list(geo1.pointIntAttribValues(\"token\"))
  
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, \"$MLOPS_MODELS\", bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
 string = detokenizer.run(tokens, bool(skip_special_tokens), model_path, local_cache_only=bool(cache_only))
 
 # Export

@@ -1,0 +1,14 @@
+Operator:     mlops::camera_to_points::2.0
+Label:        MLOPs Camera to Points
+Path:         oplib:/mlops::Sop/camera_to_points::2.0?mlops::Sop/camera_to_points::2.0
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_CAMERA TO POINTS.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       0 to 0
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Thu May 25 09:48:43 2023
+

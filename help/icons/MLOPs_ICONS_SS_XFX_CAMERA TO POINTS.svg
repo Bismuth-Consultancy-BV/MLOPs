@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: SourceSansPro-Semibold, 'Source Sans Pro';
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: #938c86;
+      }
+
+      .cls-3, .cls-2 {
+        stroke: #1d1d1b;
+        stroke-miterlimit: 10;
+        stroke-width: 13px;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-6 {
+        fill: #4ebc4c;
+      }
+
+      .cls-6, .cls-7 {
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 24px;
+      }
+
+      .cls-7 {
+        fill: #7cdee8;
+      }
+
+      .cls-8 {
+        letter-spacing: -.03em;
+      }
+    </style>
+  </defs>
+  <g id="MLOPS_ICONS" data-name="MLOPS ICONS">
+    <g>
+      <line class="cls-6" x1="311.05" y1="482.08" x2="256" y2="427.03"/>
+      <line class="cls-6" x1="256" y1="427.03" x2="200.95" y2="482.08"/>
+    </g>
+    <rect class="cls-3" x="12.83" y="87.05" width="486.29" height="337.71" rx="57.72" ry="57.72"/>
+    <circle class="cls-7" cx="163.73" cy="255.89" r="77.84"/>
+    <circle class="cls-2" cx="322.69" cy="255.89" r="41.46"/>
+    <circle class="cls-2" cx="322.69" cy="348.39" r="41.46"/>
+    <circle class="cls-2" cx="322.69" cy="163.39" r="41.46"/>
+    <circle class="cls-2" cx="417.22" cy="255.89" r="41.46"/>
+    <circle class="cls-2" cx="417.22" cy="348.39" r="41.46"/>
+    <circle class="cls-2" cx="417.22" cy="163.39" r="41.46"/>
+  </g>
+  <g id="TEXT">
+    <text class="cls-1" transform="translate(0 -7.95)"><tspan x="0" y="0">CAME</tspan><tspan class="cls-4" x="72.51" y="0">R</tspan><tspan x="90.09" y="0">A </tspan><tspan class="cls-5" x="112.83" y="0">T</tspan><tspan x="128.43" y="0">O POIN</tspan><tspan class="cls-8" x="220.47" y="0">T</tspan><tspan x="235.89" y="0">S</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+Operator:     mlops::instruct_pix2pix::1.0
+Label:        MLOPs Instruct-pix2pix
+Path:         oplib:/mlops::Sop/instruct_pix2pix::1.0?mlops::Sop/instruct_pix2pix::1.0
+Icon:         opdef:/mlops::Sop/instruct_pix2pix::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='3 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       2 to 3
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Thu May 25 23:05:44 2023
+

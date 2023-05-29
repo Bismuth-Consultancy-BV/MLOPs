@@ -1,0 +1,18 @@
+# Dialog script for mlops::measure_prompt_similarity::1.0 automatically generated
+
+{
+    name	mlops::measure_prompt_similarity::1.0
+    script	MLOPs_Image_Similarity
+    label	"MLOPs Measure Prompt Similarity"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Colored Points"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Image Similarity"
+
+}

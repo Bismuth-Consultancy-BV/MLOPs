@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #007da4;
+      }
+
+      .cls-2 {
+        fill: #fe3da6;
+      }
+
+      .cls-3 {
+        fill: #938c86;
+      }
+
+      .cls-4 {
+        fill: #fff;
+        font-family: SourceSansPro-Semibold, 'Source Sans Pro';
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .cls-5 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6 {
+        fill: #5e5a58;
+      }
+
+      .cls-7 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-8 {
+        fill: #4ebc4c;
+      }
+
+      .cls-9 {
+        fill: #7cdee8;
+      }
+
+      .cls-10 {
+        fill: #014759;
+      }
+
+      .cls-11 {
+        fill: #ffbc00;
+      }
+
+      .cls-12 {
+        fill: #5732ba;
+      }
+
+      .cls-13 {
+        letter-spacing: -.06em;
+      }
+    </style>
+  </defs>
+  <g id="MLOPS_ICONS" data-name="MLOPS ICONS">
+    <g>
+      <rect class="cls-1" x="83.71" y="359.96" width="69.24" height="69.24"/>
+      <rect x="152.95" y="359.96" width="69.24" height="69.24"/>
+      <rect x="222.19" y="359.96" width="69.24" height="69.24"/>
+      <rect class="cls-12" x="291.43" y="359.96" width="69.24" height="69.24"/>
+      <rect x="360.67" y="359.96" width="69.24" height="69.24"/>
+      <rect x="14.47" y="290.68" width="69.24" height="69.24"/>
+      <rect x="83.71" y="290.68" width="69.24" height="69.24"/>
+      <rect x="152.95" y="290.68" width="69.24" height="69.24"/>
+      <rect class="cls-9" x="222.19" y="290.68" width="69.24" height="69.24"/>
+      <rect x="291.43" y="290.68" width="69.24" height="69.24"/>
+      <rect x="360.67" y="290.68" width="69.24" height="69.24"/>
+      <rect class="cls-10" x="429.91" y="290.68" width="69.24" height="69.24"/>
+      <rect x="14.47" y="221.4" width="69.24" height="69.24"/>
+      <rect class="cls-3" x="83.71" y="221.4" width="69.24" height="69.24"/>
+      <rect x="152.95" y="221.4" width="69.24" height="69.24"/>
+      <rect x="222.19" y="221.4" width="69.24" height="69.24"/>
+      <rect class="cls-3" x="291.43" y="221.4" width="69.24" height="69.24"/>
+      <rect x="360.67" y="221.4" width="69.24" height="69.24"/>
+      <rect x="429.91" y="221.4" width="69.24" height="69.24"/>
+      <rect class="cls-8" x="14.47" y="152.12" width="69.24" height="69.24"/>
+      <rect x="83.71" y="152.12" width="69.24" height="69.24"/>
+      <rect class="cls-11" x="152.95" y="152.12" width="69.24" height="69.24"/>
+      <rect x="222.19" y="152.12" width="69.24" height="69.24"/>
+      <rect x="291.43" y="152.12" width="69.24" height="69.24"/>
+      <rect x="360.67" y="152.12" width="69.24" height="69.24"/>
+      <rect class="cls-12" x="429.91" y="152.12" width="69.24" height="69.24"/>
+      <rect class="cls-12" x="83.71" y="82.84" width="69.24" height="69.24"/>
+      <rect x="152.95" y="82.84" width="69.24" height="69.24"/>
+      <rect class="cls-6" x="222.19" y="82.84" width="69.24" height="69.24"/>
+      <rect x="291.43" y="82.84" width="69.24" height="69.24"/>
+      <rect class="cls-2" x="360.67" y="82.84" width="69.24" height="69.24"/>
+    </g>
+  </g>
+  <g id="TEXT">
+    <text class="cls-4" transform="translate(0 -7.95)"><tspan x="0" y="0">L</tspan><tspan class="cls-13" x="15.06" y="0">A</tspan><tspan x="29.88" y="0">TENT NOISE GENE</tspan><tspan class="cls-5" x="262.11" y="0">R</tspan><tspan class="cls-7" x="279.69" y="0">A</tspan><tspan x="294.51" y="0">TION</tspan></text>
+  </g>
+</svg>

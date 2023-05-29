@@ -1,0 +1,500 @@
+# Dialog script for mlops::sd_dreambooth_train::1.0 automatically generated
+
+{
+    name	mlops::sd_dreambooth_train::1.0
+    script	mlops::sd_dreambooth_train::1.0
+    label	"MLOPs SD Dreambooth Train"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Input 1"
+    inputlabel	2	"Input 2"
+    inputlabel	3	"Input 3"
+    inputlabel	4	"Input 4"
+
+    groupcollapsible {
+        name    "folder1_1"
+        label   "Schedulers"
+        grouptag { "visibletabs" "111" }
+
+        parm {
+            name    "topscheduler"
+            label   "TOP Scheduler Override"
+            type    oppath
+            joinnext
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "opfilter" "!!TOP/SCHEDULER!!" }
+            parmtag { "oprelative" "." }
+        }
+        parm {
+            name    "addjobparms"
+            label   "Add Job Parms"
+            type    button
+            nolabel
+            default { "Local" }
+            menu {
+                [ "opmenu -l -a pythonscript1 addjobparms" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_useschedulewhen"
+            label   "Use Schedule When"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_schedulewhen"
+            label   "Schedule When"
+            type    integer
+            default { "1" }
+            disablewhen "{ pdg_useschedulewhen == 0 }"
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+            parmtag { "sidefx::slider" "none" }
+        }
+        parm {
+            name    "sepparm5"
+            label   "Separator"
+            type    separator
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+        }
+        parm {
+            name    "pdg_workitemlabel"
+            label   "Work Item Label"
+            type    ordinal
+            joinnext
+            default { "0" }
+            menu {
+                "0" "Use Default"
+                "1" "Inherit from Upstream Item"
+                "2" "Custom Expression"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitemlabelexpr"
+            label   "Label Expression"
+            type    string
+            nolabel
+            default { "" }
+            disablewhen "{ pdg_workitemlabel != 2 }"
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitempriority"
+            label   "Work Item Priority"
+            type    ordinal
+            joinnext
+            default { "0" }
+            menu {
+                "0" "Inherit from Upstream Item"
+                "1" "Custom Expression"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pdg_workitempriorityexpr"
+            label   "Priority Expression"
+            type    integer
+            nolabel
+            default { "0" }
+            disablewhen "{ pdg_workitempriority != 1 }"
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+            parmtag { "sidefx::slider" "none" }
+        }
+    }
+
+    groupsimple {
+        name    "folder0"
+        label   "Training Arguments"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "pretrained_model_name_or_path"
+            label   "Model"
+            type    string
+            default { "runwayml/stable-diffusion-v1-5" }
+            menureplace {
+                [ "import mlops_utils, os" ]
+                [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\")" ]
+                [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
+                language python
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "fulldreambooth"
+            label   "Train Full Dreambooth"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "sepparm"
+            label   "Spacer"
+            type    separator
+            default { "" }
+            parmtag { "sidefx::layout_height" "small" }
+            parmtag { "sidefx::look" "blank" }
+        }
+        groupsimple {
+            name    "_ui_folder"
+            label   "Data"
+
+            parm {
+                name    "instance_prompt"
+                label   "Instance Prompt"
+                type    string
+                default { "A photo of sks dog" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "instance_data_dir"
+                label   "Instance Data"
+                type    directory
+                joinnext
+                default { "$MLOPs/data/testing/minnie/" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "center_crop"
+                label   "Center Crop"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "validation_prompt"
+                label   "Validation Prompt"
+                type    string
+                default { "A photo of sks dog in a bucket" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "num_validation_images"
+                label   "Validation Images"
+                type    integer
+                default { "4" }
+                range   { 1 100 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "validation_epochs"
+                label   "Validation Epoch"
+                type    integer
+                default { "50" }
+                disablewhen "{ fulldreambooth == 1 }"
+                range   { 0 100 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "with_prior_preservation"
+                label   "Use Prior Preservation Loss"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "class_prompt"
+                label   "Class Prompt"
+                type    string
+                default { "A photo of dog" }
+                disablewhen "{ with_prior_preservation == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "num_class_images"
+                label   "Number Class Images"
+                type    integer
+                default { "100" }
+                disablewhen "{ with_prior_preservation == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "class_data_dir"
+                label   "Class Data Dir"
+                type    directory
+                default { "$HIP/export/$OS/generated_class_images/" }
+                disablewhen "{ with_prior_preservation == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "prior_loss_weight"
+                label   "Prior Loss Weight"
+                type    float
+                default { "1" }
+                disablewhen "{ with_prior_preservation == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupsimple {
+            name    "_ui_folder2"
+            label   "Learning Settings"
+
+            parm {
+                name    "seed"
+                label   "Seed"
+                type    integer
+                default { "42" }
+                range   { 0 100 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "resolution"
+                label   "Resolution"
+                type    integer
+                default { "512" }
+                range   { 128 1024 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "train_batch_size"
+                label   "Train Batch Size"
+                type    integer
+                default { "1" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "sample_batch_size"
+                label   "Sample Batch Size"
+                type    integer
+                default { "4" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "num_train_epochs"
+                label   "Training Epochs"
+                type    integer
+                default { "1" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "max_train_steps"
+                label   "Training Steps"
+                type    integer
+                default { "500" }
+                range   { 50 1000 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "learning_rate"
+                label   "Learning Rate"
+                type    log
+                default { "0.0001" }
+                range   { 0 0.1 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "scale_lr"
+                label   "Scale Learning Rate"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            groupcollapsible {
+                name    "_ui_folder3"
+                label   "Advanced"
+
+                parm {
+                    name    "lr_warmup_steps"
+                    label   "Learning Rate Warmup Steps"
+                    type    integer
+                    default { "0" }
+                    range   { 0 10 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "lr_num_cycles"
+                    label   "Learning Rate Cycles"
+                    type    integer
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "lr_power"
+                    label   "Learning Rate Power"
+                    type    float
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "use_8bit_adam"
+                    label   "Use 8bit Adam"
+                    type    toggle
+                    default { "0" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "adam_beta1"
+                    label   "Adam Beta 1"
+                    type    float
+                    default { "0.9" }
+                    range   { 0 1 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "adam_beta2"
+                    label   "Adam Beta 2"
+                    type    float
+                    default { "0.999" }
+                    range   { 0 1 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "adam_weight_decay"
+                    label   "Adam Weight Decay"
+                    type    float
+                    default { "0.01" }
+                    range   { 0 0.1 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "adam_epsilon"
+                    label   "Adam Epsilon"
+                    type    float
+                    default { "1e-08" }
+                    range   { 0 1e-07 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "max_grad_norm"
+                    label   "Max Grad Norm"
+                    type    float
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "enable_xformers_memory_efficient_attention"
+                    label   "xformers Memory Efficient Attention"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "pre_compute_text_embeddings"
+                    label   "Precompute Text Embeddings"
+                    type    toggle
+                    default { "0" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+        groupsimple {
+            name    "_ui_folder5"
+            label   "Logging"
+
+            parm {
+                name    "report_to"
+                label   "Reporting Method"
+                type    string
+                default { "tensorboard" }
+                menu {
+                    "tensorboard"   "Tensorboard"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "logging_dir"
+                label   "Logging Dir"
+                type    directory
+                default { "$HIP/export/$OS/logs/" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "_ui_tensorboardcommand"
+                label   "Tensorboard Command"
+                type    string
+                default { "tensorboard --logdir `chs(\"output_dir\")`/logs/dreambooth-lora/ --port 6006" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupsimple {
+            name    "_ui_folder1"
+            label   "Export"
+
+            parm {
+                name    "train_text_encoder"
+                label   "Train Text Encoder"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "output_dir"
+                label   "Output Path"
+                type    directory
+                default { "$HIP/export/$OS/model/" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "checkpointing_steps"
+                label   "Checkpoint Frequency"
+                type    integer
+                default { "100" }
+                range   { 1 1000 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "gradient_checkpointing"
+                label   "Gradient Checkpointing"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "gradient_accumulation_steps"
+                label   "Gradient Accumulation Steps"
+                type    integer
+                default { "1" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "resume_from_checkpoint"
+                label   "Checkpoint Resume Path"
+                type    string
+                default { "latest" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,14 @@
+Operator:     mlops::pix2pix_hd_train::1.0
+Label:        MLOPs Pix2PixHD Train
+Path:         oplib:/mlops::Top/pix2pix_hd_train::1.0?mlops::Top/pix2pix_hd_train::1.0
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_DEFAULT IMAGE ICON.svg
+Table:        Top
+License:      
+Extra:        
+User:         
+Inputs:       0 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed May 24 14:26:08 2023
+

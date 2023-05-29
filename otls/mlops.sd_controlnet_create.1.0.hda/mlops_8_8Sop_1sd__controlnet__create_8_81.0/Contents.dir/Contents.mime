@@ -32,11 +32,12 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 6.63167 -3.70455
-connectornextid 1
+position 9.15069 -1.61762
+connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
+1 "output1"
 }
 inputsNamed3
 {
@@ -505,11 +506,12 @@ Content-Type: text/plain
 version 0.8
 python	[ 0	locks=0 ]	(	"from imp import reload
 import mlops_utils
+import os
 reload(mlops_utils)
 
 node = hou.pwd()
 cache_only = node.parent().parm(\"cache_only\").evalAsInt()
-model_path = mlops_utils.ensure_huggingface_model_local(node.parent().parm(\"model\").evalAsString(), \"$MLOPS_MODELS\", bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(node.parent().parm(\"model\").evalAsString(), os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
 
 node.geometry().setPointStringAttribValues(\"model\", [model_path])"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)

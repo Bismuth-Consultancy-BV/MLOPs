@@ -1,0 +1,262 @@
+# Dialog script for mlops::sd_pipeline::1.0 automatically generated
+
+{
+    name	mlops::sd_pipeline::1.0
+    script	mlops::sd_pipeline::1.0
+    label	"MLOPS SD Pipeline"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupcollapsible {
+        name    "folder2"
+        label   "Settings"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            joinnext
+            default { "on" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "Model"
+            type    string
+            default { "$MLOPS_SD_MODEL" }
+            menureplace {
+                [ "opmenu -l -a sd_tokenizer2 model" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "cuda" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "width"
+            label   "Width"
+            type    integer
+            default { "512" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "height"
+            label   "Height"
+            type    integer
+            default { "512" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "seed"
+            label   "Seed"
+            type    integer
+            default { "1234" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupcollapsible {
+        name    "folder0"
+        label   "Prompts"
+
+        parm {
+            name    "positiveprompt"
+            label   "Prompt"
+            type    string
+            default { "a high-quality, detailed, and professional image" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "editor" "1" }
+            parmtag { "editorlines" "5" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "negativeprompt"
+            label   "Prompt"
+            type    string
+            default { "ugly, mangled, bad, disfigured, low detail, cheap" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "editor" "1" }
+            parmtag { "editorlines" "5" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupcollapsible {
+        name    "folder1"
+        label   "Scheduler"
+
+        parm {
+            name    "scheduler"
+            label   "Scheduler"
+            type    ordinal
+            default { "unipc" }
+            menu {
+                [ "opmenu -l -a sd_scheduler1 scheduler" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inference_steps"
+            label   "Num Inference Steps"
+            type    integer
+            default { "20" }
+            range   { 1 100 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cfg_scale"
+            label   "CFG Scale"
+            type    float
+            default { "7.5" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "guidance_strength"
+            label   "Image Guidance Strength"
+            type    float
+            default { "0.9" }
+            range   { 0 1 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "seamless"
+            label   "Tiling"
+            type    toggle
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupcollapsible {
+        name    "folder3"
+        label   "Solver"
+
+        parm {
+            name    "attentionslicing"
+            label   "Attention Slicing"
+            type    toggle
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "folder6"
+            label   "LoRa"
+
+            parm {
+                name    "loraweights"
+                label   "Weights"
+                type    file
+                default { "" }
+                menureplace {
+                    [ "opmenu -l -a sd_solver1 loraweights" ]
+                }
+                parmtag { "autoscope" "0000000000000000" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "lorascale"
+                label   "Scale"
+                type    float
+                default { "1" }
+                range   { 0! 1! }
+                parmtag { "autoscope" "0000000000000000" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    groupcollapsible {
+        name    "folder4"
+        label   "Guide Image"
+
+        parm {
+            name    "useguideimage"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "filename"
+            label   "Image"
+            type    image
+            joinnext
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "filechooser_mode" "read" }
+        }
+        parm {
+            name    "reload"
+            label   "Reload"
+            type    button
+            default { "0" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupcollapsible {
+        name    "folder5"
+        label   "Mask"
+
+        parm {
+            name    "usemask"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "filename2"
+            label   "Image"
+            type    image
+            joinnext
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "filechooser_mode" "read" }
+        }
+        parm {
+            name    "reload2"
+            label   "Reload"
+            type    button
+            default { "0" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

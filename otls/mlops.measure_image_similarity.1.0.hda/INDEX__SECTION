@@ -1,0 +1,14 @@
+Operator:     mlops::measure_image_similarity::1.0
+Label:        MLOPs Measure Image Similarity
+Path:         oplib:/mlops::Sop/measure_image_similarity::1.0?mlops::Sop/measure_image_similarity::1.0
+Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_MEASURE IMAGE SIMILARITY.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='2 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       2 to 2
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed May 24 14:12:36 2023
+
