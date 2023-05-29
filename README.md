@@ -12,7 +12,9 @@ Free and Open Source Machine Learning Plugin for Houdini developed by Ambrosiuss
 
 
 ## Promo Video
-Here will be a promo video!
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=izLicMTBYUg
+" target="_blank"><img src="http://img.youtube.com/vi/izLicMTBYUg/0.jpg" 
+alt="2.0 Release Promo" width="640" height="480" border="0" /></a>
 
 
 # Installing for Houdini
