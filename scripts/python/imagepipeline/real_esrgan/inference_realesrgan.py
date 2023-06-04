@@ -10,16 +10,26 @@ from imagepipeline.real_esrgan.realesrgan.utils import RealESRGANer
 def run(
     input_colors,
     model_name,
+    model_path,
     denoise_strength,
     outscale,
     tile,
     tile_pad,
     pre_pad,
+    netscale,
     face_enhance,
     fp32,
 ):
     gpu_id = None
 
+    model = RRDBNet(
+            num_in_ch=3,
+            num_out_ch=3,
+            num_feat=64,
+            num_block=23,
+            num_grow_ch=32,
+            scale=4,
+        )
     # determine models according to model names
     model_name = model_name.split(".")[0]
     if model_name == "RealESRGAN_x4plus":  # x4 RRDBNet model
@@ -76,20 +86,24 @@ def run(
             "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-x4v3.pth",
         ]
 
-    model_path = os.path.join(
-        hou.text.expandString("$MLOPS_MODELS"), "real_esrgan", model_name + ".pth"
-    )
-    if not os.path.isfile(model_path):
-        for url in file_url:
-            # model_path will be updated
-            model_path = load_file_from_url(
-                url=url,
-                model_dir=os.path.join(
-                    hou.text.expandString("$MLOPS_MODELS"), "real_esrgan"
-                ),
-                progress=True,
-                file_name=None,
-            )
+    if model_name == "custom":
+        if not os.path.isfile(model_path):
+            raise hou.NodeError("The specified model path is not valid!")
+    else:
+        model_path = os.path.join(
+            hou.text.expandString("$MLOPS_MODELS"), "real_esrgan", model_name + ".pth"
+        )
+        if not os.path.isfile(model_path):
+            for url in file_url:
+                # model_path will be updated
+                model_path = load_file_from_url(
+                    url=url,
+                    model_dir=os.path.join(
+                        hou.text.expandString("$MLOPS_MODELS"), "real_esrgan"
+                    ),
+                    progress=True,
+                    file_name=None,
+                )
 
     # use dni to control the denoise strength
     dni_weight = None

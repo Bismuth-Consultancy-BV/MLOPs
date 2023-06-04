@@ -33,6 +33,25 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
+            name    "custompath"
+            label   "Model Path"
+            type    file
+            invisible
+            joinnext
+            default { "" }
+            parmtag { "filechooser_pattern" "*.pth" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "netscale"
+            label   "Model Scale"
+            type    integer
+            invisible
+            default { "4" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
             name    "outscale"
             label   "Upscale Factor"
             type    integer
