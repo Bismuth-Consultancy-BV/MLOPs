@@ -403,6 +403,7 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         checkpoint_file = hou.text.expandString(checkpoint_file)
         if config_file == "":
             config_file = None
+        download_dir = hou.text.expandString(self.download_directory_field.text())
 
         with hou.InterruptableOperation(
             "Converting Model", open_interrupt_dialog=True
@@ -410,9 +411,7 @@ class MLOPSConvertModel(QtWidgets.QDialog):
             convert_model.convert(
                 checkpoint_file,
                 config_file,
-                hou.text.expandString(
-                    os.path.join("$MLOPS_MODELS", "diffusers", model_name.replace("/", "-_-"))
-                ),
+                download_dir,
             )
 
         hou.ui.displayMessage(
@@ -448,6 +447,16 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         )
         if directory:
             self.config_file_field.setText(directory)
+
+    def open_directory_dialog(self):
+        directory = hou.ui.selectFile(
+            title="MLOPs - Select Download Directory",
+            file_type=hou.fileType.Directory,
+            multiple_select=False,
+            chooser_mode=hou.fileChooserMode.Read,
+        )
+        if directory:
+            self.download_directory_field.setText(directory)
 
     def buildUI(self):
         layout = QtWidgets.QVBoxLayout()
@@ -490,6 +499,18 @@ class MLOPSConvertModel(QtWidgets.QDialog):
         self.config_file_button.clicked.connect(self.open_config_dialog)
         config_file_layout.addWidget(self.config_file_button)
         layout.addLayout(config_file_layout)
+
+        layout_browse = QtWidgets.QHBoxLayout()
+        download_path_label = QtWidgets.QLabel("Download Directory: ")
+        self.download_directory_field = QtWidgets.QLineEdit("$MLOPS_MODELS/diffusers/")
+        layout_browse.addWidget(download_path_label)
+        layout_browse.addWidget(self.download_directory_field)
+
+        # Create QPushButton for directory browser
+        self.dir_button = QtWidgets.QPushButton("...")
+        self.dir_button.clicked.connect(self.open_directory_dialog)
+        layout_browse.addWidget(self.dir_button)
+        layout.addLayout(layout_browse)
 
         buttonlayout = QtWidgets.QHBoxLayout()
         self.update_button = QtWidgets.QPushButton("Convert")
