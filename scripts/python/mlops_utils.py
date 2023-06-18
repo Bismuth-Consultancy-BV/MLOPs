@@ -411,7 +411,7 @@ class MLOPSConvertModel(QtWidgets.QDialog):
                 checkpoint_file,
                 config_file,
                 hou.text.expandString(
-                    os.path.join("$MLOPS_MODELS", model_name.replace("/", "-_-"))
+                    os.path.join("$MLOPS_MODELS", "diffusers", model_name.replace("/", "-_-"))
                 ),
             )
 
