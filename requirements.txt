@@ -5,7 +5,7 @@ transformers>=4.25.1
 accelerate==0.18.0
 scipy==1.10.1
 timm==0.6.7
-controlnet_aux @ git+https://github.com/patrickvonplaten/controlnet_aux@845161d1deac8c4f0a8f9df0c9dc355fcc2d0830
+controlnet_aux==0.0.6
 torchmetrics==0.11.4
 clip_interrogator==0.6.0
 diffusers @ git+https://github.com/huggingface/diffusers@2858d7e15eaf445ec37fc77b204a85f84affbeef

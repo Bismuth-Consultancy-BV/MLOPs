@@ -14,6 +14,7 @@ from controlnet_aux import (
     OpenposeDetector,
     PidiNetDetector,
     ZoeDetector,
+    LeresDetector,
 )
 from PIL import Image
 from transformers import AutoImageProcessor, UperNetForSemanticSegmentation
@@ -58,6 +59,9 @@ def run(model, mode, input_colors, cache_only):
     elif mode == "facedetector":
         face_detector = MediapipeFaceDetector()
         processed_image = face_detector(img)
+    elif mode == "leres":
+        leres_detector = LeresDetector.from_pretrained(model)
+        processed_image = leres_detector(img)
     elif mode == "segment":
         image_processor = AutoImageProcessor.from_pretrained(
             "openmmlab/upernet-convnext-small", local_files_only=cache_only

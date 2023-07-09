@@ -41,13 +41,14 @@
             default { "canny" }
             menu {
                 "hed"           "HED Detector"
-                "midas"         "Midas Detector"
+                "midas"         "Midas Depth Detector"
+                "leres"         "Leres Depth Detector"
+                "zoe"           "Zoe Depth Detector"
                 "mlsd"          "MLSD Detector"
                 "openpose"      "Openpose Detector"
                 "pidi"          "PidiNet Detector"
                 "bae"           "Normal Bae Detector"
                 "lineartanime"  "LineArt Anime Detector"
-                "zoe"           "Zoe Depth Detector"
                 "canny"         "Canny Edge Detector"
                 "content"       "Content Shuffle Detector"
                 "facedetector"  "MediaPipe Face Detector"
