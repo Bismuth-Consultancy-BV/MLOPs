@@ -168,7 +168,7 @@ def return_downloaded_checkpoints(
 
 def check_mlops_version():
     packages = json.loads(hou.ui.packageInfo())
-    variables = None
+    variables = []
     installed_json = None
     for package in packages:
         package = packages[package]
