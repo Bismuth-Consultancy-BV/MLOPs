@@ -3,6 +3,7 @@
 	],
 	"indexes":{
 		"hdaroot/nearclip_used_here1.userdata":0,
+		"hdaroot/switch8.userdata":0,
 		"hdaroot/custom_aspects.userdata":0,
 		"hdaroot/segementation_attribute_casting/output0.userdata":0,
 		"hdaroot/segementation_attribute_casting/OUT.userdata":0,
@@ -33,6 +34,7 @@
 		"hdaroot/pointvop4.userdata":0,
 		"hdaroot/pointvop3/bind2.userdata":0,
 		"hdaroot/groupdelete1.userdata":0,
+		"hdaroot/enumerate2.userdata":0,
 		"hdaroot/pointvop3/const1.userdata":0,
 		"hdaroot/switch6.userdata":0,
 		"hdaroot/pointvop3.userdata":0,
