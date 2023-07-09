@@ -8,10 +8,10 @@ timm==0.6.7
 controlnet_aux==0.0.6
 torchmetrics==0.11.4
 clip_interrogator==0.6.0
-diffusers @ git+https://github.com/huggingface/diffusers@2858d7e15eaf445ec37fc77b204a85f84affbeef
-xformers==0.0.19
+diffusers==0.18.1
+xformers==0.0.20
 ftfy==6.1.1
-Jinja2==3.1.2
+Jinja2<3.1
 rembg[gpu]==2.0.36
 basicsr>=1.4.2
 facexlib>=0.2.5

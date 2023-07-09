@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 3.50418 2.25343
+position -1.57026 0.274837
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -138,7 +138,6 @@ folder0	[ 0	locks=0	autoscope=0 ]	(	0	)
 cache_only	[ 0	locks=0	autoscope=0 ]	(	[ cache_only	1 ] 	)
 model	[ 0	locks=0	autoscope=0 ]	(	`chs(\"../sd_tokenizer2/model\")`	)
 folder1	[ 0	locks=0	autoscope=0 ]	(	0	)
-weigthtedprompting	[ 0	locks=0	autoscope=0 ]	(	"on"	)
 device	[ 0	locks=0	autoscope=0 ]	(	[ device	0 ] 	)
 }
 
@@ -943,6 +942,21 @@ filename	[ 0	locks=0	autoscope=0 ]	(	[ filename	"" ] 	)
 reload	[ 0	locks=0 ]	(	[ reload	0 ] 	)
 width	[ 0	locks=0	autoscope=0 ]	(	[ width	512 ] 	)
 height	[ 0	locks=0	autoscope=0 ]	(	[ height	512 ] 	)
+folder1	[ 0	locks=0 ]	(	0	)
+dohueshift	[ 0	locks=0 ]	(	"off"	)
+hueshift	[ 0	locks=0 ]	(	0	)
+dosat	[ 0	locks=0 ]	(	"off"	)
+sat	[ 0	locks=0 ]	(	1	)
+doval	[ 0	locks=0 ]	(	"off"	)
+val	[ 0	locks=0 ]	(	1	)
+dobrightness	[ 0	locks=0 ]	(	"off"	)
+brightness	[ 0	locks=0 ]	(	0	)
+docontrast	[ 0	locks=0 ]	(	"off"	)
+contrast	[ 0	locks=0 ]	(	1	)
+dogain	[ 0	locks=0 ]	(	"off"	)
+gain	[ 0	locks=0 ]	(	1	)
+dogamma	[ 0	locks=0 ]	(	"off"	)
+gamma	[ 0	locks=0 ]	(	1	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -1119,6 +1133,21 @@ filename	[ 0	locks=0	autoscope=0 ]	(	[ filename	"" ] 	)
 reload	[ 0	locks=0 ]	(	[ reload	0 ] 	)
 width	[ 0	locks=0	autoscope=0 ]	(	[ width	512 ] 	)
 height	[ 0	locks=0	autoscope=0 ]	(	[ height	512 ] 	)
+folder1	[ 0	locks=0 ]	(	0	)
+dohueshift	[ 0	locks=0 ]	(	"off"	)
+hueshift	[ 0	locks=0 ]	(	0	)
+dosat	[ 0	locks=0 ]	(	"off"	)
+sat	[ 0	locks=0 ]	(	1	)
+doval	[ 0	locks=0 ]	(	"off"	)
+val	[ 0	locks=0 ]	(	1	)
+dobrightness	[ 0	locks=0 ]	(	"off"	)
+brightness	[ 0	locks=0 ]	(	0	)
+docontrast	[ 0	locks=0 ]	(	"off"	)
+contrast	[ 0	locks=0 ]	(	1	)
+dogain	[ 0	locks=0 ]	(	"off"	)
+gain	[ 0	locks=0 ]	(	1	)
+dogamma	[ 0	locks=0 ]	(	"off"	)
+gamma	[ 0	locks=0 ]	(	1	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
