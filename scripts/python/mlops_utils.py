@@ -428,7 +428,7 @@ class MLOPSConvertModel(QtWidgets.QDialog):
 
     def open_checkpoint_dialog(self):
         directory = hou.ui.selectFile(
-            title="MLOPs - Select Download Directory",
+            title="MLOPs - Model Weight",
             file_type=hou.fileType.Any,
             multiple_select=False,
             pattern="*.safetensors *.ckpt",
@@ -439,7 +439,7 @@ class MLOPSConvertModel(QtWidgets.QDialog):
 
     def open_config_dialog(self):
         directory = hou.ui.selectFile(
-            title="MLOPs - Select Download Directory",
+            title="MLOPs - Select Config File",
             file_type=hou.fileType.Any,
             multiple_select=False,
             pattern="*.yaml",
