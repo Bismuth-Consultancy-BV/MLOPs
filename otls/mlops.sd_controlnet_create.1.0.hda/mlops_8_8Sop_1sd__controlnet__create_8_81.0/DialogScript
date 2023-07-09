@@ -52,7 +52,7 @@
             label   "Conditioning Scale"
             type    float
             default { "1" }
-            range   { 0! 1! }
+            range   { 0 1 }
             parmtag { "script_callback_language" "python" }
         }
     }
