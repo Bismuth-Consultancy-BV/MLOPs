@@ -65,6 +65,17 @@
             default { "1" }
             parmtag { "script_callback_language" "python" }
         }
+        parm {
+            name    "output"
+            label   "Output"
+            type    ordinal
+            default { "0" }
+            menu {
+                "0" "Points"
+                "1" "Primitives"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
     }
 
 }
