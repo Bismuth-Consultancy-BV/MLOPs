@@ -411,7 +411,9 @@ class MLOPSConvertModel(QtWidgets.QDialog):
             convert_model.convert(
                 checkpoint_file,
                 config_file,
-                download_dir,
+                hou.text.expandString(
+                    os.path.join(download_dir, model_name.replace("/", "-_-"))
+                ),
             )
 
         hou.ui.displayMessage(
