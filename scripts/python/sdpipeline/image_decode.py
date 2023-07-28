@@ -52,7 +52,7 @@ def run_new(
             if isinstance(module, torch.nn.Conv2d):
                 module.padding_mode = "circular"
 
-    shape = (4, latent_dimension[0], latent_dimension[1])    
+    shape = (4, latent_dimension[1], latent_dimension[0])
     latents = torch.from_numpy(input_latents).to(dtype).reshape(shape).to(torch_device)    
     latents = (1.0 / vae.config.scaling_factor) * latents  
     
