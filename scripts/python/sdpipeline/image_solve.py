@@ -1,30 +1,12 @@
-# import time
-# START_TIME = 0
-# END_TIME = 0
-
-
-# def st():
-#     global START_TIME
-#     START_TIME = time.time()
-
-
-# def et(text=""):
-#     global END_TIME
-#     END_TIME = time.time()
-#     dt = END_TIME - START_TIME
-#     print("Time for {}: ".format(text), dt)
-
-
 import hou
 import mlops_image_utils
 import numpy
 import torch
+import gc
 from diffusers import ControlNetModel, UNet2DConditionModel
 from diffusers.pipelines.controlnet.multicontrolnet import MultiControlNetModel
 from tqdm.auto import tqdm
-from pprint import pprint
 from . import schedulers_lookup
-import gc
 
 
 def run(
@@ -45,12 +27,14 @@ def run(
     dtype_unet = torch.float32 if no_half else torch.float16
     dtype_controlnet = numpy.float32 if no_half else numpy.float16
     scheduler_config = input_scheduler["config"]
-    t_start = scheduler_config["init_timesteps"] 
+    t_start = scheduler_config["init_timesteps"]
 
     scheduler_type = scheduler_config["type"]
-    #del scheduler_config["init_timesteps"]
-    #del scheduler_config["type"]
-    scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(scheduler_config)
+    del scheduler_config["init_timesteps"]
+    del scheduler_config["type"]
+    scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(
+        scheduler_config
+    )
     scheduler.set_timesteps(inference_steps)
     timesteps = scheduler.timesteps
 
@@ -61,14 +45,12 @@ def run(
         local_files_only=local_cache_only,
         torch_dtype=dtype_unet,
     )
-    #print("WORKING unet: ", unet.dtype)
-    unet.to(torch_device)
     if lora["weights"] != "":
         cross_attention_kwargs = {"scale": lora["scale"]}
         unet.load_attn_procs(
-            lora["weights"], use_safetensors=lora["weights"].endswith(
-                ".safetensors")
+            lora["weights"], use_safetensors=lora["weights"].endswith(".safetensors")
         )
+    unet.to(torch_device)
 
     if seamless_gen:
         for module in unet.modules():
@@ -127,10 +109,10 @@ def run(
     text_embeddings = torch.from_numpy(
         numpy.array([uncond_embeddings, text_embeddings])
     ).to(torch_device)
+
     if not no_half:
         text_embeddings = text_embeddings.half()
 
-    #print("WORKING text embeddings: ", text_embeddings.shape, text_embeddings.dtype)
     if controlnet_geo:
         controlnet_model = []
         controlnet_image = []
@@ -144,8 +126,7 @@ def run(
             controlnet_conditioning_image = torch.from_numpy(
                 numpy.array([input_colors])
             ).to(device=torch_device)
-            controlnet_conditioning_image = controlnet_conditioning_image.to(
-                dtype_unet)
+            controlnet_conditioning_image = controlnet_conditioning_image.to(dtype_unet)
             controlnet = ControlNetModel.from_pretrained(
                 controlnetmodel,
                 local_files_only=local_cache_only,
@@ -165,24 +146,18 @@ def run(
 
     timesteps = scheduler.timesteps[t_start:].to(torch_device)
     latents = init_latents
-    #print("WORKING latents: ", latents.shape, latents.dtype)
 
     with hou.InterruptableOperation(
         "Solving Stable Diffusion", open_interrupt_dialog=True
     ) as operation:
         # if True:
         for i, t in enumerate(tqdm(timesteps, disable=True)):
-            # why do we do this
             latent_model_input = torch.cat([latents] * 2)
-            #print("WORKING latmodinput: ", latent_model_input.shape, latent_model_input.dtype)
-            
             # converting timestep to cpu for compatibility with all samplers
-            # t = t.to("cpu")
-
+            t = t.to("cpu")
             latent_model_input = scheduler.scale_model_input(
                 latent_model_input, timestep=t
             ).to(dtype_unet)
-            #print("WORKING latmodinput after: ", latent_model_input.shape, latent_model_input.dtype)
 
             if controlnet_geo:
                 down_block_res_samples, mid_block_res_sample = controlnet(
@@ -212,8 +187,6 @@ def run(
                         cross_attention_kwargs=cross_attention_kwargs,
                     ).sample
 
-            #print("WORKING noise_pred: ", noise_pred.shape, noise_pred.dtype)            
-
             # perform guidance
             noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
             noise_pred = noise_pred_uncond + guidance_scale * (
@@ -224,8 +197,7 @@ def run(
             latents = scheduler.step(noise_pred, t, latents).prev_sample
 
             if masking:
-                init_latents_proper = scheduler.add_noise(
-                    init_latents_orig, noise, t)
+                init_latents_proper = scheduler.add_noise(init_latents_orig, noise, t)
                 latents = (init_latents_proper * (1.0 - mask_orig)) + (
                     latents * mask_orig
                 )
@@ -233,8 +205,7 @@ def run(
             operation.updateProgress(i / len(timesteps))
 
     if masking:
-        latents = (init_latents_orig * (1.0 - mask_orig)) + \
-            (latents * mask_orig)
+        latents = (init_latents_orig * (1.0 - mask_orig)) + (latents * mask_orig)
     latents = latents.cpu().numpy()[0]
 
     return latents
@@ -259,8 +230,7 @@ def run_new(
     # parameters
     do_image = scheduler_data["image_provided"]
     do_mask = scheduler_data["mask_provided"] and do_image
-    do_add_noise = scheduler_data["do_defer"] and do_image
-    # print("Do image: ", do_image,"|| Do mask: ", do_mask, "|| Do add noise: ", do_add_noise)    
+    do_add_noise = scheduler_data["do_defer"] and do_image    
 
     do_half = half    
     if torch_device in ["mps", "cpu"]:
@@ -320,11 +290,10 @@ def run_new(
     uncond_embeddings = torch.from_numpy(input_embeddings["unconditional_embedding"]).reshape(text_shape)        
     text_embeddings = torch.stack([uncond_embeddings, text_embeddings]).to(dtype_torch).to(torch_device)
     # final text_embeddings shape should be [2,77,768]
-    # print("text embeddings: ", text_embeddings.shape)
+    
 
     # image latents
-    # 1 x 4 x 64 x 64   
-        
+    # 1 x 4 x 64 x 64           
     latent_shape = [1, 4, latent_dimension[1], latent_dimension[0]]    
     noise = torch.from_numpy(scheduler_data["noise_latent"]).reshape(latent_shape).to(torch_device)
     
@@ -344,15 +313,10 @@ def run_new(
     # disable this step on certain schedulers otherwise they break only with guideimage on
     # maybe a better way to check for this.. init_noise_sigma value? 
     # sigma is 1.0 on unipc.. maybe we dont need this at all? 14.6 for euler
-    if scheduler_config["type"] not in ["LMS", "euler", "euler a"]:  # if unipcmultistep scheduler
-        #print("init_noise_sigma: ", scheduler.init_noise_sigma)
-        latents = latents * scheduler.init_noise_sigma
-    
-    # not sure how accurate this is on gpu
-    #print("check noise and latents use same memory: ", noise.data_ptr() == latents.data_ptr())
+    if scheduler_config["type"] not in ["LMS", "euler", "euler a"]:  # if unipcmultistep scheduler        
+        latents = latents * scheduler.init_noise_sigma    
 
-    timesteps = scheduler.timesteps[t_start:].to(torch_device)
-    #return latents.detach().cpu().squeeze()
+    timesteps = scheduler.timesteps[t_start:].to(torch_device)    
 
     if controlnet_geo:
         controlnet_model = []
@@ -384,11 +348,7 @@ def run_new(
         if seamless_gen:
             for module in controlnet.modules():
                 if isinstance(module, torch.nn.Conv2d):
-                    module.padding_mode = "circular"
-
-    
-    # return latents
-    
+                    module.padding_mode = "circular"       
 
     # denoise the latents
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
@@ -398,8 +358,7 @@ def run_new(
             latent_model_input = torch.cat([latents] * 2)            
             
             t = t.to("cpu") # converting timestep to cpu for compatibility with all samplers
-            latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t)
-            #print("latent_model_input scale: ", latent_model_input.shape)
+            latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t)            
 
             if controlnet_geo:
                 down_block_res_samples, mid_block_res_sample = controlnet(
@@ -438,21 +397,17 @@ def run_new(
                 # we need to add noise to the original image based on our timestep
                 # instead of initializing a new tensor, lets reuse noise_pred 
                 noise_pred = scheduler.add_noise(orig_image, noise, t)                             
-                latents = (noise_pred * (1.0 - mask_latents)) + (latents * mask_latents)
-                # init_latents_proper = scheduler.add_noise(orig_image, noise, t)
-                # latents = (init_latents_proper * (1.0 - mask_latents)) + (latents * mask_latents)
+                latents = (noise_pred * (1.0 - mask_latents)) + (latents * mask_latents)                
 
             operation.updateProgress(i / len(timesteps))
 
-    if do_mask:        
+    if do_mask: # final result only affect masked region
         latents = (orig_image * (1.0 - mask_latents)) + (latents * mask_latents)
     
-
-    #return noise_pred.detach().cpu().squeeze()
     out = latents.detach().cpu().squeeze()      
 
-    # cleanup
-    if torch_device == "cuda" and False:        
+    # cleanup, some articles suggested this but not sure how effective it is
+    if torch_device == "cuda" and cleanup:      
         del latents
         del noise
         if do_image:
