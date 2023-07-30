@@ -6,7 +6,7 @@ import ssl
 import subprocess
 from urllib import request
 from torch.utils.tensorboard import SummaryWriter
-
+import mlops_image_utils
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
 
@@ -160,12 +160,13 @@ def create_tensorboard_root(root):
 def log_tensorboard_scalar(root, run, name, step, value):
     logdir = os.path.join(root, run)
     writer = SummaryWriter(log_dir=logdir)
-    writer.add_scalar("test", value, step)
+    writer.add_scalar(name, value, step)
     writer.flush()
 
 def log_tensorboard_image(root, run, name, step, image):
     logdir = os.path.join(root, run)
     writer = SummaryWriter(log_dir=logdir)
+    image = mlops_image_utils.pil_to_colors_numpy_array(image)
     writer.add_image(tag=name, img_tensor=image, global_step=step)
     writer.flush()
 
@@ -200,6 +201,7 @@ def log_tensorboard_geometry(root, run, name, step, geometry, render_faces=False
                 indices.append(point.number())
             indices.reverse()
             faces.append(indices)
+        faces = [faces]
 
     if colors:
         colors = [colors]

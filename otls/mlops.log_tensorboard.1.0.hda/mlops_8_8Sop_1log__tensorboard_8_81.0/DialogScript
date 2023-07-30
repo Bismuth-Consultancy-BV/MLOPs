@@ -1,0 +1,121 @@
+# Dialog script for mlops::log_tensorboard::1.0 automatically generated
+
+{
+    name	mlops::log_tensorboard::1.0
+    script	mlops::log_tensorboard::1.0
+    label	"MLOPs Log Tensorboard"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+
+    parm {
+        name    "execute"
+        label   "Render"
+        type    button
+        joinnext
+        default { "0" }
+        parmtag { "script_callback" "kwargs[\"node\"].node(\"export\").cook(force=True)" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "auto"
+        label   "Auto Cook"
+        type    toggle
+        joinnext
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "command"
+        label   "Command"
+        type    string
+        default { "tensorboard --logdir `chs(\"root\")` --port 6006" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "sepparm"
+        label   "Spacer"
+        type    separator
+        default { "" }
+        parmtag { "sidefx::layout_height" "small" }
+        parmtag { "sidefx::look" "blank" }
+    }
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+        disablewhen "{ datatype == scalar datatype == text }"
+
+        parm {
+            name    "datatype"
+            label   "Data"
+            type    ordinal
+            default { "scalar" }
+            menu {
+                "scalar"    "Scalar"
+                "text"      "Text"
+                "image"     "Image"
+                "geo"       "Geometry"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "root"
+            label   "Tensorboard Root"
+            type    directory
+            default { "$HIP/export/tensorboard/" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "run"
+            label   "Run Name"
+            type    string
+            default { "$OS" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "name"
+            label   "Name"
+            type    string
+            default { "my value" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "step"
+            label   "Step"
+            type    integer
+            default { "0" }
+            disablewhen "{ datatype == scalar } { datatype == text }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "attribute"
+            label   "Point Attribute"
+            type    string
+            default { "" }
+            disablewhen "{ datatype != scalar datatype != text }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder0"
+        label   "Geo"
+        disablewhen "{ datatype != geo }"
+
+        parm {
+            name    "faces"
+            label   "Render Faces"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}
