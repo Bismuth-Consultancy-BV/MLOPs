@@ -31,7 +31,7 @@ Content-Disposition: attachment; filename="hdaroot.def"
 Content-Type: text/plain
 
 comment ""
-position -2.73339 0.416274
+position -3.02451 0.438235
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress off colordefault on exposed on
 outputsNamed3
@@ -286,7 +286,7 @@ fmenu	[ 0	locks=0 ]	(	"scopeall"	)
 fautoadjust	[ 0	locks=0 ]	(	"on"	)
 currange	[ 0	locks=0 ]	(	240	)
 stdswitcher4	[ 0	locks=0 ]	(	0	0	0	)
-geometry	[ 0	locks=0 ]	(	op:`chs(\"../image\")`	)
+geometry	[ 0	locks=0 ]	(	op:`chsop(\"../image\")`	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -488,7 +488,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 1 1 0.4 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -1019,14 +1019,14 @@ Content-Type: text/plain
       lefttype = extend
       righttype = extend
       flags = 0
-      segment { length = 0 expr = "detail(chs(\"../image\"), \"image_dimension\", 0)" }
+      segment { length = 0 expr = "detail(chsop(\"../image\"), \"image_dimension\", 0)" }
     }
     channel size2 {
       lefttype = extend
       righttype = extend
       default = 512
       flags = 0
-      segment { length = 0 value = 512 512 expr = "detail(chs(\"../image\"), \"image_dimension\", 1)" }
+      segment { length = 0 value = 512 512 expr = "detail(chsop(\"../image\"), \"image_dimension\", 1)" }
     }
     channel aspect {
       lefttype = extend
@@ -1081,7 +1081,7 @@ maskplane	[ 0	locks=0 ]	(	A	)
 maskresize	[ 0	locks=0 ]	(	"off"	)
 maskinvert	[ 0	locks=0 ]	(	"off"	)
 overridesize	[ 0	locks=0 ]	(	"on"	)
-size	[ 8	locks=0 ]	(	[ size1	0 ] 	[ size2	0 ] 	)
+size	[ 0	locks=0 ]	(	[ size1	0 ] 	[ size2	0 ] 	)
 sizemenu	[ 0	locks=0 ]	(	0	)
 overrideaspect	[ 0	locks=0 ]	(	"off"	)
 aspect	[ 0	locks=0 ]	(	[ aspect	0 ] 	)
