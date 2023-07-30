@@ -169,6 +169,45 @@ def log_tensorboard_image(root, run, name, step, image):
     writer.add_image(tag=name, img_tensor=image, global_step=step)
     writer.flush()
 
+def log_tensorboard_string(root, run, name, step, string):
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+    writer.add_text(tag=name, text_string=string, global_step=step)
+    writer.flush()
+
+def log_tensorboard_geometry(root, run, name, step, geometry, render_faces=False):
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+
+    vertices = []
+    colors = None if not geometry.findPointAttrib("Cd") else []
+    faces = None
+
+    for point in geometry.points():
+        position = point.position()
+        vertices.append([position.x(), position.y(), position.z()])
+
+        if colors is not None:
+            color = point.attribValue("Cd")
+            colors.append([int(color[0]*255), int(color[1]*255), int(color[2]*255)])
+
+    if render_faces:
+        faces = []
+        for prim in geometry.prims():
+            indices = []
+            points = prim.points()
+            for point in points:
+                indices.append(point.number())
+            indices.reverse()
+            faces.append(indices)
+
+    if colors:
+        colors = [colors]
+
+    writer.add_mesh(tag=name, vertices=[vertices], colors=colors, faces=faces, global_step=step)
+    writer.flush()
+
+
 def return_downloaded_checkpoints(
     root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"
 ):
