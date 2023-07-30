@@ -5,6 +5,7 @@ import shutil
 import ssl
 import subprocess
 from urllib import request
+from torch.utils.tensorboard import SummaryWriter
 
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
@@ -150,6 +151,23 @@ def is_relevant_parm(kwargs, parmtype):
             return False
     return True
 
+def create_tensorboard_root(root):
+    logroot = hou.text.expandString(root)
+    if not os.path.isdir(logroot):
+        os.makedirs(logroot, exist_ok=True)
+    return root
+
+def log_tensorboard_scalar(root, run, name, step, value):
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+    writer.add_scalar("test", value, step)
+    writer.flush()
+
+def log_tensorboard_image(root, run, name, step, image):
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+    writer.add_image(tag=name, img_tensor=image, global_step=step)
+    writer.flush()
 
 def return_downloaded_checkpoints(
     root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"
