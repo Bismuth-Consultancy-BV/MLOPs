@@ -25,6 +25,7 @@ mediapipe==0.10.2
 bitsandbytes @ git+https://github.com/Keith-Hon/bitsandbytes-windows.git; platform_system == "Windows"
 bitsandbytes; platform_system == "Linux" or platform_system == "Darwin"
 dominate==2.8.0
+tensorboard==2.13.0
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
 torch

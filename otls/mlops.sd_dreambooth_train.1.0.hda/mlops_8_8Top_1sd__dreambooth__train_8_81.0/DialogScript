@@ -439,7 +439,7 @@
                 name    "_ui_tensorboardcommand"
                 label   "Tensorboard Command"
                 type    string
-                default { "tensorboard --logdir `chs(\"output_dir\")`/logs/dreambooth-lora/ --port 6006" }
+                default { "tensorboard --logdir `chs(\"logging_dir\")`/dreambooth-lora/ --port 6006" }
                 parmtag { "script_callback_language" "python" }
             }
         }
