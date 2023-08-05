@@ -363,7 +363,7 @@ def run_new(
             if controlnet_geo:
                 down_block_res_samples, mid_block_res_sample = controlnet(
                     latent_model_input,
-                    t.to(dtype_unet),
+                    t.to(dtype_torch),
                     encoder_hidden_states=text_embeddings,
                     controlnet_cond=controlnet_image,
                     conditioning_scale=controlnet_scale,
@@ -373,7 +373,7 @@ def run_new(
                 with torch.no_grad():
                     noise_pred = unet(
                         latent_model_input,
-                        t.to(dtype_unet),
+                        t.to(dtype_torch),
                         encoder_hidden_states=text_embeddings,
                         down_block_additional_residuals=down_block_res_samples,
                         mid_block_additional_residual=mid_block_res_sample,
