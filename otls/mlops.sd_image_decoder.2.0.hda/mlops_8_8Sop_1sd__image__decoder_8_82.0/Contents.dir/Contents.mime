@@ -32,20 +32,19 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 1.44259 -3.21995
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -1.11275 -3.10704
+connectornextid 1
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-1 "output1"
 }
 inputsNamed3
 {
-0 	attribwrangle2 1 1 "input1"
+0 	sd_image_encoder1 1 1 "input1"
 }
 inputs
 {
-0 	attribwrangle2 0 1
+0 	sd_image_encoder1 0 1
 }
 stat
 {
@@ -147,7 +146,9 @@ device = node.parent().parm(\"device\").evalAsString()
 # Attributes
 latents = numpy.array(geo1.pointFloatAttribValues(\"latent\"), dtype=numpy.float32)
 latent_dimension = list(geo1.attribValue(\"latent_dimension\"))
-seamless = geo1.attribValue(\"seamless\")
+seamless = 0
+if geo1.findGlobalAttrib(\"seamless\") != None:
+    seamless = geo1.attribValue(\"seamless\")
 
 # Solve
 model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
@@ -712,7 +713,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end

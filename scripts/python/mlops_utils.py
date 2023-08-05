@@ -6,6 +6,7 @@ import ssl
 import subprocess
 from urllib import request
 
+import mlops_image_utils
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
 
@@ -149,6 +150,68 @@ def is_relevant_parm(kwargs, parmtype):
         if len(kwargs["parms"]) == 0:
             return False
     return True
+
+def create_tensorboard_root(root):
+    logroot = hou.text.expandString(root)
+    if not os.path.isdir(logroot):
+        os.makedirs(logroot, exist_ok=True)
+    return root
+
+def log_tensorboard_scalar(root, run, name, step, value):
+    from torch.utils.tensorboard import SummaryWriter
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+    writer.add_scalar(name, value, step)
+    writer.flush()
+
+def log_tensorboard_image(root, run, name, step, image):
+    from torch.utils.tensorboard import SummaryWriter
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+    image = mlops_image_utils.pil_to_colors_numpy_array(image)
+    writer.add_image(tag=name, img_tensor=image, global_step=step)
+    writer.flush()
+
+def log_tensorboard_string(root, run, name, step, string):
+    from torch.utils.tensorboard import SummaryWriter
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+    writer.add_text(tag=name, text_string=string, global_step=step)
+    writer.flush()
+
+def log_tensorboard_geometry(root, run, name, step, geometry, render_faces=False):
+    from torch.utils.tensorboard import SummaryWriter
+    logdir = os.path.join(root, run)
+    writer = SummaryWriter(log_dir=logdir)
+
+    vertices = []
+    colors = None if not geometry.findPointAttrib("Cd") else []
+    faces = None
+
+    for point in geometry.points():
+        position = point.position()
+        vertices.append([position.x(), position.y(), position.z()])
+
+        if colors is not None:
+            color = point.attribValue("Cd")
+            colors.append([int(color[0]*255), int(color[1]*255), int(color[2]*255)])
+
+    if render_faces:
+        faces = []
+        for prim in geometry.prims():
+            indices = []
+            points = prim.points()
+            for point in points:
+                indices.append(point.number())
+            indices.reverse()
+            faces.append(indices)
+        faces = [faces]
+
+    if colors:
+        colors = [colors]
+
+    writer.add_mesh(tag=name, vertices=[vertices], colors=colors, faces=faces, global_step=step)
+    writer.flush()
 
 
 def return_downloaded_checkpoints(
