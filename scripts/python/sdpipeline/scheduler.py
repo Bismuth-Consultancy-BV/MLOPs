@@ -92,7 +92,8 @@ def run_new(
     model,
     local_cache_only=True,
     do_half=True,    
-    do_defer=False
+    do_defer=False,
+    do_exact=False,
 ):
     do_guide = image_latents is not None    
     dtype_torch = torch.float16 if do_half else torch.float32
@@ -119,7 +120,10 @@ def run_new(
 
     # Figuring initial time step based on strength
     init_timestep = int(inference_steps * guiding_strength)
-    init_timestep = min(init_timestep, inference_steps)           
+    init_timestep = min(init_timestep, inference_steps)
+    if do_exact:
+        pass
+        #init_timestep = inference_steps
     t_start = 0
 
     if do_guide:

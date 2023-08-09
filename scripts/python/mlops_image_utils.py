@@ -40,23 +40,38 @@ def ensure_same_pil_image_dimensions(pil_image1, pil_image2):
     return pil_image1, pil_image2
 
 
-def colored_points_to_numpy_array(geo, dtype=numpy.float16, gamma_correct=False):
+def colored_points_to_numpy_array(geo, scale_factor=1.0, dtype=numpy.float16, gamma_correct=False):
     width = geo.attribValue("image_dimension")[0]
     height = geo.attribValue("image_dimension")[1]
 
-    r = numpy.array(geo.pointFloatAttribValues("r"), dtype=dtype).reshape(
+    r = numpy.array(geo.pointFloatAttribValues("r")).reshape(
+        height, width 
+    )
+    g = numpy.array(geo.pointFloatAttribValues("g")).reshape(
         height, width
     )
-    g = numpy.array(geo.pointFloatAttribValues("g"), dtype=dtype).reshape(
+    b = numpy.array(geo.pointFloatAttribValues("b")).reshape(
         height, width
-    )
-    b = numpy.array(geo.pointFloatAttribValues("b"), dtype=dtype).reshape(
-        height, width
-    )
-
+    )    
     input_colors = numpy.stack((r, g, b), axis=0)
     if gamma_correct: # Gamma Correct
-        input_colors = pow(input_colors, 1.0 / 2.2)
+        input_colors = input_colors ** (1.0/2.2)
+    input_colors = input_colors * scale_factor
+    input_colors = input_colors.astype(dtype)
+    return input_colors
+
+def greyscale_points_to_numpy_array(geo, scale_factor=255.0, dtype=numpy.uint8, gamma_correct=False):
+    width = geo.attribValue("image_dimension")[0]
+    height = geo.attribValue("image_dimension")[1]
+
+    input_colors = numpy.array(geo.pointFloatAttribValues("r")).reshape(
+        height, width
+    )    
+    if gamma_correct: # Gamma Correct
+        input_colors = input_colors ** (1.0/2.2)
+    
+    input_colors *= scale_factor
+    input_colors = input_colors.astype(dtype)    
     return input_colors
 
 
@@ -66,13 +81,15 @@ def pil_to_colored_points(geo, pil_image, scale_factor=1.0):
 
 
 def numpy_array_to_colored_points(geo, cd_array, scale_factor=255.0, gamma_correct=False):
+    cd_array = cd_array.astype(numpy.float16)
+    cd_array /= scale_factor
     if gamma_correct: # Undo Gamma Correct
         cd_array = pow(cd_array, 2.2)
 
     # Split the color data into separate "r", "g", and "b" arrays
-    r_attrib = cd_array[0, :, :].ravel() / scale_factor
-    g_attrib = cd_array[1, :, :].ravel() / scale_factor
-    b_attrib = cd_array[2, :, :].ravel() / scale_factor
+    r_attrib = cd_array[0, :, :].ravel()
+    g_attrib = cd_array[1, :, :].ravel()
+    b_attrib = cd_array[2, :, :].ravel()
 
     # Set the "r", "g", and "b" attributes on the points
     geo.setPointFloatAttribValues("r", tuple(r_attrib.tolist()))

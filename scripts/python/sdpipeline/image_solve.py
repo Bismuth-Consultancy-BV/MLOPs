@@ -1,3 +1,4 @@
+
 import hou
 import mlops_image_utils
 import numpy
@@ -223,22 +224,22 @@ def run_new(
     model,
     lora,
     local_cache_only=True,
-    seamless_gen=False,
-    half=True,
+    seamless_gen=False,    
+    half=True,    
     cleanup = False,
-):
+):    
     # parameters
     do_image = scheduler_data["image_provided"]
     do_mask = scheduler_data["mask_provided"] and do_image
-    do_add_noise = scheduler_data["do_defer"] and do_image    
-
-    do_half = half    
+    do_add_noise = scheduler_data["do_defer"] and do_image        
+    do_exact_steps = scheduler_data["do_exact_steps"]
+    do_half = half
     if torch_device in ["mps", "cpu"]:
         do_half = False
     dtype_torch = torch.float16 if do_half else torch.float32
     dtype_numpy = numpy.float16 if do_half else numpy.float32
     scheduler_config = scheduler_data["config"]
-
+    out = None
     t_start = 0
     if do_image: # modifying starting timestep when using guide image
         t_start = scheduler_config["init_timesteps"] # start earlier for guidance image
@@ -265,9 +266,7 @@ def run_new(
         unet.load_attn_procs(
             lora["weights"], use_safetensors=lora["weights"].endswith(
                 ".safetensors")
-        )
-
-    out = None
+        )    
     
     # for tiling?
     if seamless_gen:
@@ -278,11 +277,8 @@ def run_new(
     # optimisation
     if attention_slicing:
         unet.set_attention_slice("auto")
-
-    # setup scheduler
-    # text embeddings
-    # latent noise / mask / guide
-    # denoise
+    # possible to do cpu offloading here? maybe only possible in pipe
+    
 
     # text latents
     text_shape = input_embeddings["tensor_shape"]    
@@ -316,6 +312,8 @@ def run_new(
     if scheduler_config["type"] not in ["LMS", "euler", "euler a"]:  # if unipcmultistep scheduler        
         latents = latents * scheduler.init_noise_sigma    
 
+    if do_exact_steps: # set to 0 after do_add_noise has been applied so solver does full steps
+        t_start = 0
     timesteps = scheduler.timesteps[t_start:].to(torch_device)    
 
     if controlnet_geo:
@@ -326,29 +324,24 @@ def run_new(
             controlnetmodel = point.stringAttribValue("model")
             geo = point.prims()[0].getEmbeddedGeometry()
             controlnet_conditioning_scale = point.attribValue("scale")
-            input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)
-
-            controlnet_conditioning_image = torch.from_numpy(
-                numpy.array([input_colors])
-            ).to(device=torch_device)
-            controlnet_conditioning_image = controlnet_conditioning_image.to(
-                dtype_torch)
+            input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)            
+            controlnet_conditioning_image = torch.from_numpy(input_colors).unsqueeze(0).to(dtype_torch).to(device=torch_device)
             controlnet = ControlNetModel.from_pretrained(
                 controlnetmodel,
                 local_files_only=local_cache_only,
                 torch_dtype=dtype_torch,
-            )
-            controlnet.to(torch_device)
+            ).to(torch_device)
             controlnet_model.append(controlnet)
             controlnet_image.append(controlnet_conditioning_image)
             controlnet_scale.append(controlnet_conditioning_scale)
-
+        
         controlnet = MultiControlNetModel(controlnet_model)
 
         if seamless_gen:
             for module in controlnet.modules():
                 if isinstance(module, torch.nn.Conv2d):
-                    module.padding_mode = "circular"       
+                    module.padding_mode = "circular"   
+
 
     # denoise the latents
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
@@ -400,6 +393,7 @@ def run_new(
                 latents = (noise_pred * (1.0 - mask_latents)) + (latents * mask_latents)                
 
             operation.updateProgress(i / len(timesteps))
+    
 
     if do_mask: # final result only affect masked region
         latents = (orig_image * (1.0 - mask_latents)) + (latents * mask_latents)
@@ -414,6 +408,10 @@ def run_new(
             del orig_image
         if do_mask:   
             del mask_latents
+        if controlnet_geo:
+            del controlnet_model
+            del controlnet_image    
+            del controlnet
         gc.collect()
         torch.cuda.empty_cache()
 
