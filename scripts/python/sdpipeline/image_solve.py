@@ -211,7 +211,7 @@ def run(
 
     return latents
 
-
+@torch.no_grad()
 def run_new(
     inference_steps,
     latent_dimension,
@@ -295,9 +295,10 @@ def run_new(
     
     if do_image:
         orig_image = torch.from_numpy(scheduler_data["image_latent"]).reshape(latent_shape).to(torch_device)        
-        if do_add_noise:
-            temp_timesteps = timesteps[t_start].unsqueeze(0)             
-            noise = scheduler.add_noise(orig_image, noise, temp_timesteps)       
+        if do_add_noise and t_start>0: # dont bother if t_start is 0.. mimics scheduler when not defering
+            temp_timesteps = timesteps[t_start].unsqueeze(0)           
+            with torch.no_grad(): 
+                noise = scheduler.add_noise(orig_image, noise, temp_timesteps)       
 
     # init latents
     latents = noise 

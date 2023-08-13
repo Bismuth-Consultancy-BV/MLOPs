@@ -116,7 +116,7 @@ def run_new(
     
 
     scheduler = {}    
-    scheduler["guided_latents"] = None
+    scheduler["guided_latents"] = input_latents
 
     # Figuring initial time step based on strength
     init_timestep = int(inference_steps * guiding_strength)
@@ -131,7 +131,7 @@ def run_new(
             t_start = max(inference_steps - init_timestep, 0)
             if not do_defer: # do modification now
                 timesteps = scheduler_object.timesteps[-init_timestep]
-                timesteps = torch.tensor([timesteps], device=torch_device)
+                timesteps = torch.tensor([timesteps], device=torch_device)                
                 shape = (4, latent_dimension[1], latent_dimension[0])    
                 noise_latents = torch.from_numpy(input_latents).reshape(shape).to(torch_device)
                 image_latents = torch.from_numpy(image_latents).reshape(shape).to(torch_device) # squeeze?            
@@ -139,7 +139,7 @@ def run_new(
                     # add noise to our guide image based on timesteps                    
                     noise_latents = scheduler_object.add_noise(image_latents, noise_latents, timesteps)
                 scheduler["guided_latents"] = noise_latents.detach().cpu().squeeze().numpy()
-            
+
     config = scheduler_object.config
     config["init_timesteps"] = t_start
     config["type"] = scheduler_model
