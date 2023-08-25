@@ -213,6 +213,23 @@ def log_tensorboard_geometry(root, run, name, step, geometry, render_faces=False
     writer.add_mesh(tag=name, vertices=[vertices], colors=colors, faces=faces, global_step=step)
     writer.flush()
 
+def parse_args_from_node_parms(args, node):
+    type_mapping = {
+        int: lambda _parm: _parm.evalAsInt(),
+        str: lambda _parm: _parm.evalAsString(),
+        float: lambda _parm: _parm.evalAsFloat(),
+        bool: lambda _parm: bool(_parm.evalAsInt()),
+        type(None): lambda _parm: _parm.evalAsString()
+    }
+
+    for parm_name, default_value in vars(args).items():
+        arg_parm = node.parm(parm_name)
+        arg_type = type(default_value)
+        if arg_parm and (arg_type in type_mapping):
+            parse_func = type_mapping[arg_type]
+            args.__dict__[parm_name] = parse_func(arg_parm)
+
+    return args
 
 def return_downloaded_checkpoints(
     root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"
