@@ -41,10 +41,10 @@ model_pos.eval()
 testloader_params = {
           'batch_size': 1,
           'shuffle': False,
-          'num_workers': 8,
+          'num_workers': 0,
           'pin_memory': True,
-          'prefetch_factor': 4,
-          'persistent_workers': True,
+          'prefetch_factor': None,
+          'persistent_workers': False,
           'drop_last': False
 }
 

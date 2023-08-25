@@ -101,7 +101,7 @@ class DataWriter():
                 if self.save_video:
                     stream.release()
                 write_json(final_result, self.opt.outputpath, form=self.opt.format, for_eval=self.opt.eval)
-                print("Results have been written to json.")
+                # print("Results have been written to json.")
                 return
             # image channel RGB->BGR
             orig_img = np.array(orig_img, dtype=np.uint8)[:, :, ::-1]
