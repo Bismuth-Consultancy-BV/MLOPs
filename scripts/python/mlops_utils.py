@@ -371,7 +371,7 @@ def move_all(src, dst):
             shutil.move(source_item, dst)
 
 
-def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
+def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False, constraints_file=None):
     flags = 0
     if os.name == "nt":
         flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
@@ -385,6 +385,10 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
     else:
         cmd.append("-r")
         cmd.append(dependencies)
+
+    if constraints_file:
+        cmd.append("-c")
+        cmd.append(constraints_file)
 
     env = os.environ.copy()
     if "PYTHONPATH" in env:
