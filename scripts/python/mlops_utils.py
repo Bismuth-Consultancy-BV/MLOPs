@@ -91,8 +91,9 @@ def install_mlops_dependencies():
                 "Failed to download get-pip.py , please download get-pip.py manually from https://bootstrap.pypa.io/ , and place in here = "
                 + PIPINSTALLFILE
             )
-        operation.updateProgress(percentage=count / total)
+        
         count += 1
+        operation.updateProgress(percentage=count / total)
 
         # Installing pip to Houdini
         hou.ui.setStatusMessage("Installing pip to Houdini")
@@ -106,9 +107,10 @@ def install_mlops_dependencies():
         out, err = p.communicate()
         if err:
             raise hou.Error(out.decode())
-        operation.updateProgress(percentage=count / total)
-        count += 1
 
+        count += 1
+        operation.updateProgress(percentage=count / total)
+        
         dependencies_dir = os.path.normpath(
             os.path.join(
                 hou.text.expandString("$MLOPS"), "data", "dependencies", "python"
@@ -125,9 +127,14 @@ def install_mlops_dependencies():
         hou.ui.setStatusMessage("Installing requirements.txt")
         pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
         count += 1
+        operation.updateProgress(percentage=count / total)
+
         hou.ui.setStatusMessage("Installing requirements_extra.txt")
         pip_install(hou.text.expandString("$MLOPS/requirements_extra.txt"), True, True)
         count += 1
+        operation.updateProgress(percentage=count / total)
+
+        shutil.rmtree(os.path.join(PIP_FOLDER, "temp"))
 
     # Informing user about the change
     hou.ui.displayMessage(
@@ -351,12 +358,24 @@ def ensure_huggingface_model_local(
     )
     return path.replace("\\", "/")
 
+def move_all(src, dst):
+
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+
+    for item in os.listdir(src):
+        source_item = os.path.join(src, item)
+        destination_item = os.path.join(dst, item)
+
+        if not os.path.exists(destination_item):
+            shutil.move(source_item, dst)
+
 
 def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
     flags = 0
     if os.name == "nt":
         flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
-    cmd = ["hython", "-m", "pip", "install", "--target", PIP_FOLDER]
+    cmd = ["hython", "-m", "pip", "install", "--target", os.path.join(PIP_FOLDER, "temp")]
 
     if upgrade:
         cmd.append("--upgrade")
@@ -382,6 +401,8 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
     res = p.communicate()
     if res[1] != "" and p.returncode != 0:
         raise hou.Error(res[1].decode())
+
+    move_all(os.path.join(PIP_FOLDER, "temp"), PIP_FOLDER)
 
 
 class MLOPSCheckpointDownloader(QtWidgets.QDialog):
