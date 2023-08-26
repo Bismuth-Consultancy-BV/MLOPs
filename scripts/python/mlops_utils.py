@@ -27,10 +27,10 @@ def install_mlops_dependencies():
     if not os.path.isdir(FOLDER):
         os.makedirs(FOLDER)
 
-    total = 3
+    total = 4
     count = 1
     with hou.InterruptableOperation(
-        "Installing Dependencies, downloading ~6Gb", open_interrupt_dialog=True
+        "Installing Dependencies, downloading ~6.3Gb", open_interrupt_dialog=True
     ) as operation:
         flags = 0
         if os.name == "nt":
@@ -124,6 +124,9 @@ def install_mlops_dependencies():
 
         hou.ui.setStatusMessage("Installing requirements.txt")
         pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
+        count += 1
+        hou.ui.setStatusMessage("Installing requirements_extra.txt")
+        pip_install(hou.text.expandString("$MLOPS/requirements_extra.txt"), True, True)
         count += 1
 
     # Informing user about the change

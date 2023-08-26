@@ -1,4 +1,4 @@
-
+cython
 setuptools==68.0.0
 openai==0.27.8
 omegaconf==2.3.0
@@ -28,13 +28,6 @@ bitsandbytes; platform_system == "Linux" or platform_system == "Darwin"
 dominate==2.8.0
 tensorboard==2.13.0
 
-#AlphaPose
-cython
-pycocotools
-cython-bbox @ git+https://github.com/Ambrosiussen/cython_bbox
-halpecocotools @ git+https://github.com/Ambrosiussen/HalpeCOCOAPI#subdirectory=PythonAPI
-AlphaPose @ git+https://github.com/MVIG-SJTU/AlphaPose.git
-
 #MotionBert
 #tensorboardX
 #matplotlib==3.1.1
@@ -53,5 +46,10 @@ smplx[all]                                      # For mesh recovery
 torch
 torchvision
 torchaudio
+
+click~=8.0
+urllib3<2.0
+protobuf<4,>=3.19.6
+numpy<1.25,>=1.21
 
 

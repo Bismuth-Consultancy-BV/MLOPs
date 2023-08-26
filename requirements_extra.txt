@@ -1,0 +1,5 @@
+#AlphaPose
+pycocotools
+cython-bbox @ git+https://github.com/Ambrosiussen/cython_bbox
+halpecocotools @ git+https://github.com/Ambrosiussen/HalpeCOCOAPI#subdirectory=PythonAPI
+AlphaPose @ git+https://github.com/MVIG-SJTU/AlphaPose.git
