@@ -20,7 +20,7 @@ from PIL import Image
 from transformers import AutoImageProcessor, UperNetForSemanticSegmentation
 
 
-def run(model, mode, input_colors, cache_only):
+def run(model, mode, input_colors, cache_only,low_threshold=None, high_threshold=None):
     img = mlops_image_utils.colors_numpy_array_to_pil(input_colors)
     width, height = img.width, img.height
     args = dict()
@@ -54,6 +54,10 @@ def run(model, mode, input_colors, cache_only):
         zoe = ZoeDetector.from_pretrained(model)
         processed_image = zoe(img, **args)
     elif mode == "canny":
+        if low_threshold is not None:
+            args['low_threshold'] = low_threshold
+        if high_threshold is not None:
+            args['high_threshold'] = high_threshold
         canny = CannyDetector()
         processed_image = canny(img, **args)
     elif mode == "content":
