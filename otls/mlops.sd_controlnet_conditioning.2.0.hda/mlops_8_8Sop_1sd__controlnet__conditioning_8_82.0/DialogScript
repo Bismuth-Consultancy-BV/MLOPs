@@ -56,6 +56,22 @@
             }
             parmtag { "script_callback_language" "python" }
         }
+        parm {
+            name    "low_threshold"
+            label   "Low Threshold"
+            type    integer
+            default { "100" }
+            range   { 0 255 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "high_threshold"
+            label   "High Threshold"
+            type    integer
+            default { "200" }
+            range   { 0 255 }
+            parmtag { "script_callback_language" "python" }
+        }
     }
 
 }
