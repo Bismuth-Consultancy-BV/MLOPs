@@ -124,6 +124,7 @@ def install_mlops_dependencies():
                 f"Please close Houdini and delete {dependencies_dir}\nAfter deleting the specified folder restart Houdini and install dependencies again."
             )
 
+        pip_install(["setuptools"], False, True)
         hou.ui.setStatusMessage("Installing requirements.txt")
         pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
         count += 1
