@@ -73,3 +73,18 @@ def numpy_array_to_colored_points(geo, cd_array, scale_factor=255.0):
     geo.setPointFloatAttribValues("r", list(map(float, r_attrib)))
     geo.setPointFloatAttribValues("g", list(map(float, g_attrib)))
     geo.setPointFloatAttribValues("b", list(map(float, b_attrib)))
+
+def pil_to_Cd_points(geo, pil_image, scale_factor=1.0):
+    cd_array = pil_to_colors_numpy_array(pil_image)
+    # Split the color data into separate "r", "g", and "b" arrays
+    
+    # Transpose the cd_array to have the shape (num_points, num_components)
+    cd_array = cd_array.transpose(1, 2, 0)
+
+    # Flatten the cd_array and scale down the color data
+    cd_attrib = cd_array.reshape(-1, 3) / scale_factor
+    
+    i = 0
+    for point in geo.points():
+        point.setAttribValue("Cd", cd_attrib[i])
+        i = i + 1
