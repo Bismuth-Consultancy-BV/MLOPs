@@ -186,7 +186,7 @@ import numpy
 import mlops_utils
 import mlops_image_utils
 from imagepipeline import controlnet_condition_image
-from imp import reload
+from importlib import reload
 reload(mlops_utils)
 reload(mlops_image_utils)
 reload(controlnet_condition_image) 

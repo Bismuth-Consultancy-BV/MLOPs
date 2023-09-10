@@ -142,7 +142,7 @@ python	[ 0	locks=0 ]	(	"import numpy
 from sdpipeline import scheduler
 import mlops_utils
 import os
-from imp import reload
+from importlib import reload
 reload(scheduler)
 
 # Input Geometry

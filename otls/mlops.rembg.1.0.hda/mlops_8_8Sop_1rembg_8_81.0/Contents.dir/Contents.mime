@@ -187,7 +187,7 @@ python	[ 0	locks=0 ]	(	"import numpy
 import mlops_image_utils
 from imagepipeline import rembg
 
-from imp import reload
+from importlib import reload
 reload(mlops_image_utils)
 reload(rembg)
 

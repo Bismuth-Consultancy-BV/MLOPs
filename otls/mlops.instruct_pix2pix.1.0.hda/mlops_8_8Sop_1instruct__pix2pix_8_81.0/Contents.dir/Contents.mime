@@ -284,7 +284,7 @@ from diffusers import StableDiffusionInstructPix2PixPipeline, UniPCMultistepSche
 import mlops_image_utils as imutils
 import mlops_utils
 import os
-from imp import reload
+from importlib import reload
 reload(mlops_utils)
 reload(imutils)
 

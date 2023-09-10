@@ -501,7 +501,7 @@ Content-Type: text/plain
 
 {
 version 0.8
-python	[ 0	locks=0 ]	(	"from imp import reload
+python	[ 0	locks=0 ]	(	"from importlib import reload
 import mlops_utils
 import os
 reload(mlops_utils)

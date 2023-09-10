@@ -257,7 +257,7 @@ import mlops_utils
 import os
 from imagepipeline import sam
 
-from imp import reload
+from importlib import reload
 reload(mlops_image_utils)
 reload(mlops_utils)
 reload(sam)

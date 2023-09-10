@@ -158,7 +158,7 @@ tensor_shape = geo2.attribValue(\"tensor_shape\")
 
 ######## IMAGE DECODER NODE ########
 from sdpipeline import image_upres 
-from imp import reload    
+from importlib import reload    
 reload(image_upres)  
 
 steps = node.parent().parm(\"steps\").evalAsInt()

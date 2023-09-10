@@ -130,7 +130,7 @@ from sdpipeline import image_encode
 import mlops_utils
 import mlops_image_utils
 import os
-from imp import reload  
+from importlib import reload  
 reload(image_encode)  
 reload(mlops_image_utils)  
 

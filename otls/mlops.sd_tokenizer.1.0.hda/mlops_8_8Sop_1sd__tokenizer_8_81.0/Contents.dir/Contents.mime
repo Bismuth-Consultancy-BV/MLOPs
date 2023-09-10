@@ -116,7 +116,7 @@ version 0.8
 python	[ 0	locks=0	autoscope=1	autosel=4294967295 ]	(	"from sdpipeline import tokenizer 
 import mlops_utils
 import os
-from imp import reload
+from importlib import reload
 reload(tokenizer)
 reload(mlops_utils)
 

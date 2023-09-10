@@ -134,7 +134,7 @@ python	[ 0	locks=0 ]	(	"import numpy
 from sdpipeline import image_solve
 import mlops_utils
 import os
-from imp import reload
+from importlib import reload
 reload(image_solve)
 
 # Input Geometry
