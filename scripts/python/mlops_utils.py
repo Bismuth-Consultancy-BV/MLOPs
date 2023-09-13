@@ -27,8 +27,8 @@ def install_mlops_dependencies():
     if not os.path.isdir(FOLDER):
         os.makedirs(FOLDER)
 
-    total = 4
-    count = 1
+    total = 5
+    count = 0
     with hou.InterruptableOperation(
         "Installing Dependencies, downloading ~6.3Gb", open_interrupt_dialog=True
     ) as operation:
@@ -110,7 +110,7 @@ def install_mlops_dependencies():
 
         count += 1
         operation.updateProgress(percentage=count / total)
-        
+
         dependencies_dir = os.path.normpath(
             os.path.join(
                 hou.text.expandString("$MLOPS"), "data", "dependencies", "python"
@@ -125,15 +125,21 @@ def install_mlops_dependencies():
             )
 
         pip_install(["setuptools"], False, True)
+
         hou.ui.setStatusMessage("Installing requirements.txt")
         pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
         count += 1
         operation.updateProgress(percentage=count / total)
 
-        hou.ui.setStatusMessage("Installing requirements_extra.txt")
-        pip_install(hou.text.expandString("$MLOPS/requirements_extra.txt"), True, True)
-        count += 1
-        operation.updateProgress(percentage=count / total)
+        # hou.ui.setStatusMessage("Installing requirements_binary.txt")
+        # pip_install(hou.text.expandString("$MLOPS/requirements_binary.txt"), True, True)
+        # count += 1
+        # operation.updateProgress(percentage=count / total)
+
+        # hou.ui.setStatusMessage("Installing requirements_extra.txt")
+        # pip_install(hou.text.expandString("$MLOPS/requirements_extra.txt"), True, True)
+        # count += 1
+        # operation.updateProgress(percentage=count / total)
 
         shutil.rmtree(os.path.join(PIP_FOLDER, "temp"))
 

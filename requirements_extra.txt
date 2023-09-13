@@ -1,9 +1,0 @@
-bitsandbytes @ git+https://github.com/acpopescu/bitsandbytes.git; platform_system == "Windows"
-bitsandbytes; platform_system == "Linux" or platform_system == "Darwin"
-
-#AlphaPose
-pycocotools
-cython-bbox @ git+https://github.com/Ambrosiussen/cython_bbox
-halpecocotools @ git+https://github.com/Ambrosiussen/HalpeCOCOAPI#subdirectory=PythonAPI
-AlphaPose @ git+https://github.com/Ambrosiussen/AlphaPose
-#hyrbik @ git+https://github.com/Jeff-sjtu/HybrIK.git
