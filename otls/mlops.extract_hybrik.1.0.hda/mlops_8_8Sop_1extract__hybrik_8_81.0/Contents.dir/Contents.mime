@@ -20,7 +20,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.00832 -1.05985
+position -1.13435 -0.248783
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -68,7 +68,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -0.51719 5.0191
+position 0.923492 2.66544
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -105,7 +105,11 @@ python	[ 0	locks=0 ]	(	"\"\"\"Image demo script.\"\"\"
 import argparse
 import os
 
-os.chdir(r\"H:\\Github\\MLOPs\\data\\models\\hybrik\")
+import mlops_utils
+ROOT = hou.text.expandString(\"$MLOPS/data/models/hybrik/\")
+if not os.path.isdir(ROOT):
+    os.makedirs(ROOT, exist_ok=True)
+os.chdir(ROOT)
 
 import pickle as pk
 
@@ -160,7 +164,7 @@ def recognize_video_ext(ext=''):
     elif ext == 'mov':
         return cv2.VideoWriter_fourcc(*'XVID'), '.' + ext
     else:
-        print(\"Unknow video format {}, will use .mp4 instead of it\".format(ext))
+        # print(\"Unknow video format {}, will use .mp4 instead of it\".format(ext))
         return cv2.VideoWriter_fourcc(*'mp4v'), '.mp4'
 
 
@@ -182,6 +186,14 @@ parser.add_argument('--out-dir',
                     help='output folder',
                     default='',
                     type=str)
+parser.add_argument('--cfg_file',
+                    help='cfg file',
+                    default='',
+                    type=str)
+parser.add_argument('--ckpt',
+                    help='ckpt file',
+                    default='',
+                    type=str)
 parser.add_argument('--save-pk', default=False, dest='save_pk',
                     help='save prediction', action='store_true')
 parser.add_argument('--save-img', default=False, dest='save_img',
@@ -189,18 +201,13 @@ parser.add_argument('--save-img', default=False, dest='save_img',
 
 
 opt = parser.parse_args()
-
-
-opt.out_dir = r\"H:\\tmp\"
-opt.video_name =  r\"H:\\Github\\MLOPs\\data\\testing\\dancing\\dancing.mp4\"
+node = hou.pwd()
+opts = mlops_utils.parse_args_from_node_parms(opt, node.parent())
 opt.save_pk = True
-cfg_file = r\"H:\\Github\\MLOPs\\data\\models\\hybrik\\configs\\256x192_adam_lr1e-3-hrw48_cam_2x_w_pw3d_3dhp.yaml\"
-CKPT = r\"H:\\Github\\MLOPs\\data\\models\\hybrik\\pretrained_hrnet.pth\"
+opt.save_img = False
 
-
-cfg = update_config(cfg_file)
-
-cfg[\"MODEL\"][\"ROOT\"] = r\"H:\\Github\\MLOPs\\data\\dependencies\\python\\hybrik\"
+cfg = update_config(opt.cfg_file)
+cfg[\"MODEL\"][\"ROOT\"] = hou.text.expandString(\"$MLOPS/data/dependencies/python/hybrik/\")
 
 
 
@@ -251,8 +258,8 @@ det_model = fasterrcnn_resnet50_fpn(pretrained=True)
 
 hybrik_model = builder.build_sppe(cfg.MODEL)
 
-print(f'Loading model from {CKPT}...')
-save_dict = torch.load(CKPT, map_location='cpu')
+# print(f'Loading model from {opt.ckpt}...')
+save_dict = torch.load(opt.ckpt, map_location='cpu')
 if type(save_dict) == dict:
     model_dict = save_dict['model']
     hybrik_model.load_state_dict(model_dict)
@@ -264,17 +271,17 @@ hybrik_model.cuda(opt.gpu)
 det_model.eval()
 hybrik_model.eval()
 
-print('### Extract Image...')
+# print('### Extract Image...')
 video_basename = os.path.basename(opt.video_name).split('.')[0]
 
 if not os.path.exists(opt.out_dir):
     os.makedirs(opt.out_dir)
 if not os.path.exists(os.path.join(opt.out_dir, 'raw_images')):
     os.makedirs(os.path.join(opt.out_dir, 'raw_images'))
-if not os.path.exists(os.path.join(opt.out_dir, 'res_images')) and opt.save_img:
-    os.makedirs(os.path.join(opt.out_dir, 'res_images'))
-if not os.path.exists(os.path.join(opt.out_dir, 'res_2d_images')) and opt.save_img:
-    os.makedirs(os.path.join(opt.out_dir, 'res_2d_images'))
+# if not os.path.exists(os.path.join(opt.out_dir, 'res_images')) and opt.save_img:
+#     os.makedirs(os.path.join(opt.out_dir, 'res_images'))
+# if not os.path.exists(os.path.join(opt.out_dir, 'res_2d_images')) and opt.save_img:
+#     os.makedirs(os.path.join(opt.out_dir, 'res_2d_images'))
 
 _, info, _ = get_video_info(opt.video_name)
 video_basename = os.path.basename(opt.video_name).split('.')[0]
@@ -284,24 +291,24 @@ savepath2d = f'{opt.out_dir}/res_2d_{video_basename}.mp4'
 info['savepath'] = savepath
 info['savepath2d'] = savepath2d
 
-write_stream = cv2.VideoWriter(
-    *[info[k] for k in ['savepath', 'fourcc', 'fps', 'frameSize']])
-write2d_stream = cv2.VideoWriter(
-    *[info[k] for k in ['savepath2d', 'fourcc', 'fps', 'frameSize']])
-if not write_stream.isOpened():
-    print(\"Try to use other video encoders...\")
-    ext = info['savepath'].split('.')[-1]
-    fourcc, _ext = recognize_video_ext(ext)
-    info['fourcc'] = fourcc
-    info['savepath'] = info['savepath'][:-4] + _ext
-    info['savepath2d'] = info['savepath2d'][:-4] + _ext
-    write_stream = cv2.VideoWriter(
-        *[info[k] for k in ['savepath', 'fourcc', 'fps', 'frameSize']])
-    write2d_stream = cv2.VideoWriter(
-        *[info[k] for k in ['savepath2d', 'fourcc', 'fps', 'frameSize']])
+# write_stream = cv2.VideoWriter(
+#     *[info[k] for k in ['savepath', 'fourcc', 'fps', 'frameSize']])
+# write2d_stream = cv2.VideoWriter(
+#     *[info[k] for k in ['savepath2d', 'fourcc', 'fps', 'frameSize']])
+# if not write_stream.isOpened():
+#     # print(\"Try to use other video encoders...\")
+#     ext = info['savepath'].split('.')[-1]
+#     fourcc, _ext = recognize_video_ext(ext)
+#     info['fourcc'] = fourcc
+#     info['savepath'] = info['savepath'][:-4] + _ext
+#     info['savepath2d'] = info['savepath2d'][:-4] + _ext
+    # write_stream = cv2.VideoWriter(
+    #     *[info[k] for k in ['savepath', 'fourcc', 'fps', 'frameSize']])
+    # write2d_stream = cv2.VideoWriter(
+    #     *[info[k] for k in ['savepath2d', 'fourcc', 'fps', 'frameSize']])
 
-assert write_stream.isOpened(), 'Cannot open video for writing'
-assert write2d_stream.isOpened(), 'Cannot open video for writing'
+# assert write_stream.isOpened(), 'Cannot open video for writing'
+# assert write2d_stream.isOpened(), 'Cannot open video for writing'
 
 # os.system(f'ffmpeg -i {opt.video_name} {opt.out_dir}/raw_images/{video_basename}-%06d.png')
 import cv2
@@ -326,9 +333,9 @@ for file in tqdm(files):
 
 prev_box = None
 renderer = None
-smpl_faces = torch.from_numpy(hybrik_model.smpl.faces.astype(np.int32))
+# smpl_faces = torch.from_numpy(hybrik_model.smpl.faces.astype(np.int32))
 
-print('### Run Model...')
+# print('### Run Model...')
 idx = 0
 for img_path in tqdm(img_path_list):
     dirname = os.path.dirname(img_path)
@@ -359,56 +366,56 @@ for img_path in tqdm(img_path_list):
             bboxes=torch.from_numpy(np.array(bbox)).to(pose_input.device).unsqueeze(0).float(),
             img_center=torch.from_numpy(img_center).to(pose_input.device).unsqueeze(0).float()
         )
-        uv_29 = pose_output.pred_uvd_jts.reshape(29, 3)[:, :2]
+        # uv_29 = pose_output.pred_uvd_jts.reshape(29, 3)[:, :2]
         transl = pose_output.transl.detach()
 
-        # Visualization
-        image = input_image.copy()
-        focal = 1000.0
+        # # Visualization
+        # image = input_image.copy()
+        # focal = 1000.0
         bbox_xywh = xyxy2xywh(bbox)
         transl_camsys = transl.clone()
         transl_camsys = transl_camsys * 256 / bbox_xywh[2]
 
-        focal = focal / 256 * bbox_xywh[2]
+        # focal = focal / 256 * bbox_xywh[2]
 
-        vertices = pose_output.pred_vertices.detach()
+        # vertices = pose_output.pred_vertices.detach()
 
-        verts_batch = vertices
-        transl_batch = transl
+        # verts_batch = vertices
+        # transl_batch = transl
 
-        color_batch = render_mesh(
-            vertices=verts_batch, faces=smpl_faces,
-            translation=transl_batch,
-            focal_length=focal, height=image.shape[0], width=image.shape[1])
+        # color_batch = render_mesh(
+        #     vertices=verts_batch, faces=smpl_faces,
+        #     translation=transl_batch,
+        #     focal_length=focal, height=image.shape[0], width=image.shape[1])
 
-        valid_mask_batch = (color_batch[:, :, :, [-1]] > 0)
-        image_vis_batch = color_batch[:, :, :, :3] * valid_mask_batch
-        image_vis_batch = (image_vis_batch * 255).cpu().numpy()
+        # valid_mask_batch = (color_batch[:, :, :, [-1]] > 0)
+        # image_vis_batch = color_batch[:, :, :, :3] * valid_mask_batch
+        # image_vis_batch = (image_vis_batch * 255).cpu().numpy()
 
-        color = image_vis_batch[0]
-        valid_mask = valid_mask_batch[0].cpu().numpy()
-        input_img = image
-        alpha = 0.9
-        image_vis = alpha * color[:, :, :3] * valid_mask + (
-            1 - alpha) * input_img * valid_mask + (1 - valid_mask) * input_img
+        # color = image_vis_batch[0]
+        # valid_mask = valid_mask_batch[0].cpu().numpy()
+        # input_img = image
+        # alpha = 0.9
+        # image_vis = alpha * color[:, :, :3] * valid_mask + (
+        #     1 - alpha) * input_img * valid_mask + (1 - valid_mask) * input_img
 
-        image_vis = image_vis.astype(np.uint8)
-        image_vis = cv2.cvtColor(image_vis, cv2.COLOR_RGB2BGR)
+        # image_vis = image_vis.astype(np.uint8)
+        # image_vis = cv2.cvtColor(image_vis, cv2.COLOR_RGB2BGR)
 
-        if opt.save_img:
-            idx += 1
-            res_path = os.path.join(opt.out_dir, 'res_images', f'image-{idx:06d}.jpg')
-            cv2.imwrite(res_path, image_vis)
-        write_stream.write(image_vis)
+        # if opt.save_img:
+        #     idx += 1
+        #     res_path = os.path.join(opt.out_dir, 'res_images', f'image-{idx:06d}.jpg')
+        #     cv2.imwrite(res_path, image_vis)
+        # write_stream.write(image_vis)
 
         # vis 2d
-        pts = uv_29 * bbox_xywh[2]
-        pts[:, 0] = pts[:, 0] + bbox_xywh[0]
-        pts[:, 1] = pts[:, 1] + bbox_xywh[1]
-        image = input_image.copy()
-        bbox_img = vis_2d(image, tight_bbox, pts)
-        bbox_img = cv2.cvtColor(bbox_img, cv2.COLOR_RGB2BGR)
-        write2d_stream.write(bbox_img)
+        # pts = uv_29 * bbox_xywh[2]
+        # pts[:, 0] = pts[:, 0] + bbox_xywh[0]
+        # pts[:, 1] = pts[:, 1] + bbox_xywh[1]
+        # image = input_image.copy()
+        # bbox_img = vis_2d(image, tight_bbox, pts)
+        # bbox_img = cv2.cvtColor(bbox_img, cv2.COLOR_RGB2BGR)
+        # write2d_stream.write(bbox_img)
 
         if opt.save_img:
             res_path = os.path.join(
@@ -461,15 +468,15 @@ for img_path in tqdm(img_path_list):
 if opt.save_pk:
     n_frames = len(res_db['img_path'])
     for k in res_db.keys():
-        print(k)
+        # print(k)
         res_db[k] = np.stack(res_db[k])
         assert res_db[k].shape[0] == n_frames
 
     with open(os.path.join(opt.out_dir, 'res.pk'), 'wb') as fid:
         pk.dump(res_db, fid)
 
-write_stream.release()
-write2d_stream.release()"	)
+# write_stream.release()
+# write2d_stream.release()"	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -497,7 +504,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.72377 3.06778
+position 0.923492 0.406444
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -536,9 +543,9 @@ geo = node.geometry()
 # Add code to modify contents of geo.
 # Use drop down menu to select examples.
 
-import pickle
+import pickle, os
 
-with open(r\"H:\\tmp\\res.pk\", 'rb') as f:
+with open(os.path.join(node.parent().parm(\"out_dir\").evalAsString(), \"res.pk\"), 'rb') as f:
     x = pickle.load(f)
     
 for f, frame_data in enumerate(x[\"pred_xyz_17\"]):
@@ -573,7 +580,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.46535 4.01909
+position 0.923492 1.53594
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -653,7 +660,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0 6.1118
+position 0.923492 3.79494
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -712,7 +719,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.23295 1.84114
+position 0.923492 -0.723056
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -800,7 +807,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.72377 1.02292
+position 0.923492 -1.85256
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -865,9 +872,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.72377 0.199305
+position 0.923492 -2.98206
 connectornextid 2
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
@@ -948,9 +955,9 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0.72377 -0.694895
+position 0.923492 -4.11156
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
