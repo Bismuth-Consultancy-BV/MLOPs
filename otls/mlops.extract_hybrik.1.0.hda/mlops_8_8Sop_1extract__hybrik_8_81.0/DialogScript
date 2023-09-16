@@ -14,50 +14,62 @@
     inputlabel	3	"Sub-Network Input #3"
     inputlabel	4	"Sub-Network Input #4"
 
-    parm {
-        name    "video_name"
-        label   "Video"
-        type    file
-        default { "$MLOPS/data/testing/dancing/dancing.mp4" }
-        parmtag { "script_callback_language" "python" }
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "video_name"
+            label   "Video"
+            type    file
+            default { "$MLOPS/data/testing/dancing/dancing.mp4" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "out_dir"
+            label   "Output"
+            type    directory
+            default { "$HIP/out/hybrik/" }
+            parmtag { "script_callback_language" "python" }
+        }
     }
-    parm {
-        name    "out_dir"
-        label   "Output"
-        type    directory
-        default { "$HIP/out/hybrik/" }
-        parmtag { "script_callback_language" "python" }
+
+    groupsimple {
+        name    "folder1"
+        label   "Model Weights"
+
+        parm {
+            name    "download_cfg_file"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://raw.githubusercontent.com/Jeff-sjtu/HybrIK/main/configs/256x192_adam_lr1e-3-hrw48_cam_2x_w_pw3d_3dhp.yaml\"; parm = \"cfg_file\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_generic_file(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cfg_file"
+            label   "Model Config"
+            type    file
+            default { "$MLOPS/data/models/hybrik/configs/256x192_adam_lr1e-3-hrw48_cam_2x_w_pw3d_3dhp.yaml" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_ckpt"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://drive.google.com/u/0/uc?id=1C-jRnay38mJG-0O4_um82o1t7unC1zeT&export=download\";  parm = \"ckpt\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_gdrive_file_to_folder(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "ckpt"
+            label   "Model Checkpoint"
+            type    file
+            default { "$MLOPS/data/models/hybrik/pretrained_hrnet.pth" }
+            parmtag { "script_callback_language" "python" }
+        }
     }
-    parm {
-        name    "download_cfg_file"
-        label   "Download"
-        type    button
-        joinnext
-        default { "0" }
-        parmtag { "script_callback" "url = r\"https://raw.githubusercontent.com/Jeff-sjtu/HybrIK/main/configs/256x192_adam_lr1e-3-hrw48_cam_2x_w_pw3d_3dhp.yaml\"; parm = \"cfg_file\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_generic_file(url, output);" }
-        parmtag { "script_callback_language" "python" }
-    }
-    parm {
-        name    "cfg_file"
-        label   "Model Config"
-        type    file
-        default { "$MLOPS/data/models/hybrik/configs/256x192_adam_lr1e-3-hrw48_cam_2x_w_pw3d_3dhp.yaml" }
-        parmtag { "script_callback_language" "python" }
-    }
-    parm {
-        name    "download_ckpt"
-        label   "Download"
-        type    button
-        joinnext
-        default { "0" }
-        parmtag { "script_callback" "url = r\"https://drive.google.com/u/0/uc?id=1C-jRnay38mJG-0O4_um82o1t7unC1zeT&export=download\";  parm = \"ckpt\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_gdrive_file_to_folder(url, output);" }
-        parmtag { "script_callback_language" "python" }
-    }
-    parm {
-        name    "ckpt"
-        label   "Model Checkpoint"
-        type    file
-        default { "$MLOPS/data/models/hybrik/pretrained_hrnet.pth" }
-        parmtag { "script_callback_language" "python" }
-    }
+
 }
