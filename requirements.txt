@@ -23,6 +23,7 @@ safetensors
 umap-learn
 compel
 mediapipe
+gdown
 
 dominate
 tensorboard
