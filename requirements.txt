@@ -34,7 +34,7 @@ tensorboard
 tqdm
 easydict
 prettytable
-chumpy
+chumpy @ git+https://github.com/mattloper/chumpy@51d5afd92a8ded3637553be8cef41f328a1c863a
 opencv-python
 imageio-ffmpeg
 roma
@@ -70,7 +70,7 @@ https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries/alphapose-0
 
 # hybrik
 #hybrik @ git+https://github.com/Ambrosiussen/HybrIK
-https://github.com/Ambrosiussen/HybrIK/releases/download/binaries/hybrik-0.2.0+aa195d7-py3-none-any.whl
+https://github.com/Ambrosiussen/HybrIK/releases/download/binaries/hybrik-0.2.0+27332e0-py3-none-any.whl
 
 # pytorch3d
 pytorch3d @ git+https://github.com/facebookresearch/pytorch3d.git@stable; platform_system == "Linux"

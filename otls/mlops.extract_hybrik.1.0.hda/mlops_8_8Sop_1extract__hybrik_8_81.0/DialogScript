@@ -1,0 +1,17 @@
+# Dialog script for mlops::extract_hybrik::1.0 automatically generated
+
+{
+    name	mlops::extract_hybrik::1.0
+    script	mlops::mlops_extract_hybrik::1.0
+    label	"MLOPs Extract Hybrik Copy"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+
+}
