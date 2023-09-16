@@ -230,6 +230,15 @@ def log_tensorboard_geometry(root, run, name, step, geometry, render_faces=False
     writer.add_mesh(tag=name, vertices=[vertices], colors=colors, faces=faces, global_step=step)
     writer.flush()
 
+def download_gdrive_file_to_folder(url, output):
+    import gdown
+    gdown.download(url, output, quiet=False, use_cookies=False)
+
+def download_generic_file(url, output):
+    with request.urlopen(url) as response:
+        with open(output, 'wb') as file:
+            file.write(response.read())
+
 def parse_args_from_node_parms(args, node):
     type_mapping = {
         int: lambda _parm: _parm.evalAsInt(),
