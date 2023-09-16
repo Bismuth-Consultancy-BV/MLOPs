@@ -232,9 +232,11 @@ def log_tensorboard_geometry(root, run, name, step, geometry, render_faces=False
 
 def download_gdrive_file_to_folder(url, output):
     import gdown
+    os.makedirs(os.path.dirname(output), exist_ok=True)
     gdown.download(url, output, quiet=False, use_cookies=False)
 
 def download_generic_file(url, output):
+    os.makedirs(os.path.dirname(output), exist_ok=True)
     with request.urlopen(url) as response:
         with open(output, 'wb') as file:
             file.write(response.read())
