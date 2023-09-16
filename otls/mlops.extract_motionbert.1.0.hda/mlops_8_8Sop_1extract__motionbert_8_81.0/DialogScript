@@ -1,0 +1,68 @@
+# Dialog script for mlops::extract_motionbert::1.0 automatically generated
+
+{
+    name	mlops::extract_motionbert::1.0
+    script	mlops::extract_motionbert::1.0
+    label	"MLOPs Extract MotionBert"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "out_path"
+            label   "Output"
+            type    directory
+            default { "$HIP/out/motionbert/" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Weights"
+
+        parm {
+            name    "download_config"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://raw.githubusercontent.com/Walter0807/MotionBERT/main/configs/pose3d/MB_ft_h36m_global_lite.yaml\"; parm = \"config\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_generic_file(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "config"
+            label   "Model Config"
+            type    file
+            default { "$MLOPS/data/models/motionbert/MB_ft_h36m_global_lite.yaml" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_evaluate"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://onedrive.live.com/?authkey=%21ALuKCr9wihi87bI&id=A5438CD242871DF0%21190&cid=A5438CD242871DF0\"; import webbrowser; webbrowser.open(url);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "evaluate"
+            label   "Model Checkpoint"
+            type    file
+            default { "$MLOPS/data/models/motionbert/best_epoch.bin" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

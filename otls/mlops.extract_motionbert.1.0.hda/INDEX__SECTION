@@ -1,0 +1,14 @@
+Operator:     mlops::extract_motionbert::1.0
+Label:        MLOPs Extract MotionBert
+Path:         oplib:/mlops::Sop/extract_motionbert::1.0?mlops::Sop/extract_motionbert::1.0
+Icon:         SOP_subnet
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Sat Sep 16 17:38:28 2023
+
