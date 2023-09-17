@@ -2,11 +2,11 @@ import numpy
 from PIL import Image
 
 
-def colors_numpy_array_to_pil(input_colors):
+def colors_numpy_array_to_pil(input_colors, scale_factor=2.2):
     # Transpose into (width, height, channels)
     input_colors = input_colors.transpose(1, 2, 0)
     # Gamma Correct
-    input_colors = pow(input_colors, 1.0 / 2.2)
+    input_colors = pow(input_colors, 1.0 / scale_factor)
     # Convert to RGB space
     input_colors = (input_colors * 255).round().astype("uint8")
     return Image.fromarray(input_colors)
