@@ -2,7 +2,9 @@ import diffusers
 from imp import reload
 reload(diffusers)
 
+
 import mlops_utils
+reload(mlops_utils)
 import mlops_image_utils
 import torch
 from . import schedulers_lookup
@@ -18,6 +20,7 @@ def run(
     input_scheduler,
     input_embeddings,
     controlnet_geo,
+    lora_weights,
 ):
 
     dtype = torch.float16
@@ -74,6 +77,13 @@ def run(
     scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(pipe.scheduler.config)
     pipe.scheduler = scheduler
 
+    # LORA
+    lora_kwargs = {}
+    if lora_weights["model"] != "":
+        lora_model_path = mlops_utils.ensure_huggingface_model_local(lora_weights["model"], os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only,model_type="all")
+        pipe.load_lora_weights(lora_model_path)
+        lora_kwargs = {"scale": lora_weights["weight"]}
+
     # Inference
     pipe.enable_model_cpu_offload()
     output_image = pipe(
@@ -89,7 +99,8 @@ def run(
         output_type = "pil",
         generator = torch.manual_seed(seed),
         # TODO: FIX the clamping below. Should not be there, but the solve throws an error otherwise
-        strength= max(0.05, image_deviation)
+        strength= max(0.05, image_deviation),
+        cross_attention_kwargs=lora_kwargs
     ).images[0]
 
     return output_image

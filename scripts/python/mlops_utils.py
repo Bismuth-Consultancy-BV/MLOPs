@@ -322,6 +322,7 @@ def ensure_huggingface_model_local(
     path = hou.text.expandString(
         os.path.join(model_path, model_name.replace("/", "-_-"))
     )
+    path = os.path.normpath(path)
 
     if os.path.isdir(model_name):
         return model_name
@@ -365,6 +366,7 @@ def ensure_huggingface_model_local(
         allow_patterns.append("*")
         ignore_patterns = []
 
+    os.makedirs(path, exist_ok=True)
     snapshot_download(
         repo_id=model_name,
         local_dir=path,
