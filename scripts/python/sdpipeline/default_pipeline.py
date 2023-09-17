@@ -8,12 +8,15 @@ reload(mlops_utils)
 import mlops_image_utils
 import torch
 from . import schedulers_lookup
+from . import pipelines_lookup
 import numpy
 import os
+import hou
 
 def run(
     model,
     cache_only,
+    device,
     inference_steps,
     guidance_scale,
     image_deviation,
@@ -22,8 +25,10 @@ def run(
     controlnet_geo,
     lora_weights,
 ):
-
+    pipeline_call_kwargs = {}
+    pipeline_kwargs = {}
     dtype = torch.float16
+    pipeline_type = "StableDiffusionInpaintPipeline"
 
     input_controlnet_models = []
     input_controlnet_images = []
@@ -50,6 +55,11 @@ def run(
             input_controlnet_images.append(controlnet_conditioning_image)
             input_controlnet_scales.append(controlnet_conditioning_scale)
 
+        pipeline_call_kwargs["control_image"] = input_controlnet_images
+        pipeline_call_kwargs["controlnet_conditioning_scale"] = input_controlnet_scales
+        pipeline_kwargs["controlnet"] = input_controlnet_models
+        pipeline_type = "StableDiffusionControlNetInpaintPipeline"
+
     # Text Embeddings
     conditional_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["conditional_embedding"]).reshape(
         input_embeddings["tensor_shape"])]))
@@ -67,8 +77,9 @@ def run(
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
 
     # Diffusers Pipeline
-    pipe = diffusers.StableDiffusionControlNetInpaintPipeline.from_pretrained(
-        model_path,  controlnet=input_controlnet_models, torch_dtype=dtype)
+    pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, torch_dtype=dtype, **pipeline_kwargs)
+    pipe.to(device)
+    pipe.set_progress_bar_config(disable=True)
 
     # Scheduler
     scheduler_config = input_scheduler["config"]
@@ -84,23 +95,30 @@ def run(
         pipe.load_lora_weights(lora_model_path)
         lora_kwargs = {"scale": lora_weights["weight"]}
 
+    from functools import partial
+    total_steps = min(int(inference_steps * image_deviation), inference_steps)
+    def progress_bar(step, timestep, latents, operation):
+        operation.updateProgress(step / total_steps)
+
     # Inference
     pipe.enable_model_cpu_offload()
-    output_image = pipe(
-        prompt_embeds = conditional_embeddings,
-        negative_prompt_embeds = unconditional_embeddings,
-        num_inference_steps=inference_steps,
-        guidance_scale = guidance_scale,
-        eta=1.0,
-        image=input_image,
-        mask_image=input_mask,
-        control_image=input_controlnet_images,
-        controlnet_conditioning_scale=input_controlnet_scales,
-        output_type = "pil",
-        generator = torch.manual_seed(seed),
-        # TODO: FIX the clamping below. Should not be there, but the solve throws an error otherwise
-        strength= max(0.05, image_deviation),
-        cross_attention_kwargs=lora_kwargs
-    ).images[0]
+
+    with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
+        _progress_bar = partial(progress_bar, operation=operation)
+        output_image = pipe(
+            prompt_embeds = conditional_embeddings,
+            negative_prompt_embeds = unconditional_embeddings,
+            num_inference_steps=inference_steps,
+            guidance_scale = guidance_scale,
+            eta=1.0,
+            image=input_image,
+            mask_image=input_mask,
+            output_type = "pil",
+            generator = torch.manual_seed(seed),
+            strength= max(0.05, image_deviation),
+            cross_attention_kwargs=lora_kwargs,
+            callback=_progress_bar,
+            **pipeline_call_kwargs,
+        ).images[0]
 
     return output_image
