@@ -43,7 +43,7 @@ def run(
                 local_files_only=cache_only,
                 torch_dtype=dtype,
             )
-            # controlnet.to(torch_device)
+
             controlnet_models.append(controlnet)
             controlnet_images.append(controlnet_conditioning_image)
             controlnet_scales.append(controlnet_conditioning_scale)
@@ -66,8 +66,6 @@ def run(
     mask_latents[mask_latents >= 0.5] = 1
     mask_latents = torch.from_numpy(mask_latents)
 
-
-
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
 
     # scheduler_config = input_scheduler["config"]
@@ -78,18 +76,18 @@ def run(
 
     pipe = diffusers.StableDiffusionControlNetInpaintPipeline.from_pretrained(
         model_path,  controlnet=controlnet_models, torch_dtype=dtype)#, scheduler=scheduler
-    # )
+
     pipe.enable_model_cpu_offload()
 
     out_latent = pipe(
-        prompt_embeds = text_embeddings,#prompt= "a cat smiling", #
-        negative_prompt_embeds = uncond_embeddings,#negative_prompt="bad quality, mangled",
+        prompt_embeds = text_embeddings,
+        negative_prompt_embeds = uncond_embeddings,
         num_inference_steps=inference_steps,
         guidance_scale = guidance_scale,
         eta=1.0,
         latents = input_noise,
-        image=init_latents, # hijacked - CLEAN IMAGE
-        mask_image=mask_latents, # hijacked - CLEAN MASK
+        image=init_latents,
+        mask_image=mask_latents,
         control_image=controlnet_images,
         controlnet_conditioning_scale=controlnet_scales,
         output_type = "pil",
@@ -97,5 +95,5 @@ def run(
         # TODO: FIX the clamping below. Should not be there, but the solve throws an error otherwise
         strength= max(0.05, image_deviation)
     ).images[0]
-    # out_latent.show()
+
     return out_latent
