@@ -20,39 +20,46 @@ from PIL import Image
 from transformers import AutoImageProcessor, UperNetForSemanticSegmentation
 
 
-def run(model, mode, input_colors, cache_only):
+def run(model, mode, input_colors, cache_only,low_threshold=None, high_threshold=None):
     img = mlops_image_utils.colors_numpy_array_to_pil(input_colors)
-
+    width, height = img.width, img.height
+    args = dict()
+    args['detect_resolution'] = width
+    args['image_resolution'] = width
     if mode == "hed":
         hed = HEDdetector.from_pretrained(model)
-        processed_image = hed(img)
+        processed_image = hed(img, **args)
     elif mode == "midas":
         midas = MidasDetector.from_pretrained(model)
-        processed_image = midas(img)
+        processed_image = midas(img, **args)
     elif mode == "mlsd":
         mlsd = MLSDdetector.from_pretrained(model)
-        processed_image = mlsd(img)
+        processed_image = mlsd(img, **args)
     elif mode == "openpose":
         open_pose = OpenposeDetector.from_pretrained(model)
-        processed_image = open_pose(img, hand_and_face=True)
+        processed_image = open_pose(img, hand_and_face=True, **args)
     elif mode == "pidi":
         pidi = PidiNetDetector.from_pretrained(model)
-        processed_image = pidi(img, safe=True)
+        processed_image = pidi(img, safe=True, **args)
     elif mode == "bae":
         normal_bae = NormalBaeDetector.from_pretrained(model)
-        processed_image = normal_bae(img)
+        processed_image = normal_bae(img, **args)
     elif mode == "lineart":
         lineart = LineartDetector.from_pretrained(model)
-        processed_image = lineart(img, coarse=True)
+        processed_image = lineart(img, coarse=True, **args)
     elif mode == "lineartanime":
         lineart_anime = LineartAnimeDetector.from_pretrained(model)
-        processed_image = lineart_anime(img)
+        processed_image = lineart_anime(img, **args)
     elif mode == "zoe":
         zoe = ZoeDetector.from_pretrained(model)
-        processed_image = zoe(img)
+        processed_image = zoe(img, **args)
     elif mode == "canny":
+        if low_threshold is not None:
+            args['low_threshold'] = low_threshold
+        if high_threshold is not None:
+            args['high_threshold'] = high_threshold
         canny = CannyDetector()
-        processed_image = canny(img)
+        processed_image = canny(img, **args)
     elif mode == "content":
         content = ContentShuffleDetector()
         processed_image = content(img)
@@ -61,7 +68,7 @@ def run(model, mode, input_colors, cache_only):
         processed_image = face_detector(img)
     elif mode == "leres":
         leres_detector = LeresDetector.from_pretrained(model)
-        processed_image = leres_detector(img)
+        processed_image = leres_detector(img, **args)
     elif mode == "segment":
         image_processor = AutoImageProcessor.from_pretrained(
             "openmmlab/upernet-convnext-small", local_files_only=cache_only

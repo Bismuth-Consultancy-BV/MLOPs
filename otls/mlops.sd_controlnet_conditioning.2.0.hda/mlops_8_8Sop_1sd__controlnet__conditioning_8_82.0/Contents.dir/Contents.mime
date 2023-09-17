@@ -30,7 +30,7 @@ matchesdef = 0
 Content-Disposition: attachment; filename="hdaroot.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -0.851307 -0.411438
 connectornextid 1
@@ -53,7 +53,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -87,7 +87,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/output0.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -4.94997 2.43356
 connectornextid 1
@@ -110,7 +110,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -146,7 +146,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/python1.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -4.94997 5.51136
 connectornextid 2
@@ -170,7 +170,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -189,7 +189,7 @@ from imagepipeline import controlnet_condition_image
 from imp import reload
 reload(mlops_utils)
 reload(mlops_image_utils)
-reload(controlnet_condition_image) 
+reload(controlnet_condition_image)
 
 # Input Geometry
 node = hou.pwd()
@@ -198,7 +198,7 @@ geo = node.geometry()
 # Parameters
 cache_only = node.parent().parm(\"cache_only\").evalAsInt()
 model_type = node.parent().parm(\"conditioning\").evalAsString()
-model = node.parent().parm(\"model\").evalAsString() 
+model = node.parent().parm(\"model\").evalAsString()
 
 # Attributes
 input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)
@@ -233,7 +233,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/attribwrangle2.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -4.95297 6.54926
 connectornextid 2
@@ -257,7 +257,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -314,7 +314,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/attribwrangle3.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -4.95297 4.47146
 connectornextid 2
@@ -338,7 +338,7 @@ stat
   author Paul@M16AMTA
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -393,7 +393,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/attribdelete1.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -4.95342 3.43356
 connectornextid 2
@@ -417,7 +417,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -463,7 +463,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/resize_image1.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -4.94997 7.58916
 connectornextid 2
@@ -487,7 +487,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -559,7 +559,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/null1.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -4.94997 8.68186
 connectornextid 2
@@ -583,7 +583,7 @@ stat
   author Mo@MO-GPU
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.6 0.7 0.77
 delscript ""
 exprlanguage hscript
 end
@@ -620,7 +620,7 @@ matchesdef = 1
 Content-Disposition: attachment; filename="hdaroot/python2.def"
 Content-Type: text/plain
 
-sopflags sopflags = 
+sopflags sopflags =
 comment ""
 position -8.47403 4.9679
 connectornextid 0
@@ -641,7 +641,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 0.8 0.8 
+color UT_Color RGB 0.8 0.8 0.8
 delscript ""
 exprlanguage hscript
 end
@@ -704,3 +704,4 @@ Content-Type: text/plain
 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY--
+
