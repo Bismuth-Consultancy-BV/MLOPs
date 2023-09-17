@@ -18,7 +18,7 @@ def run(
     input_scheduler,
     input_embeddings,
     controlnet_geo,
-    latent_dimension,
+    # latent_dimension,
 ):
 
     dtype = torch.float16
@@ -56,18 +56,20 @@ def run(
         input_embeddings["tensor_shape"])]))
 
     # Latent Noise
-    input_noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(
-                    4, latent_dimension[1], latent_dimension[0])])).to(dtype)
+    # input_noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(
+    #                 4, latent_dimension[1], latent_dimension[0])])).to(dtype)
 
     # Guide Image
-    input_image = numpy.array([input_scheduler["numpy_image"]])
-    input_image = torch.from_numpy(input_image).to(dtype) / 0.5 - 1.0
+    input_image = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_image"])
+    # input_image = numpy.array([input_scheduler["numpy_image"]])
+    # input_image = torch.from_numpy(input_image).to(dtype) / 0.5 - 1.0
 
     # Mask
-    input_mask = numpy.array([[input_scheduler["numpy_mask"][0]]])
-    input_mask[input_mask < 0.5] = 0
-    input_mask[input_mask >= 0.5] = 1
-    input_mask = torch.from_numpy(input_mask)
+    # input_mask = numpy.array([[input_scheduler["numpy_mask"][0]]])
+    # input_mask[input_mask < 0.5] = 0
+    # input_mask[input_mask >= 0.5] = 1
+    # input_mask = torch.from_numpy(input_mask)
+    input_mask = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_mask"])
 
     # Model
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
@@ -78,6 +80,7 @@ def run(
 
     # Scheduler
     scheduler_config = input_scheduler["config"]
+    seed = input_scheduler["seed"]
     scheduler_type = scheduler_config["type"]
     scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(pipe.scheduler.config)
     pipe.scheduler = scheduler
@@ -90,13 +93,13 @@ def run(
         num_inference_steps=inference_steps,
         guidance_scale = guidance_scale,
         eta=1.0,
-        latents = input_noise,
+        # latents = input_noise,
         image=input_image,
         mask_image=input_mask,
         control_image=input_controlnet_images,
         controlnet_conditioning_scale=input_controlnet_scales,
         output_type = "pil",
-        generator = torch.manual_seed(1),
+        generator = torch.manual_seed(seed),
         # TODO: FIX the clamping below. Should not be there, but the solve throws an error otherwise
         strength= max(0.05, image_deviation)
     ).images[0]
