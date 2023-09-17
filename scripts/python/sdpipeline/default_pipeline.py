@@ -18,7 +18,6 @@ def run(
     input_scheduler,
     input_embeddings,
     controlnet_geo,
-    # latent_dimension,
 ):
 
     dtype = torch.float16
@@ -55,20 +54,10 @@ def run(
     unconditional_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["unconditional_embedding"]).reshape(
         input_embeddings["tensor_shape"])]))
 
-    # Latent Noise
-    # input_noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(
-    #                 4, latent_dimension[1], latent_dimension[0])])).to(dtype)
-
     # Guide Image
     input_image = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_image"])
-    # input_image = numpy.array([input_scheduler["numpy_image"]])
-    # input_image = torch.from_numpy(input_image).to(dtype) / 0.5 - 1.0
 
     # Mask
-    # input_mask = numpy.array([[input_scheduler["numpy_mask"][0]]])
-    # input_mask[input_mask < 0.5] = 0
-    # input_mask[input_mask >= 0.5] = 1
-    # input_mask = torch.from_numpy(input_mask)
     input_mask = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_mask"])
 
     # Model
@@ -93,7 +82,6 @@ def run(
         num_inference_steps=inference_steps,
         guidance_scale = guidance_scale,
         eta=1.0,
-        # latents = input_noise,
         image=input_image,
         mask_image=input_mask,
         control_image=input_controlnet_images,
