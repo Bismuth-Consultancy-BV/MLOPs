@@ -23,9 +23,9 @@ def run(
 
     dtype = torch.float16
 
-    controlnet_models = []
-    controlnet_images = []
-    controlnet_scales = []
+    input_controlnet_models = []
+    input_controlnet_images = []
+    input_controlnet_scales = []
 
     if controlnet_geo:
         for point in controlnet_geo.points():
@@ -44,56 +44,61 @@ def run(
                 torch_dtype=dtype,
             )
 
-            controlnet_models.append(controlnet)
-            controlnet_images.append(controlnet_conditioning_image)
-            controlnet_scales.append(controlnet_conditioning_scale)
+            input_controlnet_models.append(controlnet)
+            input_controlnet_images.append(controlnet_conditioning_image)
+            input_controlnet_scales.append(controlnet_conditioning_scale)
 
-    text_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["conditional_embedding"]).reshape(
+    # Text Embeddings
+    conditional_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["conditional_embedding"]).reshape(
         input_embeddings["tensor_shape"])]))
 
-    uncond_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["unconditional_embedding"]).reshape(
+    unconditional_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["unconditional_embedding"]).reshape(
         input_embeddings["tensor_shape"])]))
 
-
+    # Latent Noise
     input_noise = torch.from_numpy(numpy.array([input_scheduler["noise_latent"].reshape(
                     4, latent_dimension[1], latent_dimension[0])])).to(dtype)
 
-    init_latents = numpy.array([input_scheduler["numpy_image"]])
-    init_latents = torch.from_numpy(init_latents).to(dtype) / 0.5 - 1.0
+    # Guide Image
+    input_image = numpy.array([input_scheduler["numpy_image"]])
+    input_image = torch.from_numpy(input_image).to(dtype) / 0.5 - 1.0
 
-    mask_latents = numpy.array([[input_scheduler["numpy_mask"][0]]])
-    mask_latents[mask_latents < 0.5] = 0
-    mask_latents[mask_latents >= 0.5] = 1
-    mask_latents = torch.from_numpy(mask_latents)
+    # Mask
+    input_mask = numpy.array([[input_scheduler["numpy_mask"][0]]])
+    input_mask[input_mask < 0.5] = 0
+    input_mask[input_mask >= 0.5] = 1
+    input_mask = torch.from_numpy(input_mask)
 
+    # Model
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
 
-    # scheduler_config = input_scheduler["config"]
-    # scheduler_type = scheduler_config["type"]
-    # del scheduler_config["init_timesteps"]
-    # del scheduler_config["type"]
-    # scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(scheduler_config)
-
+    # Diffusers Pipeline
     pipe = diffusers.StableDiffusionControlNetInpaintPipeline.from_pretrained(
-        model_path,  controlnet=controlnet_models, torch_dtype=dtype)#, scheduler=scheduler
+        model_path,  controlnet=input_controlnet_models, torch_dtype=dtype)
 
+    # Scheduler
+    scheduler_config = input_scheduler["config"]
+    scheduler_type = scheduler_config["type"]
+    scheduler = schedulers_lookup.schedulers[scheduler_type].from_config(pipe.scheduler.config)
+    pipe.scheduler = scheduler
+
+    # Inference
     pipe.enable_model_cpu_offload()
-
-    out_latent = pipe(
-        prompt_embeds = text_embeddings,
-        negative_prompt_embeds = uncond_embeddings,
+    output_image = pipe(
+        prompt_embeds = conditional_embeddings,
+        negative_prompt_embeds = unconditional_embeddings,
         num_inference_steps=inference_steps,
         guidance_scale = guidance_scale,
         eta=1.0,
         latents = input_noise,
-        image=init_latents,
-        mask_image=mask_latents,
-        control_image=controlnet_images,
-        controlnet_conditioning_scale=controlnet_scales,
+        image=input_image,
+        mask_image=input_mask,
+        control_image=input_controlnet_images,
+        controlnet_conditioning_scale=input_controlnet_scales,
         output_type = "pil",
         generator = torch.manual_seed(1),
         # TODO: FIX the clamping below. Should not be there, but the solve throws an error otherwise
         strength= max(0.05, image_deviation)
     ).images[0]
 
-    return out_latent
+    return output_image
