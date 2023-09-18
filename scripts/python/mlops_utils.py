@@ -358,6 +358,7 @@ def ensure_huggingface_model_local(
             folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
             allow_patterns += [os.path.join(k, "*") for k in folder_names]
             allow_patterns.append(pipelines_lookup.pipelines[pipeline].config_name)
+            ignore_patterns += ["*.onnx"]
         except:
             pass
         allow_patterns += [
