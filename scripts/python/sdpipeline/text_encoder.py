@@ -55,18 +55,23 @@ def run(
     unconditional_embeddings, unconditional_embeddings_pooled = unpack_values(compel_proc(input_prompt_negative))
 
     embeddings_shape = list(unconditional_embeddings.shape)
+    pooled_embeddings_shape = list(unconditional_embeddings_pooled.shape)
     if not XL:
-        embeddings_shape.insert(0, 0)
+        embeddings_shape.insert(0, 1)
 
-    unconditional_embeddings = unconditional_embeddings.flatten()
-    unconditional_embeddings_pooled = unconditional_embeddings_pooled.flatten()
-    conditional_embeddings = conditional_embeddings.flatten()
-    conditional_embeddings_pooled = conditional_embeddings_pooled.flatten()
+    unconditional_embeddings = unconditional_embeddings.flatten().tolist()
+    unconditional_embeddings_pooled = unconditional_embeddings_pooled.flatten().tolist()
+    unconditional_embeddings_pooled.extend([0] * abs(len(unconditional_embeddings)-len(unconditional_embeddings_pooled)))
+    conditional_embeddings = conditional_embeddings.flatten().tolist()
+    conditional_embeddings_pooled = conditional_embeddings_pooled.flatten().tolist()
+    conditional_embeddings_pooled.extend([0] * abs(len(conditional_embeddings)-len(conditional_embeddings_pooled)))
 
     embeddings = {}
     embeddings["unconditional_embedding"] = unconditional_embeddings
     embeddings["conditional_embedding"] = conditional_embeddings
     embeddings["unconditional_embedding_pooled"] = unconditional_embeddings_pooled
     embeddings["conditional_embedding_pooled"] = conditional_embeddings_pooled
+
     embeddings["tensor_shape"] = embeddings_shape
+    embeddings["pooled_tensor_shape"] = pooled_embeddings_shape
     return embeddings

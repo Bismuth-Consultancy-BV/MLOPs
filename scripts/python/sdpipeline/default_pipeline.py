@@ -18,6 +18,7 @@ def run(
     model,
     cache_only,
     device,
+    pipeline,
     resolution,
     inference_steps,
     guidance_scale,
@@ -33,7 +34,12 @@ def run(
     pipeline_call_kwargs = {}
     pipeline_kwargs = {}
     dtype = torch.float16
-    pipeline_type = "StableDiffusionXLPipeline"
+
+    pipeline_modifier = ""
+    if pipeline == "stablediffusionxl":
+        pipeline_modifier = "XL"
+
+    pipeline_type = f"StableDiffusion{pipeline_modifier}Pipeline"
 
     if input_scheduler["numpy_image"] is not None:
         # Guide Image
@@ -44,13 +50,13 @@ def run(
         pipeline_call_kwargs["mask_image"] = input_mask
 
         pipeline_call_kwargs["strength"] = max(0.05, image_deviation)
-        pipeline_type = "StableDiffusionInpaintPipeline"
+        pipeline_type = f"StableDiffusion{pipeline_modifier}InpaintPipeline"
 
     input_controlnet_models = []
     input_controlnet_images = []
     input_controlnet_scales = []
 
-    if controlnet_geo:
+    if controlnet_geo and pipeline != "stablediffusionxl":
         for point in controlnet_geo.points():
             controlnetmodel = point.stringAttribValue("model")
             geo = point.prims()[0].getEmbeddedGeometry()
@@ -77,11 +83,28 @@ def run(
         pipeline_type = "StableDiffusionControlNetInpaintPipeline"
 
     # Text Embeddings
-    conditional_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["conditional_embedding"]).reshape(
-        input_embeddings["tensor_shape"])]))
+    tensor_shape = input_embeddings["tensor_shape"]
+    if tensor_shape[0] == -1:
+        tensor_shape = tensor_shape[1:]
 
-    unconditional_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["unconditional_embedding"]).reshape(
-        input_embeddings["tensor_shape"])]))
+    pooled_tensor_shape = input_embeddings["pooled_tensor_shape"]
+
+    conditional_embeddings = torch.from_numpy(numpy.array(numpy.array(input_embeddings["conditional_embedding"]).reshape(
+        tensor_shape)))
+
+    pooled_conditional_embeddings = input_embeddings["pooled_conditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
+    pooled_conditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_conditional_embeddings).reshape(
+        pooled_tensor_shape)))
+
+    unconditional_embeddings = torch.from_numpy(numpy.array(numpy.array(input_embeddings["unconditional_embedding"]).reshape(
+        tensor_shape)))
+    pooled_unconditional_embeddings = input_embeddings["pooled_unconditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
+    pooled_unconditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_unconditional_embeddings).reshape(
+        pooled_tensor_shape)))
+
+    if pipeline == "stablediffusionxl":
+        pipeline_call_kwargs["pooled_prompt_embeds"] = pooled_conditional_embeddings
+        pipeline_call_kwargs["negative_pooled_prompt_embeds"] = pooled_unconditional_embeddings
 
     # Model
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
@@ -116,10 +139,8 @@ def run(
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
         _progress_bar = partial(progress_bar, operation=operation)
         output_image = pipe(
-            prompt=input_embeddings["prompt"],
-            negative_prompt=input_embeddings["negative_prompt"],
-            # prompt_embeds=conditional_embeddings,
-            # negative_prompt_embeds=unconditional_embeddings,
+            prompt_embeds=conditional_embeddings,
+            negative_prompt_embeds=unconditional_embeddings,
             num_inference_steps=inference_steps,
             guidance_scale=guidance_scale,
             eta=1.0,

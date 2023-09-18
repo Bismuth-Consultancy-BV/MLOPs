@@ -32,20 +32,20 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -20.5752 -6.42996
+position -2.40098 -3.37841
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 1 "output1"
 }
 inputsNamed3
 {
-0 	sd_tokenizer1 1 1 "input1"
+0 	null1 1 1 "input1"
 }
 inputs
 {
-0 	sd_tokenizer1 0 1
+0 	null1 0 1
 }
 stat
 {
@@ -155,16 +155,22 @@ model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$M
 text_embeddings = text_encoder.run(positive_tokens[0], negative_tokens[0], device, model_path, local_cache_only=cache_only)
 conditional_embedding = text_embeddings[\"conditional_embedding\"]
 unconditional_embedding = text_embeddings[\"unconditional_embedding\"]
+conditional_embedding_pooled = text_embeddings[\"conditional_embedding_pooled\"]
+unconditional_embedding_pooled = text_embeddings[\"unconditional_embedding_pooled\"]
 
 # Export
-geo.addAttrib(hou.attribType.Global, \"tensor_dimension\", [1,1], create_local_variable=False) 
+geo.addAttrib(hou.attribType.Global, \"tensor_dimension\", [0,0,0], create_local_variable=False)
+geo.addAttrib(hou.attribType.Global, \"pooled_tensor_dimension\", [0,0], create_local_variable=False) 
 
 for i in conditional_embedding:
     pt = geo.createPoint()
 
-geo.setPointFloatAttribValues(\"conditional_embedding\", tuple(map(float, conditional_embedding))) 
-geo.setPointFloatAttribValues(\"unconditional_embedding\", tuple(map(float, unconditional_embedding))) 
-geo.setGlobalAttribValue(\"tensor_dimension\", text_embeddings[\"tensor_shape\"]) "	)
+geo.setPointFloatAttribValues(\"conditional_embedding\", tuple(conditional_embedding))
+geo.setPointFloatAttribValues(\"unconditional_embedding\", tuple(unconditional_embedding))
+geo.setPointFloatAttribValues(\"conditional_embedding_pooled\", tuple(conditional_embedding_pooled))
+geo.setPointFloatAttribValues(\"unconditional_embedding_pooled\", tuple(unconditional_embedding_pooled))
+geo.setGlobalAttribValue(\"tensor_dimension\", text_embeddings[\"tensor_shape\"])
+geo.setGlobalAttribValue(\"pooled_tensor_dimension\", text_embeddings[\"pooled_tensor_shape\"]) "	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -287,7 +293,7 @@ version 0.8
 group	[ 0	locks=0 ]	(	""	)
 grouptype	[ 0	locks=0 ]	(	"guess"	)
 encodenames	[ 0	locks=0 ]	(	"off"	)
-numattr	[ 0	locks=0 ]	(	1	)
+numattr	[ 0	locks=0 ]	(	2	)
 enable1	[ 0	locks=0 ]	(	"on"	)
 name1	[ 0	locks=0 ]	(	conditional_embedding	)
 existing1	[ 0	locks=0 ]	(	"better"	)
@@ -305,6 +311,23 @@ uselocal1	[ 0	locks=0 ]	(	"on"	)
 value1v	[ 0	locks=0 ]	(	0	0	0	0	)
 string1	[ 0	locks=0 ]	(	""	)
 numattr_spacerparm1	[ 0	locks=0 ]	(	)
+enable2	[ 0	locks=0 ]	(	"on"	)
+name2	[ 0	locks=0 ]	(	conditional_embedding_pooled	)
+existing2	[ 0	locks=0 ]	(	"better"	)
+createvarmap2	[ 0	locks=0 ]	(	"off"	)
+varname2	[ 0	locks=0 ]	(	""	)
+class2	[ 0	locks=0 ]	(	"point"	)
+savetoinfo2	[ 0	locks=0 ]	(	"off"	)
+type2	[ 0	locks=0 ]	(	"float"	)
+typeinfo2	[ 0	locks=0 ]	(	"guess"	)
+precision2	[ 0	locks=0 ]	(	"auto"	)
+size2	[ 0	locks=0 ]	(	1	)
+default2v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues2	[ 0	locks=0 ]	(	"on"	)
+uselocal2	[ 0	locks=0 ]	(	"on"	)
+value2v	[ 0	locks=0 ]	(	0	0	0	0	)
+string2	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm2	[ 0	locks=0 ]	(	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -426,7 +449,7 @@ version 0.8
 group	[ 0	locks=0 ]	(	""	)
 grouptype	[ 0	locks=0 ]	(	"guess"	)
 encodenames	[ 0	locks=0 ]	(	"off"	)
-numattr	[ 0	locks=0 ]	(	1	)
+numattr	[ 0	locks=0 ]	(	2	)
 enable1	[ 0	locks=0 ]	(	"on"	)
 name1	[ 0	locks=0 ]	(	unconditional_embedding	)
 existing1	[ 0	locks=0 ]	(	"better"	)
@@ -444,6 +467,23 @@ uselocal1	[ 0	locks=0 ]	(	"on"	)
 value1v	[ 0	locks=0 ]	(	0	0	0	0	)
 string1	[ 0	locks=0 ]	(	""	)
 numattr_spacerparm1	[ 0	locks=0 ]	(	)
+enable2	[ 0	locks=0 ]	(	"on"	)
+name2	[ 0	locks=0 ]	(	unconditional_embedding_pooled	)
+existing2	[ 0	locks=0 ]	(	"better"	)
+createvarmap2	[ 0	locks=0 ]	(	"off"	)
+varname2	[ 0	locks=0 ]	(	""	)
+class2	[ 0	locks=0 ]	(	"point"	)
+savetoinfo2	[ 0	locks=0 ]	(	"off"	)
+type2	[ 0	locks=0 ]	(	"float"	)
+typeinfo2	[ 0	locks=0 ]	(	"guess"	)
+precision2	[ 0	locks=0 ]	(	"auto"	)
+size2	[ 0	locks=0 ]	(	1	)
+default2v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues2	[ 0	locks=0 ]	(	"on"	)
+uselocal2	[ 0	locks=0 ]	(	"on"	)
+value2v	[ 0	locks=0 ]	(	0	0	0	0	)
+string2	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm2	[ 0	locks=0 ]	(	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
