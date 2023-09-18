@@ -33,7 +33,7 @@ def run(
     pipeline_call_kwargs = {}
     pipeline_kwargs = {}
     dtype = torch.float16
-    pipeline_type = "StableDiffusionPipeline"
+    pipeline_type = "StableDiffusionXLPipeline"
 
     if input_scheduler["numpy_image"] is not None:
         # Guide Image
@@ -45,7 +45,6 @@ def run(
 
         pipeline_call_kwargs["strength"] = max(0.05, image_deviation)
         pipeline_type = "StableDiffusionInpaintPipeline"
-
 
     input_controlnet_models = []
     input_controlnet_images = []
@@ -88,7 +87,7 @@ def run(
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
 
     # Diffusers Pipeline
-    pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, torch_dtype=dtype, **pipeline_kwargs)
+    pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, torch_dtype=dtype,use_safetensors=True, **pipeline_kwargs)
     pipe.to(device)
     pipe.set_progress_bar_config(disable=True)
 
@@ -117,8 +116,10 @@ def run(
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
         _progress_bar = partial(progress_bar, operation=operation)
         output_image = pipe(
-            prompt_embeds=conditional_embeddings,
-            negative_prompt_embeds=unconditional_embeddings,
+            prompt=input_embeddings["prompt"],
+            negative_prompt=input_embeddings["negative_prompt"],
+            # prompt_embeds=conditional_embeddings,
+            # negative_prompt_embeds=unconditional_embeddings,
             num_inference_steps=inference_steps,
             guidance_scale=guidance_scale,
             eta=1.0,

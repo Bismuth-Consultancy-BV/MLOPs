@@ -312,9 +312,9 @@ def check_mlops_version():
 
 
 def ensure_huggingface_model_local(
-    model_name, model_path, cache_only=False, model_type="stablediffusion"
+    model_name, model_path, cache_only=False, model_type="stablediffusion/StableDiffusionPipeline"
 ):
-    from diffusers import StableDiffusionPipeline
+    from sdpipeline import pipelines_lookup
     from diffusers.schedulers.scheduling_utils import SCHEDULER_CONFIG_NAME
     from diffusers.utils import CONFIG_NAME, ONNX_WEIGHTS_NAME, WEIGHTS_NAME
     from huggingface_hub import snapshot_download
@@ -341,16 +341,23 @@ def ensure_huggingface_model_local(
 
     model_name = model_name.replace("-_-", "/")
     allow_patterns = ["*.json", "*.txt"]
-    ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
+    ignore_patterns = []
+
+    def unpack_values(data):
+        a, *remainder = data.split("/")
+        b = remainder[0] if remainder else "StableDiffusionPipeline"
+        return a, b
+
+    model_type, pipeline = unpack_values(model_type)
 
     if model_type == "stablediffusion":
         try:
-            config_dict = StableDiffusionPipeline.load_config(
+            config_dict = pipelines_lookup.pipelines[pipeline].load_config(
                 model_name, resume_download=True, force_download=False
             )
             folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
             allow_patterns += [os.path.join(k, "*") for k in folder_names]
-            allow_patterns.append(StableDiffusionPipeline.config_name)
+            allow_patterns.append(pipelines_lookup.pipelines[pipeline].config_name)
         except:
             pass
         allow_patterns += [
@@ -442,8 +449,9 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
     def on_accept(self):
         model_name = self.model_path_field.text()
         download_dir = hou.text.expandString(self.download_directory_field.text())
+        model_type = self.model_type_field.text()
 
-        ensure_huggingface_model_local(model_name, download_dir)
+        ensure_huggingface_model_local(model_name, download_dir, model_type=model_type)
         hou.ui.displayMessage(
             f"You have successfully downloaded or updated the {model_name} model!",
             buttons=("OK",),
@@ -479,8 +487,15 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
         layout_model = QtWidgets.QHBoxLayout()
         model_path_label = QtWidgets.QLabel("Model Name: ")
         self.model_path_field = QtWidgets.QLineEdit("runwayml/stable-diffusion-v1-5")
+
+        layout_type = QtWidgets.QHBoxLayout()
+        model_type_label = QtWidgets.QLabel("Model Type: ")
+        self.model_type_field = QtWidgets.QLineEdit("stablediffusion/StableDiffusionPipeline")
+
         layout_model.addWidget(model_path_label)
         layout_model.addWidget(self.model_path_field)
+        layout_type.addWidget(model_type_label)
+        layout_type.addWidget(self.model_type_field)
 
         layout_browse = QtWidgets.QHBoxLayout()
         download_path_label = QtWidgets.QLabel("Download Directory: ")
@@ -494,6 +509,7 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
         layout_browse.addWidget(self.dir_button)
 
         layout.addLayout(layout_model)
+        layout.addLayout(layout_type)
         layout.addLayout(layout_browse)
 
         buttonlayout = QtWidgets.QHBoxLayout()
