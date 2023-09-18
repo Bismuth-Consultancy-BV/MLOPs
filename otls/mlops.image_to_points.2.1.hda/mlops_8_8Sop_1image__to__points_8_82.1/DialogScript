@@ -1,0 +1,263 @@
+# Dialog script for mlops::image_to_points::2.1 automatically generated
+
+{
+    name	mlops::image_to_points::2.1
+    script	labs::wfc_initialize
+    label	"MLOPs SD Image to Points"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "do_time"
+            label   "Is Sequence"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "filename"
+            label   "Image"
+            type    image
+            joinnext
+            default { "" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "filechooser_mode" "read" }
+        }
+        parm {
+            name    "reload"
+            label   "Reload"
+            type    button
+            default { "0" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "overridesize"
+            label   "File Size"
+            type    ordinal
+            default { "natural" }
+            menu usetokenvalue {
+                "0" "Natural Resolution"
+                "3" "3/4 Resolution"
+                "4" "2/3 Resolution"
+                "5" "1/2 Resolution"
+                "6" "1/3 Resolution"
+                "7" "1/4 Resolution"
+                "8" "1/8 Resolution"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "do_resize"
+            label   "Resize"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "do_aspect"
+            label   "Maintain Aspect Ratio"
+            type    toggle
+            joinnext
+            default { "0" }
+            disablewhen "{ do_resize == 0 }"
+            range   { 0! 8 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "upfilter"
+            label   "Filter:"
+            type    string
+            default { "point" }
+            disablewhen "{ do_resize == 0 }"
+            menu {
+                [ "opmenu -l -a cop2net2/scale_aspect upfilter" ]
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "width"
+            label   "Width"
+            type    integer
+            default { "512" }
+            disablewhen "{ do_resize == 0 }"
+            range   { 64 1024 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "height"
+            label   "Height"
+            type    integer
+            default { "512" }
+            disablewhen "{ do_resize == 0 } { do_aspect == 1 }"
+            range   { 64 1024 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "do_pad"
+            label   "Auto-Pad"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupcollapsible {
+        name    "folder1"
+        label   "Color Correction"
+
+        parm {
+            name    "dohueshift"
+            label   "Hue Shift"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+        }
+        parm {
+            name    "hueshift"
+            label   "Hue Shift"
+            type    float
+            default { "0" }
+            disablewhen "{ dohueshift != 1 }"
+            range   { -180 180 }
+        }
+        parm {
+            name    "dosat"
+            label   "Saturation"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "sat"
+            label   "Saturation"
+            type    float
+            default { "1" }
+            disablewhen "{ dosat != 1 }"
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "doval"
+            label   "Value"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "val"
+            label   "Value"
+            type    float
+            default { "1" }
+            disablewhen "{ doval != 1 }"
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "dobrightness"
+            label   "Brightness"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "brightness"
+            label   "Brightness"
+            type    float
+            default { "0" }
+            disablewhen "{ dobrightness != 1 }"
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "docontrast"
+            label   "Constrast"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "contrast"
+            label   "Contrast"
+            type    float
+            default { "1" }
+            disablewhen "{ docontrast != 1 }"
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "dogain"
+            label   "Gain"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gain"
+            label   "Gain"
+            type    float
+            default { "1" }
+            disablewhen "{ dogain != 1 }"
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "dogamma"
+            label   "Gamma"
+            type    toggle
+            nolabel
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gamma"
+            label   "Gamma"
+            type    float
+            default { "1" }
+            disablewhen "{ dogamma != 1 }"
+            range   { 0.1 3 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}
