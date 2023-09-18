@@ -56,7 +56,7 @@ def run(
     input_controlnet_images = []
     input_controlnet_scales = []
 
-    if controlnet_geo:
+    if controlnet_geo and pipeline != "stablediffusionxl":
         for point in controlnet_geo.points():
             controlnetmodel = point.stringAttribValue("model")
             geo = point.prims()[0].getEmbeddedGeometry()
