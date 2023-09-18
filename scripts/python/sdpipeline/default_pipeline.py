@@ -1,5 +1,5 @@
 import diffusers
-from imp import reload
+from importlib import reload
 reload(diffusers)
 
 
@@ -9,6 +9,7 @@ import mlops_image_utils
 import torch
 from . import schedulers_lookup
 from . import pipelines_lookup
+reload(pipelines_lookup)
 import numpy
 import os
 import hou
@@ -17,6 +18,7 @@ def run(
     model,
     cache_only,
     device,
+    resolution,
     inference_steps,
     guidance_scale,
     image_deviation,
@@ -25,10 +27,25 @@ def run(
     controlnet_geo,
     lora_weights,
 ):
+    diffusers.utils.logging.set_verbosity_error()
+    
+    diffusers.utils.logging.set_verbosity(40)
     pipeline_call_kwargs = {}
     pipeline_kwargs = {}
     dtype = torch.float16
-    pipeline_type = "StableDiffusionInpaintPipeline"
+    pipeline_type = "StableDiffusionPipeline"
+
+    if input_scheduler["numpy_image"] is not None:
+        # Guide Image
+        input_image = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_image"])
+        pipeline_call_kwargs["image"] = input_image
+        # Mask
+        input_mask = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_mask"])
+        pipeline_call_kwargs["mask_image"] = input_mask
+
+        pipeline_call_kwargs["strength"] = max(0.05, image_deviation)
+        pipeline_type = "StableDiffusionInpaintPipeline"
+
 
     input_controlnet_models = []
     input_controlnet_images = []
@@ -67,12 +84,6 @@ def run(
     unconditional_embeddings = torch.from_numpy(numpy.array([numpy.array(input_embeddings["unconditional_embedding"]).reshape(
         input_embeddings["tensor_shape"])]))
 
-    # Guide Image
-    input_image = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_image"])
-
-    # Mask
-    input_mask = mlops_image_utils.colors_numpy_array_to_pil(input_scheduler["numpy_mask"])
-
     # Model
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
 
@@ -106,16 +117,15 @@ def run(
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
         _progress_bar = partial(progress_bar, operation=operation)
         output_image = pipe(
-            prompt_embeds = conditional_embeddings,
-            negative_prompt_embeds = unconditional_embeddings,
+            prompt_embeds=conditional_embeddings,
+            negative_prompt_embeds=unconditional_embeddings,
             num_inference_steps=inference_steps,
-            guidance_scale = guidance_scale,
+            guidance_scale=guidance_scale,
             eta=1.0,
-            image=input_image,
-            mask_image=input_mask,
-            output_type = "pil",
-            generator = torch.manual_seed(seed),
-            strength= max(0.05, image_deviation),
+            width=resolution[0],
+            height=resolution[1],
+            output_type="pil",
+            generator=torch.manual_seed(seed),
             cross_attention_kwargs=lora_kwargs,
             callback=_progress_bar,
             **pipeline_call_kwargs,
