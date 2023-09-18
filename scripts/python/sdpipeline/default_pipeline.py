@@ -56,7 +56,7 @@ def run(
     input_controlnet_images = []
     input_controlnet_scales = []
 
-    if controlnet_geo and pipeline != "stablediffusionxl":
+    if controlnet_geo:
         for point in controlnet_geo.points():
             controlnetmodel = point.stringAttribValue("model")
             geo = point.prims()[0].getEmbeddedGeometry()
@@ -80,7 +80,7 @@ def run(
         pipeline_call_kwargs["control_image"] = input_controlnet_images
         pipeline_call_kwargs["controlnet_conditioning_scale"] = input_controlnet_scales
         pipeline_kwargs["controlnet"] = input_controlnet_models
-        pipeline_type = "StableDiffusionControlNetInpaintPipeline"
+        pipeline_type = f"StableDiffusion{pipeline_modifier}ControlNetInpaintPipeline"
 
     # Text Embeddings
     tensor_shape = input_embeddings["tensor_shape"]
