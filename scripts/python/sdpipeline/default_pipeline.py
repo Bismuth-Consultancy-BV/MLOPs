@@ -115,8 +115,10 @@ def run(
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
 
     if pipeline["type"] == "custom":
+        _keep = inspect.signature(pipelines_lookup.pipelines[pipeline_type]).parameters.keys()
+
         for key, value in pipeline_kwargs.copy().items():
-            if key not in pipeline["create_kwargs"]:
+            if key not in _keep:
                 # print("DELETING", key)
                 del pipeline_kwargs[key]
 
@@ -186,8 +188,9 @@ def run(
     pipe.enable_model_cpu_offload()
 
     if pipeline["type"] == "custom":
+        _keep = inspect.signature(pipelines_lookup.pipelines[pipeline_type].__call__).parameters.keys()
         for key, value in pipeline_call_kwargs.copy().items():
-            if key not in pipeline["call_kwargs"]:
+            if key not in _keep:
                 # print("DELETING", key, pipeline["call_kwargs"])
                 del pipeline_call_kwargs[key]
 
