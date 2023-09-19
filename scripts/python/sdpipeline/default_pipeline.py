@@ -14,6 +14,7 @@ import numpy
 import os
 import hou
 from typing import Optional
+import inspect
 
 def run(
     model,
@@ -113,20 +114,18 @@ def run(
 
     # Model
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
+    
 
-    if pipeline["type"] == "custom":
-        _keep = inspect.signature(pipelines_lookup.pipelines[pipeline_type]).parameters.keys()
-
-        for key, value in pipeline_kwargs.copy().items():
-            if key not in _keep:
-                # print("DELETING", key)
-                del pipeline_kwargs[key]
+    # Delete kwargs not used by pipeline
+    _keep = inspect.signature(pipelines_lookup.pipelines[pipeline_type]).parameters.keys()
+    for key, value in pipeline_kwargs.copy().items():
+        if key not in _keep:
+            del pipeline_kwargs[key]
 
     # Diffusers Pipeline
     if pipeline["type"] == "custom":
         pipeline_type = pipeline["name"]
 
-    # print("INSTANTIATING PIPELINE WITH", pipeline_kwargs)
     pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, torch_dtype=dtype,use_safetensors=True, **pipeline_kwargs)
     pipe.to(device)
     pipe.set_progress_bar_config(disable=True)
@@ -187,15 +186,14 @@ def run(
     # Inference
     pipe.enable_model_cpu_offload()
 
-    if pipeline["type"] == "custom":
-        _keep = inspect.signature(pipelines_lookup.pipelines[pipeline_type].__call__).parameters.keys()
-        for key, value in pipeline_call_kwargs.copy().items():
-            if key not in _keep:
-                # print("DELETING", key, pipeline["call_kwargs"])
-                del pipeline_call_kwargs[key]
+
+    # Delete kwargs not used by pipeline
+    _keep = inspect.signature(pipelines_lookup.pipelines[pipeline_type].__call__).parameters.keys()
+    for key, value in pipeline_call_kwargs.copy().items():
+        if key not in _keep:
+            del pipeline_call_kwargs[key]
 
 
-    # print("RUNNING PIPELINE WITH", list(pipeline_call_kwargs.keys()))
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
         _progress_bar = partial(progress_bar, operation=operation)
         output_image = pipe(
