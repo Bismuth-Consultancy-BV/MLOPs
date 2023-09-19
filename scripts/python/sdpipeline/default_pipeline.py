@@ -13,6 +13,7 @@ reload(pipelines_lookup)
 import numpy
 import os
 import hou
+from typing import Optional
 
 def run(
     model,
@@ -23,6 +24,7 @@ def run(
     inference_steps,
     guidance_scale,
     image_deviation,
+    tiling,
     input_scheduler,
     input_embeddings,
     controlnet_geo,
@@ -117,6 +119,41 @@ def run(
     pipe.to(device)
     pipe.set_progress_bar_config(disable=True)
 
+
+    # Tiling Support (Have to hijack pipeline to support this currently)
+    if tiling != "none":
+        if tiling == "x":
+            modex = "circular"
+            modey = "constant"
+        if tiling == "y":
+            modex = "constant"
+            modey = "circular"
+        if tiling == "xy":
+            modex = "circular"
+            modey = "circular"
+
+        def asymmetricConv2DConvForward(self, input: torch.Tensor, weight: torch.Tensor, bias: Optional[torch.Tensor]):
+            F = torch.nn.functional
+            self.paddingX = (self._reversed_padding_repeated_twice[0], self._reversed_padding_repeated_twice[1], 0, 0)
+            self.paddingY = (0, 0, self._reversed_padding_repeated_twice[2], self._reversed_padding_repeated_twice[3])
+            working = F.pad(input, self.paddingX, mode=modex)
+            working = F.pad(working, self.paddingY, mode=modey)
+            return F.conv2d(working, weight, bias, self.stride, torch.nn.modules.utils._pair(0), self.dilation, self.groups)
+
+        targets = [pipe.vae, pipe.text_encoder, pipe.unet,]
+        conv_layers = []
+        for target in targets:
+            for module in target.modules():
+                if isinstance(module, torch.nn.Conv2d):
+                    conv_layers.append(module)
+
+        for cl in conv_layers:
+            if isinstance(cl, diffusers.models.lora.LoRACompatibleConv) and cl.lora_layer is None:
+                cl.lora_layer = lambda *x: 0
+
+            cl._conv_forward = asymmetricConv2DConvForward.__get__(cl, torch.nn.Conv2d)
+
+
     # Scheduler
     scheduler_config = input_scheduler["config"]
     seed = input_scheduler["seed"]
@@ -132,9 +169,8 @@ def run(
         lora_kwargs = {"scale": lora_weights["weight"]}
 
     from functools import partial
-    total_steps = min(int(inference_steps * image_deviation), inference_steps)
     def progress_bar(step, timestep, latents, operation):
-        operation.updateProgress(step / total_steps)
+        operation.updateProgress(step / inference_steps)
 
     # Inference
     pipe.enable_model_cpu_offload()
