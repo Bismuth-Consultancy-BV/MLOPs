@@ -38,7 +38,7 @@ def run(
     dtype = torch.float16
 
     pipeline_modifier = ""
-    if pipeline == "stablediffusionxl":
+    if pipeline["type"] == "stablediffusionxl":
         pipeline_modifier = "XL"
 
     pipeline_type = f"StableDiffusion{pipeline_modifier}Pipeline"
@@ -96,17 +96,17 @@ def run(
         tensor_shape)))
     
 
-    if pipeline == "stablediffusionxl":
-        pooled_tensor_shape = input_embeddings["pooled_tensor_shape"]
-        pooled_conditional_embeddings = input_embeddings["pooled_conditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
-        pooled_conditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_conditional_embeddings).reshape(
-        pooled_tensor_shape)))
-        pooled_unconditional_embeddings = input_embeddings["pooled_unconditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
-        pooled_unconditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_unconditional_embeddings).reshape(
-        pooled_tensor_shape)))
+    # if pipeline["type"] == "stablediffusionxl":
+    pooled_tensor_shape = input_embeddings["pooled_tensor_shape"]
+    pooled_conditional_embeddings = input_embeddings["pooled_conditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
+    pooled_conditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_conditional_embeddings).reshape(
+    pooled_tensor_shape)))
+    pooled_unconditional_embeddings = input_embeddings["pooled_unconditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
+    pooled_unconditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_unconditional_embeddings).reshape(
+    pooled_tensor_shape)))
 
-        pipeline_call_kwargs["pooled_prompt_embeds"] = pooled_conditional_embeddings
-        pipeline_call_kwargs["negative_pooled_prompt_embeds"] = pooled_unconditional_embeddings
+    pipeline_call_kwargs["pooled_prompt_embeds"] = pooled_conditional_embeddings
+    pipeline_call_kwargs["negative_pooled_prompt_embeds"] = pooled_unconditional_embeddings
 
     del input_embeddings
     del controlnet_geo
@@ -114,7 +114,17 @@ def run(
     # Model
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
 
+    if pipeline["type"] == "custom":
+        for key, value in pipeline_kwargs.copy().items():
+            if key not in pipeline["create_kwargs"]:
+                # print("DELETING", key)
+                del pipeline_kwargs[key]
+
     # Diffusers Pipeline
+    if pipeline["type"] == "custom":
+        pipeline_type = pipeline["name"]
+
+    # print("INSTANTIATING PIPELINE WITH", pipeline_kwargs)
     pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, torch_dtype=dtype,use_safetensors=True, **pipeline_kwargs)
     pipe.to(device)
     pipe.set_progress_bar_config(disable=True)
@@ -175,6 +185,14 @@ def run(
     # Inference
     pipe.enable_model_cpu_offload()
 
+    if pipeline["type"] == "custom":
+        for key, value in pipeline_call_kwargs.copy().items():
+            if key not in pipeline["call_kwargs"]:
+                # print("DELETING", key, pipeline["call_kwargs"])
+                del pipeline_call_kwargs[key]
+
+
+    # print("RUNNING PIPELINE WITH", list(pipeline_call_kwargs.keys()))
     with hou.InterruptableOperation("Solving Stable Diffusion", open_interrupt_dialog=True) as operation:
         _progress_bar = partial(progress_bar, operation=operation)
         output_image = pipe(
