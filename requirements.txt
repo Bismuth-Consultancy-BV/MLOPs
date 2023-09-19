@@ -8,11 +8,11 @@ geopandas
 scikit-learn
 scipy
 timm==0.6.7
-controlnet_aux==0.0.6
+controlnet_aux==0.0.7
 torchmetrics
 clip_interrogator
-diffusers==0.19.3
-xformers==0.0.20
+diffusers==0.21.2
+xformers==0.0.21
 ftfy
 Jinja2
 rembg[gpu]

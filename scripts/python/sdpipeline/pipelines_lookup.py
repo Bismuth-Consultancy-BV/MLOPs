@@ -4,7 +4,7 @@ from diffusers import (
     StableDiffusionPipeline,
     StableDiffusionXLPipeline,
     StableDiffusionXLInpaintPipeline,
-    # StableDiffusionXLControlNetInpaintPipeline,
+    StableDiffusionXLControlNetInpaintPipeline,
 )
 
 pipelines = {
@@ -13,5 +13,5 @@ pipelines = {
     "StableDiffusionControlNetInpaintPipeline": StableDiffusionControlNetInpaintPipeline,
     "StableDiffusionXLPipeline": StableDiffusionXLPipeline,
     "StableDiffusionXLInpaintPipeline": StableDiffusionXLInpaintPipeline,
-    # "StableDiffusionXLControlNetInpaintPipeline": StableDiffusionXLControlNetInpaintPipeline,
+    "StableDiffusionXLControlNetInpaintPipeline": StableDiffusionXLControlNetInpaintPipeline,
 }

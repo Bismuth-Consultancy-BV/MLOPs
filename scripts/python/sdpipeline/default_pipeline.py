@@ -56,7 +56,7 @@ def run(
     input_controlnet_images = []
     input_controlnet_scales = []
 
-    if controlnet_geo and pipeline != "stablediffusionxl":
+    if controlnet_geo:
         for point in controlnet_geo.points():
             controlnetmodel = point.stringAttribValue("model")
             geo = point.prims()[0].getEmbeddedGeometry()
@@ -87,24 +87,27 @@ def run(
     if tensor_shape[0] == -1:
         tensor_shape = tensor_shape[1:]
 
-    pooled_tensor_shape = input_embeddings["pooled_tensor_shape"]
-
     conditional_embeddings = torch.from_numpy(numpy.array(numpy.array(input_embeddings["conditional_embedding"]).reshape(
         tensor_shape)))
 
-    pooled_conditional_embeddings = input_embeddings["pooled_conditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
-    pooled_conditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_conditional_embeddings).reshape(
-        pooled_tensor_shape)))
-
     unconditional_embeddings = torch.from_numpy(numpy.array(numpy.array(input_embeddings["unconditional_embedding"]).reshape(
         tensor_shape)))
-    pooled_unconditional_embeddings = input_embeddings["pooled_unconditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
-    pooled_unconditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_unconditional_embeddings).reshape(
-        pooled_tensor_shape)))
+    
 
     if pipeline == "stablediffusionxl":
+        pooled_tensor_shape = input_embeddings["pooled_tensor_shape"]
+        pooled_conditional_embeddings = input_embeddings["pooled_conditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
+        pooled_conditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_conditional_embeddings).reshape(
+        pooled_tensor_shape)))
+        pooled_unconditional_embeddings = input_embeddings["pooled_unconditional_embedding"][:pooled_tensor_shape[0]*pooled_tensor_shape[1]]
+        pooled_unconditional_embeddings = torch.from_numpy(numpy.array(numpy.array(pooled_unconditional_embeddings).reshape(
+        pooled_tensor_shape)))
+
         pipeline_call_kwargs["pooled_prompt_embeds"] = pooled_conditional_embeddings
         pipeline_call_kwargs["negative_pooled_prompt_embeds"] = pooled_unconditional_embeddings
+
+    del input_embeddings
+    del controlnet_geo
 
     # Model
     model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
