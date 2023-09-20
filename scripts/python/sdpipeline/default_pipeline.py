@@ -68,12 +68,11 @@ def run(
 
             controlnet_conditioning_image = torch.from_numpy(
                 numpy.array([input_colors])
-            ).to(dtype)
+            )
 
             controlnet = diffusers.ControlNetModel.from_pretrained(
                 controlnetmodel,
                 local_files_only=cache_only,
-                torch_dtype=dtype,
             )
 
             input_controlnet_models.append(controlnet)
@@ -126,7 +125,7 @@ def run(
     if pipeline["type"] == "custom":
         pipeline_type = pipeline["name"]
 
-    pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, torch_dtype=dtype,use_safetensors=True, **pipeline_kwargs)
+    pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, use_safetensors=True, **pipeline_kwargs)
     pipe.to(device)
     pipe.set_progress_bar_config(disable=True)
 
