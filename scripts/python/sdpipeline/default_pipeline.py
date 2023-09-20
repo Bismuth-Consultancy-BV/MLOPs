@@ -73,6 +73,7 @@ def run(
             controlnet = diffusers.ControlNetModel.from_pretrained(
                 controlnetmodel,
                 local_files_only=cache_only,
+                torch_dtype=dtype,
             )
 
             input_controlnet_models.append(controlnet)
@@ -83,6 +84,10 @@ def run(
         pipeline_call_kwargs["controlnet_conditioning_scale"] = input_controlnet_scales
         pipeline_kwargs["controlnet"] = input_controlnet_models
         pipeline_type = f"StableDiffusion{pipeline_modifier}ControlNetInpaintPipeline"
+        
+        if input_scheduler["numpy_image"] is None and pipeline_modifier == "XL":
+            pipeline_call_kwargs["image"] = input_controlnet_images
+            pipeline_type = f"StableDiffusion{pipeline_modifier}ControlNetPipeline"
 
     # Text Embeddings
     tensor_shape = input_embeddings["tensor_shape"]
@@ -125,7 +130,7 @@ def run(
     if pipeline["type"] == "custom":
         pipeline_type = pipeline["name"]
 
-    pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, use_safetensors=True, **pipeline_kwargs)
+    pipe = pipelines_lookup.pipelines[pipeline_type].from_pretrained(model_path, torch_dtype=dtype, use_safetensors=True, **pipeline_kwargs)
     pipe.to(device)
     pipe.set_progress_bar_config(disable=True)
 
