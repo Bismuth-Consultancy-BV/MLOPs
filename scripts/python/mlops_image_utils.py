@@ -2,7 +2,7 @@ import numpy
 from PIL import Image
 
 
-def colors_numpy_array_to_pil(input_colors, scale_factor=2.2):
+def colors_numpy_array_to_pil(input_colors, scale_factor=1.0):
     # Transpose into (width, height, channels)
     input_colors = input_colors.transpose(1, 2, 0)
     # Gamma Correct
