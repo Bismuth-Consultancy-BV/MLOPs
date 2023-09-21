@@ -88,4 +88,46 @@
         }
     }
 
+    groupsimple {
+        name    "smoothmotion"
+        label   "Motion Smoothing"
+
+        parm {
+            name    "enablesmooth"
+            label   "Motion Smoothing"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "filtertype"
+            label   "Type"
+            type    ordinal
+            default { "butter" }
+            menu {
+                "butter"    "Butterworth"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "filterorder"
+            label   "Order"
+            type    integer
+            default { "3" }
+            range   { 1 6 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cutofffrequency"
+            label   "Cutoff Frequency"
+            type    float
+            default { "5" }
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
 }
