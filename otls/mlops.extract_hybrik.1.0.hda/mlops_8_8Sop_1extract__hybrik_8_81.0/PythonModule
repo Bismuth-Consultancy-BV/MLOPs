@@ -1,0 +1,16 @@
+def download_deps(kwargs):
+    url = r"https://drive.google.com/u/0/uc?id=1un9yAGlGjDooPwlnwFpJrbGHRiLaBNzV&export=download";
+    parm = "deps"
+    import mlops_utils
+    from zipfile import ZipFile
+    import os
+    from importlib import reload
+    reload(mlops_utils)
+    node = kwargs["node"]
+    output = node.parm(parm).evalAsString()
+
+    mlops_utils.download_gdrive_file_to_folder(url, output);
+    tdir = os.path.dirname(output)
+    with ZipFile(output, 'r') as file: 
+        file.extractall(path=tdir)
+

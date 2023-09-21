@@ -39,6 +39,22 @@
         label   "Model Weights"
 
         parm {
+            name    "download_deps"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "kwargs['node'].hm().download_deps(kwargs)" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "deps"
+            label   "Dependencies"
+            type    directory
+            default { "$MLOPS/data/models/hybrik/model_files.zip" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
             name    "download_cfg_file"
             label   "Download"
             type    button
