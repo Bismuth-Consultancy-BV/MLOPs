@@ -1,5 +1,6 @@
 from diffusers import (
     StableDiffusionControlNetInpaintPipeline,
+    StableDiffusionControlNetPipeline,
     StableDiffusionInpaintPipeline,
     StableDiffusionPipeline,
     StableDiffusionXLPipeline,
@@ -10,6 +11,7 @@ from diffusers import (
 
 pipelines = {
     "StableDiffusionPipeline": StableDiffusionPipeline,
+    "StableDiffusionControlNetPipeline": StableDiffusionControlNetPipeline,
     "StableDiffusionInpaintPipeline": StableDiffusionInpaintPipeline,
     "StableDiffusionControlNetInpaintPipeline": StableDiffusionControlNetInpaintPipeline,
     "StableDiffusionXLPipeline": StableDiffusionXLPipeline,
