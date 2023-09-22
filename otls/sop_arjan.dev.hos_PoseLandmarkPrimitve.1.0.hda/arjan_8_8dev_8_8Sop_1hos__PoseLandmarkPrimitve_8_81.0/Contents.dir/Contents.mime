@@ -1,0 +1,4214 @@
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY"
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename=".OPfallbacks"
+Content-Type: application/external-reference
+
+.OPfallbacks
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename=".OPdummydefs"
+Content-Type: application/external-reference
+
+.OPdummydefs
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="node_type"
+Content-Type: text/plain
+
+Sop
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.init"
+Content-Type: text/plain
+
+type = arjan::dev::hos_PoseLandmarkPrimitve::1.0
+matchesdef = 0
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -4.54488 1.25676
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author Mo@MO-GPU
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/Openpose.init"
+Content-Type: text/plain
+
+type = kinefx::skeleton
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/Openpose.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -3.31852
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/Openpose.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+stashinput	[ 0	locks=0 ]	(	0	)
+stashmergeinput	[ 0	locks=0 ]	(	0	)
+updatestashfromouput	[ 0	locks=0 ]	(	0	)
+stash	[ 0	locks=0 ]	(	geometry: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	)
+refstash	[ 0	locks=0 ]	(	""	)
+transferanimation	[ 0	locks=0 ]	(	"off"	)
+cacheoutput	[ 0	locks=0 ]	(	"off"	)
+jointcolor	[ 0	locks=0 ]	(	1	1	1	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/Openpose.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	},
+	"display_options":{
+		"type":"string",
+		"value":"{\"show_joints\": 1, \"show_links\": 1, \"solid_links\": 1, \"show_axes\": 0, \"show_scene_geo\": 1}"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/sort1.init"
+Content-Type: text/plain
+
+type = sort
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/sort1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.133 -5.20882
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	id_name 0 1 "input1"
+}
+inputs
+{
+0 	id_name 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/sort1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+pointsfolder	[ 0	locks=0 ]	(	0	)
+ptgroup	[ 0	locks=0 ]	(	""	)
+ptsort	[ 0	locks=0 ]	(	"attribute"	)
+pointseed	[ 0	locks=0 ]	(	29	)
+pointoffset	[ 0	locks=0 ]	(	0	)
+pointprox	[ 0	locks=0 ]	(	0	0	0	)
+pointobjpath	[ 0	locks=0 ]	(	""	)
+pointdir	[ 0	locks=0 ]	(	0	1	0	)
+pointexpr	[ 0	locks=0 ]	(	0	)
+pointattrib	[ 0	locks=0 ]	(	id	)
+pointattribcomp	[ 0	locks=0 ]	(	0	)
+pointreverse	[ 0	locks=0 ]	(	"off"	)
+primitivesfolder	[ 0	locks=0 ]	(	0	)
+primgroup	[ 0	locks=0 ]	(	""	)
+primsort	[ 0	locks=0 ]	(	"none"	)
+primseed	[ 0	locks=0 ]	(	0	)
+primoffset	[ 0	locks=0 ]	(	0	)
+primprox	[ 0	locks=0 ]	(	0	0	0	)
+primobjpath	[ 0	locks=0 ]	(	""	)
+primdir	[ 0	locks=0 ]	(	0	1	0	)
+primexpr	[ 0	locks=0 ]	(	0	)
+primattrib	[ 0	locks=0 ]	(	""	)
+primattribcomp	[ 0	locks=0 ]	(	0	)
+primreverse	[ 0	locks=0 ]	(	"off"	)
+vertexprimorder	[ 0	locks=0 ]	(	"on"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/sort1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/id_name.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/id_name.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -4.35842
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+1 	Openpose 0 1 "input1"
+}
+inputs
+{
+0 	Openpose 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/id_name.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"string sp[] = split(s@name,\"_\");
+s@name = sp[1];
+i@id = atoi(sp[0]);"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/id_name.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_rest.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_rest.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -7.1686
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault off exposed on
+outputsNamed3
+{
+2 "output1"
+}
+inputsNamed3
+{
+0 	limb_colors 1 1 "input1"
+}
+inputs
+{
+0 	limb_colors 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 1 0.529 0.624 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_rest.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"4@rest_transform = pointtransform(0, @ptnum);"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/set_rest.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/limb_colors.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/limb_colors.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -6.2588
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	sort1 1 1 "input1"
+}
+inputs
+{
+0 	sort1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/limb_colors.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"detail"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"vector colors[] = array({255, 0, 0}, {255, 85, 0}, {255, 170, 0}, {255, 255, 0}, {170, 255, 0}, {85, 255, 0}, {0, 255, 0}, {0, 255, 85}, {0, 255, 170}, {0, 255, 255}, {0, 170, 255}, {0, 85, 255}, {0, 0, 255}, {85, 0, 255}, {170, 0, 255}, {255, 0, 255}, {255, 0, 170}, {255, 0, 85});
+vector2 lp[] = array({2, 3}, {2, 6}, {3, 4}, {4, 5}, {6, 7}, {7, 8}, {2, 9}, {9, 10}, {10, 11}, {2, 12}, {12, 13}, {13, 14}, {2, 1}, {1, 15}, {15, 17}, {1, 16}, {16, 18});
+
+//set primcolors
+float dim = 0.6;
+foreach(int num;vector2 l; lp)
+    {
+    int fp = int(rint(l.x)) - 1;
+    int sp = int(rint(l.y)) - 1;
+    int pps[] = pointprims(0,fp);
+    int prim = -1;
+    foreach(int pp;pps)
+        {
+        int pmp1 = primpoint(0,pp,0);
+        int pmp2 = primpoint(0,pp,1);
+        if(fp==pmp1 && sp==pmp2)
+            {
+            prim = pp;
+            }
+        }
+    vector color = (colors[num] / 255.0) * dim;
+    setprimattrib(0,\"lm_primCd\",prim,color);
+    }
+
+foreach(int num;vector c;colors)
+    {
+    vector color = (colors[num] / 255.0);
+    setpointattrib(0,\"lm_pointCd\",num,color);
+    }
+"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/limb_colors.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -10.6655
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	render_point_attrib 1 1 "input1"
+}
+inputs
+{
+0 	render_point_attrib 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"s@lm_name = \"prim_01\";"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name1.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 11.3357 -8.59658
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	attribute2 1 1 "input1"
+}
+inputs
+{
+0 	attribute2 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"s@lm_name = \"prim_11\";"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -8.11161
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	set_rest 2 1 "input1"
+}
+inputs
+{
+0 	set_rest 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "PixelWidth"
+        label   "Pixelwidth"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "ramp"
+        label   "Ramp"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "renderLines"
+        label   "Renderlines"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs.chn"
+Content-Type: text/plain
+
+{
+    channel PixelWidth {
+      lefttype = extend
+      righttype = extend
+      default = 4
+      flags = 0
+      segment { length = 0 value = 4 4 expr = ch(\"../PixelWidth\") }
+    }
+    channel renderLines {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../renderLines\") }
+    }
+    channel ramp {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../ramp\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_pwidth = chi(\"PixelWidth\");
+i@lm_ramp = chi(\"ramp\");
+i@lm_lines = chi(\"renderLines\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+PixelWidth	[ 0	locks=0 ]	(	[ PixelWidth	0 ] 	)
+ramp	[ 0	locks=0 ]	(	[ ramp	0 ] 	)
+renderLines	[ 0	locks=0 ]	(	[ renderLines	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -9.89829
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	render_prim_sec 1 1 "input1"
+}
+inputs
+{
+0 	render_prim_sec 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "RenderPoints"
+        label   "Renderpoints"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "PointRadius"
+        label   "Pointradius"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib.chn"
+Content-Type: text/plain
+
+{
+    channel PointRadius {
+      lefttype = extend
+      righttype = extend
+      default = 5
+      flags = 0
+      segment { length = 0 value = 5 5 expr = ch(\"../PointRadius\") }
+    }
+    channel RenderPoints {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../RenderPoints\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_points = chi(\"RenderPoints\");
+i@lm_pradius = chi(\"PointRadius\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+RenderPoints	[ 0	locks=0 ]	(	[ RenderPoints	0 ] 	)
+PointRadius	[ 0	locks=0 ]	(	[ PointRadius	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib1.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 11.3357 -10.0746
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	render_prim_attribs1 1 1 "input1"
+}
+inputs
+{
+0 	render_prim_attribs1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib1.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "RenderPoints"
+        label   "Renderpoints"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "PointRadius"
+        label   "Pointradius"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib1.chn"
+Content-Type: text/plain
+
+{
+    channel PointRadius {
+      lefttype = extend
+      righttype = extend
+      default = 2
+      flags = 0
+      segment { length = 0 value = 2 2 expr = ch(\"../PointRadius4\") }
+    }
+    channel RenderPoints {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../RenderPoints4\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_points = chi(\"RenderPoints\");
+i@lm_pradius = chi(\"PointRadius\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+RenderPoints	[ 0	locks=0 ]	(	[ RenderPoints	0 ] 	)
+PointRadius	[ 0	locks=0 ]	(	[ PointRadius	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs1.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 11.3357 -9.34558
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	name1 1 1 "input1"
+}
+inputs
+{
+0 	name1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs1.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "PixelWidth"
+        label   "Pixelwidth"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "ramp"
+        label   "Ramp"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "renderLines"
+        label   "Renderlines"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs1.chn"
+Content-Type: text/plain
+
+{
+    channel PixelWidth {
+      lefttype = extend
+      righttype = extend
+      default = 2
+      flags = 0
+      segment { length = 0 value = 2 2 expr = ch(\"../PixelWidth4\") }
+    }
+    channel renderLines {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../renderLines4\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_pwidth = chi(\"PixelWidth\");
+i@lm_ramp = chi(\"ramp\");
+i@lm_lines = chi(\"renderLines\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+PixelWidth	[ 0	locks=0 ]	(	[ PixelWidth	0 ] 	)
+ramp	[ 0	locks=0 ]	(	0	)
+renderLines	[ 0	locks=0 ]	(	[ renderLines	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_sec.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_sec.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 7.13 -9.05049
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	render_prim_attribs 1 1 "input1"
+}
+inputs
+{
+0 	render_prim_attribs 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_sec.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	"2 5 8 11 13 16"	)
+grouptype	[ 0	locks=0 ]	(	"prims"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_extra = 1;"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_sec.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/obj_name.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/obj_name.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.32932 -8.93151
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	primcolor 1 1 "input1"
+}
+inputs
+{
+0 	primcolor 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/obj_name.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"s@lm_name = \"prim_12\";"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/obj_name.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib2.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib2.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.32932 -10.8154
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	render_prim_attribs4 1 1 "input1"
+}
+inputs
+{
+0 	render_prim_attribs4 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib2.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "RenderPoints"
+        label   "Renderpoints"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "PointRadius"
+        label   "Pointradius"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib2.chn"
+Content-Type: text/plain
+
+{
+    channel PointRadius {
+      lefttype = extend
+      righttype = extend
+      default = 5
+      flags = 0
+      segment { length = 0 value = 5 5 expr = ch(\"../PointRadius3\") }
+    }
+    channel RenderPoints {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../RenderPoints3\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib2.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_points = chi(\"RenderPoints\");
+i@lm_pradius = chi(\"PointRadius\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+RenderPoints	[ 0	locks=0 ]	(	[ RenderPoints	0 ] 	)
+PointRadius	[ 0	locks=0 ]	(	[ PointRadius	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib2.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs4.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs4.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.32932 -9.89829
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	obj_name 1 1 "input1"
+}
+inputs
+{
+0 	obj_name 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs4.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "PixelWidth"
+        label   "Pixelwidth"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "ramp"
+        label   "Ramp"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "renderLines"
+        label   "Renderlines"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs4.chn"
+Content-Type: text/plain
+
+{
+    channel PixelWidth {
+      lefttype = extend
+      righttype = extend
+      default = 2
+      flags = 0
+      segment { length = 0 value = 2 2 expr = ch(\"../PixelWidth3\") }
+    }
+    channel renderLines {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../renderLines3\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs4.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_lines = chi(\"renderLines\");
+i@lm_pwidth = chi(\"PixelWidth\");
+i@lm_ramp = chi(\"ramp\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+PixelWidth	[ 0	locks=0 ]	(	[ PixelWidth	0 ] 	)
+ramp	[ 0	locks=0 ]	(	0	)
+renderLines	[ 0	locks=0 ]	(	[ renderLines	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs4.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointcolor.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointcolor.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.32932 -6.87952
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	stash1 1 1 "input1"
+}
+inputs
+{
+0 	stash1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointcolor.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"v@lm_pointCd = set(1,1,1);"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pointcolor.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/primcolor.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/primcolor.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.32932 -7.88253
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	pointcolor 1 1 "input1"
+}
+inputs
+{
+0 	pointcolor 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/primcolor.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"v@lm_primCd = set(1,1,1);"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/primcolor.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/mirror7.init"
+Content-Type: text/plain
+
+type = mirror
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/mirror7.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 3.36768 -10.3424
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	render_point_attrib3 1 1 "input1"
+}
+inputs
+{
+0 	render_point_attrib3 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/mirror7.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+group	[ 0	locks=0 ]	(	""	)
+origin	[ 0	locks=0 ]	(	0	0	0	)
+dist	[ 0	locks=0 ]	(	0	)
+dir	[ 0	locks=0 ]	(	1	0	0	)
+reversenml	[ 0	locks=0 ]	(	"reverse"	)
+keepOriginal	[ 0	locks=0 ]	(	"off"	)
+consolidatepts	[ 0	locks=0 ]	(	"on"	)
+consolidatetol	[ 0	locks=0 ]	(	9.999999747378752e-5	)
+consolidateunshared	[ 0	locks=0 ]	(	"off"	)
+createoutputgroup	[ 0	locks=0 ]	(	"off"	)
+outputgroup	[ 0	locks=0 ]	(	mirror	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/mirror7.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pcolor.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pcolor.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.2848 -6.55768
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	attribute1 1 1 "input1"
+}
+inputs
+{
+0 	attribute1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pcolor.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"v@lm_pointCd = {0,0,1};"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/pcolor.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name3.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name3.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.2848 -7.55768
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	pcolor 1 1 "input1"
+}
+inputs
+{
+0 	pcolor 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name3.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"s@lm_name = \"prim_12\";"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/name3.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib3.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib3.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.2848 -9.58518
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	render_prim_attribs3 1 1 "input1"
+}
+inputs
+{
+0 	render_prim_attribs3 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib3.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "RenderPoints"
+        label   "Renderpoints"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "PointRadius"
+        label   "Pointradius"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib3.chn"
+Content-Type: text/plain
+
+{
+    channel PointRadius {
+      lefttype = extend
+      righttype = extend
+      default = 6
+      flags = 0
+      segment { length = 0 value = 6 6 expr = ch(\"../PointRadius2\") }
+    }
+    channel RenderPoints {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../RenderPoints2\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib3.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"point"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_points = chi(\"RenderPoints\");
+i@lm_pradius = chi(\"PointRadius\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+RenderPoints	[ 0	locks=0 ]	(	[ RenderPoints	0 ] 	)
+PointRadius	[ 0	locks=0 ]	(	[ PointRadius	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_point_attrib3.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs3.init"
+Content-Type: text/plain
+
+type = attribwrangle
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs3.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.2848 -8.58908
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	name3 1 1 "input1"
+}
+inputs
+{
+0 	name3 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs3.spareparmdef"
+Content-Type: text/plain
+
+    group {
+        name    "folder1"
+        label   "Code"
+
+        parm {
+            name    "group"
+            baseparm
+            label   "Group"
+            export  none
+            bindselector points "Modify Points"
+                "Select the points to affect and press Enter to complete."
+                0 1 0xffffffff 0 grouptype 0
+        }
+        parm {
+            name    "grouptype"
+            baseparm
+            label   "Group Type"
+            export  none
+        }
+        parm {
+            name    "class"
+            baseparm
+            label   "Run Over"
+            export  none
+        }
+        parm {
+            name    "vex_numcount"
+            baseparm
+            label   "Number Count"
+            export  none
+        }
+        parm {
+            name    "vex_threadjobsize"
+            baseparm
+            label   "Thread Job Size"
+            export  none
+        }
+        parm {
+            name    "snippet"
+            baseparm
+            label   "VEXpression"
+            export  all
+        }
+        parm {
+            name    "exportlist"
+            baseparm
+            label   "Attributes to Create"
+            export  none
+        }
+        parm {
+            name    "vex_strict"
+            baseparm
+            label   "Enforce Prototypes"
+            export  none
+        }
+    }
+
+    group {
+        name    "folder1_1"
+        label   "Bindings"
+
+        parm {
+            name    "autobind"
+            baseparm
+            label   "Autobind by Name"
+            export  none
+        }
+        multiparm {
+            name    "bindings"
+            label    "Number of Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindname#"
+                baseparm
+                label   "Attribute Name"
+                export  none
+            }
+            parm {
+                name    "bindparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "groupautobind"
+            baseparm
+            label   "Autobind Groups by Name"
+            export  none
+        }
+        multiparm {
+            name    "groupbindings"
+            label    "Group Bindings"
+            baseparm
+            default 0
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "multistartoffset" "1" }
+
+            parm {
+                name    "bindgroupname#"
+                baseparm
+                label   "Group Name"
+                export  none
+            }
+            parm {
+                name    "bindgroupparm#"
+                baseparm
+                label   "VEX Parameter"
+                export  none
+            }
+        }
+
+        parm {
+            name    "vex_cwdpath"
+            baseparm
+            label   "Evaluation Node Path"
+            export  none
+        }
+        parm {
+            name    "vex_outputmask"
+            baseparm
+            label   "Export Parameters"
+            export  none
+        }
+        parm {
+            name    "vex_updatenmls"
+            baseparm
+            label   "Update Normals If Displaced"
+            export  none
+        }
+        parm {
+            name    "vex_matchattrib"
+            baseparm
+            label   "Attribute to Match"
+            export  none
+        }
+        parm {
+            name    "vex_inplace"
+            baseparm
+            label   "Compute Results In Place"
+            export  none
+        }
+        parm {
+            name    "vex_selectiongroup"
+            baseparm
+            label   "Output Selection Group"
+            export  none
+        }
+        parm {
+            name    "vex_precision"
+            baseparm
+            label   "VEX Precision"
+            export  none
+        }
+    }
+
+    parm {
+        name    "PixelWidth"
+        label   "Pixelwidth"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "ramp"
+        label   "Ramp"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+    parm {
+        name    "renderLines"
+        label   "Renderlines"
+        type    integer
+        default { "0" }
+        range   { 0 10 }
+    }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs3.chn"
+Content-Type: text/plain
+
+{
+    channel PixelWidth {
+      lefttype = extend
+      righttype = extend
+      default = 3
+      flags = 0
+      segment { length = 0 value = 3 3 expr = ch(\"../PixelWidth2\") }
+    }
+    channel renderLines {
+      lefttype = extend
+      righttype = extend
+      default = 1
+      flags = 0
+      segment { length = 0 value = 1 1 expr = ch(\"../renderLines2\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs3.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+folder0	[ 0	locks=0 ]	(	0	0	)
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+class	[ 0	locks=0 ]	(	"primitive"	)
+vex_numcount	[ 0	locks=0 ]	(	10	)
+vex_threadjobsize	[ 0	locks=0 ]	(	1024	)
+snippet	[ 0	locks=0 ]	(	"i@lm_lines = chi(\"renderLines\");
+i@lm_pwidth = chi(\"PixelWidth\");
+i@lm_ramp = chi(\"ramp\");"	)
+exportlist	[ 0	locks=0 ]	(	*	)
+vex_strict	[ 0	locks=0 ]	(	"off"	)
+autobind	[ 0	locks=0 ]	(	"on"	)
+bindings	[ 0	locks=0 ]	(	0	)
+groupautobind	[ 0	locks=0 ]	(	"on"	)
+groupbindings	[ 0	locks=0 ]	(	0	)
+vex_cwdpath	[ 0	locks=0 ]	(	.	)
+vex_outputmask	[ 0	locks=0 ]	(	*	)
+vex_updatenmls	[ 0	locks=0 ]	(	"off"	)
+vex_matchattrib	[ 0	locks=0 ]	(	id	)
+vex_inplace	[ 0	locks=0 ]	(	"off"	)
+vex_selectiongroup	[ 0	locks=0 ]	(	""	)
+vex_precision	[ 0	locks=0 ]	(	auto	)
+folder1	[ 0	locks=0 ]	(	0	0	)
+PixelWidth	[ 0	locks=0 ]	(	[ PixelWidth	0 ] 	)
+ramp	[ 0	locks=0 ]	(	0	)
+renderLines	[ 0	locks=0 ]	(	[ renderLines	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/render_prim_attribs3.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":""
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif2.init"
+Content-Type: text/plain
+
+type = switchif
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif2.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.2878 -10.9676
+connectornextid 3
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+2 "output1"
+}
+inputsNamed3
+{
+0 	render_point_attrib3 1 1 "input1"
+1 	mirror7 1 1 "input2"
+}
+inputs
+{
+0 	render_point_attrib3 0 1
+1 	mirror7 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 1 0.7 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif2.chn"
+Content-Type: text/plain
+
+{
+    channel expr1 {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../orientation\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif2.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+mergecondition	[ 0	locks=0 ]	(	"all"	)
+testinput	[ 0	locks=0 ]	(	"first"	)
+tests	[ 0	locks=0 ]	(	1	)
+enable1	[ 0	locks=0 ]	(	"on"	)
+type1	[ 0	locks=0 ]	(	"expr"	)
+expr1	[ 0	locks=0 ]	(	[ expr1	1 ] 	)
+attribtype1	[ 0	locks=0 ]	(	"all"	)
+attribowner1	[ 0	locks=0 ]	(	"point"	)
+attributes1	[ 0	locks=0 ]	(	""	)
+attribvaltype1	[ 0	locks=0 ]	(	"flt"	)
+attribfloatcomp1	[ 0	locks=0 ]	(	"equal"	)
+attribstringcomp1	[ 0	locks=0 ]	(	"equal"	)
+attribval1	[ 0	locks=0 ]	(	0	)
+attribsval1	[ 0	locks=0 ]	(	""	)
+counttype1	[ 0	locks=0 ]	(	"points"	)
+countgroup1	[ 0	locks=0 ]	(	""	)
+countcomp1	[ 0	locks=0 ]	(	"equal"	)
+countval1	[ 0	locks=0 ]	(	0	)
+hasinputtype1	[ 0	locks=0 ]	(	"wired"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switchif2.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.init"
+Content-Type: text/plain
+
+type = switch
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.6569 -14.8722
+connectornextid 5
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+4 "output1"
+}
+inputsNamed3
+{
+0 	name 1 1 "input1"
+1 	switchif2 2 1 "input2"
+2 	render_point_attrib2 1 1 "input3"
+3 	render_point_attrib1 1 1 "input4"
+}
+inputs
+{
+0 	name 0 1
+1 	switchif2 0 1
+2 	render_point_attrib2 0 1
+3 	render_point_attrib1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 1 0.7 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.chn"
+Content-Type: text/plain
+
+{
+    channel input {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../shape\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+input	[ 0	locks=0 ]	(	[ input	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.init"
+Content-Type: text/plain
+
+type = output
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.6569 -16.6383
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+}
+inputsNamed3
+{
+0 	switch1 4 1 "input1"
+}
+inputs
+{
+0 	switch1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+outputidx	[ 0	locks=0 ]	(	0	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/output0.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash1.init"
+Content-Type: text/plain
+
+type = stash
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.32632 -5.78829
+connectornextid 0
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.9 0.8 0.55 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+stash	[ 0	locks=0 ]	(	geometry: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	)
+stashinput	[ 0	locks=0 ]	(	0	)
+stashfile	[ 0	locks=0 ]	(	""	)
+movestashtofile	[ 0	locks=0 ]	(	0	)
+loadstashfromfile	[ 0	locks=0 ]	(	0	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash2.init"
+Content-Type: text/plain
+
+type = stash
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash2.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.2878 -4.51778
+connectornextid 0
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.9 0.8 0.55 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash2.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+stash	[ 0	locks=0 ]	(	geometry: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	)
+stashinput	[ 0	locks=0 ]	(	0	)
+stashfile	[ 0	locks=0 ]	(	""	)
+movestashtofile	[ 0	locks=0 ]	(	0	)
+loadstashfromfile	[ 0	locks=0 ]	(	0	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash2.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash3.init"
+Content-Type: text/plain
+
+type = stash
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash3.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 11.3387 -6.55668
+connectornextid 0
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+}
+inputs
+{
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.9 0.8 0.55 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash3.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+stash	[ 0	locks=0 ]	(	geometry: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gD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD9dXV1bWyYXJhgmGSYaJhsrMQ9mYnhfdHJhbnNsYXRpb24mMSYde31dWyYhEQMmIiYjJiRbJiERASYiJiUmJkAaAQAAAAAAAAAAXSYmWyYhEQMmIiYjJicSAAQmKFtAEAEBAAAAXSYpQBkDAAAAAAAAAAAAAAAAXV1dXSsyE3ByaW1pdGl2ZWF0dHJpYnV0ZXMmMltbWyYXJhgmGSYeJhsmGyYde31dWyYhEQEmIiszBWludDMyJjMrNAdzdHJpbmdzJjRbXSYUWyYhEQEmIiYzJicSAAQmKFtAEAEBAAAAXSYpQBMB/////11dXVtbJhcmGCYZJhomGys1B3ByaW1fQ2QmNSYde31dWyYhEQMmIiYjJiRbJiERASYiJiUmJkAaAQAAAAAAAAAAXSYmWyYhEQMmIiYjJicSAAQmKUAZ8rwBAAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AAHo/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAAgPQAASD8AADQ/AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAB6PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAA0PwAASD8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAAND8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9AAAgPQAASD8AACA9XV1dXSs2EGdsb2JhbGF0dHJpYnV0ZXMmNltbWyYXJhgmGSYeJhsrNwZ2YXJtYXAmNyYdeys4DmJsb2I6c3RyaW5nc2V0Jjh7JhkrOQRib29sJjkmHzF9fV1bJiERAiYiJjMmNFsrOg11diAtPiBUZXh0dXJlJjorOwxOIC0+IE5vcm1hbHMmO10mFFsmIRECJiImMyYnEgAEJihbQBABAQAAAF0mKUATAgAAAAABAAAAXV1dXV0rPApwcmltaXRpdmVzJjxbW1smGSs9A2NfciY9XVsrPgNzX3YmPhEAKz8Dbl9wJj8SlAArQANyX3YmQEASAgIAlABdXV0nBWluZGV4WycOaW50ZWdlcmVudHJpZXN7fScNc3RyaW5nZW50cmllc3t9JxFpbnRlZ2Vya2V5ZW50aXJlc3t9JxBzdHJpbmdrZXllbnRyaWVze31dJw1pbmRleHBvc2l0aW9uFGYAAAAAAAAAXQ==	)
+stashinput	[ 0	locks=0 ]	(	0	)
+stashfile	[ 0	locks=0 ]	(	""	)
+movestashtofile	[ 0	locks=0 ]	(	0	)
+loadstashfromfile	[ 0	locks=0 ]	(	0	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/stash3.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute1.init"
+Content-Type: text/plain
+
+type = attribute
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 2.28435 -5.51001
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	stash2 1 1 "input1"
+}
+inputs
+{
+0 	stash2 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+stdswitcher	[ 0	locks=0 ]	(	2	2	2	2	2	)
+_label1_	[ 0	locks=0 ]	(	From	To	)
+ptrenames	[ 0	locks=0 ]	(	0	)
+ptdel	[ 0	locks=0 ]	(	""	)
+ptkeep	[ 0	locks=0 ]	(	*	)
+_label2_	[ 0	locks=0 ]	(	From	To	)
+vtxrenames	[ 0	locks=0 ]	(	5	)
+vtxdel	[ 0	locks=0 ]	(	""	)
+vtxkeep	[ 0	locks=0 ]	(	*	)
+_label3_	[ 0	locks=0 ]	(	From	To	)
+primrenames	[ 0	locks=0 ]	(	1	)
+primdel	[ 0	locks=0 ]	(	""	)
+primkeep	[ 0	locks=0 ]	(	*	)
+_label4_	[ 0	locks=0 ]	(	From	To	)
+detailrenames	[ 0	locks=0 ]	(	5	)
+dtldel	[ 0	locks=0 ]	(	""	)
+dtlkeep	[ 0	locks=0 ]	(	*	)
+_label5_	[ 0	locks=0 ]	(	RiName	RiType	Offset	""	)
+rmanconversions	[ 0	locks=0 ]	(	5	)
+ridefault	[ 0	locks=0 ]	(	"off"	)
+updatevar	[ 0	locks=0 ]	(	"on"	)
+overwrite	[ 0	locks=0 ]	(	"off"	)
+encodenames	[ 0	locks=0 ]	(	"off"	)
+fromvtx0	[ 0	locks=0 ]	(	""	)
+tovtx0	[ 0	locks=0 ]	(	""	)
+fromvtx1	[ 0	locks=0 ]	(	""	)
+tovtx1	[ 0	locks=0 ]	(	""	)
+fromvtx2	[ 0	locks=0 ]	(	""	)
+tovtx2	[ 0	locks=0 ]	(	""	)
+fromvtx3	[ 0	locks=0 ]	(	""	)
+tovtx3	[ 0	locks=0 ]	(	""	)
+fromvtx4	[ 0	locks=0 ]	(	""	)
+tovtx4	[ 0	locks=0 ]	(	""	)
+frompr0	[ 0	locks=0 ]	(	prim_Cd	)
+topr0	[ 0	locks=0 ]	(	lm_primCd	)
+fromdtl0	[ 0	locks=0 ]	(	""	)
+todtl0	[ 0	locks=0 ]	(	""	)
+fromdtl1	[ 0	locks=0 ]	(	""	)
+todtl1	[ 0	locks=0 ]	(	""	)
+fromdtl2	[ 0	locks=0 ]	(	""	)
+todtl2	[ 0	locks=0 ]	(	""	)
+fromdtl3	[ 0	locks=0 ]	(	""	)
+todtl3	[ 0	locks=0 ]	(	""	)
+fromdtl4	[ 0	locks=0 ]	(	""	)
+todtl4	[ 0	locks=0 ]	(	""	)
+hname0	[ 0	locks=0 ]	(	""	)
+riname0	[ 0	locks=0 ]	(	""	)
+ritype0	[ 0	locks=0 ]	(	vtx_float	)
+rioff0	[ 0	locks=0 ]	(	0	)
+hname1	[ 0	locks=0 ]	(	""	)
+riname1	[ 0	locks=0 ]	(	""	)
+ritype1	[ 0	locks=0 ]	(	vtx_float	)
+rioff1	[ 0	locks=0 ]	(	0	)
+hname2	[ 0	locks=0 ]	(	""	)
+riname2	[ 0	locks=0 ]	(	""	)
+ritype2	[ 0	locks=0 ]	(	vtx_float	)
+rioff2	[ 0	locks=0 ]	(	0	)
+hname3	[ 0	locks=0 ]	(	""	)
+riname3	[ 0	locks=0 ]	(	""	)
+ritype3	[ 0	locks=0 ]	(	vtx_float	)
+rioff3	[ 0	locks=0 ]	(	0	)
+hname4	[ 0	locks=0 ]	(	""	)
+riname4	[ 0	locks=0 ]	(	""	)
+ritype4	[ 0	locks=0 ]	(	vtx_float	)
+rioff4	[ 0	locks=0 ]	(	0	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute2.init"
+Content-Type: text/plain
+
+type = attribute
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute2.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position 11.3353 -7.55668
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	stash3 1 1 "input1"
+}
+inputs
+{
+0 	stash3 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author arjan@DESKTOP-6L62TOS
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute2.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+stdswitcher	[ 0	locks=0 ]	(	2	2	2	2	2	)
+_label1_	[ 0	locks=0 ]	(	From	To	)
+ptrenames	[ 0	locks=0 ]	(	0	)
+ptdel	[ 0	locks=0 ]	(	""	)
+ptkeep	[ 0	locks=0 ]	(	*	)
+_label2_	[ 0	locks=0 ]	(	From	To	)
+vtxrenames	[ 0	locks=0 ]	(	5	)
+vtxdel	[ 0	locks=0 ]	(	""	)
+vtxkeep	[ 0	locks=0 ]	(	*	)
+_label3_	[ 0	locks=0 ]	(	From	To	)
+primrenames	[ 0	locks=0 ]	(	1	)
+primdel	[ 0	locks=0 ]	(	""	)
+primkeep	[ 0	locks=0 ]	(	*	)
+_label4_	[ 0	locks=0 ]	(	From	To	)
+detailrenames	[ 0	locks=0 ]	(	5	)
+dtldel	[ 0	locks=0 ]	(	""	)
+dtlkeep	[ 0	locks=0 ]	(	*	)
+_label5_	[ 0	locks=0 ]	(	RiName	RiType	Offset	""	)
+rmanconversions	[ 0	locks=0 ]	(	5	)
+ridefault	[ 0	locks=0 ]	(	"off"	)
+updatevar	[ 0	locks=0 ]	(	"on"	)
+overwrite	[ 0	locks=0 ]	(	"off"	)
+encodenames	[ 0	locks=0 ]	(	"off"	)
+fromvtx0	[ 0	locks=0 ]	(	""	)
+tovtx0	[ 0	locks=0 ]	(	""	)
+fromvtx1	[ 0	locks=0 ]	(	""	)
+tovtx1	[ 0	locks=0 ]	(	""	)
+fromvtx2	[ 0	locks=0 ]	(	""	)
+tovtx2	[ 0	locks=0 ]	(	""	)
+fromvtx3	[ 0	locks=0 ]	(	""	)
+tovtx3	[ 0	locks=0 ]	(	""	)
+fromvtx4	[ 0	locks=0 ]	(	""	)
+tovtx4	[ 0	locks=0 ]	(	""	)
+frompr0	[ 0	locks=0 ]	(	prim_Cd	)
+topr0	[ 0	locks=0 ]	(	lm_primCd	)
+fromdtl0	[ 0	locks=0 ]	(	""	)
+todtl0	[ 0	locks=0 ]	(	""	)
+fromdtl1	[ 0	locks=0 ]	(	""	)
+todtl1	[ 0	locks=0 ]	(	""	)
+fromdtl2	[ 0	locks=0 ]	(	""	)
+todtl2	[ 0	locks=0 ]	(	""	)
+fromdtl3	[ 0	locks=0 ]	(	""	)
+todtl3	[ 0	locks=0 ]	(	""	)
+fromdtl4	[ 0	locks=0 ]	(	""	)
+todtl4	[ 0	locks=0 ]	(	""	)
+hname0	[ 0	locks=0 ]	(	""	)
+riname0	[ 0	locks=0 ]	(	""	)
+ritype0	[ 0	locks=0 ]	(	vtx_float	)
+rioff0	[ 0	locks=0 ]	(	0	)
+hname1	[ 0	locks=0 ]	(	""	)
+riname1	[ 0	locks=0 ]	(	""	)
+ritype1	[ 0	locks=0 ]	(	vtx_float	)
+rioff1	[ 0	locks=0 ]	(	0	)
+hname2	[ 0	locks=0 ]	(	""	)
+riname2	[ 0	locks=0 ]	(	""	)
+ritype2	[ 0	locks=0 ]	(	vtx_float	)
+rioff2	[ 0	locks=0 ]	(	0	)
+hname3	[ 0	locks=0 ]	(	""	)
+riname3	[ 0	locks=0 ]	(	""	)
+ritype3	[ 0	locks=0 ]	(	vtx_float	)
+rioff3	[ 0	locks=0 ]	(	0	)
+hname4	[ 0	locks=0 ]	(	""	)
+riname4	[ 0	locks=0 ]	(	""	)
+ritype4	[ 0	locks=0 ]	(	vtx_float	)
+rioff4	[ 0	locks=0 ]	(	0	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribute2.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.order"
+Content-Type: text/plain
+
+30
+Openpose
+sort1
+id_name
+set_rest
+limb_colors
+name
+name1
+render_prim_attribs
+render_point_attrib
+render_point_attrib1
+render_prim_attribs1
+render_prim_sec
+obj_name
+render_point_attrib2
+render_prim_attribs4
+pointcolor
+primcolor
+mirror7
+pcolor
+name3
+render_point_attrib3
+render_prim_attribs3
+switchif2
+switch1
+output0
+stash1
+stash2
+stash3
+attribute1
+attribute2
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot.net"
+Content-Type: text/plain
+
+1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY--

@@ -85,7 +85,7 @@ def run(
         pipeline_kwargs["controlnet"] = input_controlnet_models
         pipeline_type = f"StableDiffusion{pipeline_modifier}ControlNetInpaintPipeline"
         
-        if input_scheduler["numpy_image"] is None and pipeline_modifier == "XL":
+        if input_scheduler["numpy_image"] is None:
             pipeline_call_kwargs["image"] = input_controlnet_images
             pipeline_type = f"StableDiffusion{pipeline_modifier}ControlNetPipeline"
 

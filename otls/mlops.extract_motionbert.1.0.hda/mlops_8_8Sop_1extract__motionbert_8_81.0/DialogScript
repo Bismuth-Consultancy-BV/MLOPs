@@ -66,6 +66,198 @@
     }
 
     groupsimple {
+        name    "skeleton"
+        label   "Skeleton"
+
+        parm {
+            name    "skeltype"
+            label   "Face"
+            type    ordinal
+            default { "0" }
+            menu {
+                "hou_skeleton"      "Houdini Skeleton"
+                "openpose_skeleton" "Openpose Skeleton"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "openposeoptions"
+            label   "Open Pose Settings"
+            disablewhen "{ skeltype == 0 }"
+
+            parm {
+                name    "addface"
+                label   "Add Facial Markers"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "addhands"
+                label   "Add Hand Markers"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            groupcollapsible {
+                name    "openskelset"
+                label   "Skeleton"
+
+                parm {
+                    name    "PixelWidth"
+                    label   "Pixelwidth"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PointRadius"
+                    label   "Pointradius"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "ramp"
+                    label   "Rounded"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "renderLines"
+                    label   "Renderlines"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "RenderPoints"
+                    label   "Renderpoints"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            groupcollapsible {
+                name    "openface"
+                label   "Face"
+
+                parm {
+                    name    "scale2"
+                    label   "Face Scale"
+                    type    float
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PixelWidth3"
+                    label   "Pixelwidth"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PointRadius3"
+                    label   "Pointradius"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "renderLines3"
+                    label   "Renderlines"
+                    type    toggle
+                    default { "off" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "RenderPoints3"
+                    label   "Renderpoints"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            group {
+                name    "openhands"
+                label   "Hands"
+                tabbreak
+
+                parm {
+                    name    "scale"
+                    label   "Hand Scale"
+                    type    float
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PixelWidth2"
+                    label   "Pixelwidth"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PointRadius2"
+                    label   "Pointradius"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "renderLines2"
+                    label   "Renderlines"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "RenderPoints2"
+                    label   "Renderpoints"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+    }
+
+    groupsimple {
         name    "Motionsmoothing"
         label   "Motion Smoothing"
 

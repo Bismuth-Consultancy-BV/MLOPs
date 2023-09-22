@@ -88,6 +88,23 @@
         }
     }
 
+    group {
+        name    "skeleton"
+        label   "Skeleton"
+
+        parm {
+            name    "newparameter"
+            label   "Skeleton Type"
+            type    ordinal
+            default { "0" }
+            menu {
+                "hou_skeleton"      "Houdini Skeleton"
+                "openpose_skeleton" "Openpose Skeleton"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
     groupsimple {
         name    "smoothmotion"
         label   "Motion Smoothing"
