@@ -201,7 +201,7 @@
                 }
             }
 
-            group {
+            groupcollapsible {
                 name    "openhands"
                 label   "Hands"
                 tabbreak

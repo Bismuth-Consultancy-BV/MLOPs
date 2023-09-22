@@ -2,10 +2,23 @@
 	"values":["455","20.0.470","2"
 	],
 	"indexes":{
+		"hdaroot/merge4.userdata":1,
+		"hdaroot/switch4.userdata":1,
+		"hdaroot/merge3.userdata":1,
+		"hdaroot/null5.userdata":1,
+		"hdaroot/transform4.userdata":1,
+		"hdaroot/switch3.userdata":1,
+		"hdaroot/transform3.userdata":1,
+		"hdaroot/copytopoints2.userdata":1,
+		"hdaroot/copytopoints5.userdata":1,
+		"hdaroot/transform7.userdata":1,
 		"hdaroot/attribtransfer1.userdata":1,
 		"hdaroot/rigmatchpose4.userdata":2,
+		"hdaroot/copytopoints4.userdata":1,
+		"hdaroot/transform5.userdata":1,
 		"hdaroot/switch2.userdata":1,
 		"hdaroot/switch1.userdata":1,
+		"hdaroot/tube2.userdata":1,
 		"hdaroot/rigstashpose1.userdata":2,
 		"hdaroot/null4.userdata":1,
 		"hdaroot/copytopoints1.userdata":1,
@@ -16,6 +29,7 @@
 		"hdaroot/computerigpose1.userdata":1,
 		"hdaroot/bonedeform2.userdata":1,
 		"hdaroot/rigmatchpose2.userdata":2,
+		"hdaroot/copytopoints3.userdata":1,
 		"hdaroot/output0.userdata":1,
 		"hdaroot/null1.userdata":1,
 		"hdaroot/OUT.userdata":1,
@@ -23,9 +37,11 @@
 		"hdaroot/attribcreate1.userdata":1,
 		"hdaroot/python3.userdata":1,
 		"hdaroot/add1.userdata":1,
+		"hdaroot/transform6.userdata":1,
 		"hdaroot/blast1.userdata":1,
 		"hdaroot/python1.userdata":1,
 		"hdaroot/clear_cache.userdata":1,
+		"hdaroot/null6.userdata":1,
 		"hdaroot/testgeometry_paul2.userdata":0
 	}
 }
