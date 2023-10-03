@@ -1,9 +1,9 @@
-# Dialog script for arjan::dev::hos_PoseLandmarkPrimitve::1.0 automatically generated
+# Dialog script for mlops::openpose_primitive_create::1.0 automatically generated
 
 {
-    name	arjan::dev::hos_PoseLandmarkPrimitve::1.0
+    name	mlops::openpose_primitive_create::1.0
     script	arjan::dev::hos_PoseLandmarkPrimitve::1.0
-    label	"hos_Poselandmarkprimitve (Dev)"
+    label	"MLOPs OpenPose Primitive Create"
 
     help {
 	""
