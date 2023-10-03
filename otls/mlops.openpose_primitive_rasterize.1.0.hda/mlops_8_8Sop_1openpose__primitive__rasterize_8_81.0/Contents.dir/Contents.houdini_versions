@@ -1,12 +1,9 @@
 {
-	"values":["20.0.470"
+	"values":["20.0.460"
 	],
 	"indexes":{
-		"hdaroot/OUT_to_cops.userdata":0,
 		"hdaroot/sort1.userdata":0,
-		"hdaroot/save/channelcopy1.userdata":0,
 		"hdaroot/blast3.userdata":0,
-		"hdaroot/save/sopimport1.userdata":0,
 		"hdaroot/blast2.userdata":0,
 		"hdaroot/dimension.userdata":0,
 		"hdaroot/blast1.userdata":0,
@@ -15,10 +12,7 @@
 		"hdaroot/volumeresample1.userdata":0,
 		"hdaroot/repeat_end1.userdata":0,
 		"hdaroot/repeat_begin1_metadata1.userdata":0,
-		"hdaroot/save/rop_comp1.userdata":0,
 		"hdaroot/unpack1.userdata":0,
-		"hdaroot/save.userdata":0,
-		"hdaroot/switchif2.userdata":0,
 		"hdaroot/pack1.userdata":0,
 		"hdaroot/color8.userdata":0,
 		"hdaroot/uvtexture1.userdata":0,

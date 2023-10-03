@@ -20,3 +20,4 @@ opalias Sop mlops::transform_image::2.0 mlops::transform_image::1.0
 
 
 opalias Sop mlops::openpose_primitive_create::1.0 arjan::dev::hos_PoseLandmarkPrimitve::1.0
+opalias Sop mlops::openpose_primitive_rasterize::1.0 arjan::dev::hos_RenderPoseLandmark::1.0
