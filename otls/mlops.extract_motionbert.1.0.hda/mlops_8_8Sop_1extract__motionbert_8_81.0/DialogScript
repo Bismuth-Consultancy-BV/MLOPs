@@ -9,10 +9,11 @@
 	""
     }
 
-    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	1	"AlphaPose Attributes"
     inputlabel	2	"Sub-Network Input #2"
     inputlabel	3	"Sub-Network Input #3"
     inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"KineFX Skeleton"
 
     groupsimple {
         name    "folder0"
@@ -204,7 +205,6 @@
             groupcollapsible {
                 name    "openhands"
                 label   "Hands"
-                tabbreak
 
                 parm {
                     name    "scale"

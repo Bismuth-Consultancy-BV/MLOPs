@@ -1,7 +1,7 @@
 Operator:     mlops::extract_hybrik::1.0
 Label:        MLOPs Extract Hybrik
 Path:         oplib:/mlops::Sop/extract_hybrik::1.0?mlops::Sop/extract_hybrik::1.0
-Icon:         SOP_subnet
+Icon:         $MLOPS/help/icons/mlops.svg
 Table:        Sop
 License:      
 Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
@@ -10,5 +10,5 @@ Inputs:       0 to 0
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Tue Oct  3 19:57:38 2023
+Modified:     Tue Oct  3 20:44:58 2023
 

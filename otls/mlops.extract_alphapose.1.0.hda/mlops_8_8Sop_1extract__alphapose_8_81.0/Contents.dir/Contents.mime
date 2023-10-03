@@ -20,11 +20,12 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.22386 0.0460784
-connectornextid 0
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position -1.89291 2.51496
+connectornextid 1
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
+0 "output1"
 }
 inputsNamed3
 {
@@ -36,7 +37,7 @@ stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 

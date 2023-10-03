@@ -1,7 +1,7 @@
 Operator:     mlops::extract_alphapose::1.0
 Label:        MLOPs Extract AlphaPose
 Path:         oplib:/mlops::Sop/extract_alphapose::1.0?mlops::Sop/extract_alphapose::1.0
-Icon:         SOP_subnet
+Icon:         $MLOPS/help/icons/mlops.svg
 Table:        Sop
 License:      
 Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
@@ -10,5 +10,5 @@ Inputs:       0 to 0
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Sat Sep 16 17:13:30 2023
+Modified:     Tue Oct  3 20:44:00 2023
 
