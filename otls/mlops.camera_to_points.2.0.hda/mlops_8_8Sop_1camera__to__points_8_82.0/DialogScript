@@ -31,6 +31,8 @@
                 "segment"   "Segmentation"
                 "albedo"    "Albedo (Cd)"
                 "shading"   "Shading"
+                "angle"     "Angle"
+                "attribute" "Attribute"
             }
             parmtag { "script_callback_language" "python" }
         }
@@ -61,6 +63,126 @@
             parmtag { "opfilter" "!!OBJ!!" }
             parmtag { "oprelative" "." }
         }
+        groupcollapsible {
+            name    "folder4"
+            label   "Advanced"
+
+            groupsimple {
+                name    "folder1"
+                label   "Depth"
+                disablewhen "{ mode != depth }"
+
+                parm {
+                    name    "minchoke"
+                    label   "Min Choke"
+                    type    float
+                    default { "0" }
+                    help    "Change the minimum depth clipping plane"
+                    range   { 0 1 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "maxchoke"
+                    label   "Max Choke"
+                    type    float
+                    default { "0" }
+                    help    "Change the maximum depth clipping plane"
+                    range   { 0 1 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            groupsimple {
+                name    "folder5"
+                label   "Normal"
+                disablewhen "{ mode != normal }"
+
+                parm {
+                    name    "worldspacenormal"
+                    label   "Worldspace Normal"
+                    type    toggle
+                    default { "0" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            groupsimple {
+                name    "folder6"
+                label   "Attribute"
+                disablewhen "{ mode != attribute }"
+
+                parm {
+                    name    "attribute"
+                    label   "Attribute"
+                    type    string
+                    default { "P" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            groupsimple {
+                name    "folder2"
+                label   "Segmentation"
+                disablewhen "{ mode != segment }"
+
+                parm {
+                    name    "input"
+                    label   "Segement by Connectivity"
+                    type    toggle
+                    default { "1" }
+                    range   { 0! 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "inname"
+                    label   "Piece Attribute"
+                    type    string
+                    default { "name" }
+                    disablewhen "{ input == 1 }"
+                    menureplace {
+                        [ "# Assuming you have a geometry object stored in the variable 'geo'" ]
+                        [ "node = hou.node(\"./object_merge_geo\")" ]
+                        [ "geo = node.geometry()" ]
+                        [ "" ]
+                        [ "# Get the names of all point attributes" ]
+                        [ "attribute_names = [str(attr.name()) for attr in geo.pointAttribs()]" ]
+                        [ "attribute_names = attribute_names + [str(attr.name()) for attr in geo.primAttribs()]" ]
+                        [ "attribute_names = attribute_names + [str(attr.name()) for attr in geo.vertexAttribs()]" ]
+                        [ "" ]
+                        [ "# Create menu items as pairs of strings" ]
+                        [ "menu_items = []" ]
+                        [ "for attr_name in attribute_names:" ]
+                        [ "    menu_items.append(attr_name)" ]
+                        [ "    menu_items.append(attr_name)  # You can modify this if needed" ]
+                        [ "" ]
+                        [ "# Return menu items as a pair of strings" ]
+                        [ "return tuple(menu_items)" ]
+                        language python
+                    }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            groupsimple {
+                name    "albedo"
+                label   "Color"
+                disablewhen "{ mode != albedo }"
+
+                parm {
+                    name    "albAttr"
+                    label   "Attribute Name"
+                    type    string
+                    default { "Cd" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
         parm {
             name    "sepparm"
             label   "Separator"
@@ -121,92 +243,6 @@
             range   { 0! 100 }
             parmtag { "script_callback_language" "python" }
         }
-        groupsimple {
-            name    "folder1"
-            label   "Depth"
-            hidewhen "{ mode != depth }"
-
-            parm {
-                name    "minchoke"
-                label   "Min Choke"
-                type    float
-                default { "0" }
-                help    "Change the minimum depth clipping plane"
-                range   { 0 1 }
-                parmtag { "autoscope" "0000000000000000" }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "maxchoke"
-                label   "Max Choke"
-                type    float
-                default { "0" }
-                help    "Change the maximum depth clipping plane"
-                range   { 0 1 }
-                parmtag { "autoscope" "0000000000000000" }
-                parmtag { "script_callback_language" "python" }
-            }
-        }
-
-        groupsimple {
-            name    "albedo"
-            label   "Color"
-            hidewhen "{ mode != albedo }"
-
-            parm {
-                name    "albAttr"
-                label   "Attribute Name"
-                type    string
-                default { "Cd" }
-                parmtag { "script_callback_language" "python" }
-            }
-        }
-
-        groupsimple {
-            name    "folder2"
-            label   "Segmentation"
-            hidewhen "{ mode != segment }"
-
-            parm {
-                name    "input"
-                label   "Segement by Connectivity"
-                type    toggle
-                default { "1" }
-                range   { 0! 10 }
-                parmtag { "autoscope" "0000000000000000" }
-                parmtag { "script_callback_language" "python" }
-            }
-            parm {
-                name    "inname"
-                label   "Piece Attribute"
-                type    string
-                default { "name" }
-                disablewhen "{ input == 1 }"
-                menureplace {
-                    [ "# Assuming you have a geometry object stored in the variable 'geo'" ]
-                    [ "node = hou.node(\"./object_merge_geo\")" ]
-                    [ "geo = node.geometry()" ]
-                    [ "" ]
-                    [ "# Get the names of all point attributes" ]
-                    [ "attribute_names = [str(attr.name()) for attr in geo.pointAttribs()]" ]
-                    [ "attribute_names = attribute_names + [str(attr.name()) for attr in geo.primAttribs()]" ]
-                    [ "attribute_names = attribute_names + [str(attr.name()) for attr in geo.vertexAttribs()]" ]
-                    [ "" ]
-                    [ "# Create menu items as pairs of strings" ]
-                    [ "menu_items = []" ]
-                    [ "for attr_name in attribute_names:" ]
-                    [ "    menu_items.append(attr_name)" ]
-                    [ "    menu_items.append(attr_name)  # You can modify this if needed" ]
-                    [ "" ]
-                    [ "# Return menu items as a pair of strings" ]
-                    [ "return tuple(menu_items)" ]
-                    language python
-                }
-                parmtag { "autoscope" "0000000000000000" }
-                parmtag { "script_callback_language" "python" }
-            }
-        }
-
     }
 
     groupsimple {
