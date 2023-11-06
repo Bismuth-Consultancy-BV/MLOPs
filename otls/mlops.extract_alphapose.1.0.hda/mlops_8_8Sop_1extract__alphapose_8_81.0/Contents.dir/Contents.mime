@@ -20,7 +20,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.89291 2.51496
+position -6.30558 1.06637
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -37,7 +37,7 @@ stat
 {
   create -1
   modify -1
-  author Mo@MO-GPU
+  author Paul@DESKTOP-SPRVPD3
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -57,267 +57,6 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/AlphaPose.init"
-Content-Type: text/plain
-
-type = python
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/AlphaPose.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 0 6.1118
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-0 "output1"
-}
-inputsNamed3
-{
-1 	attribcreate1 1 1 "input1"
-}
-inputs
-{
-0 	attribcreate1 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author Paul@DESKTOP-PAFFS1R
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/AlphaPose.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-python	[ 0	locks=0 ]	(	"import argparse
-import os
-import mlops_utils
-
-import torch
-import natsort 
- 
-from alphapose.detector.apis import get_detector
-from alphapose.trackers.tracker_api import Tracker
-from alphapose.trackers.tracker_cfg import cfg as tcfg
-from alphapose.trackers import track
-from alphapose.models import builder
-from alphapose.utils.config import update_config
-from alphapose.utils.detector import DetectionLoader
-from alphapose.utils.transforms import flip, flip_heatmap 
-from alphapose.utils.vis import getTime
-from alphapose.utils.writer import DataWriter
-
-parser = argparse.ArgumentParser(description='AlphaPose Demo') 
-parser.add_argument('--cfg', type=str, required=False,
-                    help='experiment configure file name')
-parser.add_argument('--checkpoint', type=str, required=False,
-                    help='checkpoint file name')
-parser.add_argument('--det_weights', type=str, required=False,
-                    help='detector weights')
-parser.add_argument('--det_cfg', type=str, required=False,
-                    help='detector weights')
-parser.add_argument('--sp', default=False, action='store_true',
-                    help='Use single process for pytorch')
-parser.add_argument('--detector', dest='detector',
-                    help='detector name', default=\"yolo\")
-parser.add_argument('--detfile', dest='detfile',
-                    help='detection result file', default=\"\")
-parser.add_argument('--indir', dest='inputpath',
-                    help='image-directory', default=\"\")
-parser.add_argument('--list', dest='inputlist',
-                    help='image-list', default=\"\")
-parser.add_argument('--image', dest='inputimg',
-                    help='image-name', default=\"\")
-parser.add_argument('--outdir', dest='outputpath',
-                    help='output-directory', default=\"examples/res/\")
-parser.add_argument('--save_img', default=False, action='store_true',
-                    help='save result as image')
-parser.add_argument('--vis', default=False, action='store_true',
-                    help='visualize image')
-parser.add_argument('--showbox', default=False, action='store_true',
-                    help='visualize human bbox')
-parser.add_argument('--format', type=str,
-                    help='save in the format of cmu or coco or openpose, option: coco/cmu/open')
-parser.add_argument('--min_box_area', type=int, default=0,
-                    help='min box area to filter out')
-parser.add_argument('--detbatch', type=int, default=5,
-                    help='detection batch size PER GPU')
-parser.add_argument('--posebatch', type=int, default=64,
-                    help='pose estimation maximum batch size PER GPU')
-parser.add_argument('--eval', dest='eval', default=False, action='store_true',
-                    help='save the result json as coco format, using image index(int) instead of image name(str)')
-parser.add_argument('--gpus', type=str, dest='gpus', default=\"0\",
-                    help='choose which cuda device to use by index and input comma to use multi gpus, e.g. 0,1,2,3. (input -1 for cpu only)')
-parser.add_argument('--qsize', type=int, dest='qsize', default=1024,
-                    help='the length of result buffer, where reducing it will lower requirement of cpu memory')
-parser.add_argument('--flip', default=False, action='store_true',
-                    help='enable flip testing')
-parser.add_argument('--debug', default=False, action='store_true',
-                    help='print detail information')
-parser.add_argument('--video', dest='video',
-                    help='video-name', default=\"\")
-parser.add_argument('--webcam', dest='webcam', type=int,
-                    help='webcam number', default=-1)
-parser.add_argument('--save_video', dest='save_video',
-                    help='whether to save rendered video', default=False, action='store_true')
-parser.add_argument('--vis_fast', dest='vis_fast',
-                    help='use fast rendering', action='store_true', default=False)
-parser.add_argument('--pose_flow', dest='pose_flow',
-                    help='track humans in video with PoseFlow', action='store_true', default=False)
-parser.add_argument('--pose_track', dest='pose_track',
-                    help='track humans in video with reid', action='store_true', default=False)
-
-node = hou.pwd()
-geo = node.geometry()
-
-args = parser.parse_args()
-args = mlops_utils.parse_args_from_node_parms(args, node.parent())
-args.sp=True
-cfg = update_config(args.cfg)
-
-args.gpus = [int(i) for i in args.gpus.split(',')] if torch.cuda.device_count() >= 1 else [-1]
-args.device = torch.device(\"cuda:\" + str(args.gpus[0]) if args.gpus[0] >= 0 else \"cpu\")
-args.detbatch = args.detbatch * len(args.gpus)
-args.posebatch = args.posebatch * len(args.gpus)
-args.tracking = args.pose_track or args.pose_flow or args.detector=='tracker'
-
-
-det = get_detector(args)
-det.model_cfg = args.det_cfg
-det.model_weights = args.det_weights
-det.load_model()
-
-def check_input():
-    # for video
-    if len(args.video):
-        if os.path.isfile(args.video):
-            return 'video', args.video
-
-    # for images
-    if len(args.inputpath) or len(args.inputlist) or len(args.inputimg):
-        inputpath = args.inputpath
-        inputlist = args.inputlist
-        inputimg = args.inputimg
-
-        if len(inputlist):
-            im_names = open(inputlist, 'r').readlines()
-        elif len(inputpath) and inputpath != '/':
-            for _, _, files in os.walk(inputpath):
-                im_names = files
-            im_names = natsort.natsorted(im_names)
-        elif len(inputimg):
-            args.inputpath = os.path.split(inputimg)[0]
-            im_names = [os.path.split(inputimg)[1]]
-
-        return 'image', im_names
-
-mode, input_source = check_input()
-
-if not os.path.exists(args.outputpath):
-    os.makedirs(args.outputpath)
-
-det_loader = DetectionLoader(input_source, det, cfg, args, batchSize=args.detbatch, mode=mode, queueSize=args.qsize)
-det_worker = det_loader.start() 
-
-
-# Load pose model
-pose_model = builder.build_sppe(cfg.MODEL, preset_cfg=cfg.DATA_PRESET)
-
-pose_model.load_state_dict(torch.load(args.checkpoint, map_location=args.device))
-pose_dataset = builder.retrieve_dataset(cfg.DATASET.TRAIN)
-if args.pose_track:
-    tracker = Tracker(tcfg, args)
-if len(args.gpus) > 1:
-    pose_model = torch.nn.DataParallel(pose_model, device_ids=args.gpus).to(args.device)
-else:
-    pose_model.to(args.device)
-pose_model.eval()
-
-# Init data writer
-if args.save_video and mode != 'image':
-    from alphapose.utils.writer import DEFAULT_VIDEO_SAVE_OPT as video_save_opt
-    if mode == 'video':
-        video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_' + os.path.basename(input_source))
-    else:
-        video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_webcam' + str(input_source) + '.mp4')
-    video_save_opt.update(det_loader.videoinfo)
-    writer = DataWriter(cfg, args, save_video=True, video_save_opt=video_save_opt, queueSize=args.qsize).start()
-else:
-    writer = DataWriter(cfg, args, save_video=False, queueSize=args.qsize).start()
-
-
-data_len = det_loader.length
-
-batchSize = args.posebatch
-if args.flip:
-    batchSize = int(batchSize / 2)
-
-with hou.InterruptableOperation(\"Extracting Pose\", open_interrupt_dialog=True) as operation:
-    for i in range(data_len):
-        start_time = getTime()
-        with torch.no_grad():
-            (inps, orig_img, im_name, boxes, scores, ids, cropped_boxes) = det_loader.read()
-            if orig_img is None:
-                break
-            if boxes is None or boxes.nelement() == 0:
-                writer.save(None, None, None, None, None, orig_img, im_name)
-                continue
-
-            # Pose Estimation
-            inps = inps.to(args.device)
-            datalen = inps.size(0)
-            leftover = 0
-            if (datalen) % batchSize:
-                leftover = 1
-            num_batches = datalen // batchSize + leftover
-            hm = []
-            for j in range(num_batches):
-                inps_j = inps[j * batchSize:min((j + 1) * batchSize, datalen)]
-                if args.flip:
-                    inps_j = torch.cat((inps_j, flip(inps_j)))
-                hm_j = pose_model(inps_j)
-                if args.flip:
-                    hm_j_flip = flip_heatmap(hm_j[int(len(hm_j) / 2):], pose_dataset.joint_pairs, shift=True)
-                    hm_j = (hm_j[0:int(len(hm_j) / 2)] + hm_j_flip) / 2
-                hm.append(hm_j)
-            hm = torch.cat(hm)
-            if args.pose_track:
-                boxes,scores,ids,hm,cropped_boxes = track(tracker,args,orig_img,inps,boxes,hm,cropped_boxes,im_name,scores)
-            hm = hm.cpu()
-            writer.save(boxes, scores, ids, hm, cropped_boxes, orig_img, im_name)
-
-        operation.updateProgress(float(i)/float(data_len))
-    writer.stop()
-    det_loader.stop()
-"	)
-maintainstate	[ 0	locks=0 ]	(	"off"	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/AlphaPose.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":"___EXTERNAL___"
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/output0.init"
 Content-Type: text/plain
 
@@ -330,19 +69,19 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 0 5.2176
+position -5.5785 3.22699
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	AlphaPose 0 1 "input1"
+0 	switch1 2 1 "input1"
 }
 inputs
 {
-0 	AlphaPose 0 1
+0 	switch1 0 1
 }
 stat
 {
@@ -389,7 +128,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.79412 7.12352
+position -5.5785 7.77088
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -425,7 +164,7 @@ version 0.8
 group	[ 0	locks=0 ]	(	""	)
 grouptype	[ 0	locks=0 ]	(	"guess"	)
 encodenames	[ 0	locks=0 ]	(	"off"	)
-numattr	[ 0	locks=0 ]	(	2	)
+numattr	[ 0	locks=0 ]	(	3	)
 enable1	[ 0	locks=0 ]	(	"on"	)
 name1	[ 0	locks=0 ]	(	video_path	)
 existing1	[ 0	locks=0 ]	(	"better"	)
@@ -460,6 +199,23 @@ uselocal2	[ 0	locks=0 ]	(	"on"	)
 value2v	[ 0	locks=0 ]	(	0	0	0	0	)
 string2	[ 0	locks=0 ]	(	`chs(\"../outputpath\")`/alphapose-results.json	)
 numattr_spacerparm2	[ 0	locks=0 ]	(	)
+enable3	[ 0	locks=0 ]	(	"on"	)
+name3	[ 0	locks=0 ]	(	idx	)
+existing3	[ 0	locks=0 ]	(	"better"	)
+createvarmap3	[ 0	locks=0 ]	(	"off"	)
+varname3	[ 0	locks=0 ]	(	""	)
+class3	[ 0	locks=0 ]	(	"point"	)
+savetoinfo3	[ 0	locks=0 ]	(	"off"	)
+type3	[ 0	locks=0 ]	(	"int"	)
+typeinfo3	[ 0	locks=0 ]	(	"guess"	)
+precision3	[ 0	locks=0 ]	(	"auto"	)
+size3	[ 0	locks=0 ]	(	1	)
+default3v	[ 0	locks=0 ]	(	-1	0	0	0	)
+writevalues3	[ 0	locks=0 ]	(	"on"	)
+uselocal3	[ 0	locks=0 ]	(	"on"	)
+value3v	[ 0	locks=0 ]	(	-1	0	0	0	)
+string3	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm3	[ 0	locks=0 ]	(	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -486,7 +242,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.79067 8.22941
+position -5.5785 8.77088
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -506,7 +262,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -533,14 +289,648 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python1.init"
+Content-Type: text/plain
+
+type = python
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.87867 5.89586
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	python3 0 1 "input1"
+}
+inputs
+{
+0 	python3 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-SPRVPD3
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+python	[ 0	locks=0 ]	(	"node = hou.pwd()
+geo = node.geometry()
+
+# Add code to modify contents of geo.
+# Use drop down menu to select examples.
+
+
+import json
+
+path = geo.attribValue(\"output_keypoints\")
+
+with open(path, \"r\") as infile:
+    data = json.load(infile)
+
+def group_by_image_id(data_list):
+    grouped_data = {}
+    for data in data_list:
+        image_id = data.get(\"image_id\")
+        if image_id is not None:
+            if image_id not in grouped_data:
+                grouped_data[image_id] = []
+            grouped_data[image_id].append(data)
+    return grouped_data
+
+def create_vector3_tuples(data):
+    return [tuple((data[i], data[i+1], 0.0)) for i in range(0, len(data), 3)]
+    
+frames = group_by_image_id(data)
+persons = frames[hou.intFrame()]
+
+idx = []
+# Create each detected person
+for person in persons:
+    keypoints = person[\"keypoints\"]
+    points = create_vector3_tuples(keypoints)
+    idx.extend([person[\"idx\"]]*len(points))
+    geo.createPoints(points)
+
+geo.setPointIntAttribValues(\"idx\", idx)"	)
+maintainstate	[ 0	locks=0 ]	(	"off"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.init"
+Content-Type: text/plain
+
+type = xform
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -3.87867 4.89586
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	python1 1 1 "input1"
+}
+inputs
+{
+0 	python1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-SPRVPD3
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+group	[ 0	locks=0 ]	(	""	)
+grouptype	[ 0	locks=0 ]	(	"guess"	)
+xOrd	[ 0	locks=0 ]	(	"srt"	)
+rOrd	[ 0	locks=0 ]	(	"xyz"	)
+t	[ 0	locks=0 ]	(	0	0	0	)
+r	[ 0	locks=0 ]	(	0	0	180	)
+s	[ 0	locks=0 ]	(	1	1	1	)
+shear	[ 0	locks=0 ]	(	0	0	0	)
+scale	[ 0	locks=0 ]	(	1	)
+parmgroup_pivotxform	[ 0	locks=0 ]	(	0	)
+p	[ 0	locks=0 ]	(	0	0	0	)
+pr	[ 0	locks=0 ]	(	0	0	0	)
+parmgroup_prexform	[ 0	locks=0 ]	(	0	)
+prexform_xOrd	[ 0	locks=0 ]	(	"srt"	)
+prexform_rOrd	[ 0	locks=0 ]	(	"xyz"	)
+prexform_t	[ 0	locks=0 ]	(	0	0	0	)
+prexform_r	[ 0	locks=0 ]	(	0	0	0	)
+prexform_s	[ 0	locks=0 ]	(	1	1	1	)
+prexform_shear	[ 0	locks=0 ]	(	0	0	0	)
+movecentroid	[ 0	locks=0 ]	(	0	)
+movepivot	[ 0	locks=0 ]	(	0	)
+attribs	[ 0	locks=0 ]	(	*	)
+updatenmls	[ 0	locks=0 ]	(	"off"	)
+updateaffectednmls	[ 0	locks=0 ]	(	"on"	)
+vlength	[ 0	locks=0 ]	(	"on"	)
+invertxform	[ 0	locks=0 ]	(	"off"	)
+addattrib	[ 0	locks=0 ]	(	"off"	)
+outputattrib	[ 0	locks=0 ]	(	xform	)
+outputmerge	[ 0	locks=0 ]	(	"post"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/transform1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.init"
+Content-Type: text/plain
+
+type = switch
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -5.46839 4.08456
+connectornextid 3
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+2 "output1"
+}
+inputsNamed3
+{
+0 	python3 0 1 "input1"
+1 	transform1 1 1 "input2"
+}
+inputs
+{
+0 	python3 0 1
+1 	transform1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-SPRVPD3
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.chn"
+Content-Type: text/plain
+
+{
+    channel input {
+      lefttype = extend
+      righttype = extend
+      flags = 0
+      segment { length = 0 expr = ch(\"../visualize\") }
+    }
+  }
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+input	[ 8	locks=0 ]	(	[ input	0 ] 	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/switch1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python3.init"
+Content-Type: text/plain
+
+type = python
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python3.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -5.5785 6.77088
+connectornextid 2
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+0 "output1"
+}
+inputsNamed3
+{
+1 	attribcreate1 1 1 "input1"
+}
+inputs
+{
+0 	attribcreate1 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-SPRVPD3
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python3.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+python	[ 0	locks=0 ]	(	"\"\"\"Script for single-gpu/multi-gpu demo.\"\"\"
+import argparse
+import os
+import platform
+import sys
+import time
+
+import numpy as np
+import torch
+from tqdm import tqdm
+import natsort
+
+from alphapose.detector.apis import get_detector
+from alphapose.trackers.tracker_api import Tracker
+from alphapose.trackers.tracker_cfg import cfg as tcfg
+from alphapose.trackers import track
+from alphapose.models import builder
+from alphapose.utils.config import update_config
+from alphapose.utils.detector import DetectionLoader
+from alphapose.utils.file_detector import FileDetectionLoader
+from alphapose.utils.transforms import flip, flip_heatmap
+from alphapose.utils.vis import getTime
+from alphapose.utils.webcam_detector import WebCamDetectionLoader
+from alphapose.utils.writer import DataWriter
+
+import mlops_utils
+
+\"\"\"----------------------------- Demo options -----------------------------\"\"\"
+parser = argparse.ArgumentParser(description='AlphaPose Demo')
+parser.add_argument('--cfg', type=str, required=False,
+                    help='experiment configure file name')
+parser.add_argument('--checkpoint', type=str, required=False,
+                    help='checkpoint file name')
+parser.add_argument('--sp', default=False, action='store_true',
+                    help='Use single process for pytorch')
+parser.add_argument('--detector', dest='detector',
+                    help='detector name', default=\"yolo\")
+parser.add_argument('--det_cfg', type=str, required=False,
+                    help='detector configure file name')
+parser.add_argument('--det_weights', type=str, required=False,
+                    help='detector weights file name') 
+parser.add_argument('--detfile', dest='detfile',
+                    help='detection result file', default=\"\")
+parser.add_argument('--indir', dest='inputpath',
+                    help='image-directory', default=\"\")
+parser.add_argument('--list', dest='inputlist',
+                    help='image-list', default=\"\") 
+parser.add_argument('--image', dest='inputimg',
+                    help='image-name', default=\"\")
+parser.add_argument('--outdir', dest='outputpath',
+                    help='output-directory', default=\"examples/res/\")
+parser.add_argument('--save_img', default=False, action='store_true',
+                    help='save result as image')
+parser.add_argument('--vis', default=False, action='store_true',
+                    help='visualize image')
+parser.add_argument('--showbox', default=False, action='store_true',
+                    help='visualize human bbox')
+parser.add_argument('--profile', default=False, action='store_true',
+                    help='add speed profiling at screen output')
+parser.add_argument('--format', type=str, default=\"coco\",
+                    help='save in the format of cmu or coco or openpose, option: coco/cmu/open')
+parser.add_argument('--min_box_area', type=int, default=0,
+                    help='min box area to filter out')
+parser.add_argument('--detbatch', type=int, default=5,
+                    help='detection batch size PER GPU')
+parser.add_argument('--posebatch', type=int, default=64,
+                    help='pose estimation maximum batch size PER GPU')
+parser.add_argument('--eval', dest='eval', default=True, action='store_true',
+                    help='save the result json as coco format, using image index(int) instead of image name(str)')
+parser.add_argument('--gpus', type=str, dest='gpus', default=\"0\",
+                    help='choose which cuda device to use by index and input comma to use multi gpus, e.g. 0,1,2,3. (input -1 for cpu only)')
+parser.add_argument('--qsize', type=int, dest='qsize', default=1024,
+                    help='the length of result buffer, where reducing it will lower requirement of cpu memory')
+parser.add_argument('--flip', default=True, action='store_true',
+                    help='enable flip testing')
+parser.add_argument('--debug', default=False, action='store_true',
+                    help='print detail information')
+\"\"\"----------------------------- Video options -----------------------------\"\"\"
+parser.add_argument('--video', dest='video',
+                    help='video-name', default=\"\")
+parser.add_argument('--webcam', dest='webcam', type=int,
+                    help='webcam number', default=-1)
+parser.add_argument('--save_video', dest='save_video',
+                    help='whether to save rendered video', default=False, action='store_true')
+parser.add_argument('--vis_fast', dest='vis_fast',
+                    help='use fast rendering', action='store_true', default=False)
+\"\"\"----------------------------- Tracking options -----------------------------\"\"\"
+parser.add_argument('--pose_flow', dest='pose_flow',
+                    help='track humans in video with PoseFlow', action='store_true', default=False)
+parser.add_argument('--pose_track', dest='pose_track',
+                    help='track humans in video with reid', action='store_true', default=False)
+parser.add_argument('--tracker_weights', type=str, required=False,
+                    help='tracker weights file name')
+
+node = hou.pwd()
+geo = node.geometry()
+args = parser.parse_args()
+args = mlops_utils.parse_args_from_node_parms(args, node.parent())
+cfg = update_config(args.cfg)
+args.sp = True
+args.pose_track = True
+args.save_video = True
+args.vis_fast = True
+tcfg.loadmodel = args.tracker_weights
+
+args.gpus = [int(i) for i in args.gpus.split(',')] if torch.cuda.device_count() >= 1 else [-1]
+args.device = torch.device(\"cuda:\" + str(args.gpus[0]) if args.gpus[0] >= 0 else \"cpu\")
+args.detbatch = args.detbatch * len(args.gpus)
+args.posebatch = args.posebatch * len(args.gpus)
+args.tracking = args.pose_track or args.pose_flow or args.detector=='tracker'
+
+
+if not args.sp:
+    torch.multiprocessing.set_start_method('forkserver', force=True)
+    torch.multiprocessing.set_sharing_strategy('file_system')
+ 
+
+def check_input(): 
+    # for wecam
+    if args.webcam != -1:
+        args.detbatch = 1
+        return 'webcam', int(args.webcam)
+
+    # for video
+    if len(args.video):
+        if os.path.isfile(args.video):
+            videofile = args.video
+            return 'video', videofile
+        else:
+            raise IOError('Error: --video must refer to a video file, not directory.')
+
+    # for detection results
+    if len(args.detfile):
+        if os.path.isfile(args.detfile):
+            detfile = args.detfile
+            return 'detfile', detfile
+        else:
+            raise IOError('Error: --detfile must refer to a detection json file, not directory.')
+
+    # for images
+    if len(args.inputpath) or len(args.inputlist) or len(args.inputimg):
+        inputpath = args.inputpath
+        inputlist = args.inputlist
+        inputimg = args.inputimg
+
+        if len(inputlist):
+            im_names = open(inputlist, 'r').readlines()
+        elif len(inputpath) and inputpath != '/':
+            for root, dirs, files in os.walk(inputpath):
+                im_names = files
+            im_names = natsort.natsorted(im_names)
+        elif len(inputimg):
+            args.inputpath = os.path.split(inputimg)[0]
+            im_names = [os.path.split(inputimg)[1]]
+
+        return 'image', im_names
+
+    else:
+        raise NotImplementedError
+
+
+# def print_finish_info():
+#     print('===========================> Finish Model Running.')
+#     if (args.save_img or args.save_video) and not args.vis_fast:
+#         print('===========================> Rendering remaining images in the queue...')
+#         print('===========================> If this step takes too long, you can enable the --vis_fast flag to use fast rendering (real-time).')
+
+
+def loop():
+    n = 0
+    while True:
+        yield n
+        n += 1
+
+
+# if __name__ == \"__main__\":
+mode, input_source = check_input()
+
+if not os.path.exists(args.outputpath):
+    os.makedirs(args.outputpath)
+
+# Load detection loader
+if mode == 'webcam':
+    det_loader = WebCamDetectionLoader(input_source, get_detector(args), cfg, args)
+    det_worker = det_loader.start()
+elif mode == 'detfile':
+    det_loader = FileDetectionLoader(input_source, cfg, args)
+    det_worker = det_loader.start()
+else:
+    det_loader = DetectionLoader(input_source, get_detector(args), cfg, args, batchSize=args.detbatch, mode=mode, queueSize=args.qsize)
+    det_worker = det_loader.start()
+
+# Load pose model
+pose_model = builder.build_sppe(cfg.MODEL, preset_cfg=cfg.DATA_PRESET)
+
+# print('Loading pose model from %s...' % (args.checkpoint,))
+pose_model.load_state_dict(torch.load(args.checkpoint, map_location=args.device))
+pose_dataset = builder.retrieve_dataset(cfg.DATASET.TRAIN)
+if args.pose_track:
+    tracker = Tracker(tcfg, args)
+if len(args.gpus) > 1:
+    pose_model = torch.nn.DataParallel(pose_model, device_ids=args.gpus).to(args.device)
+else:
+    pose_model.to(args.device)
+pose_model.eval()
+
+runtime_profile = {
+    'dt': [],
+    'pt': [],
+    'pn': []
+}
+
+# Init data writer
+queueSize = 2 if mode == 'webcam' else args.qsize
+if args.save_video and mode != 'image':
+    from alphapose.utils.writer import DEFAULT_VIDEO_SAVE_OPT as video_save_opt
+    if mode == 'video':
+        video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_' + os.path.basename(input_source))
+    else:
+        video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_webcam' + str(input_source) + '.mp4')
+    video_save_opt.update(det_loader.videoinfo)
+    writer = DataWriter(cfg, args, save_video=True, video_save_opt=video_save_opt, queueSize=queueSize).start()
+else:
+    writer = DataWriter(cfg, args, save_video=False, queueSize=queueSize).start()
+
+data_len = det_loader.length
+
+
+batchSize = args.posebatch
+if args.flip:
+    batchSize = int(batchSize / 2)
+# try:
+with hou.InterruptableOperation(\"Extracting Pose\", open_interrupt_dialog=True) as operation:
+    for i in range(data_len):
+        start_time = getTime()
+        with torch.no_grad():
+            (inps, orig_img, im_name, boxes, scores, ids, cropped_boxes) = det_loader.read()
+            if orig_img is None:
+                break
+            if boxes is None or boxes.nelement() == 0:
+                writer.save(None, None, None, None, None, orig_img, im_name)
+                continue
+            if args.profile:
+                ckpt_time, det_time = getTime(start_time)
+                runtime_profile['dt'].append(det_time)
+            # Pose Estimation
+            inps = inps.to(args.device)
+            datalen = inps.size(0)
+            leftover = 0
+            if (datalen) % batchSize:
+                leftover = 1
+            num_batches = datalen // batchSize + leftover
+            hm = []
+            for j in range(num_batches):
+                inps_j = inps[j * batchSize:min((j + 1) * batchSize, datalen)]
+                if args.flip:
+                    inps_j = torch.cat((inps_j, flip(inps_j)))
+                hm_j = pose_model(inps_j)
+                if args.flip:
+                    hm_j_flip = flip_heatmap(hm_j[int(len(hm_j) / 2):], pose_dataset.joint_pairs, shift=True)
+                    hm_j = (hm_j[0:int(len(hm_j) / 2)] + hm_j_flip) / 2
+                hm.append(hm_j)
+            hm = torch.cat(hm)
+            if args.profile:
+                ckpt_time, pose_time = getTime(ckpt_time)
+                runtime_profile['pt'].append(pose_time)
+            if args.pose_track:
+                boxes,scores,ids,hm,cropped_boxes = track(tracker,args,orig_img,inps,boxes,hm,cropped_boxes,im_name,scores)
+            hm = hm.cpu()
+            writer.save(boxes, scores, ids, hm, cropped_boxes, orig_img, im_name)
+            if args.profile:
+                ckpt_time, post_time = getTime(ckpt_time)
+                runtime_profile['pn'].append(post_time)
+
+        if args.profile:
+            # TQDM
+            im_names_desc.set_description(
+                'det time: {dt:.4f} | pose time: {pt:.4f} | post processing: {pn:.4f}'.format(
+                    dt=np.mean(runtime_profile['dt']), pt=np.mean(runtime_profile['pt']), pn=np.mean(runtime_profile['pn']))
+            )
+    # print_finish_info()
+    # while(writer.running()):
+    #     time.sleep(1)
+    #     print('===========================> Rendering remaining ' + str(writer.count()) + ' images in the queue...', end='\\r')
+        operation.updateProgress(float(i)/float(data_len))
+    writer.stop()
+    det_loader.stop()
+    # except Exception as e:
+    #     print(repr(e))
+    #     print('An error as above occurs when processing the images, please check it')
+    #     pass
+    # except KeyboardInterrupt:
+    #     print_finish_info()
+    #     # Thread won't be killed when press Ctrl+C
+    #     if args.sp:
+    #         det_loader.terminate()
+    #         while(writer.running()):
+    #             time.sleep(1)
+    #             print('===========================> Rendering remaining ' + str(writer.count()) + ' images in the queue...', end='\\r')
+    #         writer.stop()
+    #     else:
+    #         # subprocesses are killed, manually clear queues
+
+    #         det_loader.terminate()
+    #         writer.terminate()
+    #         writer.clear_queues()
+    #         det_loader.clear_queues()
+
+"	)
+maintainstate	[ 0	locks=0 ]	(	"off"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/python3.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-4
-AlphaPose
+7
 output0
 attribcreate1
 null1
+python1
+transform1
+switch1
+python3
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"

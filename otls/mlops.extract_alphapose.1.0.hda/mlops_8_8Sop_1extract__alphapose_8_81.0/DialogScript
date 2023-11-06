@@ -44,6 +44,13 @@
             }
             parmtag { "script_callback_language" "python" }
         }
+        parm {
+            name    "visualize"
+            label   "Visualize"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
     }
 
     groupsimple {
@@ -112,6 +119,22 @@
             label   "Detector Config"
             type    file
             default { "$MLOPS/data/models/alphapose/yolov3-spp.cfg" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_trackerweights"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://drive.google.com/u/0/uc?id=1myNKfr2cXqiHZVXaaG8ZAq_U2UpeOLfG&export=download\"; parm = \"tracker_weights\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_gdrive_file_to_folder(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "tracker_weights"
+            label   "Tracker Weights"
+            type    file
+            default { "$MLOPS/data/models/alphapose/osnet_ain_x1_0_msmt17_256x128_amsgrad_ep50_lr0.0015_coslr_b64_fb10_softmax_labsmth_flip_jitter.pth" }
             parmtag { "script_callback_language" "python" }
         }
     }
