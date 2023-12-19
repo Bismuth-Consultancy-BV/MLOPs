@@ -265,7 +265,7 @@ import mlops_utils
 import os
 from textpipeline import blip_caption
 
-from imp import reload
+from importlib import reload
 reload(mlops_image_utils)
 reload(blip_caption)
 reload(mlops_utils)

@@ -14,7 +14,7 @@
 
   <tool name="mlops_install" label="Install Dependencies" icon="$MLOPs/help/icons/mlops.svg">
     <script scriptType="python"><![CDATA[import mlops_utils
-from imp import reload
+from importlib import reload
 reload(mlops_utils)
 
 mlops_utils.install_mlops_dependencies()]]></script>
@@ -22,7 +22,7 @@ mlops_utils.install_mlops_dependencies()]]></script>
 
   <tool name="mlops_download_model" label="Download Model" icon="$MLOPS/help/icons/mlops.svg">
     <script scriptType="python"><![CDATA[import mlops_utils
-from imp import reload
+from importlib import reload
 reload(mlops_utils)
 
 mlops_utils.MLOPSCheckpointDownloader(hou.qt.mainWindow())]]></script>
@@ -30,7 +30,7 @@ mlops_utils.MLOPSCheckpointDownloader(hou.qt.mainWindow())]]></script>
 
   <tool name="mlops_convert_model" label="Convert Model" icon="$MLOPS/help/icons/mlops.svg">
     <script scriptType="python"><![CDATA[import mlops_utils
-from imp import reload
+from importlib import reload
 reload(mlops_utils)
 
 mlops_utils.MLOPSConvertModel(hou.qt.mainWindow())]]></script>
@@ -38,7 +38,7 @@ mlops_utils.MLOPSConvertModel(hou.qt.mainWindow())]]></script>
 
   <tool name="mlops_pip_install" label="Pip Install" icon="$MLOPS/help/icons/mlops.svg">
     <script scriptType="python"><![CDATA[import mlops_utils
-from imp import reload
+from importlib import reload
 reload(mlops_utils)
 
 mlops_utils.MLOPSPipInstall(hou.qt.mainWindow())

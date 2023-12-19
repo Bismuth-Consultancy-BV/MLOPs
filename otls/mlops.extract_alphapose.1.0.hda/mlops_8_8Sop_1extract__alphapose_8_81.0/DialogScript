@@ -1,0 +1,142 @@
+# Dialog script for mlops::extract_alphapose::1.0 automatically generated
+
+{
+    name	mlops::extract_alphapose::1.0
+    script	mlops::extract_alphapose::1.0
+    label	"MLOPs Extract AlphaPose"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"AlphaPose Attributes"
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+
+        parm {
+            name    "video"
+            label   "Video"
+            type    file
+            default { "$MLOPS/data/testing/dancing/dancing.mp4" }
+            parmtag { "filechooser_pattern" "*.mp4" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "outputpath"
+            label   "Output"
+            type    directory
+            default { "$HIP/out/alphapose/" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "detector"
+            label   "Detector"
+            type    ordinal
+            default { "yolo" }
+            menu {
+                "yolo"  "YOLO"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "visualize"
+            label   "Visualize"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder0"
+        label   "Weights"
+
+        parm {
+            name    "download_cfg"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://raw.githubusercontent.com/MVIG-SJTU/AlphaPose/master/configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml\"; parm = \"cfg\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_generic_file(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cfg"
+            label   "Model Config"
+            type    file
+            default { "$MLOPS/data/models/alphapose/256x192_res50_lr1e-3_1x.yaml" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_checkpoint"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://drive.google.com/u/0/uc?id=1S-ROA28de-1zvLv-hVfPFJ5tFBYOSITb&export=download\"; parm = \"checkpoint\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_gdrive_file_to_folder(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "checkpoint"
+            label   "Model Checkpoint"
+            type    file
+            default { "$MLOPS/data/models/alphapose/halpe26_fast_res50_256x192.pth" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_detweight"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://drive.google.com/u/0/uc?id=1D47msNOOiJKvPOXlnpyzdKA3k6E97NTC&export=download\"; parm = \"det_weights\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_gdrive_file_to_folder(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "det_weights"
+            label   "Detector Weights"
+            type    file
+            default { "$MLOPS/data/models/alphapose/yolov3-spp.weights" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_detcfg"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://raw.githubusercontent.com/MVIG-SJTU/AlphaPose/master/detector/yolo/cfg/yolov3-spp.cfg\"; parm = \"det_cfg\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_generic_file(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "det_cfg"
+            label   "Detector Config"
+            type    file
+            default { "$MLOPS/data/models/alphapose/yolov3-spp.cfg" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_trackerweights"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://drive.google.com/u/0/uc?id=1myNKfr2cXqiHZVXaaG8ZAq_U2UpeOLfG&export=download\"; parm = \"tracker_weights\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_gdrive_file_to_folder(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "tracker_weights"
+            label   "Tracker Weights"
+            type    file
+            default { "$MLOPS/data/models/alphapose/osnet_ain_x1_0_msmt17_256x128_amsgrad_ep50_lr0.0015_coslr_b64_fb10_softmax_labsmth_flip_jitter.pth" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

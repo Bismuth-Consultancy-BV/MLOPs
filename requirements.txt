@@ -1,33 +1,81 @@
-setuptools==68.0.0
-openai==0.27.8
-omegaconf==2.3.0
-transformers==4.31.0
-accelerate>=0.20.3
-geopandas==0.13.2
-scikit-learn==1.3.0
-scipy==1.11.1
+cython
+setuptools
+openai
+omegaconf
+transformers
+accelerate
+geopandas
+scikit-learn
+scipy
 timm==0.6.7
-controlnet_aux==0.0.6
-torchmetrics==1.0.1
-clip_interrogator==0.6.0
-diffusers==0.19.3
-xformers==0.0.20
-ftfy==6.1.1
-Jinja2<3.1
-rembg[gpu]==2.0.50
-basicsr>=1.4.2
-facexlib==0.3.0
-gfpgan==1.3.8
-safetensors==0.3.1
-umap-learn==0.5.3
-compel==2.0.1
-mediapipe==0.10.2
-bitsandbytes @ git+https://github.com/Keith-Hon/bitsandbytes-windows.git; platform_system == "Windows"
-bitsandbytes; platform_system == "Linux" or platform_system == "Darwin"
-dominate==2.8.0
-tensorboard==2.13.0
+controlnet_aux==0.0.7
+torchmetrics
+clip_interrogator
+diffusers==0.21.2
+xformers==0.0.21
+ftfy
+Jinja2
+rembg[gpu]
+basicsr
+facexlib
+gfpgan
+safetensors
+umap-learn
+compel
+mediapipe
+gdown
+
+dominate
+tensorboard
+
+#MotionBert
+#tensorboardX
+#matplotlib==3.1.1
+tqdm
+easydict
+prettytable
+chumpy @ git+https://github.com/mattloper/chumpy@51d5afd92a8ded3637553be8cef41f328a1c863a
+opencv-python
+imageio-ffmpeg
+roma
+ipdb
+pytorch-metric-learning                         # For one-shot action recognition
+smplx[all]                                      # For mesh recovery
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
 torch
 torchvision
 torchaudio
+
+--prefer-binary
+
+--extra-index-url https://jllllll.github.io/bitsandbytes-windows-webui
+bitsandbytes==0.41.1
+
+# pycocotools
+pycocotools @ git+https://github.com/Ambrosiussen/cocoapi#subdirectory=PythonAPI; platform_system == "Linux"
+https://github.com/Ambrosiussen/cocoapi/releases/download/binaries/pycocotools-2.0.7-cp310-cp310-win_amd64.whl; platform_system == "Windows"
+
+# cython-bbox
+cython-bbox @ git+https://github.com/Ambrosiussen/cython_bbox; platform_system == "Linux"
+https://github.com/Ambrosiussen/cython_bbox/releases/download/binaries/cython_bbox-0.1.3-cp310-cp310-win_amd64.whl; platform_system == "Windows"
+
+# halpecocotools
+halpecocotools @ git+https://github.com/Ambrosiussen/HalpeCOCOAPI#subdirectory=PythonAPI; platform_system == "Linux"
+https://github.com/Ambrosiussen/HalpeCOCOAPI/releases/download/binaries/halpecocotools-0.0.0-cp310-cp310-win_amd64.whl; platform_system == "Windows"
+
+# Alphapose
+#AlphaPose @ git+https://github.com/Ambrosiussen/AlphaPose
+https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries/alphapose-0.5.0+be2ecb8-py3-none-any.whl
+
+# hybrik
+#hybrik @ git+https://github.com/Ambrosiussen/HybrIK
+https://github.com/Ambrosiussen/HybrIK/releases/download/binaries/hybrik-0.2.0+27332e0-py3-none-any.whl
+
+# pytorch3d
+pytorch3d @ git+https://github.com/facebookresearch/pytorch3d.git@stable; platform_system == "Linux"
+https://github.com/Ambrosiussen/pytorch3d/releases/download/binaries/pytorch3d-0.7.4-cp310-cp310-win_amd64.whl; platform_system == "Windows"
+
+
+
+

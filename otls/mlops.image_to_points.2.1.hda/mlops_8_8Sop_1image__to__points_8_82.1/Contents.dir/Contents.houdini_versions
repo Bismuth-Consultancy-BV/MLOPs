@@ -1,0 +1,27 @@
+{
+	"values":["19.5.605"
+	],
+	"indexes":{
+		"hdaroot/error1.userdata":0,
+		"hdaroot/switchif1.userdata":0,
+		"hdaroot/timeshift1.userdata":0,
+		"hdaroot/attribcreate1.userdata":0,
+		"hdaroot/switch2.userdata":0,
+		"hdaroot/cop2net2/switch_pad.userdata":0,
+		"hdaroot/cop2net2/switch_resize.userdata":0,
+		"hdaroot/grid.userdata":0,
+		"hdaroot/cop2net2/READ.userdata":0,
+		"hdaroot/cop2net2/switch_aspect.userdata":0,
+		"hdaroot/attribcopy1.userdata":0,
+		"hdaroot/transform1.userdata":0,
+		"hdaroot/cop2net2/crop1.userdata":0,
+		"hdaroot/switch1.userdata":0,
+		"hdaroot/uv.userdata":0,
+		"hdaroot/output0.userdata":0,
+		"hdaroot/cop2net2/RES.userdata":0,
+		"hdaroot/cop2net2/scale_aspect.userdata":0,
+		"hdaroot/cop2net2.userdata":0,
+		"hdaroot/cop2net2/scale1.userdata":0,
+		"hdaroot/cop2net2/OUT.userdata":0
+	}
+}

@@ -1,0 +1,305 @@
+# Dialog script for mlops::extract_motionbert::1.0 automatically generated
+
+{
+    name	mlops::extract_motionbert::1.0
+    script	mlops::extract_motionbert::1.0
+    label	"MLOPs Extract MotionBert"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"AlphaPose Attributes"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"KineFX Skeleton"
+
+    groupsimple {
+        name    "folder0"
+        label   "Settings"
+
+        parm {
+            name    "out_path"
+            label   "Output"
+            type    directory
+            default { "$HIP/out/motionbert/" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Weights"
+
+        parm {
+            name    "download_config"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://raw.githubusercontent.com/Walter0807/MotionBERT/main/configs/pose3d/MB_ft_h36m_global_lite.yaml\"; parm = \"config\"; import mlops_utils; from importlib import reload; reload(mlops_utils); node = kwargs[\"node\"]; output = node.parm(parm).evalAsString(); mlops_utils.download_generic_file(url, output);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "config"
+            label   "Model Config"
+            type    file
+            default { "$MLOPS/data/models/motionbert/MB_ft_h36m_global_lite.yaml" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "download_evaluate"
+            label   "Download"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "script_callback" "url = r\"https://onedrive.live.com/?authkey=%21ALuKCr9wihi87bI&id=A5438CD242871DF0%21190&cid=A5438CD242871DF0\"; import webbrowser; webbrowser.open(url);" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "evaluate"
+            label   "Model Checkpoint"
+            type    file
+            default { "$MLOPS/data/models/motionbert/best_epoch.bin" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "skeleton"
+        label   "Skeleton"
+
+        parm {
+            name    "skeltype"
+            label   "Face"
+            type    ordinal
+            default { "0" }
+            menu {
+                "hou_skeleton"      "Houdini Skeleton"
+                "openpose_skeleton" "Openpose Skeleton"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "openposeoptions"
+            label   "Open Pose Settings"
+            disablewhen "{ skeltype == 0 }"
+
+            parm {
+                name    "addface"
+                label   "Add Facial Markers"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "addhands"
+                label   "Add Hand Markers"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+            groupcollapsible {
+                name    "openskelset"
+                label   "Skeleton"
+
+                parm {
+                    name    "PixelWidth"
+                    label   "Pixelwidth"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PointRadius"
+                    label   "Pointradius"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "ramp"
+                    label   "Rounded"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "renderLines"
+                    label   "Renderlines"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "RenderPoints"
+                    label   "Renderpoints"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            groupcollapsible {
+                name    "openface"
+                label   "Face"
+
+                parm {
+                    name    "scale2"
+                    label   "Face Scale"
+                    type    float
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PixelWidth3"
+                    label   "Pixelwidth"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PointRadius3"
+                    label   "Pointradius"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "renderLines3"
+                    label   "Renderlines"
+                    type    toggle
+                    default { "off" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "RenderPoints3"
+                    label   "Renderpoints"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            groupcollapsible {
+                name    "openhands"
+                label   "Hands"
+
+                parm {
+                    name    "scale"
+                    label   "Hand Scale"
+                    type    float
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PixelWidth2"
+                    label   "Pixelwidth"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "PointRadius2"
+                    label   "Pointradius"
+                    type    integer
+                    default { "2" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "renderLines2"
+                    label   "Renderlines"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "RenderPoints2"
+                    label   "Renderpoints"
+                    type    toggle
+                    default { "on" }
+                    range   { 0 10 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+    }
+
+    groupsimple {
+        name    "Motionsmoothing"
+        label   "Motion Smoothing"
+
+        parm {
+            name    "enablesmooth"
+            label   "Motion Smoothing"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "filtertype"
+            label   "Type"
+            type    ordinal
+            default { "butter" }
+            disablewhen "{ enablesmooth == 0 }"
+            menu {
+                "butter"    "Butterworth"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "filterorder"
+            label   "Order"
+            type    integer
+            default { "3" }
+            disablewhen "{ enablesmooth == 0 }"
+            range   { 1 6 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cutofffrequency"
+            label   "Cutoff Frequency"
+            type    float
+            default { "5" }
+            disablewhen "{ enablesmooth == 0 }"
+            range   { 0! 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

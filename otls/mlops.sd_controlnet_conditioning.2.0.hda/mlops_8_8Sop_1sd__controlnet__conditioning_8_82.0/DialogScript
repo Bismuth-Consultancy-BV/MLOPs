@@ -53,6 +53,7 @@
                 "content"       "Content Shuffle Detector"
                 "facedetector"  "MediaPipe Face Detector"
                 "segment"       "Semantic Segmentation"
+                "inpaint"       "Inpainting"
             }
             parmtag { "script_callback_language" "python" }
         }

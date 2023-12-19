@@ -48,6 +48,22 @@
             default { "Generated using MLOPs" }
             parmtag { "script_callback_language" "python" }
         }
+        parm {
+            name    "jpgquality"
+            label   "JPG Quality"
+            type    integer
+            default { "75" }
+            range   { 0! 100! }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gamma"
+            label   "Gamma"
+            type    float
+            default { "2.2" }
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
     }
 
 }

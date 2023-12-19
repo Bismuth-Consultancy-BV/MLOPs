@@ -128,7 +128,7 @@ version 0.8
 python	[ 0	locks=0 ]	(	"import numpy
 import mlops_image_utils
 from imagepipeline.real_esrgan import inference_realesrgan 
-from imp import reload
+from importlib import reload
 reload(inference_realesrgan)
  
 

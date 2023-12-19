@@ -2,7 +2,7 @@ import numpy
 from PIL import Image
 
 
-def colors_numpy_array_to_pil(input_colors, scale_factor=2.2):
+def colors_numpy_array_to_pil(input_colors, scale_factor=1.0):
     # Transpose into (width, height, channels)
     input_colors = input_colors.transpose(1, 2, 0)
     # Gamma Correct
@@ -65,25 +65,26 @@ def pil_to_colored_points(geo, pil_image, scale_factor=1.0):
 
 def numpy_array_to_colored_points(geo, cd_array, scale_factor=255.0):
     # Split the color data into separate "r", "g", and "b" arrays
-    r_attrib = cd_array[0, :, :].ravel() / scale_factor
-    g_attrib = cd_array[1, :, :].ravel() / scale_factor
-    b_attrib = cd_array[2, :, :].ravel() / scale_factor
+    cd_array /= scale_factor
+    r_attrib = cd_array[0, :, :].ravel()
+    g_attrib = cd_array[1, :, :].ravel()
+    b_attrib = cd_array[2, :, :].ravel()
 
     # Set the "r", "g", and "b" attributes on the points
-    geo.setPointFloatAttribValues("r", list(map(float, r_attrib)))
-    geo.setPointFloatAttribValues("g", list(map(float, g_attrib)))
-    geo.setPointFloatAttribValues("b", list(map(float, b_attrib)))
+    geo.setPointFloatAttribValues("r", tuple(r_attrib.tolist()))
+    geo.setPointFloatAttribValues("g", tuple(g_attrib.tolist()))
+    geo.setPointFloatAttribValues("b", tuple(b_attrib.tolist()))
 
 def pil_to_Cd_points(geo, pil_image, scale_factor=1.0):
     cd_array = pil_to_colors_numpy_array(pil_image)
     # Split the color data into separate "r", "g", and "b" arrays
-    
+
     # Transpose the cd_array to have the shape (num_points, num_components)
     cd_array = cd_array.transpose(1, 2, 0)
 
     # Flatten the cd_array and scale down the color data
     cd_attrib = cd_array.reshape(-1, 3) / scale_factor
-    
+
     i = 0
     for point in geo.points():
         point.setAttribValue("Cd", cd_attrib[i])

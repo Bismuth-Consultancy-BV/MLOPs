@@ -32,19 +32,19 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 2.47888 -9.50228
+position -15.2035 -11.3001
 connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	sd_image_decoder3 1 1 "input1"
+0 	sd_solver1 2 1 "input1"
 }
 inputs
 {
-0 	sd_image_decoder3 0 1
+0 	sd_solver1 0 1
 }
 stat
 {
@@ -719,7 +719,7 @@ coatrough	[ 0	locks=0 ]	(	0	)
 folder13	[ 0	locks=0 ]	(	1	)
 transparency	[ 0	locks=0 ]	(	0	)
 transcolor	[ 0	locks=0 ]	(	1	1	1	)
-transdist	[ 0	locks=0 ]	(	0.10000000000000001	)
+transdist	[ 0	locks=0 ]	(	0.1	)
 dispersion	[ 0	locks=0 ]	(	0	)
 priority	[ 0	locks=0 ]	(	0	)
 transcolor_usePointColor	[ 0	locks=0 ]	(	"off"	)
@@ -727,7 +727,7 @@ folder8	[ 0	locks=0 ]	(	1	)
 sss	[ 0	locks=0 ]	(	0	)
 ssscolor	[ 0	locks=0 ]	(	1	1	1	)
 sssmodel	[ 0	locks=0 ]	(	pbrsss	)
-sssdist	[ 0	locks=0 ]	(	0.10000000000000001	)
+sssdist	[ 0	locks=0 ]	(	0.1	)
 sssphase	[ 0	locks=0 ]	(	0	)
 ssscolor_usePointColor	[ 0	locks=0 ]	(	"off"	)
 folder11	[ 0	locks=0 ]	(	1	)
@@ -894,7 +894,7 @@ shading_16	[ 0	locks=0 ]	(	0	0	)
 baseBumpAndNormal_enable	[ 0	locks=0 ]	(	"off"	)
 baseBumpAndNormal_type	[ 0	locks=0 ]	(	normal	)
 baseBump_colorSpace	[ 0	locks=0 ]	(	linear	)
-baseBump_bumpScale	[ 0	locks=0 ]	(	0.050000000000000003	)
+baseBump_bumpScale	[ 0	locks=0 ]	(	0.05	)
 baseBump_bumpTexture	[ 0	locks=0 ]	(	""	)
 baseBump_wrap	[ 0	locks=0 ]	(	repeat	)
 baseBump_filter	[ 0	locks=0 ]	(	gauss	)
@@ -919,7 +919,7 @@ separateCoatNormals	[ 0	locks=0 ]	(	"off"	)
 coatBumpAndNormal_enable	[ 0	locks=0 ]	(	"on"	)
 coatBumpAndNormal_type	[ 0	locks=0 ]	(	normal	)
 coatBump_colorSpace	[ 0	locks=0 ]	(	linear	)
-coatBump_bumpScale	[ 0	locks=0 ]	(	0.050000000000000003	)
+coatBump_bumpScale	[ 0	locks=0 ]	(	0.05	)
 coatBump_bumpTexture	[ 0	locks=0 ]	(	""	)
 coatBump_wrap	[ 0	locks=0 ]	(	repeat	)
 coatBump_filter	[ 0	locks=0 ]	(	gauss	)
@@ -954,7 +954,7 @@ dispTex_colorSpace	[ 0	locks=0 ]	(	linear	)
 dispTex_vectorSpace	[ 0	locks=0 ]	(	uvtangent	)
 dispTex_channelOrder	[ 0	locks=0 ]	(	xyz	)
 dispTex_offset	[ 0	locks=0 ]	(	-0.5	)
-dispTex_scale	[ 0	locks=0 ]	(	0.050000000000000003	)
+dispTex_scale	[ 0	locks=0 ]	(	0.05	)
 dispTex_texture	[ 0	locks=0 ]	(	""	)
 dispTex_channel	[ 0	locks=0 ]	(	0	)
 dispTex_wrap	[ 0	locks=0 ]	(	repeat	)
@@ -1141,12 +1141,13 @@ geo = node.geometry()
 path = node.parent().parm(\"path\").evalAsString()
 width = int(geo.attribValue(\"image_dimension\")[0])
 height = int(geo.attribValue(\"image_dimension\")[1])
+gamma = node.parent().parm(\"gamma\").evalAsFloat()
 
 # Attributes
 input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)
 
 # Export
-image = mlops_image_utils.colors_numpy_array_to_pil(input_colors)
+image = mlops_image_utils.colors_numpy_array_to_pil(input_colors, gamma)
 
 dir_path = os.path.dirname(path)
 if not os.path.exists(dir_path):
@@ -1155,7 +1156,10 @@ if not os.path.exists(dir_path):
 exif = image.getexif() 
 description = node.parent().parm(\"exif\").evalAsString()
 exif[0x010E] = description
-image.save(path, exif=exif) "	)
+
+params = {\"quality\": node.parent().parm(\"jpgquality\").evalAsInt()}
+
+image.save(path, exif=exif, **params) "	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 

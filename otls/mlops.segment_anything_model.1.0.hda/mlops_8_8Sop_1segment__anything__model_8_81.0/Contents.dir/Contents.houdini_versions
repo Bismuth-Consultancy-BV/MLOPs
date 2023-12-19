@@ -1,11 +1,10 @@
 {
-	"values":["19.5.605","432"
+	"values":["20.0.484"
 	],
 	"indexes":{
 		"hdaroot/attribpromote1.userdata":0,
 		"hdaroot/groupdelete1.userdata":0,
 		"hdaroot/fuse1.userdata":0,
-		"hdaroot/fast_unshared1.userdata":1,
 		"hdaroot/switch2.userdata":0,
 		"hdaroot/switch1.userdata":0,
 		"hdaroot/switchif2.userdata":0,
@@ -15,6 +14,7 @@
 		"hdaroot/null1.userdata":0,
 		"hdaroot/attribcreate1.userdata":0,
 		"hdaroot/pointgenerate2.userdata":0,
+		"hdaroot/group1.userdata":0,
 		"hdaroot/python1.userdata":0,
 		"hdaroot/dissolve2.userdata":0,
 		"hdaroot/output0.userdata":0,

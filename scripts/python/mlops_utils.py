@@ -27,10 +27,10 @@ def install_mlops_dependencies():
     if not os.path.isdir(FOLDER):
         os.makedirs(FOLDER)
 
-    total = 3
-    count = 1
+    total = 5
+    count = 0
     with hou.InterruptableOperation(
-        "Installing Dependencies, downloading ~6Gb", open_interrupt_dialog=True
+        "Installing Dependencies, downloading ~6.3Gb", open_interrupt_dialog=True
     ) as operation:
         flags = 0
         if os.name == "nt":
@@ -91,8 +91,9 @@ def install_mlops_dependencies():
                 "Failed to download get-pip.py , please download get-pip.py manually from https://bootstrap.pypa.io/ , and place in here = "
                 + PIPINSTALLFILE
             )
-        operation.updateProgress(percentage=count / total)
+        
         count += 1
+        operation.updateProgress(percentage=count / total)
 
         # Installing pip to Houdini
         hou.ui.setStatusMessage("Installing pip to Houdini")
@@ -106,8 +107,9 @@ def install_mlops_dependencies():
         out, err = p.communicate()
         if err:
             raise hou.Error(out.decode())
-        operation.updateProgress(percentage=count / total)
+
         count += 1
+        operation.updateProgress(percentage=count / total)
 
         dependencies_dir = os.path.normpath(
             os.path.join(
@@ -122,9 +124,24 @@ def install_mlops_dependencies():
                 f"Please close Houdini and delete {dependencies_dir}\nAfter deleting the specified folder restart Houdini and install dependencies again."
             )
 
+        pip_install(["setuptools"], False, True)
+
         hou.ui.setStatusMessage("Installing requirements.txt")
         pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
         count += 1
+        operation.updateProgress(percentage=count / total)
+
+        # hou.ui.setStatusMessage("Installing requirements_binary.txt")
+        # pip_install(hou.text.expandString("$MLOPS/requirements_binary.txt"), True, True)
+        # count += 1
+        # operation.updateProgress(percentage=count / total)
+
+        # hou.ui.setStatusMessage("Installing requirements_extra.txt")
+        # pip_install(hou.text.expandString("$MLOPS/requirements_extra.txt"), True, True)
+        # count += 1
+        # operation.updateProgress(percentage=count / total)
+
+        shutil.rmtree(os.path.join(PIP_FOLDER, "temp"))
 
     # Informing user about the change
     hou.ui.displayMessage(
@@ -213,6 +230,34 @@ def log_tensorboard_geometry(root, run, name, step, geometry, render_faces=False
     writer.add_mesh(tag=name, vertices=[vertices], colors=colors, faces=faces, global_step=step)
     writer.flush()
 
+def download_gdrive_file_to_folder(url, output):
+    import gdown
+    os.makedirs(os.path.dirname(output), exist_ok=True)
+    gdown.download(url, output, quiet=False, use_cookies=False)
+
+def download_generic_file(url, output):
+    os.makedirs(os.path.dirname(output), exist_ok=True)
+    with request.urlopen(url) as response:
+        with open(output, 'wb') as file:
+            file.write(response.read())
+
+def parse_args_from_node_parms(args, node):
+    type_mapping = {
+        int: lambda _parm: _parm.evalAsInt(),
+        str: lambda _parm: _parm.evalAsString(),
+        float: lambda _parm: _parm.evalAsFloat(),
+        bool: lambda _parm: bool(_parm.evalAsInt()),
+        type(None): lambda _parm: _parm.evalAsString()
+    }
+
+    for parm_name, default_value in vars(args).items():
+        arg_parm = node.parm(parm_name)
+        arg_type = type(default_value)
+        if arg_parm and (arg_type in type_mapping):
+            parse_func = type_mapping[arg_type]
+            args.__dict__[parm_name] = parse_func(arg_parm)
+
+    return args
 
 def return_downloaded_checkpoints(
     root="$MLOPS_MODELS", subfolder="", replace_sign="-_-"
@@ -267,9 +312,9 @@ def check_mlops_version():
 
 
 def ensure_huggingface_model_local(
-    model_name, model_path, cache_only=False, model_type="stablediffusion"
+    model_name, model_path, cache_only=False, model_type="stablediffusion/StableDiffusionPipeline"
 ):
-    from diffusers import StableDiffusionPipeline
+    from sdpipeline import pipelines_lookup
     from diffusers.schedulers.scheduling_utils import SCHEDULER_CONFIG_NAME
     from diffusers.utils import CONFIG_NAME, ONNX_WEIGHTS_NAME, WEIGHTS_NAME
     from huggingface_hub import snapshot_download
@@ -277,6 +322,7 @@ def ensure_huggingface_model_local(
     path = hou.text.expandString(
         os.path.join(model_path, model_name.replace("/", "-_-"))
     )
+    path = os.path.normpath(path)
 
     if os.path.isdir(model_name):
         return model_name
@@ -295,16 +341,24 @@ def ensure_huggingface_model_local(
 
     model_name = model_name.replace("-_-", "/")
     allow_patterns = ["*.json", "*.txt"]
-    ignore_patterns = ["*.msgpack", "*.safetensors", "*.ckpt"]
+    ignore_patterns = []
+
+    def unpack_values(data):
+        a, *remainder = data.split("/")
+        b = remainder[0] if remainder else "StableDiffusionPipeline"
+        return a, b
+
+    model_type, pipeline = unpack_values(model_type)
 
     if model_type == "stablediffusion":
         try:
-            config_dict = StableDiffusionPipeline.load_config(
+            config_dict = pipelines_lookup.pipelines[pipeline].load_config(
                 model_name, resume_download=True, force_download=False
             )
             folder_names = [k for k in config_dict.keys() if not k.startswith("_")]
             allow_patterns += [os.path.join(k, "*") for k in folder_names]
-            allow_patterns.append(StableDiffusionPipeline.config_name)
+            allow_patterns.append(pipelines_lookup.pipelines[pipeline].config_name)
+            ignore_patterns += ["*.onnx"]
         except:
             pass
         allow_patterns += [
@@ -320,6 +374,7 @@ def ensure_huggingface_model_local(
         allow_patterns.append("*")
         ignore_patterns = []
 
+    os.makedirs(path, exist_ok=True)
     snapshot_download(
         repo_id=model_name,
         local_dir=path,
@@ -331,12 +386,24 @@ def ensure_huggingface_model_local(
     )
     return path.replace("\\", "/")
 
+def move_all(src, dst):
 
-def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+
+    for item in os.listdir(src):
+        source_item = os.path.join(src, item)
+        destination_item = os.path.join(dst, item)
+
+        if not os.path.exists(destination_item):
+            shutil.move(source_item, dst)
+
+
+def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False, constraints_file=None):
     flags = 0
     if os.name == "nt":
         flags = subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP
-    cmd = ["hython", "-m", "pip", "install", "--target", PIP_FOLDER]
+    cmd = ["hython", "-m", "pip", "install", "--target", os.path.join(PIP_FOLDER, "temp")]
 
     if upgrade:
         cmd.append("--upgrade")
@@ -346,6 +413,10 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
     else:
         cmd.append("-r")
         cmd.append(dependencies)
+
+    if constraints_file:
+        cmd.append("-c")
+        cmd.append(constraints_file)
 
     env = os.environ.copy()
     if "PYTHONPATH" in env:
@@ -363,6 +434,8 @@ def pip_install(dependencies, dep_is_txt=False, upgrade=False, verbose=False):
     if res[1] != "" and p.returncode != 0:
         raise hou.Error(res[1].decode())
 
+    move_all(os.path.join(PIP_FOLDER, "temp"), PIP_FOLDER)
+
 
 class MLOPSCheckpointDownloader(QtWidgets.QDialog):
     def __init__(self, parent):
@@ -377,8 +450,9 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
     def on_accept(self):
         model_name = self.model_path_field.text()
         download_dir = hou.text.expandString(self.download_directory_field.text())
+        model_type = self.model_type_field.text()
 
-        ensure_huggingface_model_local(model_name, download_dir)
+        ensure_huggingface_model_local(model_name, download_dir, model_type=model_type)
         hou.ui.displayMessage(
             f"You have successfully downloaded or updated the {model_name} model!",
             buttons=("OK",),
@@ -414,8 +488,15 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
         layout_model = QtWidgets.QHBoxLayout()
         model_path_label = QtWidgets.QLabel("Model Name: ")
         self.model_path_field = QtWidgets.QLineEdit("runwayml/stable-diffusion-v1-5")
+
+        layout_type = QtWidgets.QHBoxLayout()
+        model_type_label = QtWidgets.QLabel("Model Type: ")
+        self.model_type_field = QtWidgets.QLineEdit("stablediffusion/StableDiffusionPipeline")
+
         layout_model.addWidget(model_path_label)
         layout_model.addWidget(self.model_path_field)
+        layout_type.addWidget(model_type_label)
+        layout_type.addWidget(self.model_type_field)
 
         layout_browse = QtWidgets.QHBoxLayout()
         download_path_label = QtWidgets.QLabel("Download Directory: ")
@@ -429,6 +510,7 @@ class MLOPSCheckpointDownloader(QtWidgets.QDialog):
         layout_browse.addWidget(self.dir_button)
 
         layout.addLayout(layout_model)
+        layout.addLayout(layout_type)
         layout.addLayout(layout_browse)
 
         buttonlayout = QtWidgets.QHBoxLayout()

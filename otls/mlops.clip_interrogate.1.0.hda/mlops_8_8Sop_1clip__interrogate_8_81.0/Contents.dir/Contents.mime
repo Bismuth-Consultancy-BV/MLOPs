@@ -261,7 +261,7 @@ import mlops_image_utils
 import mlops_utils
 from textpipeline import clip_interrogate
 
-from imp import reload
+from importlib import reload
 reload(mlops_image_utils)
 reload(clip_interrogate)
 reload(mlops_utils)

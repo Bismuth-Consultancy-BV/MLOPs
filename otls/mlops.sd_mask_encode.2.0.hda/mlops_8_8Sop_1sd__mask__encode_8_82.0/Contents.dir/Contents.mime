@@ -143,7 +143,7 @@ invert = node.parent().parm(\"invert\").evalAsInt()
 
 ######## IMAGE DECODER NODE ######## 
 from sdpipeline import mask_encode      
-from imp import reload   
+from importlib import reload   
 reload(mask_encode)    
  
 ATTR_LATENTS = mask_encode.run(mask, latentwidth, latentheight, bool(invert)).flatten()

@@ -32,28 +32,26 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -3.80142 0.114185
-connectornextid 3
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+position -2.40098 -3.37841
+connectornextid 2
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
+1 "output1"
 }
 inputsNamed3
 {
-1 	sd_tokenizer2 1 1 "input1"
-2 	sd_tokenizer1 1 1 "input2"
+0 	null1 1 1 "input1"
 }
 inputs
 {
-0 	sd_tokenizer2 0 1
-1 	sd_tokenizer1 0 1
+0 	null1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Paul@M16AMTA
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -134,7 +132,7 @@ python	[ 0	locks=0 ]	(	"import numpy
 from sdpipeline import text_encoder
 import mlops_utils
 import os
-from imp import reload 
+from importlib import reload 
 reload(text_encoder)
 
 # Input Geometry
@@ -157,16 +155,22 @@ model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$M
 text_embeddings = text_encoder.run(positive_tokens[0], negative_tokens[0], device, model_path, local_cache_only=cache_only)
 conditional_embedding = text_embeddings[\"conditional_embedding\"]
 unconditional_embedding = text_embeddings[\"unconditional_embedding\"]
+conditional_embedding_pooled = text_embeddings[\"conditional_embedding_pooled\"]
+unconditional_embedding_pooled = text_embeddings[\"unconditional_embedding_pooled\"]
 
 # Export
-geo.addAttrib(hou.attribType.Global, \"tensor_dimension\", [1,1], create_local_variable=False) 
+geo.addAttrib(hou.attribType.Global, \"tensor_dimension\", [0,0,0], create_local_variable=False)
+geo.addAttrib(hou.attribType.Global, \"pooled_tensor_dimension\", [0,0], create_local_variable=False) 
 
 for i in conditional_embedding:
     pt = geo.createPoint()
 
-geo.setPointFloatAttribValues(\"conditional_embedding\", tuple(map(float, conditional_embedding))) 
-geo.setPointFloatAttribValues(\"unconditional_embedding\", tuple(map(float, unconditional_embedding))) 
-geo.setGlobalAttribValue(\"tensor_dimension\", text_embeddings[\"tensor_shape\"]) "	)
+geo.setPointFloatAttribValues(\"conditional_embedding\", tuple(conditional_embedding))
+geo.setPointFloatAttribValues(\"unconditional_embedding\", tuple(unconditional_embedding))
+geo.setPointFloatAttribValues(\"conditional_embedding_pooled\", tuple(conditional_embedding_pooled))
+geo.setPointFloatAttribValues(\"unconditional_embedding_pooled\", tuple(unconditional_embedding_pooled))
+geo.setGlobalAttribValue(\"tensor_dimension\", text_embeddings[\"tensor_shape\"])
+geo.setGlobalAttribValue(\"pooled_tensor_dimension\", text_embeddings[\"pooled_tensor_shape\"]) "	)
 maintainstate	[ 0	locks=0 ]	(	"off"	)
 }
 
@@ -194,7 +198,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.00763 2.98807
+position -0.811576 3.2992
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -202,11 +206,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	text_encoder 0 1 "input1"
+0 	attribcopy2 1 1 "input1"
 }
 inputs
 {
-0 	text_encoder 0 1
+0 	attribcopy2 0 1
 }
 stat
 {
@@ -289,7 +293,7 @@ version 0.8
 group	[ 0	locks=0 ]	(	""	)
 grouptype	[ 0	locks=0 ]	(	"guess"	)
 encodenames	[ 0	locks=0 ]	(	"off"	)
-numattr	[ 0	locks=0 ]	(	1	)
+numattr	[ 0	locks=0 ]	(	2	)
 enable1	[ 0	locks=0 ]	(	"on"	)
 name1	[ 0	locks=0 ]	(	conditional_embedding	)
 existing1	[ 0	locks=0 ]	(	"better"	)
@@ -307,6 +311,23 @@ uselocal1	[ 0	locks=0 ]	(	"on"	)
 value1v	[ 0	locks=0 ]	(	0	0	0	0	)
 string1	[ 0	locks=0 ]	(	""	)
 numattr_spacerparm1	[ 0	locks=0 ]	(	)
+enable2	[ 0	locks=0 ]	(	"on"	)
+name2	[ 0	locks=0 ]	(	conditional_embedding_pooled	)
+existing2	[ 0	locks=0 ]	(	"better"	)
+createvarmap2	[ 0	locks=0 ]	(	"off"	)
+varname2	[ 0	locks=0 ]	(	""	)
+class2	[ 0	locks=0 ]	(	"point"	)
+savetoinfo2	[ 0	locks=0 ]	(	"off"	)
+type2	[ 0	locks=0 ]	(	"float"	)
+typeinfo2	[ 0	locks=0 ]	(	"guess"	)
+precision2	[ 0	locks=0 ]	(	"auto"	)
+size2	[ 0	locks=0 ]	(	1	)
+default2v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues2	[ 0	locks=0 ]	(	"on"	)
+uselocal2	[ 0	locks=0 ]	(	"on"	)
+value2v	[ 0	locks=0 ]	(	0	0	0	0	)
+string2	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm2	[ 0	locks=0 ]	(	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -428,7 +449,7 @@ version 0.8
 group	[ 0	locks=0 ]	(	""	)
 grouptype	[ 0	locks=0 ]	(	"guess"	)
 encodenames	[ 0	locks=0 ]	(	"off"	)
-numattr	[ 0	locks=0 ]	(	1	)
+numattr	[ 0	locks=0 ]	(	2	)
 enable1	[ 0	locks=0 ]	(	"on"	)
 name1	[ 0	locks=0 ]	(	unconditional_embedding	)
 existing1	[ 0	locks=0 ]	(	"better"	)
@@ -446,6 +467,23 @@ uselocal1	[ 0	locks=0 ]	(	"on"	)
 value1v	[ 0	locks=0 ]	(	0	0	0	0	)
 string1	[ 0	locks=0 ]	(	""	)
 numattr_spacerparm1	[ 0	locks=0 ]	(	)
+enable2	[ 0	locks=0 ]	(	"on"	)
+name2	[ 0	locks=0 ]	(	unconditional_embedding_pooled	)
+existing2	[ 0	locks=0 ]	(	"better"	)
+createvarmap2	[ 0	locks=0 ]	(	"off"	)
+varname2	[ 0	locks=0 ]	(	""	)
+class2	[ 0	locks=0 ]	(	"point"	)
+savetoinfo2	[ 0	locks=0 ]	(	"off"	)
+type2	[ 0	locks=0 ]	(	"float"	)
+typeinfo2	[ 0	locks=0 ]	(	"guess"	)
+precision2	[ 0	locks=0 ]	(	"auto"	)
+size2	[ 0	locks=0 ]	(	1	)
+default2v	[ 0	locks=0 ]	(	0	0	0	0	)
+writevalues2	[ 0	locks=0 ]	(	"on"	)
+uselocal2	[ 0	locks=0 ]	(	"on"	)
+value2v	[ 0	locks=0 ]	(	0	0	0	0	)
+string2	[ 0	locks=0 ]	(	""	)
+numattr_spacerparm2	[ 0	locks=0 ]	(	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -985,10 +1023,160 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy1.init"
+Content-Type: text/plain
+
+type = attribcopy
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy1.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -1.00763 5.73375
+connectornextid 3
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	text_encoder 0 1 "input1"
+2 	switchif3 2 1 "input2"
+}
+inputs
+{
+0 	text_encoder 0 1
+1 	switchif3 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy1.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+srcgroup	[ 0	locks=0 ]	(	""	)
+srcgrouptype	[ 0	locks=0 ]	(	"points"	)
+destgroup	[ 0	locks=0 ]	(	""	)
+destgrouptype	[ 0	locks=0 ]	(	"points"	)
+matchbyattribute	[ 0	locks=0 ]	(	"off"	)
+attributetomatch	[ 0	locks=0 ]	(	piece	)
+attrib	[ 0	locks=0 ]	(	"otherattrib"	)
+attribname	[ 0	locks=0 ]	(	prompt	)
+copyp	[ 0	locks=0 ]	(	"on"	)
+usenewname	[ 0	locks=0 ]	(	"off"	)
+newname	[ 0	locks=0 ]	(	""	)
+class	[ 0	locks=0 ]	(	"guess"	)
+copyvariable	[ 0	locks=0 ]	(	"on"	)
+copydata	[ 0	locks=0 ]	(	"on"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy1.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy2.init"
+Content-Type: text/plain
+
+type = attribcopy
+matchesdef = 1
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy2.def"
+Content-Type: text/plain
+
+sopflags sopflags = 
+comment ""
+position -0.815026 4.64603
+connectornextid 3
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+outputsNamed3
+{
+1 "output1"
+}
+inputsNamed3
+{
+0 	attribcopy1 1 1 "input1"
+2 	switchif4 2 1 "input2"
+}
+inputs
+{
+0 	attribcopy1 0 1
+1 	switchif4 0 1
+}
+stat
+{
+  create -1
+  modify -1
+  author Paul@DESKTOP-PAFFS1R
+  access 0777
+}
+color UT_Color RGB 0.8 0.8 0.8 
+delscript ""
+exprlanguage hscript
+end
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy2.parm"
+Content-Type: text/plain
+
+{
+version 0.8
+srcgroup	[ 0	locks=0 ]	(	""	)
+srcgrouptype	[ 0	locks=0 ]	(	"points"	)
+destgroup	[ 0	locks=0 ]	(	""	)
+destgrouptype	[ 0	locks=0 ]	(	"points"	)
+matchbyattribute	[ 0	locks=0 ]	(	"off"	)
+attributetomatch	[ 0	locks=0 ]	(	piece	)
+attrib	[ 0	locks=0 ]	(	"otherattrib"	)
+attribname	[ 0	locks=0 ]	(	prompt	)
+copyp	[ 0	locks=0 ]	(	"on"	)
+usenewname	[ 0	locks=0 ]	(	"on"	)
+newname	[ 0	locks=0 ]	(	negative_prompt	)
+class	[ 0	locks=0 ]	(	"guess"	)
+copyvariable	[ 0	locks=0 ]	(	"on"	)
+copydata	[ 0	locks=0 ]	(	"on"	)
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
+Content-Disposition: attachment; filename="hdaroot/attribcopy2.userdata"
+Content-Type: text/plain
+
+{
+	"___Version___":{
+		"type":"string",
+		"value":"___EXTERNAL___"
+	}
+}
+
+--HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-12
+14
 text_encoder
 output0
 attribcreate1
@@ -1001,6 +1189,8 @@ error1
 switchif3
 error2
 switchif4
+attribcopy1
+attribcopy2
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot.net"

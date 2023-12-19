@@ -1,0 +1,226 @@
+# Dialog script for mlops::openpose_primitive_create::1.0 automatically generated
+
+{
+    name	mlops::openpose_primitive_create::1.0
+    script	arjan::dev::hos_PoseLandmarkPrimitve::1.0
+    label	"MLOPs OpenPose Primitive Create"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Sub-Network Input #1"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+
+    parm {
+        name    "shape"
+        label   "Shape"
+        type    ordinal
+        default { "0" }
+        menu {
+            "openskeleton"  "Openpose Skeleton"
+            "openhand"      "Openpose Hand"
+            "openface"      "Openpose face"
+            "mediaface"     "mediapipe Face"
+        }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupsimple {
+        name    "poseskeleton"
+        label   "poseskeleton"
+        disablewhentab "{ shape != openskeleton }"
+        hidewhentab "{ shape != openskeleton }"
+
+        parm {
+            name    "PixelWidth"
+            label   "Pixelwidth"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "PointRadius"
+            label   "Pointradius"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "ramp"
+            label   "Rounded"
+            type    toggle
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "renderLines"
+            label   "Renderlines"
+            type    toggle
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "RenderPoints"
+            label   "Renderpoints"
+            type    toggle
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "posehand"
+        label   "posehand"
+        disablewhentab "{ shape != openhand }"
+        hidewhentab "{ shape != openhand }"
+
+        parm {
+            name    "orientation"
+            label   "Orientation"
+            type    ordinal
+            default { "0" }
+            menu {
+                "right" "Right"
+                "left"  "Left"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "PixelWidth2"
+            label   "Pixelwidth"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "PointRadius2"
+            label   "Pointradius"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "renderLines2"
+            label   "Renderlines"
+            type    toggle
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "RenderPoints2"
+            label   "Renderpoints"
+            type    toggle
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "openface"
+        label   "openface"
+        disablewhentab "{ shape != openface }"
+        hidewhentab "{ shape != openface }"
+
+        parm {
+            name    "PixelWidth3"
+            label   "Pixelwidth"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "PointRadius3"
+            label   "Pointradius"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "renderLines3"
+            label   "Renderlines"
+            type    toggle
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "RenderPoints3"
+            label   "Renderpoints"
+            type    toggle
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "mediaface"
+        label   "mediaface"
+        disablewhentab "{ shape != mediaface }"
+        hidewhentab "{ shape != mediaface }"
+
+        parm {
+            name    "PixelWidth4"
+            label   "Pixelwidth"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "PointRadius4"
+            label   "Pointradius"
+            type    integer
+            default { "2" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "renderLines4"
+            label   "Renderlines"
+            type    toggle
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "RenderPoints4"
+            label   "Renderpoints"
+            type    toggle
+            default { "0" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

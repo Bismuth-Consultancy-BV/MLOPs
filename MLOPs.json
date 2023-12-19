@@ -5,7 +5,7 @@
     "enable": true,
     "env": [
         {
-            "MLOPS": "C:/Users/Mo/Documents/GitHub/MLOPs"
+            "MLOPS": "H:/Github/MLOPS/MLOPs"
         },
         {
             "MLOPS_MODELS": "$MLOPS/data/models/"
@@ -20,10 +20,16 @@
             "HUGGINGFACE_HUB_CACHE": "$MLOPS_MODELS/cache/"
         },
         {
-            "PYTHONPATH" : "$MLOPS/data/dependencies/python/"
+            "PYTHONPATH" : 
+            {
+
+                "value": ["$MLOPS/data/dependencies/python/", "$MLOPS/scripts/python/characterpipeline/AlphaPose",
+                "$MLOPS/scripts/python/characterpipeline/MotionBert"],
+                "method": "prepend"
+            }
         },
         {
-            "MLOPS_VERSION": "2.0"
+            "MLOPS_VERSION": "3.0"
         }
     ]
 }
