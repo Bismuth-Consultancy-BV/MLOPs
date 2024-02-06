@@ -4,11 +4,12 @@ Path:         oplib:/mlops::Sop/extract_alphapose::1.0?mlops::Sop/extract_alphap
 Icon:         $MLOPS/help/icons/mlops.svg
 Table:        Sop
 License:      
-Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+Extra:        inputcolors='0 ' outputcolors='2 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' visibleoutputs=2 
 User:         
 Inputs:       0 to 0
+Outputs:      2
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Mon Nov  6 14:41:26 2023
+Modified:     Wed Nov  8 21:17:39 2023
 

@@ -4,11 +4,11 @@ Path:         oplib:/mlops::Sop/camera_to_points::2.0?mlops::Sop/camera_to_point
 Icon:         $MLOPS/help/icons/MLOPs_ICONS_SS_XFX_CAMERA TO POINTS.svg
 Table:        Sop
 License:      
-Extra:        inputcolors='0 ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
 User:         
-Inputs:       0 to 0
+Inputs:       0 to 1
 Subnet:       true
 Python:       false
 Empty:        false
-Modified:     Sun Nov  5 16:43:01 2023
+Modified:     Sun Nov 12 00:57:58 2023
 
