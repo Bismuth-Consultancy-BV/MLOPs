@@ -1,0 +1,14 @@
+Operator:     mlops::alphapose_filter_apply::1.0
+Label:        MLOPs AlphaPose Filter Apply
+Path:         oplib:/mlops::Sop/alphapose_filter_apply::1.0?mlops::Sop/alphapose_filter_apply::1.0
+Icon:         $MLOPs/help/icons/mlops.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       1 to 1
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed Nov  8 20:47:13 2023
+

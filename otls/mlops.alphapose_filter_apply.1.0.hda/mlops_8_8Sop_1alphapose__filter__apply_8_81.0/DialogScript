@@ -1,0 +1,18 @@
+# Dialog script for mlops::alphapose_filter_apply::1.0 automatically generated
+
+{
+    name	mlops::alphapose_filter_apply::1.0
+    script	mlops::alphapose_filter_apply::1.0
+    label	"MLOPs AlphaPose Filter Apply"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"AlphaPose Isolate"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	AlphaPose
+
+}

@@ -1,0 +1,14 @@
+Operator:     mlops::alphapose_isolate_by_volume::1.0
+Label:        MLOPs AlphaPose Isolate by Volume
+Path:         oplib:/mlops::Sop/alphapose_isolate_by_volume::1.0?mlops::Sop/alphapose_isolate_by_volume::1.0
+Icon:         $MLOPs/help/icons/mlops.svg
+Table:        Sop
+License:      
+Extra:        inputcolors='3 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' outputcolors='1 "RGB 0.700195 0.700195 0.700195" ' 
+User:         
+Inputs:       3 to 3
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Wed Nov  8 20:47:21 2023
+

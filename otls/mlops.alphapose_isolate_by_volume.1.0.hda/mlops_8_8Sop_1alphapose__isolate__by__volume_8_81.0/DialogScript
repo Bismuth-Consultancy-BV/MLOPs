@@ -1,0 +1,17 @@
+# Dialog script for mlops::alphapose_isolate_by_volume::1.0 automatically generated
+
+{
+    name	mlops::alphapose_isolate_by_volume::1.0
+    script	mlops::alphapose_isolate_by_volume::1.0
+    label	"MLOPs AlphaPose Isolate by Volume"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"AlphaPose Output"
+    inputlabel	2	"AlphaPose Geometry"
+    inputlabel	3	"Volume Geometry"
+    inputlabel	4	"Sub-Network Input #4"
+
+}
