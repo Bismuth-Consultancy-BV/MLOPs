@@ -237,7 +237,10 @@ def download_gdrive_file_to_folder(url, output):
 
 def download_generic_file(url, output):
     os.makedirs(os.path.dirname(output), exist_ok=True)
-    with request.urlopen(url) as response:
+    context = ssl.create_default_context()
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+    with request.urlopen(url, context=context) as response:
         with open(output, 'wb') as file:
             file.write(response.read())
 
