@@ -63,7 +63,8 @@ https://github.com/Ambrosiussen/HalpeCOCOAPI/releases/download/binaries/halpecoc
 
 # Alphapose
 #AlphaPose @ git+https://github.com/Ambrosiussen/AlphaPose
-https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries_latest/alphapose-0.5.0_-py3-none-any.whl
+https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries_latest/alphapose-0.5.0_-py3-none-any.whl; platform_system == "Windows"
+https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries_latest/alphapose-0.5.0+ba80620-cp310-cp310-linux_x86_64.whl; platform_system == "Linux"
 
 # hybrik
 #hybrik @ git+https://github.com/Ambrosiussen/HybrIK
