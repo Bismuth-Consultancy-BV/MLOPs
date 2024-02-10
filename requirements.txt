@@ -54,8 +54,9 @@ bitsandbytes==0.41.1
 https://github.com/Ambrosiussen/cocoapi/releases/download/binaries/pycocotools-2.0.7-cp310-cp310-win_amd64.whl; platform_system == "Windows"
 
 # cython-bbox
-#cython-bbox @ git+https://github.com/Ambrosiussen/cython_bbox; platform_system == "Linux"
+#cython-bbox @ git+https://github.com/Ambrosiussen/cython_bbox
 https://github.com/Ambrosiussen/cython_bbox/releases/download/binaries/cython_bbox-0.1.3-cp310-cp310-win_amd64.whl; platform_system == "Windows"
+https://github.com/Ambrosiussen/cython_bbox/releases/download/binaries/cython_bbox-0.1.3-cp310-cp310-linux_x86_64.whl; platform_system == "Linux"
 
 # halpecocotools
 #halpecocotools @ git+https://github.com/Ambrosiussen/HalpeCOCOAPI#subdirectory=PythonAPI; platform_system == "Linux"
