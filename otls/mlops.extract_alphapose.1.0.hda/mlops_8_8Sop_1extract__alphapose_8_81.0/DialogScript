@@ -44,13 +44,6 @@
             }
             parmtag { "script_callback_language" "python" }
         }
-        parm {
-            name    "visualize"
-            label   "Visualize"
-            type    toggle
-            default { "0" }
-            parmtag { "script_callback_language" "python" }
-        }
     }
 
     groupsimple {
