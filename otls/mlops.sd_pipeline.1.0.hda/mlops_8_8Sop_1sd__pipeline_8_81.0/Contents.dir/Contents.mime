@@ -32,7 +32,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -1.57026 0.274837
+position -1.52965 0.566639
 connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -48,7 +48,7 @@ stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Paul@DESKTOP-GB4I42C
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -156,7 +156,7 @@ Content-Type: text/plain
 Content-Disposition: attachment; filename="hdaroot/sd_scheduler1.init"
 Content-Type: text/plain
 
-type = mlops::sd_scheduler::2.0
+type = mlops::sd_scheduler::3.0
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -166,7 +166,7 @@ Content-Type: text/plain
 sopflags sopflags = 
 comment ""
 position 4.08932 2.46902
-connectornextid 5
+connectornextid 4
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
@@ -175,22 +175,20 @@ outputsNamed3
 inputsNamed3
 {
 1 	sd_text_encoder1 0 1 "input1"
-2 	sd_latent_noise_generate1 0 1 "input2"
-3 	switchif1 2 1 "input3"
-4 	switchif2 2 1 "input4"
+2 	switchif1 2 1 "input2"
+3 	switchif2 2 1 "input3"
 }
 inputs
 {
 0 	sd_text_encoder1 0 1
-1 	sd_latent_noise_generate1 0 1
-2 	switchif1 0 1
-3 	switchif2 0 1
+1 	switchif1 0 1
+2 	switchif2 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Paul@DESKTOP-GB4I42C
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -203,18 +201,6 @@ Content-Disposition: attachment; filename="hdaroot/sd_scheduler1.chn"
 Content-Type: text/plain
 
 {
-    channel cache_only {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 value = 1 1 expr = ch(\"../sd_tokenizer2/cache_only\") }
-    }
-    channel device {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../sd_text_encoder1/device\") }
-    }
     channel scheduler {
       lefttype = extend
       righttype = extend
@@ -239,11 +225,32 @@ Content-Type: text/plain
       flags = 0
       segment { length = 0 value = 0.90000000000000002 0.90000000000000002 expr = ch(\"../guidance_strength\") }
     }
-    channel seamless {
+    channel width {
+      lefttype = extend
+      righttype = extend
+      default = 512
+      flags = 0
+      segment { length = 0 value = 512 512 expr = ch(\"../width\") }
+    }
+    channel height {
+      lefttype = extend
+      righttype = extend
+      default = 512
+      flags = 0
+      segment { length = 0 value = 512 512 expr = ch(\"../height\") }
+    }
+    channel seed {
+      lefttype = extend
+      righttype = extend
+      default = 44
+      flags = 0
+      segment { length = 0 value = 44 44 expr = ch(\"../seed\") }
+    }
+    channel tiling {
       lefttype = extend
       righttype = extend
       flags = 0
-      segment { length = 0 expr = ch(\"../seamless\") }
+      segment { length = 0 expr = ch(\"../tiling\") }
     }
   }
 
@@ -253,16 +260,15 @@ Content-Type: text/plain
 
 {
 version 0.8
-folder0	[ 0	locks=0	autoscope=0 ]	(	0	)
-cache_only	[ 0	locks=0	autoscope=0 ]	(	[ cache_only	1 ] 	)
-model	[ 0	locks=0	autoscope=0 ]	(	`chs(\"../sd_tokenizer2/model\")`	)
 folder1	[ 0	locks=0	autoscope=0 ]	(	0	)
-device	[ 0	locks=0	autoscope=0 ]	(	[ device	0 ] 	)
-scheduler	[ 0	locks=0	autoscope=0 ]	(	[ scheduler	0 ] 	)
+width	[ 8	locks=0	autoscope=0 ]	(	[ width	512 ] 	)
+height	[ 8	locks=0	autoscope=0 ]	(	[ height	512 ] 	)
 inference_steps	[ 0	locks=0	autoscope=0 ]	(	[ inference_steps	20 ] 	)
 cfg_scale	[ 0	locks=0	autoscope=0 ]	(	[ cfg_scale	7.5 ] 	)
-guidance_strength	[ 0	locks=0	autoscope=0 ]	(	[ guidance_strength	0.80000000000000004 ] 	)
-seamless	[ 0	locks=0	autoscope=0 ]	(	[ seamless	0 ] 	)
+guidance_strength	[ 0	locks=0	autoscope=0 ]	(	[ guidance_strength	0.8 ] 	)
+seed	[ 8	locks=0	autoscope=0 ]	(	[ seed	44 ] 	)
+scheduler	[ 0	locks=0	autoscope=0 ]	(	[ scheduler	0 ] 	)
+tiling	[ 0	locks=0	autoscope=0 ]	(	[ tiling	0 ] 	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -277,103 +283,10 @@ Content-Type: text/plain
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_latent_noise_generate1.init"
-Content-Type: text/plain
-
-type = mlops::sd_latent_noise_generate::2.0
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_latent_noise_generate1.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 5.09712 4.51977
-connectornextid 1
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-0 "output1"
-}
-inputsNamed3
-{
-}
-inputs
-{
-}
-stat
-{
-  create -1
-  modify -1
-  author Paul@DESKTOP-PAFFS1R
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_latent_noise_generate1.chn"
-Content-Type: text/plain
-
-{
-    channel device {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../sd_text_encoder1/device\") }
-    }
-    channel height {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 value = 512 512 expr = ch(\"../height\") }
-    }
-    channel width {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 value = 512 512 expr = ch(\"../width\") }
-    }
-    channel seed {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 value = 1234 1234 expr = ch(\"../seed\") }
-    }
-  }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_latent_noise_generate1.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-folder0	[ 0	locks=0	autoscope=0 ]	(	0	)
-device	[ 0	locks=0	autoscope=0 ]	(	[ device	0 ] 	)
-width	[ 0	locks=0	autoscope=0 ]	(	[ width	512 ] 	)
-height	[ 0	locks=0	autoscope=0 ]	(	[ height	512 ] 	)
-seed	[ 0	locks=0	autoscope=0 ]	(	[ seed	44 ] 	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_latent_noise_generate1.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":""
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/sd_solver1.init"
 Content-Type: text/plain
 
-type = mlops::sd_solver::2.0
+type = mlops::sd_solver::3.0
 matchesdef = 1
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
@@ -384,7 +297,7 @@ sopflags sopflags =
 comment ""
 position 4.08932 1.46902
 connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 0 "output1"
@@ -401,7 +314,7 @@ stat
 {
   create -1
   modify -1
-  author Paul@DESKTOP-PAFFS1R
+  author Paul@DESKTOP-GB4I42C
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -438,11 +351,18 @@ Content-Type: text/plain
       flags = 0
       segment { length = 0 expr = ch(\"../sd_text_encoder1/device\") }
     }
-    channel attentionslicing {
+    channel pipeline {
       lefttype = extend
       righttype = extend
       flags = 0
-      segment { length = 0 expr = ch(\"../attentionslicing\") }
+      segment { length = 0 expr = ch(\"../pipeline\") }
+    }
+    channel name {
+      lefttype = extend
+      righttype = extend
+      defaultString = \"\"
+      flags = 0
+      segment { length = 0 expr = chs(\"../name\") }
     }
   }
 
@@ -460,94 +380,12 @@ loraweights	[ 0	locks=0	autoscope=0 ]	(	[ loraweights	"" ] 	)
 lorascale	[ 0	locks=0	autoscope=0 ]	(	[ lorascale	1 ] 	)
 folder1	[ 0	locks=0	autoscope=0 ]	(	0	)
 device	[ 0	locks=0	autoscope=0 ]	(	[ device	0 ] 	)
-attentionslicing	[ 0	locks=0	autoscope=0 ]	(	[ attentionslicing	0 ] 	)
+pipeline	[ 0	locks=0	autoscope=0 ]	(	[ pipeline	0 ] 	)
+name	[ 0	locks=0	autoscope=0 ]	(	[ name	"" ] 	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/sd_solver1.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":""
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_decoder1.init"
-Content-Type: text/plain
-
-type = mlops::sd_image_decoder::2.0
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_decoder1.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 4.08932 0.46902
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-0 "output1"
-}
-inputsNamed3
-{
-1 	sd_solver1 0 1 "input1"
-}
-inputs
-{
-0 	sd_solver1 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author Paul@DESKTOP-PAFFS1R
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_decoder1.chn"
-Content-Type: text/plain
-
-{
-    channel cache_only {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 value = 1 1 expr = ch(\"../sd_tokenizer2/cache_only\") }
-    }
-    channel device {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../sd_text_encoder1/device\") }
-    }
-  }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_decoder1.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-folder0	[ 0	locks=0	autoscope=0 ]	(	0	)
-cache_only	[ 0	locks=0	autoscope=0 ]	(	[ cache_only	1 ] 	)
-model	[ 0	locks=0	autoscope=0 ]	(	`chs(\"../sd_tokenizer2/model\")`	)
-folder1	[ 0	locks=0	autoscope=0 ]	(	0	)
-device	[ 0	locks=0	autoscope=0 ]	(	[ device	0 ] 	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_decoder1.userdata"
 Content-Type: text/plain
 
 {
@@ -875,7 +713,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 9.83401 7.81415
+position 6.68322 6.1118
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -961,89 +799,6 @@ gamma	[ 0	locks=0 ]	(	1	)
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
 Content-Disposition: attachment; filename="hdaroot/image_to_points1.userdata"
-Content-Type: text/plain
-
-{
-	"___Version___":{
-		"type":"string",
-		"value":""
-	}
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_encoder1.init"
-Content-Type: text/plain
-
-type = mlops::sd_image_encoder::2.0
-matchesdef = 1
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_encoder1.def"
-Content-Type: text/plain
-
-sopflags sopflags = 
-comment ""
-position 9.83401 6.45278
-connectornextid 2
-flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
-outputsNamed3
-{
-0 "output1"
-}
-inputsNamed3
-{
-1 	image_to_points1 0 1 "input1"
-}
-inputs
-{
-0 	image_to_points1 0 1
-}
-stat
-{
-  create -1
-  modify -1
-  author Paul@DESKTOP-PAFFS1R
-  access 0777
-}
-color UT_Color RGB 0.8 0.8 0.8 
-delscript ""
-exprlanguage hscript
-end
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_encoder1.chn"
-Content-Type: text/plain
-
-{
-    channel cache_only {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 value = 1 1 expr = ch(\"../sd_tokenizer2/cache_only\") }
-    }
-    channel device {
-      lefttype = extend
-      righttype = extend
-      flags = 0
-      segment { length = 0 expr = ch(\"../sd_text_encoder1/device\") }
-    }
-  }
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_encoder1.parm"
-Content-Type: text/plain
-
-{
-version 0.8
-folder0	[ 0	locks=0	autoscope=0 ]	(	0	)
-cache_only	[ 0	locks=0	autoscope=0 ]	(	[ cache_only	1 ] 	)
-model	[ 0	locks=0	autoscope=0 ]	(	`chs(\"../sd_tokenizer2/model\")`	)
-folder1	[ 0	locks=0	autoscope=0 ]	(	0	)
-device	[ 0	locks=0	autoscope=0 ]	(	[ device	0 ] 	)
-}
-
---HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY
-Content-Disposition: attachment; filename="hdaroot/sd_image_encoder1.userdata"
 Content-Type: text/plain
 
 {
@@ -1176,17 +931,17 @@ sopflags sopflags =
 comment ""
 position 4.08932 -1.42518
 connectornextid 1
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
 }
 inputsNamed3
 {
-0 	sd_image_decoder1 0 1 "input1"
+0 	sd_solver1 0 1 "input1"
 }
 inputs
 {
-0 	sd_image_decoder1 0 1
+0 	sd_solver1 0 1
 }
 stat
 {
@@ -1233,7 +988,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 9.164 4.51957
+position 4.69832 3.92415
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -1243,12 +998,12 @@ outputsNamed3
 inputsNamed3
 {
 0 	null1 0 1 "input1"
-1 	sd_image_encoder1 0 1 "input2"
+1 	image_to_points1 0 1 "input2"
 }
 inputs
 {
 0 	null1 0 1
-1 	sd_image_encoder1 0 1
+1 	image_to_points1 0 1
 }
 stat
 {
@@ -1257,7 +1012,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 1 0.7 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -1327,7 +1082,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 11.1805 5.66589
+position 9.39423 5.66589
 connectornextid 1
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -1347,7 +1102,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.6 0.7 0.77 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -1386,7 +1141,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position 12.6002 4.51957
+position 10.2681 4.18727
 connectornextid 3
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -1410,7 +1165,7 @@ stat
   author Paul@DESKTOP-PAFFS1R
   access 0777
 }
-color UT_Color RGB 0.8 1 0.7 
+color UT_Color RGB 0.8 0.8 0.8 
 delscript ""
 exprlanguage hscript
 end
@@ -1471,18 +1226,15 @@ Content-Type: text/plain
 Content-Disposition: attachment; filename="hdaroot.order"
 Content-Type: text/plain
 
-16
+13
 sd_text_encoder1
 sd_scheduler1
-sd_latent_noise_generate1
 sd_solver1
-sd_image_decoder1
 sd_prompt_create2
 sd_tokenizer2
 sd_prompt_create1
 sd_tokenizer1
 image_to_points1
-sd_image_encoder1
 image_to_points2
 output0
 switchif1

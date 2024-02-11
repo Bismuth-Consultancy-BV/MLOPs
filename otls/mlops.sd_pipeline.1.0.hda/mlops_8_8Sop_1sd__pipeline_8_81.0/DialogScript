@@ -89,7 +89,7 @@
             name    "positiveprompt"
             label   "Prompt"
             type    string
-            default { "a high-quality, detailed, and professional image" }
+            default { "a high-quality, detailed, and professional image of a bear" }
             parmtag { "autoscope" "0000000000000000" }
             parmtag { "editor" "1" }
             parmtag { "editorlines" "5" }
@@ -123,6 +123,20 @@
             parmtag { "script_callback_language" "python" }
         }
         parm {
+            name    "tiling"
+            label   "Tiling"
+            type    ordinal
+            default { "none" }
+            menu {
+                "none"  "None"
+                "x"     "Horizontal"
+                "y"     "Vertical"
+                "xy"    "Full"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
             name    "inference_steps"
             label   "Num Inference Steps"
             type    integer
@@ -149,14 +163,6 @@
             parmtag { "autoscope" "0000000000000000" }
             parmtag { "script_callback_language" "python" }
         }
-        parm {
-            name    "seamless"
-            label   "Tiling"
-            type    toggle
-            default { "off" }
-            parmtag { "autoscope" "0000000000000000" }
-            parmtag { "script_callback_language" "python" }
-        }
     }
 
     groupcollapsible {
@@ -164,10 +170,28 @@
         label   "Solver"
 
         parm {
-            name    "attentionslicing"
-            label   "Attention Slicing"
-            type    toggle
-            default { "off" }
+            name    "pipeline"
+            label   "Pipeline"
+            type    ordinal
+            joinnext
+            default { "stablediffusion" }
+            menu {
+                "stablediffusion"   "StableDiffusion - Autodetect"
+                "stablediffusionxl" "StableDiffusionXL - Autodetect"
+                "custom"            "Select Manually"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "name"
+            label   "Name"
+            type    string
+            default { "" }
+            disablewhen "{ pipeline != custom }"
+            menureplace {
+                [ "opmenu -l -a sd_solver1 name" ]
+            }
             parmtag { "autoscope" "0000000000000000" }
             parmtag { "script_callback_language" "python" }
         }
