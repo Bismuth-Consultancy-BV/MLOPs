@@ -59,8 +59,9 @@ https://github.com/Ambrosiussen/cython_bbox/releases/download/binaries/cython_bb
 https://github.com/Ambrosiussen/cython_bbox/releases/download/binaries/cython_bbox-0.1.3-cp310-cp310-linux_x86_64.whl; platform_system == "Linux"
 
 # halpecocotools
-#halpecocotools @ git+https://github.com/Ambrosiussen/HalpeCOCOAPI#subdirectory=PythonAPI; platform_system == "Linux"
+#halpecocotools @ git+https://github.com/Ambrosiussen/HalpeCOCOAPI#subdirectory=PythonAPI
 https://github.com/Ambrosiussen/HalpeCOCOAPI/releases/download/binaries/halpecocotools-0.0.0-cp310-cp310-win_amd64.whl; platform_system == "Windows"
+https://github.com/Ambrosiussen/HalpeCOCOAPI/releases/download/binaries/halpecocotools-0.0.0-cp310-cp310-linux_x86_64.whl; platform_system == "Linux"
 
 # Alphapose
 #AlphaPose @ git+https://github.com/Ambrosiussen/AlphaPose
