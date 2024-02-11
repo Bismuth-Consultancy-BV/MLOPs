@@ -10,9 +10,7 @@ import mlops_image_utils
 import hou
 from hutil.Qt import QtCore, QtGui, QtWidgets
 
-PIP_FOLDER = os.path.normpath(
-    os.path.join(hou.text.expandString("$MLOPS"), "data", "dependencies", "python")
-)
+PIP_FOLDER = hou.text.expandString("$MLOPS_PIP_FOLDER")
 
 
 def install_mlops_dependencies():
