@@ -1,11 +1,11 @@
 {
     "path": "$MLOPS",
     "load_package_once": true,
-    "version": "19.5",
+    "version": "20.0",
     "enable": true,
     "env": [
         {
-            "MLOPS": "H:/Github/MLOPS/MLOPs"
+            "MLOPS": "H:/Github/MLOPS/"
         },
         {
             "MLOPS_MODELS": "$MLOPS/data/models/"
@@ -26,8 +26,7 @@
             "PYTHONPATH" : 
             {
 
-                "value": ["$MLOPS_PIP_FOLDER", "$MLOPS/scripts/python/characterpipeline/AlphaPose",
-                "$MLOPS/scripts/python/characterpipeline/MotionBert"],
+                "value": ["$MLOPS_PIP_FOLDER", "$MLOPS/scripts/python/characterpipeline/MotionBert"],
                 "method": "prepend"
             }
         },
