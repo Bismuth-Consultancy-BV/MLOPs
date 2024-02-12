@@ -5,8 +5,8 @@ hip/backup/
 hip/out/*/
 checkpoints/*/
 data/temp/
-data/models/
-data/dependencies/
+data/**/models/
+data/**/dependencies/
 data/versions/
 
 #ignore other unimportant expanded HDA files
@@ -15,3 +15,4 @@ data/versions/
 *.createtimes
 *.modtimes
 *.local
+hip/out/

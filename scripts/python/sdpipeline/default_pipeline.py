@@ -117,7 +117,7 @@ def run(
     del controlnet_geo
 
     # Model
-    model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only)
+    model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join("$MLOPS_MODELS", "diffusers"), cache_only)
     
 
     # Delete kwargs not used by pipeline
@@ -179,7 +179,7 @@ def run(
     # LORA
     lora_kwargs = {}
     if lora_weights["model"] != "":
-        lora_model_path = mlops_utils.ensure_huggingface_model_local(lora_weights["model"], os.path.join("$MLOPS", "data", "models", "diffusers"), cache_only,model_type="all")
+        lora_model_path = mlops_utils.ensure_huggingface_model_local(lora_weights["model"], os.path.join("$MLOPS_MODELS", "diffusers"), cache_only,model_type="all")
         pipe.load_lora_weights(lora_model_path)
         lora_kwargs = {"scale": lora_weights["weight"]}
 

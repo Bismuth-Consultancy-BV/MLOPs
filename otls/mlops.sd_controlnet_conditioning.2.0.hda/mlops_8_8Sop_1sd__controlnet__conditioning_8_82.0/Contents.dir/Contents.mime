@@ -704,7 +704,7 @@ model = node.parent().parm(\"model\").evalAsString()
 
 # Attributes
 input_colors = mlops_image_utils.colored_points_to_numpy_array(geo)
-# cache = hou.text.expandString(os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\", \"cache\"))
+# cache = hou.text.expandString(os.path.join(\"$MLOPS_MODELS\", \"diffusers\", \"cache\"))
 
 image = controlnet_condition_image.run(model, model_type, input_colors, bool(cache_only))
 mlops_image_utils.pil_to_Cd_points(geo, image)

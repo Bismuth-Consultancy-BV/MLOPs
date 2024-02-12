@@ -45,7 +45,7 @@
             name    "config"
             label   "Model Config"
             type    file
-            default { "$MLOPS/data/models/motionbert/MB_ft_h36m_global_lite.yaml" }
+            default { "$MLOPS_MODELS/motionbert/MB_ft_h36m_global_lite.yaml" }
             parmtag { "script_callback_language" "python" }
         }
         parm {
@@ -61,7 +61,7 @@
             name    "evaluate"
             label   "Model Checkpoint"
             type    file
-            default { "$MLOPS/data/models/motionbert/best_epoch.bin" }
+            default { "$MLOPS_MODELS/motionbert/best_epoch.bin" }
             parmtag { "script_callback_language" "python" }
         }
     }

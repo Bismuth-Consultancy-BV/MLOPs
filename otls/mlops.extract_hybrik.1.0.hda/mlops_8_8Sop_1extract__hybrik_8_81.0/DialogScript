@@ -52,7 +52,7 @@
             name    "deps"
             label   "Dependencies"
             type    directory
-            default { "$MLOPS/data/models/hybrik/model_files.zip" }
+            default { "$MLOPS_MODELS/hybrik/model_files.zip" }
             parmtag { "script_callback_language" "python" }
         }
         parm {
@@ -68,7 +68,7 @@
             name    "cfg_file"
             label   "Model Config"
             type    file
-            default { "$MLOPS/data/models/hybrik/configs/256x192_adam_lr1e-3-hrw48_cam_2x_w_pw3d_3dhp.yaml" }
+            default { "$MLOPS_MODELS/hybrik/configs/256x192_adam_lr1e-3-hrw48_cam_2x_w_pw3d_3dhp.yaml" }
             parmtag { "script_callback_language" "python" }
         }
         parm {
@@ -84,7 +84,7 @@
             name    "ckpt"
             label   "Model Checkpoint"
             type    file
-            default { "$MLOPS/data/models/hybrik/pretrained_hrnet.pth" }
+            default { "$MLOPS_MODELS/hybrik/pretrained_hrnet.pth" }
             parmtag { "script_callback_language" "python" }
         }
     }

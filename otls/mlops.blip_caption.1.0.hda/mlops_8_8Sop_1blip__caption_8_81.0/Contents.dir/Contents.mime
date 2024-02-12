@@ -289,7 +289,7 @@ model = node.parent().parm(\"model\").evalAsString()
 skip_special = not bool(node.parent().parm(\"specialtokens\").evalAsInt())
  
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"transformers\")
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS_MODELS\", \"transformers\"), bool(cache_only), model_type=\"transformers\")
 text = blip_caption.run(model_path, conditional_prompt, skip_special, input_colors, device, cache_only)
 
 # Export

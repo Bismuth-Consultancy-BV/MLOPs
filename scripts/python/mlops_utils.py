@@ -109,11 +109,8 @@ def install_mlops_dependencies():
         count += 1
         operation.updateProgress(percentage=count / total)
 
-        dependencies_dir = os.path.normpath(
-            os.path.join(
-                hou.text.expandString("$MLOPS"), "data", "dependencies", "python"
-            )
-        )
+        dependencies_dir = os.path.normpath(PIP_FOLDER)
+        
         try:
             if os.path.isdir(dependencies_dir):
                 shutil.rmtree(dependencies_dir)
