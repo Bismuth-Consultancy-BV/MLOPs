@@ -288,7 +288,7 @@ cache_only = bool(node.parent().parm(\"cache_only\").evalAsInt())
 model = node.parent().parm(\"model\").evalAsString()
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"transformers\"), bool(cache_only), model_type=\"all\")
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS_MODELS\", \"transformers\"), bool(cache_only), model_type=\"all\")
 channel = sam.run(model_path, input_colors, points, labels, device, cache_only)
 out = channel.flatten()
 

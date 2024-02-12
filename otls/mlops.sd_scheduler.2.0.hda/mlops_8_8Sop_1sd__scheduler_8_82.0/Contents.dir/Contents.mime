@@ -166,7 +166,7 @@ _img_latent = geo2.pointFloatAttribValues(\"latent\")
 image_latents = numpy.array(_img_latent) if geo2.attribValue(\"image_provided\") == 1 else []
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS_MODELS\", \"diffusers\"), bool(cache_only))
 scheduler_data = scheduler.run(latents, latent_dimension, image_latents, guidance_strength, inference_steps, device, scheduler_type, model_path, local_cache_only=bool(cache_only))
 latents = scheduler_data[\"guided_latents\"]
 

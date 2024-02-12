@@ -180,7 +180,7 @@ scheduler_data[\"mask_latent\"] = numpy.array(geo1.pointFloatAttribValues(\"mask
 scheduler_data[\"image_provided\"] = geo1.attribValue(\"image_provided\")
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS_MODELS\", \"diffusers\"), bool(cache_only))
 latents = image_solve.run(num_inference_steps, latent_dimension, text_embeddings, controlnet_geo, bool(attention_slicing), cfg_scale, scheduler_data, device, model_path, lora, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
 
 # Export

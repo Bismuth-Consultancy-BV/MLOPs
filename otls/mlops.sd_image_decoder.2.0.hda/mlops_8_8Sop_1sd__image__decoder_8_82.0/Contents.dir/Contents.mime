@@ -151,7 +151,7 @@ if geo1.findGlobalAttrib(\"seamless\") != None:
     seamless = geo1.attribValue(\"seamless\")
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS_MODELS\", \"diffusers\"), bool(cache_only))
 latents = image_decode.run(latents, latent_dimension, device, model_path, local_cache_only=bool(cache_only), seamless_gen=bool(seamless))
 latents = numpy.clip(latents / 2 + 0.5, 0, 1)
 

@@ -32,26 +32,28 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -2.40098 -3.37841
-connectornextid 2
-flags =  lock off model off template on footprint off xray off bypass off display on render on highlight off unload off savedata off compress on colordefault on exposed on
+position -3.80142 0.114185
+connectornextid 3
+flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-1 "output1"
+2 "output1"
 }
 inputsNamed3
 {
-0 	null1 1 1 "input1"
+0 	sd_tokenizer2 1 1 "input1"
+1 	sd_tokenizer1 1 1 "input2"
 }
 inputs
 {
-0 	null1 0 1
+0 	sd_tokenizer2 0 1
+1 	sd_tokenizer1 0 1
 }
 stat
 {
   create -1
   modify -1
-  author Paul@M16AMTA
+  author Mo@MO-GPU
   access 0777
 }
 color UT_Color RGB 0.8 0.8 0.8 
@@ -151,7 +153,7 @@ positive_tokens = list(geo1.pointStringAttribValues(\"prompt\"))
 negative_tokens = list(geo2.pointStringAttribValues(\"prompt\"))
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS_MODELS\", \"diffusers\"), bool(cache_only))
 text_embeddings = text_encoder.run(positive_tokens[0], negative_tokens[0], device, model_path, local_cache_only=cache_only)
 conditional_embedding = text_embeddings[\"conditional_embedding\"]
 unconditional_embedding = text_embeddings[\"unconditional_embedding\"]

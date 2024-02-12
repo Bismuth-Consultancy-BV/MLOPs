@@ -20,7 +20,7 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -14.5972 0.955627
+position -4.62972 0.0874852
 connectornextid 2
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
@@ -29,11 +29,11 @@ outputsNamed3
 }
 inputsNamed3
 {
-0 	sd_prompt_create2 0 1 "input1"
+0 	sd_prompt_create1 0 1 "input1"
 }
 inputs
 {
-0 	sd_prompt_create2 0 1
+0 	sd_prompt_create1 0 1
 }
 stat
 {
@@ -134,7 +134,7 @@ point = geo1.points()[0]
 prompt = point.attribValue(\"prompt\")
 
 # Solve
-model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\"), bool(cache_only))
+model_path = mlops_utils.ensure_huggingface_model_local(model, os.path.join(\"$MLOPS_MODELS\", \"diffusers\"), bool(cache_only))
 tokens = tokenizer.run(prompt, model_path, local_cache_only=bool(cache_only)) 
 
 # Export
@@ -415,6 +415,7 @@ usenewname	[ 0	locks=0 ]	(	"off"	)
 newname	[ 0	locks=0 ]	(	""	)
 class	[ 0	locks=0 ]	(	"guess"	)
 copyvariable	[ 0	locks=0 ]	(	"on"	)
+copydata	[ 0	locks=0 ]	(	"on"	)
 }
 
 --HOUDINIMIMEBOUNDARY0xD3ADD339-0x00000F49-0x56B122C9-0x00000001HOUDINIMIMEBOUNDARY

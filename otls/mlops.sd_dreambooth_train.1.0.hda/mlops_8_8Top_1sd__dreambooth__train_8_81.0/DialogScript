@@ -139,7 +139,7 @@
             default { "runwayml/stable-diffusion-v1-5" }
             menureplace {
                 [ "import mlops_utils, os" ]
-                [ "root = os.path.join(\"$MLOPS\", \"data\", \"models\", \"diffusers\")" ]
+                [ "root = os.path.join(\"$MLOPS_MODELS\", \"diffusers\")" ]
                 [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
                 language python
             }
