@@ -2,6 +2,7 @@
 
 /otls/backup/
 hip/backup/
+hip/out/*/
 checkpoints/*/
 data/temp/
 data/models/
