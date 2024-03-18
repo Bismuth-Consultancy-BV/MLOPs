@@ -1,0 +1,152 @@
+# Dialog script for mlops::image_segmentation_pipeline::1.0 automatically generated
+
+{
+    name	mlops::image_segmentation_pipeline::1.0
+    script	mlops::sd_tokenizer::1.0
+    label	"MLOPs Image Segmentation Pipeline"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Mask Points"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"Colored Points"
+    outputlabel	2	"Colored Primitives"
+    outputlabel	3	"Original Image as Colored Points"
+
+    groupsimple {
+        name    "folder2"
+        label   "Image"
+
+        parm {
+            name    "labelparm"
+            label   "Message"
+            type    label
+            default { "Image parameters will be overriden if an input is present on the node" }
+            parmtag { "sidefx::look" "block" }
+        }
+        parm {
+            name    "image"
+            label   "Input Image"
+            type    image
+            default { "" }
+            parmtag { "filechooser_mode" "read" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder0"
+        label   "Model"
+
+        parm {
+            name    "cache_only"
+            label   "Local Cache"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "model"
+            label   "Segmentation Model"
+            type    string
+            default { "shi-labs/oneformer_ade20k_dinat_large" }
+            menureplace {
+                [ "import mlops_utils, os" ]
+                [ "root = os.path.join(\"$MLOPS_MODELS\", \"transformers\")" ]
+                [ "return mlops_utils.return_downloaded_checkpoints(root=root)" ]
+                language python
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "device"
+            label   "Compute Device"
+            type    ordinal
+            default { "0" }
+            menu {
+                "cuda"  "cuda"
+                "cpu"   "cpu"
+                "mps"   "mps"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "subtask"
+            label   "Subtask"
+            type    string
+            default { "panoptic" }
+            help    "Segmentation task to be performed, choose [`semantic`, `instance` and `panoptic`] depending on model                 capabilities. If not set, the pipeline will attempt tp resolve in the following order:                   `panoptic`, `instance`, `semantic`"
+            menu {
+                "panoptic"  "Panoptic"
+                "instance"  "Instance"
+                "semantic"  "Semantic"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "threshold"
+            label   "Threshold"
+            type    float
+            default { "0.9" }
+            help    "Probability threshold to filter out predicted masks"
+            range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "mask_threshold"
+            label   "Mask Threshold"
+            type    float
+            default { "0.5" }
+            help    "Threshold to use when turning the predicted masks into binary values"
+            range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "overlap_mask_area_threshold"
+            label   "Overlap Mask Area Threshold"
+            type    float
+            default { "0.5" }
+            help    "Mask overlap threshold to eliminate small, disconnected segments"
+            range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    groupsimple {
+        name    "folder1"
+        label   "Settings"
+        grouptag { "group_type" "simple" }
+        grouptag { "visibletabs" "1" }
+
+        parm {
+            name    "execute"
+            label   "Export"
+            type    button
+            joinnext
+            default { "0" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "auto"
+            label   "Auto Cook"
+            type    toggle
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "path"
+            label   "Export Path"
+            type    image
+            default { "$HIP/out/image_mask.png" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+}

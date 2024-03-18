@@ -1,0 +1,154 @@
+# Dialog script for mlops::image_to_3d::1.0 automatically generated
+
+{
+    name	mlops::image_to_3d::1.0
+    script	mlops::image_to_3d::1.0
+    label	"MLOPs Image To 3D"
+
+    help {
+	""
+    }
+
+    inputlabel	1	"Colored Points"
+    inputlabel	2	"Sub-Network Input #2"
+    inputlabel	3	"Sub-Network Input #3"
+    inputlabel	4	"Sub-Network Input #4"
+    outputlabel	1	"3D Textured Mesh"
+    outputlabel	2	"3D Untextured Mesh"
+
+    groupsimple {
+        name    "folder2"
+        label   "Image"
+
+        parm {
+            name    "labelparm"
+            label   "Message"
+            type    label
+            default { "Image parameters will be overriden if an input is present on the node" }
+            parmtag { "sidefx::look" "block" }
+        }
+        parm {
+            name    "image"
+            label   "Input Image"
+            type    image
+            default { "" }
+            parmtag { "filechooser_mode" "read" }
+            parmtag { "script_callback" "hou.node('./python1').cook()" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "no_remove_bg"
+            label   "Do Not Remove Background"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupsimple {
+            name    "folder1"
+            label   "Options"
+
+            parm {
+                name    "device"
+                label   "Compute Device"
+                type    ordinal
+                default { "0" }
+                menu {
+                    "cuda"  "cuda"
+                    "cpu"   "cpu"
+                    "mps"   "mps"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "chunk_size"
+                label   "Chunk Size"
+                type    integer
+                default { "8192" }
+                help    "Evaluation chunk size for surface extraction and rendering. Smaller chunk size reduces VRAM usage but increases computation time. 0 for no chunking."
+                range   { 0! 8192! }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mc_resolution"
+                label   "MC Grid Resolution"
+                type    integer
+                default { "256" }
+                help    "Marching cubes grid resolution. Default: 256"
+                range   { 0! 512 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "foreground_ratio"
+                label   "Foreground Ratio"
+                type    float
+                default { "0.85" }
+                help    "Ratio of the foreground size to the image size. Only used when \"Do Not Remove Background\" is off"
+                range   { 0! 1! }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    groupsimple {
+        name    "folder0"
+        label   "Output"
+
+        parm {
+            name    "t"
+            label   "Translate"
+            type    vector
+            size    3
+            default { "0" "0" "0" }
+            range   { -1 1 }
+            parmtag { "autoscope" "1110000000000000" }
+        }
+        parm {
+            name    "r"
+            label   "Rotate"
+            type    vector
+            size    3
+            default { "0" "0" "0" }
+            range   { 0 360 }
+            parmtag { "autoscope" "1110000000000000" }
+        }
+        parm {
+            name    "s"
+            label   "Scale"
+            type    vector
+            size    3
+            default { "1" "1" "1" }
+            range   { -1 1 }
+            parmtag { "autoscope" "1110000000000000" }
+        }
+        parm {
+            name    "scale"
+            label   "Uniform Scale"
+            type    float
+            default { "1" }
+            range   { 0 10 }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "bCustomMTLFile"
+            label   "Custom MTL"
+            type    toggle
+            joinnext
+            default { "off" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "sCustomMTL"
+            label   "Label"
+            type    image
+            nolabel
+            default { "" }
+            disablewhen "{ bCustomMTLFile == 0 }"
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "filechooser_pattern" "*.mtl" }
+        }
+    }
+
+}
