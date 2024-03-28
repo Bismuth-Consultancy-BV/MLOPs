@@ -5,6 +5,7 @@ import shutil
 import ssl
 import subprocess
 from urllib import request
+import glob
 
 import mlops_image_utils
 import hou
@@ -25,7 +26,14 @@ def install_mlops_dependencies():
     if not os.path.isdir(FOLDER):
         os.makedirs(FOLDER)
 
-    total = 5
+    # Requirements files
+    def_pattern = hou.text.expandString("$MLOPS/requirements.txt")
+    req_pattern = hou.text.expandString("$MLOPS/requirements_*.txt")
+    req_files = glob.glob(req_pattern)
+    if os.path.exists(def_pattern):
+        req_files.insert(0,def_pattern)
+
+    total = 4 + len(req_files)
     count = 0
     with hou.InterruptableOperation(
         "Installing Dependencies, downloading ~6.3Gb", open_interrupt_dialog=True
@@ -121,10 +129,12 @@ def install_mlops_dependencies():
 
         pip_install(["setuptools"], False, True)
 
-        hou.ui.setStatusMessage("Installing requirements.txt")
-        pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
-        count += 1
-        operation.updateProgress(percentage=count / total)
+    
+        for file_path in sorted(req_files):
+            hou.ui.setStatusMessage(f"Installing {os.path.basename(file_path)}")
+            pip_install(file_path, True, True)
+            count += 1
+            operation.updateProgress(percentage=count / total)
 
         # hou.ui.setStatusMessage("Installing requirements_binary.txt")
         # pip_install(hou.text.expandString("$MLOPS/requirements_binary.txt"), True, True)

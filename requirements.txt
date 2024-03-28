@@ -40,9 +40,9 @@ pytorch-metric-learning==2.4.1                         # For one-shot action rec
 smplx[all]==0.1.28                                      # For mesh recovery
 
 --extra-index-url "https://download.pytorch.org/whl/cu118"
-torch
-torchvision
-torchaudio
+torch==2.1.2
+torchvision==0.16.2
+torchaudio==2.1.2
 
 --prefer-binary
 
