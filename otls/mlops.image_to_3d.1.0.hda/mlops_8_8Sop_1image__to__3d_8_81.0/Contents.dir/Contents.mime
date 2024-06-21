@@ -32,21 +32,17 @@ Content-Type: text/plain
 
 sopflags sopflags = 
 comment ""
-position -14.0389 9.36237
-connectornextid 3
+position -1.42974 1.91258
+connectornextid 0
 flags =  lock off model off template off footprint off xray off bypass off display off render off highlight off unload off savedata off compress on colordefault on exposed on
 outputsNamed3
 {
-0 "output1"
-1 "output2"
 }
 inputsNamed3
 {
-2 	image_to_points1 0 1 "input1"
 }
 inputs
 {
-0 	image_to_points1 0 1
 }
 stat
 {
@@ -225,7 +221,7 @@ from omegaconf import OmegaConf
 from PIL import Image
 
 import sys
-sys.path.insert(0,os.path.join(\"$HIP\",'../../scripts/python/imagepipeline/TripoSR'))
+sys.path.insert(0,os.path.join(\"$MLOPS\",'scripts/python/imagepipeline/TripoSR'))
 
 from tsr.system import TSR
 from tsr.utils import remove_background, resize_foreground, save_video
