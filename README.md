@@ -1,5 +1,7 @@
 ![mlops_banner](https://github.com/Bismuth-Consultancy-BV/MLOPs/assets/115803478/abc396a5-be3c-4bee-bdb9-a3721a829dcd)
 
+> [!IMPORTANT]  
+> 07/23/24: MLOPs is currently migrating to Houdini 20.5. While the repo seems inactive it is very alive and this migration will make MLOPS more accessible: Relying on a proper virtualenv to avoid installation issues, a Copernicus integration as well as a ComfyUI bridge. Stay tuned
 
 # Houdini MLOPs 3.0
 Free and Open Source Machine Learning Plugin for Houdini developed by Ambrosiussen Holding and [Entagma](https://entagma.com/), Licensed and Distributed by [Bismuth Consultancy B.V.](https://www.bismuthconsultancy.com/) _By downloading or using the plugin (or any of its contents), you are agreeing to the LICENSE found in this repository and [Terms of Service of Bismuth Consultancy B.V.](https://www.bismuthconsultancy.com/s/EN_Terms_And_Conditions-f5sk.pdf)_
