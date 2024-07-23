@@ -1,0 +1,15 @@
+Operator:     mlops::image_segment::1.0
+Label:        MLOPs Image Segment
+Path:         oplib:/mlops::Sop/image_segment::1.0?mlops::Sop/image_segment::1.0
+Icon:         opdef:/mlops::Sop/image_segment::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='2 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' visibleoutputs=2 
+User:         
+Inputs:       1 to 1
+Outputs:      2
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Thu Mar 21 08:54:09 2024
+

@@ -1,0 +1,15 @@
+Operator:     mlops::image_segmentation_pipeline::1.0
+Label:        MLOPs Image Segmentation Pipeline
+Path:         oplib:/mlops::Sop/image_segmentation_pipeline::1.0?mlops::Sop/image_segmentation_pipeline::1.0
+Icon:         opdef:/mlops::Sop/image_segmentation_pipeline::1.0?IconSVG
+Table:        Sop
+License:      
+Extra:        inputcolors='1 "RGB 0.700195 0.700195 0.700195" ' outputcolors='3 "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" "RGB 0.700195 0.700195 0.700195" ' visibleoutputs=3 
+User:         
+Inputs:       0 to 1
+Outputs:      3
+Subnet:       true
+Python:       false
+Empty:        false
+Modified:     Fri Mar 22 14:01:57 2024
+
