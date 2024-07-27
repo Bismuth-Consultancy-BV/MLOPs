@@ -6,8 +6,8 @@ import ssl
 import subprocess
 from urllib import request
 
-import mlops_image_utils
 import hou
+import mlops_image_utils
 from hutil.Qt import QtCore, QtGui, QtWidgets
 
 PIP_FOLDER = hou.text.expandString("$MLOPS_PIP_FOLDER")
@@ -56,7 +56,7 @@ def install_mlops_dependencies():
             hou.ui.setStatusMessage(
                 "curl failed to download get-pip.py , trying urllib."
             )
-            remote_url = "https://github.com/pypa/get-pip/raw/2b873b978dbfdfc5e15ef5c3adf4354084612432/public/get-pip.py"  # last known get-pip.py from 20230422
+            remote_url = "https://raw.githubusercontent.com/pypa/get-pip/e03e1607ad60522cf34a92e834138eb89f57667c/public/get-pip.py"  # last known get-pip.py from 24.1.2
             # Create an SSL context with certificate verification
             context = ssl.create_default_context()
             context.check_hostname = True
@@ -70,7 +70,7 @@ def install_mlops_dependencies():
                         file.write(chunk)
             if os.path.isfile(PIPINSTALLFILE):
                 hou.ui.setStatusMessage("testing get-pip.py MD5.")
-                safe_md5 = "6f33e0cffbbd2093f2406f8d0839b01f"  # last known get-pip.py MD5 hash from 20230422
+                safe_md5 = "3798e33235b86348cd634d97a1267b9c"  # last known get-pip.py MD5 hash from 20230422
                 test_md5 = hashlib.md5(open(PIPINSTALLFILE, "rb").read()).hexdigest()
                 if safe_md5 != test_md5:
                     os.remove(
@@ -119,10 +119,11 @@ def install_mlops_dependencies():
                 f"Please close Houdini and delete {dependencies_dir}\nAfter deleting the specified folder restart Houdini and install dependencies again."
             )
 
-        pip_install(["setuptools"], False, True)
-
+        print("STARETING SETIPTOOLS")
+        pip_install(["setuptools==71.1.0"], False, True, constraints_file=hou.text.expandString("$MLOPS/constraints.txt"))
+        print("COMPLETED SETIPTOOLS")
         hou.ui.setStatusMessage("Installing requirements.txt")
-        pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True)
+        pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True, constraints_file=hou.text.expandString("$MLOPS/constraints.txt"))
         count += 1
         operation.updateProgress(percentage=count / total)
 
@@ -312,10 +313,10 @@ def check_mlops_version():
 def ensure_huggingface_model_local(
     model_name, model_path, cache_only=False, model_type="stablediffusion/StableDiffusionPipeline"
 ):
-    from sdpipeline import pipelines_lookup
     from diffusers.schedulers.scheduling_utils import SCHEDULER_CONFIG_NAME
     from diffusers.utils import CONFIG_NAME, ONNX_WEIGHTS_NAME, WEIGHTS_NAME
     from huggingface_hub import snapshot_download
+    from sdpipeline import pipelines_lookup
 
     path = hou.text.expandString(
         os.path.join(model_path, model_name.replace("/", "-_-"))
@@ -701,7 +702,7 @@ class MLOPSPipInstall(QtWidgets.QDialog):
             operation.updateLongProgress(
                 percentage=-1.0, long_op_status=f"Installing dependencies"
             )
-            pip_install(result, upgrade=True, verbose=True)
+            pip_install(result, upgrade=True, verbose=True, constraints_file=hou.text.expandString("$MLOPS/constraints.txt"))
 
             # Informing user about the change
             hou.ui.displayMessage(
