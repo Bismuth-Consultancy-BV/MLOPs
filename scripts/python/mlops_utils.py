@@ -28,7 +28,7 @@ def install_mlops_dependencies():
     total = 5
     count = 0
     with hou.InterruptableOperation(
-        "Installing Dependencies, downloading ~6.3Gb", open_interrupt_dialog=True
+        "Installing Dependencies, downloading ~7.2Gb", open_interrupt_dialog=True
     ) as operation:
         flags = 0
         if os.name == "nt":
