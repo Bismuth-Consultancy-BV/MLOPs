@@ -119,9 +119,8 @@ def install_mlops_dependencies():
                 f"Please close Houdini and delete {dependencies_dir}\nAfter deleting the specified folder restart Houdini and install dependencies again."
             )
 
-        print("STARETING SETIPTOOLS")
         pip_install(["setuptools==71.1.0"], False, True, constraints_file=hou.text.expandString("$MLOPS/constraints.txt"))
-        print("COMPLETED SETIPTOOLS")
+
         hou.ui.setStatusMessage("Installing requirements.txt")
         pip_install(hou.text.expandString("$MLOPS/requirements.txt"), True, True, constraints_file=hou.text.expandString("$MLOPS/constraints.txt"))
         count += 1
