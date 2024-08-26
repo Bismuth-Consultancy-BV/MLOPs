@@ -68,12 +68,12 @@ https://github.com/Ambrosiussen/HalpeCOCOAPI/releases/download/binaries/halpecoc
 
 # Alphapose
 #AlphaPose @ git+https://github.com/Ambrosiussen/AlphaPose
-https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries_latest/alphapose-0.5.0+ec52103-py3-none-any.whl; platform_system == "Windows"
-https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries_latest/alphapose-0.5.0+ec52103-cp311-cp311-linux_x86_64.whl; platform_system == "Linux"
+https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries_latest/alphapose-0.5.0-py3-none-any.whl; platform_system == "Windows"
+https://github.com/Ambrosiussen/AlphaPose/releases/download/binaries_latest/alphapose-0.5.0-cp311-cp311-linux_x86_64.whl; platform_system == "Linux"
 
 # hybrik
 #hybrik @ git+https://github.com/Ambrosiussen/HybrIK
-https://github.com/Ambrosiussen/HybrIK/releases/download/binaries/hybrik-0.2.0+e234195-py3-none-any.whl
+https://github.com/Ambrosiussen/HybrIK/releases/download/binaries/hybrik-0.2.0-py3-none-any.whl
 
 # pytorch3d
 #pytorch3d @ git+https://github.com/facebookresearch/pytorch3d.git@stable; platform_system == "Linux"
