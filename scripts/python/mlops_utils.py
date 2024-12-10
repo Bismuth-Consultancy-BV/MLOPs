@@ -278,8 +278,8 @@ def check_mlops_version():
     installed_json = None
     for package in packages:
         package = packages[package]
-        if "Environment variables" in package.keys():
-            vars = package["Environment variables"]
+        if "Environment Variables" in package.keys():
+            vars = package["Environment Variables"]
             if "MLOPS" in vars.keys():
                 installed_json = os.path.normpath(package["File path"])
                 variables = vars.keys()
