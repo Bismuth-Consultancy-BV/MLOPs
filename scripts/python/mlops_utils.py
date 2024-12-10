@@ -285,7 +285,8 @@ def check_mlops_version():
                 variables = vars.keys()
                 break
     variables = list(variables)
-    variables.remove("HOUDINI_PATH")
+    if "HOUDINI_PATH" in variables:
+        variables.remove("HOUDINI_PATH")
 
     plugin_json = os.path.normpath(hou.text.expandString("$MLOPS/MLOPs.json"))
     with open(plugin_json, "r", encoding="utf-8") as infile:
