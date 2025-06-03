@@ -9,6 +9,7 @@ from urllib import request
 import hou
 import mlops_image_utils
 from hutil.Qt import QtCore, QtGui, QtWidgets
+import certifi
 
 PIP_FOLDER = hou.text.expandString("$MLOPS_PIP_FOLDER")
 
@@ -58,7 +59,8 @@ def install_mlops_dependencies():
             )
             remote_url = "https://raw.githubusercontent.com/pypa/get-pip/e03e1607ad60522cf34a92e834138eb89f57667c/public/get-pip.py"  # last known get-pip.py from 24.1.2
             # Create an SSL context with certificate verification
-            context = ssl.create_default_context()
+            # context = ssl.create_default_context()
+            context = ssl.create_default_context(cafile=certifi.where())
             context.check_hostname = True
             context.verify_mode = ssl.CERT_REQUIRED
             with request.urlopen(remote_url, context=context) as response:
